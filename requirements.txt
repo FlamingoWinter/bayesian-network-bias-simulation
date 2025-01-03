@@ -1,3 +1,0 @@
-numpy~=2.2.0
-pgmpy~=0.1.26
-pygraphviz~=1.7
