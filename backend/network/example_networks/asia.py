@@ -1,11 +1,12 @@
 import numpy as np
 import pymc as pm
 import pytensor as pt
+from pymc import Model
 
 
 # Transcribed from https://www.bnlearn.com/bnrepository/discrete-small.html#asia
 
-def get_asia_network():
+def get_asia_network() -> Model:
     lookup_table = pt.shared(np.asarray([
         [[.99, .01], [.1, .9]],
         [[.9, .1], [.1, .9]]]))
