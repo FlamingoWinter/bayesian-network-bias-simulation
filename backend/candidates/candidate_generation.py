@@ -1,4 +1,4 @@
-from backend.models.bayesian_network import BayesianNetwork
+from backend.network.bayesian_network import BayesianNetwork
 from typing import List
 
 from backend.candidates.candidate import Candidate

@@ -6,7 +6,7 @@ from backend.candidates.candidate_generation import generate_candidates
 from backend.candidates.candidate import Candidate
 from backend.recruiters.recruiter import Recruiter
 from backend.network.network_generation import generate_network
-from models.bayesian_network import BayesianNetwork
+from backend.network.bayesian_network import BayesianNetwork
 
 def simulate(network, candidates, recruiters):
     applications = [candidate.get_application() for candidate in candidates]
