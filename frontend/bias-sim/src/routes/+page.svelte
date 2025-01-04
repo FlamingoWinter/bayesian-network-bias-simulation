@@ -1,8 +1,4 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-
 <!--Adapted from https://gist.github.com/mbostock/2675ff61ea5e063ede2b5d63c08020c7 -->
-
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { D3DragEvent } from 'd3';
@@ -10,13 +6,17 @@
 	import type { Graph, Link, Node } from '../types/network';
 
 	let svg: SVGElement;
-	const width = 600;
-	const height = 500;
+	let svgElement: d3.Selection<SVGElement, unknown, null, undefined>;
+	let innerWidth = 0;
+	let innerHeight = 0;
+
+	$: width = innerWidth;
+	$: height = innerHeight - 4;
 
 	onMount(async () => {
-		const svgElement = d3.select(svg)
-			.attr('width', width)
-			.attr('height', height);
+		svgElement = d3.select(svg)
+			.attr('width', innerWidth)
+			.attr('height', innerHeight);
 
 		const graph: Graph | undefined = await d3.json('http://localhost:8000/');
 
@@ -25,6 +25,15 @@
 			console.log(graph);
 		}
 	});
+
+	$: console.log(width);
+
+	$: if (svgElement) {
+		svgElement
+			.attr('width', width)
+			.attr('height', height);
+		console.log('updated');
+	}
 
 	function renderGraph(graph: Graph, svgElement: d3.Selection<SVGElement, unknown, null, undefined>) {
 
@@ -127,4 +136,14 @@
 
 </script>
 
+<style>
+    :global(body) {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<svelte:window bind:innerWidth bind:innerHeight />
+
 <svg bind:this={svg}></svg>
+
