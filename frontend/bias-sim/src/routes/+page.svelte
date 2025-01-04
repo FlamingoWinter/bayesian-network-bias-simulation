@@ -22,24 +22,20 @@
 
 		if (graph) {
 			renderGraph(graph, svgElement);
-			console.log(graph);
 		}
 	});
-
-	$: console.log(width);
 
 	$: if (svgElement) {
 		svgElement
 			.attr('width', width)
 			.attr('height', height);
-		console.log('updated');
 	}
 
 	function renderGraph(graph: Graph, svgElement: d3.Selection<SVGElement, unknown, null, undefined>) {
 
 		const simulation = d3.forceSimulation(graph.nodes)
-			.force('link', d3.forceLink(graph.links).id((d: any) => d.id).distance(100))
-			.force('charge', d3.forceManyBody().strength(-200))
+			.force('link', d3.forceLink(graph.links).id((d: any) => d.id).distance(150).strength(0.25))
+			.force('charge', d3.forceManyBody().strength(-400))
 			.force('center', d3.forceCenter(width / 2, height / 2));
 
 		const link = svgElement.append('g')
@@ -55,21 +51,22 @@
 			.enter().append('g')
 			.attr('class', 'node');
 
-		const arrowHead = svgElement.append('defs').selectAll('marker')
-			.data(['arrowhead'])
+		const markers = svgElement.append('defs').selectAll('marker')
+			.data(graph.links)
 			.enter().append('marker')
-			.attr('id', 'arrowhead')
+			.attr('id', d => `arrowhead-${d.index}`)
 			.attr('viewBox', '0 -5 10 10')
-			.attr('refX', 20)
 			.attr('refY', 0)
 			.attr('markerWidth', 20)
 			.attr('markerHeight', 20)
-			.attr('orient', 'auto')
-			.append('path')
+			.attr('orient', 'auto');
+
+
+		markers.append('path')
 			.attr('d', 'M0,-5L10,0L0,5')
 			.attr('fill', '#aaa');
 
-		link.attr('marker-end', 'url(#arrowhead)');
+		link.attr('marker-start', d => `url(#arrowhead-${d.index})`);
 
 
 		const rectWidth = 100;
@@ -94,6 +91,7 @@
 			.append('xhtml:body')
 			.style('font', '14px \'Helvetica Neue\'')
 			.style('text-align', 'center')
+			.style('padding', '10px')
 			.html((d: Node) => `<p>${d.label}</p>`);
 
 		node
@@ -111,6 +109,19 @@
 					.attr('y1', (d: Link) => (d.source as Node).y!)
 					.attr('x2', (d: Link) => (d.target as Node).x!)
 					.attr('y2', (d: Link) => (d.target as Node).y!);
+
+
+				markers
+					.attr('refX', d => {
+						const x1 = (d.source as Node).x!;
+						const y1 = (d.source as Node).y!;
+						const x2 = (d.target as Node).x!;
+						const y2 = (d.target as Node).y!;
+
+
+						return -Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) / 4;
+					});
+
 
 				node
 					.attr('transform', d => `translate(${d.x},${d.y})`);
