@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 export interface Node extends d3.SimulationNodeDatum {
-	id: number;
+	id: string;
 	label: string;
 	name?: string;
 }

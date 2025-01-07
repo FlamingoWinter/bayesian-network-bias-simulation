@@ -1,0 +1,41 @@
+<!--Adapted from https://gist.github.com/mbostock/2675ff61ea5e063ede2b5d63c08020c7 -->
+
+
+<svg bind:this={svg} width={width} height={height} />
+
+
+<script lang="ts">
+	import * as d3 from 'd3';
+	import type { Graph, Node } from '../types/network';
+	import { onMount } from 'svelte';
+	import { renderGraph } from '../d3/graph';
+
+	export let graph: Graph;
+	export let width: number;
+	export let height: number;
+	export let nodeDistributionByName: Record<string, string[]>;
+
+	let svg: SVGElement;
+	let svgElement: d3.Selection<SVGElement, unknown, null, undefined>;
+	let simulation: d3.Simulation<Node, undefined>;
+
+	onMount(async () => {
+		svgElement = d3.select(svg);
+
+
+		if (graph) {
+			simulation = renderGraph(graph, nodeDistributionByName, svgElement, width, height);
+		}
+	});
+
+
+	$: {
+		if (simulation) {
+			simulation.force('center', d3.forceCenter(width / 2, height / 2));
+			simulation.alpha(1).restart();
+		}
+	}
+
+</script>
+
+
