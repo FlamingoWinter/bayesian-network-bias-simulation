@@ -1,16 +1,14 @@
 import numpy as np
 import pymc as pm
 import pytensor as pt
-from pymc import Model
+
+from backend.network.bayesian_network import BayesianNetwork
+from backend.visualisation.visualise import visualise_model_as_network
 
 
 # Transcribed from https://www.bnlearn.com/bnrepository/discrete-small.html#asia
 
-def get_asia_network() -> Model:
-    lookup_table = pt.shared(np.asarray([
-        [[.99, .01], [.1, .9]],
-        [[.9, .1], [.1, .9]]]))
-
+def get_asia_network() -> BayesianNetwork:
     def p_asia():
         return [0.01, 0.99]
 
@@ -55,22 +53,19 @@ def get_asia_network() -> Model:
         xray = pm.Categorical('xray', p_xray(either))
         dysp = pm.Categorical('dysp', p_dysp(bronc, either))
 
-    return asia_network
-
-    #     prior_trace = pm.sample_prior_predictive(100000)
-    #
-    # predict_proba0 = prior_trace['covid'][
-    #     (prior_trace['smoker'] == 0)
-    #     & (prior_trace['hospital'] == 1)].mean()
-    # predict_proba1 = prior_trace['covid'][
-    #     (prior_trace['smoker'] == 1)
-    #     & (prior_trace['hospital'] == 1)].mean()
-    #
-    # print(f'P(covid|¬smoking, hospital) is {predict_proba0}')
-    # print(f'P(covid|smoking, hospital) is {predict_proba1}')
+    return BayesianNetwork(asia_network, "dysp", ["either", "bronc"],
+                           {
+                               'asia': ['True', 'False'],
+                               'tub': ['Positive', 'Negative'],
+                               'smoke': ['Yes', 'No'],
+                               'lung': ['Present', 'Absent'],
+                               'bronc': ['Present', 'Absent'],
+                               'either': ['Present', 'Absent'],
+                               'xray': ['Positive', 'Negative'],
+                               'dysp': ['Present', 'Absent'],
+                           })
 
 
 if __name__ == "__main__":
     asia_network = get_asia_network()
-    print("Hi!")
-    pm.model_to_graphviz(asia_network).render("asia", format="png", view=True, cleanup=True)
+    visualise_model_as_network(asia_network)
