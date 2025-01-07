@@ -1,9 +1,17 @@
+from typing import cast
+
+import pymc as pm
+
+from backend.candidates.candidate_group import CandidateGroup
 from backend.network.bayesian_network import BayesianNetwork
-from typing import List
+from backend.type_extensions.prior_trace import PriorTrace
+from backend.utilities.time_function import time_function
 
-from backend.candidates.candidate import Candidate
 
+@time_function("Generating candidates")
+def generate_candidate_group(network: BayesianNetwork, count: int = 10_000) -> CandidateGroup:
+    with network.model:
+        prior_trace: PriorTrace = cast(PriorTrace, pm.sample_prior_predictive(count))
 
-def generate_candidates(network: BayesianNetwork, count: int = 10_000) -> List[Candidate]:
-    # TODO
-    pass
+    candidate_group = CandidateGroup(network, prior_trace.prior.to_dataframe())
+    return candidate_group
