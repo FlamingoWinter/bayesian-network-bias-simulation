@@ -1,15 +1,18 @@
 from abc import ABC, abstractmethod
-from typing import List
 
-from backend.candidates.candidate import Application
+import pandas as pd
 
 
 class Recruiter(ABC):
-    def __init__(self):
-        # TODO
+    @property
+    @abstractmethod
+    def name(self) -> str:
         pass
 
     @abstractmethod
-    def score_applications(self, applications: List[Application]) -> float:
-        # TODO
+    def train(self, application_train: pd.DataFrame, score_train: pd.Series):
+        pass
+
+    @abstractmethod
+    def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
         pass
