@@ -23,7 +23,7 @@
 
 		if (graph) {
 			await Promise.all(graph.nodes.map(async (node) => {
-				nodeInformationByName[node.id] = await d3.json(`http://localhost:8000/node-${node.id}`) as NodeInformation;
+				nodeInformationByName[node.id] = await d3.json(`http://localhost:8000/distribution-${node.id}`) as NodeInformation;
 			}));
 
 		}
