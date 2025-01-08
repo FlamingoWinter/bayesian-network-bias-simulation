@@ -51,9 +51,14 @@ export function renderCategoricalDistribution(distribution: number[],
 		.data(bars)
 		.enter()
 		.append('rect')
+		.attr('fill', '#69b3a2')
 		.attr('x', (bar: Bar) => x(bar.category.toString()) ?? 0)
-		.attr('y', (bar: Bar) => y(bar.value))
 		.attr('width', x.bandwidth())
-		.attr('height', (bar: Bar) => (calculatedHeight - y(bar.value)))
-		.attr('fill', '#69b3a2');
+		.attr('y', calculatedHeight)
+		.attr('height', 0)
+		.attr('fill', '#69b3a2')
+		.transition()
+		.duration(750)
+		.attr('y', (bar: Bar) => y(bar.value))
+		.attr('height', (bar: Bar) => (calculatedHeight - y(bar.value)));
 }

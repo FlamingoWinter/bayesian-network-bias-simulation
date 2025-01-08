@@ -23,9 +23,18 @@
 	onMount(async () => {
 		svgElement = d3.select(svg);
 
+		const zoomGroup = svgElement.append('g')
+			.attr('class', 'zoom-group');
+
+		svgElement.call(d3.zoom<SVGElement, unknown>()
+			.scaleExtent([0.5, 5])
+			.on('zoom', (event) => {
+				zoomGroup.attr('transform', event.transform);
+			}));
+		
 
 		if (graph) {
-			simulation = renderGraph(graph, nodeInformationByName, svgElement, width, height);
+			simulation = renderGraph(graph, nodeInformationByName, zoomGroup, width, height);
 		}
 	});
 
@@ -36,6 +45,7 @@
 			simulation.alpha(1).restart();
 		}
 	}
+
 
 </script>
 

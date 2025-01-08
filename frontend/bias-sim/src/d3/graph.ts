@@ -5,7 +5,7 @@ import { renderCategoricalDistribution } from './categoricalDistribution';
 import type { NodeInformation } from '../types/nodeInformation';
 
 export function renderGraph(graph: Graph, nodeInformationByName: Record<string, NodeInformation>,
-														svgElement: d3.Selection<SVGElement, unknown, null, undefined>,
+														g: d3.Selection<SVGGElement, unknown, null, undefined>,
 														width: number, height: number) {
 
 	const simulation = d3.forceSimulation(graph.nodes)
@@ -29,20 +29,20 @@ export function renderGraph(graph: Graph, nodeInformationByName: Record<string, 
 		});
 	}
 
-	const link = svgElement.append('g')
+	const link = g.append('g')
 		.selectAll('.link')
 		.data(graph.links)
 		.enter().append('line')
 		.attr('class', 'link')
 		.attr('stroke', '#aaa');
 
-	const node = svgElement.append('g')
+	const node = g.append('g')
 		.selectAll('.node')
 		.data(graph.nodes)
 		.enter().append('g')
 		.attr('class', 'node');
 
-	const markers = svgElement.append('defs').selectAll('marker')
+	const markers = g.append('defs').selectAll('marker')
 		.data(graph.links)
 		.enter().append('marker')
 		.attr('id', d => `arrowhead-${d.index}`)
