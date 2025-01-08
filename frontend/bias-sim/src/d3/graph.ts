@@ -104,18 +104,6 @@ export function renderGraph(graph: Graph, nodeDistributionByName: Record<string,
 	});
 
 
-	// node.append('foreignObject')
-	// 	.attr('width', rectWidth)
-	// 	.attr('height', rectHeight)
-	// 	.attr('x', -rectWidth / 2)
-	// 	.attr('y', -rectHeight / 2)
-	// 	.append('xhtml:body')
-	// 	.style('font', '14px \'Helvetica Neue\'')
-	// 	.style('text-align', 'center')
-	// 	.style('padding', '10px')
-	// 	.html((d: Node) => `<p>${nodeDistributionByName[d.id][0]}</p>`);
-
-
 	node
 		.call(d3.drag<SVGGElement, Node>()
 			.on('start', dragStarted)
