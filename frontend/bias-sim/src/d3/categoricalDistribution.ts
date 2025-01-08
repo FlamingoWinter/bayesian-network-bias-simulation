@@ -13,14 +13,15 @@ interface Margin {
 }
 
 
-export function renderCategoricalDistribution(distribution: string[],
+export function renderCategoricalDistribution(distribution: number[],
+																							categories: string[],
 																							g: d3.Selection<SVGGElement, unknown, null, undefined>,
 																							width: number,
 																							height: number,
 																							margin: Margin = { top: 20, right: 10, bottom: 25, left: 35 }
 ) {
 	const bars: Bar[] = Array.from(new Set(distribution)).map(num => ({
-		category: num,
+		category: categories[num],
 		value: distribution.filter(d => d === num).length / distribution.length
 	}));
 

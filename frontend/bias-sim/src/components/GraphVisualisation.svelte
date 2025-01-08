@@ -9,11 +9,12 @@
 	import type { Graph, Node } from '../types/network';
 	import { onMount } from 'svelte';
 	import { renderGraph } from '../d3/graph';
+	import type { NodeInformation } from '../types/nodeInformation';
 
 	export let graph: Graph;
 	export let width: number;
 	export let height: number;
-	export let nodeDistributionByName: Record<string, string[]>;
+	export let nodeInformationByName: Record<string, NodeInformation>;
 
 	let svg: SVGElement;
 	let svgElement: d3.Selection<SVGElement, unknown, null, undefined>;
@@ -24,7 +25,7 @@
 
 
 		if (graph) {
-			simulation = renderGraph(graph, nodeDistributionByName, svgElement, width, height);
+			simulation = renderGraph(graph, nodeInformationByName, svgElement, width, height);
 		}
 	});
 

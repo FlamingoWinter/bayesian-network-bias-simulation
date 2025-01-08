@@ -2,8 +2,9 @@ import type { Graph, Link, Node } from '../types/network';
 import type { D3DragEvent } from 'd3';
 import * as d3 from 'd3';
 import { renderCategoricalDistribution } from './categoricalDistribution';
+import type { NodeInformation } from '../types/nodeInformation';
 
-export function renderGraph(graph: Graph, nodeDistributionByName: Record<string, string[]>,
+export function renderGraph(graph: Graph, nodeInformationByName: Record<string, NodeInformation>,
 														svgElement: d3.Selection<SVGElement, unknown, null, undefined>,
 														width: number, height: number) {
 
@@ -86,7 +87,7 @@ export function renderGraph(graph: Graph, nodeDistributionByName: Record<string,
 	node.each(function(d: Node) {
 		const container = d3.select(this);
 
-		const distribution = nodeDistributionByName[d.id];
+		const nodeInformation = nodeInformationByName[d.id];
 		const g = container.append('g');
 		const margin = {
 			top: 15,
@@ -95,7 +96,11 @@ export function renderGraph(graph: Graph, nodeDistributionByName: Record<string,
 			left: 35
 		};
 
-		renderCategoricalDistribution(distribution, g, rectWidth, rectHeight, margin);
+		if (nodeInformation.isCategoricalVariable) {
+			renderCategoricalDistribution(nodeInformation.distribution, nodeInformation.categoriesForCategoricalDistributions, g, rectWidth, rectHeight, margin);
+
+		}
+
 	});
 
 

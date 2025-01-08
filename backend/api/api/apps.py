@@ -23,13 +23,16 @@ class ApiConfig(AppConfig):
         candidate_group: CandidateGroup = generate_candidate_group(network, 1000)
         for node in network.model.named_vars:
             if node in network.categories_by_categorical_variable.keys():
-                nums_to_categories = [network.categories_by_categorical_variable[node][characteristic_num]
-                                      for characteristic_num in candidate_group.characteristics[node].to_list()]
-
-                cache.set(f"distribution-{node}",
-                          JsonResponse(nums_to_categories, safe=False),
-                          timeout=None)
+                categories_for_categorical_distributions = network.categories_by_categorical_variable[node]
+                is_categorical_variable = True
             else:
-                cache.set(f"distribution-{node}",
-                          JsonResponse(candidate_group.characteristics[node].to_list(), safe=False),
-                          timeout=None)
+                categories_for_categorical_distributions = None
+                is_categorical_variable = False
+
+            cache.set(f"distribution-{node}",
+                      JsonResponse(
+                          {"distribution": candidate_group.characteristics[node].to_list(),
+                           "isCategoricalVariable": True,
+                           "categoriesForCategoricalDistributions": categories_for_categorical_distributions}
+                          , safe=False),
+                      timeout=None)

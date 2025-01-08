@@ -3,9 +3,11 @@
 	import { onMount } from 'svelte';
 	import type { Graph } from '../types/network.js';
 	import * as d3 from 'd3';
+	import type { NodeInformation } from '../types/nodeInformation';
 
 	let graph: Graph | undefined;
-	let nodeDistributionByName: Record<string, string[]> = {};
+
+	let nodeInformationByName: Record<string, NodeInformation> = {};
 
 	let initialised = false;
 
@@ -21,7 +23,7 @@
 
 		if (graph) {
 			await Promise.all(graph.nodes.map(async (node) => {
-				nodeDistributionByName[node.id] = await d3.json(`http://localhost:8000/node-${node.id}`) as string[];
+				nodeInformationByName[node.id] = await d3.json(`http://localhost:8000/node-${node.id}`) as NodeInformation;
 			}));
 
 		}
@@ -42,5 +44,5 @@
 
 
 {#if initialised && graph}
-	<GraphVisualisation graph={graph} width={width} height={height} nodeDistributionByName={nodeDistributionByName} />
+	<GraphVisualisation graph={graph} width={width} height={height} nodeInformationByName={nodeInformationByName} />
 {/if}
