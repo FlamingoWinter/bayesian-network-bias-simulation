@@ -6,4 +6,4 @@ def get_example_network(request):
 
 
 def get_distribution_for_node(request, node: str):
-    return cache.get(f"distribution-{node}")
+    return cache.get(f"prior-distribution-{node}")

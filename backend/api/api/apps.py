@@ -29,7 +29,7 @@ class ApiConfig(AppConfig):
                 categories_for_categorical_distributions = None
                 is_categorical_variable = False
 
-            cache.set(f"distribution-{node}",
+            cache.set(f"prior-distribution-{node}",
                       JsonResponse(
                           {"distribution": candidate_group.characteristics[node].to_list(),
                            "isCategoricalVariable": True,
