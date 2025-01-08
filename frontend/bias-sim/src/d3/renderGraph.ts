@@ -1,7 +1,7 @@
 import type { Graph, Link, Node } from '../types/network';
 import type { D3DragEvent } from 'd3';
 import * as d3 from 'd3';
-import { renderCategoricalDistribution } from './categoricalDistribution';
+import { renderCategoricalDistribution } from './renderCategoricalDistribution';
 import type { NodeDistribution } from '../types/nodeDistribution';
 
 export function renderGraph(graph: Graph, nodeDistributionByName: Record<string, NodeDistribution>,

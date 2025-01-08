@@ -8,10 +8,10 @@ from networkx.readwrite.json_graph import node_link_data
 
 from backend.api.reponseTypes.distributionResponse import DistributionResponse
 from backend.api.reponseTypes.networkResponse import NetworkResponse
-from backend.candidates.candidate_generation import generate_candidate_group
 from backend.candidates.candidate_group import CandidateGroup
+from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
-from backend.network.network_generation import generate_network
+from backend.network.generate_network import generate_network
 
 
 class ApiConfig(AppConfig):

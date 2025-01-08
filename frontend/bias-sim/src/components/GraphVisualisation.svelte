@@ -8,7 +8,7 @@
 	import * as d3 from 'd3';
 	import type { Graph, Node } from '../types/network';
 	import { onMount } from 'svelte';
-	import { renderGraph } from '../d3/graph';
+	import { renderGraph } from '../d3/renderGraph';
 	import type { NodeDistribution } from '../types/nodeDistribution';
 
 	export let graph: Graph;

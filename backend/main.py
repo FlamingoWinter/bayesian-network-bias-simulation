@@ -4,10 +4,10 @@ from typing import List, Dict
 import pandas as pd
 
 from backend.bias.bias import calculate_bias, print_bias_summary, RecruiterBiasMeasurement
-from backend.candidates.candidate_generation import generate_candidate_group
 from backend.candidates.candidate_group import CandidateGroup
+from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
-from backend.network.network_generation import generate_network
+from backend.network.generate_network import generate_network
 from backend.recruiters.linear_model_recruiter import LinearModelRecruiter
 from backend.recruiters.recruiter import Recruiter
 from backend.utilities.time_function import time_function
