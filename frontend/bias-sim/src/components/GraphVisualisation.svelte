@@ -9,12 +9,12 @@
 	import type { Graph, Node } from '../types/network';
 	import { onMount } from 'svelte';
 	import { renderGraph } from '../d3/graph';
-	import type { NodeInformation } from '../types/nodeInformation';
+	import type { NodeDistribution } from '../types/nodeDistribution';
 
 	export let graph: Graph;
 	export let width: number;
 	export let height: number;
-	export let nodeInformationByName: Record<string, NodeInformation>;
+	export let nodeDistributionByName: Record<string, NodeDistribution>;
 
 	let svg: SVGElement;
 	let svgElement: d3.Selection<SVGElement, unknown, null, undefined>;
@@ -31,10 +31,10 @@
 			.on('zoom', (event) => {
 				zoomGroup.attr('transform', event.transform);
 			}));
-		
+
 
 		if (graph) {
-			simulation = renderGraph(graph, nodeInformationByName, zoomGroup, width, height);
+			simulation = renderGraph(graph, nodeDistributionByName, zoomGroup, width, height);
 		}
 	});
 
