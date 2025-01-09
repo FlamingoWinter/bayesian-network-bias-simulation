@@ -1,11 +1,11 @@
 <script lang="ts">
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
-	import type { Graph } from '../types/network.js';
+	import type { Network } from '../types/network.js';
 	import * as d3 from 'd3';
 	import type { NodeDistribution } from '../types/nodeDistribution';
 
-	let graph: Graph | undefined;
+	let network: Network | undefined;
 
 	let nodeDistributionByName: Record<string, NodeDistribution> = {};
 
@@ -18,11 +18,11 @@
 	$: height = innerHeight - 4;
 
 	onMount(async () => {
-		graph = await d3.json('http://localhost:8000/');
+		network = await d3.json('http://localhost:8000/');
 
 
-		if (graph) {
-			await Promise.all(graph.nodes.map(async (node) => {
+		if (network) {
+			await Promise.all(network.graph.nodes.map(async (node) => {
 				nodeDistributionByName[node.id] = await d3.json(`http://localhost:8000/distribution-${node.id}`) as NodeDistribution;
 			}));
 
@@ -43,6 +43,6 @@
 <svelte:window bind:innerWidth bind:innerHeight />
 
 
-{#if initialised && graph}
-	<GraphVisualisation graph={graph} width={width} height={height} nodeDistributionByName={nodeDistributionByName} />
+{#if initialised && network}
+	<GraphVisualisation network={network} width={width} height={height} nodeDistributionByName={nodeDistributionByName} />
 {/if}

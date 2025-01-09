@@ -21,26 +21,31 @@ class ApiConfig(AppConfig):
         network: BayesianNetwork = generate_network()
 
         network_response: NetworkResponse = {
-            "network": node_link_data(pm.model_to_networkx(network.model), link="links"),
+            "graph": node_link_data(pm.model_to_networkx(network.model), link="links"),
             "scoreCharacteristic": network.score_characteristic,
-            "applicationCharacteristics": network.application_characteristics}
+            "applicationCharacteristics": network.application_characteristics,
+            "descriptionsByCharacteristic": network.descriptions_by_characteristic,
+            "description": network.description}
 
         cache.set("network",
                   JsonResponse(network_response, safe=False),
                   timeout=None)
 
-        candidate_group: CandidateGroup = generate_candidate_group(network, 1000)
+        candidate_group: CandidateGroup = generate_candidate_group(network, 10_000)
         for node in network.model.named_vars:
             if node in network.categories_by_categorical_variable.keys():
                 categories_for_categorical_distributions = network.categories_by_categorical_variable[node]
-                is_categorical_variable = True
+                distribution_type = "categorical"
             else:
                 categories_for_categorical_distributions = None
-                is_categorical_variable = False
+                if node in [var.name for var in network.model.discrete_value_vars]:
+                    distribution_type = "discrete"
+                else:
+                    distribution_type = "continuous"
 
             distribution_response: DistributionResponse = {
                 "distribution": candidate_group.characteristics[node].to_list(),
-                "isCategoricalVariable": True,
+                "distributionType": distribution_type,
                 "categoriesForCategoricalDistributions": categories_for_categorical_distributions}
 
             cache.set(f"prior-distribution-{node}",

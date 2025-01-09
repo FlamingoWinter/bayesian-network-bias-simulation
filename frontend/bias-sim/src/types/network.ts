@@ -15,4 +15,8 @@ export interface Graph {
 	links: Link[];
 }
 
-
+export interface Network {
+	graph: Graph;
+	scoreCharacteristic: string;
+	applicationCharacteristics: string;
+}

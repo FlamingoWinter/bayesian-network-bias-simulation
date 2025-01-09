@@ -1,7 +1,9 @@
-from typing import List, TypedDict
+from typing import List, TypedDict, Dict
 
 NetworkResponse = TypedDict('NetworkResponse', {
-    'network': None,
+    'graph': None,
     'scoreCharacteristic': str,
-    'applicationCharacteristics': List[str]
+    'applicationCharacteristics': List[str],
+    'descriptionsByCharacteristic': Dict[str, str],
+    'description': str
 })
