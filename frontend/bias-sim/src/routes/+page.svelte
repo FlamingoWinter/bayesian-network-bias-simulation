@@ -42,7 +42,8 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-
+<button type="button" class="btn-icon variant-filled-surface">(icon)</button>
 {#if initialised && network}
 	<GraphVisualisation network={network} width={width} height={height} nodeDistributionByName={nodeDistributionByName} />
 {/if}
+

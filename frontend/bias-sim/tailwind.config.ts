@@ -22,7 +22,9 @@ const config = {
 	},
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)
-		skeleton
+		skeleton({
+			themes: { preset: ['skeleton', 'vintage', 'gold-nouveau'] }
+		})
 	]
 } satisfies Config;
 
