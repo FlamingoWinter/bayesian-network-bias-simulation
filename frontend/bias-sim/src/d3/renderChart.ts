@@ -43,5 +43,4 @@ export function renderChart(nodeDistribution: NodeDistribution,
 	if (nodeDistribution.distributionType == 'continuous') {
 		renderContinuousDistribution(nodeDistribution.distribution, g, calculatedWidth, calculatedHeight);
 	}
-
 }
