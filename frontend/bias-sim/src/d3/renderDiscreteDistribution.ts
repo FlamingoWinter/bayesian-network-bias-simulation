@@ -82,7 +82,7 @@ export function renderDiscreteDistribution(distribution: number[],
 	g.append('text')
 		.attr('class', 'bar-label')
 		.attr('x', x(median))
-		.attr('y', y(0) + 11)
+		.attr('y', y(0) - 10)
 		.attr('text-anchor', 'middle')
 		.style('font-size', '8px')
 		.style('font-weight', '400')
