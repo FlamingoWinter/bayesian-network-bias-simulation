@@ -1,5 +1,6 @@
 export interface NodeDistribution {
 	distribution: number[];
-	isCategoricalVariable: boolean;
-	categoriesForCategoricalDistributions: string[];
+	distributionType: 'categorical' | 'discrete' | 'continuous';
+	categoriesForCategoricalDistributions: string[] | null;
+
 }

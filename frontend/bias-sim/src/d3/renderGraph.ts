@@ -1,13 +1,15 @@
-import type { Graph, Link, Node } from '../types/network';
+import type { Link, Network, Node } from '../types/network';
 import type { D3DragEvent } from 'd3';
 import * as d3 from 'd3';
-import { renderCategoricalDistribution } from './renderCategoricalDistribution';
 import type { NodeDistribution } from '../types/nodeDistribution';
+import { toTitleCase } from '../utiliites/toTitleCase';
+import { renderChart } from './renderChart';
 
-export function renderGraph(graph: Graph, nodeDistributionByName: Record<string, NodeDistribution>,
+export function renderGraph(network: Network, nodeDistributionByName: Record<string, NodeDistribution>,
 														g: d3.Selection<SVGGElement, unknown, null, undefined>,
 														width: number, height: number) {
 
+	const graph = network.graph;
 	const simulation = d3.forceSimulation(graph.nodes)
 		.force('link', d3.forceLink(graph.links).id((d: any) => d.id).distance(200).strength(0.25))
 		.force('charge', d3.forceManyBody().strength(-800))
@@ -67,7 +69,10 @@ export function renderGraph(graph: Graph, nodeDistributionByName: Record<string,
 		.attr('ry', 2)
 		.attr('width', rectWidth)
 		.attr('height', rectHeight)
-		.attr('fill', '#ffffff')
+		.attr('fill', (node: Node) =>
+			network.scoreCharacteristic == node.id ? '#fff8f3' :
+				network.applicationCharacteristics.includes(node.id) ? '#fff3fc' :
+					'#ffffff')
 		.attr('stroke', '#333333')
 		.attr('stroke-width', 0.7)
 		.attr('x', -rectWidth / 2)
@@ -75,13 +80,12 @@ export function renderGraph(graph: Graph, nodeDistributionByName: Record<string,
 
 	node.append('svg:text')
 		.attr('x', 0)
-		.attr('y', -rectHeight / 2 - 10)
+		.attr('y', -rectHeight / 2 - 7)
 		.attr('text-anchor', 'middle')
 		.attr('fill', '#333333')
-		.attr('font-size', '12px')
-		.style('font', '16px \'Helvetica Neue\'')
-		.attr('font-weight', 'bold')
-		.text(d => d.id);
+		.style('font-weight', '600')
+		.style('font-size', '18px')
+		.text(d => toTitleCase(d.id));
 
 
 	node.each(function(d: Node) {
@@ -89,17 +93,15 @@ export function renderGraph(graph: Graph, nodeDistributionByName: Record<string,
 
 		const nodeDistribution = nodeDistributionByName[d.id];
 		const g = container.append('g');
+
 		const margin = {
 			top: 15,
-			right: 10,
+			right: 14,
 			bottom: 25,
-			left: 35
+			left: 14
 		};
 
-		if (nodeDistribution.isCategoricalVariable) {
-			renderCategoricalDistribution(nodeDistribution.distribution, nodeDistribution.categoriesForCategoricalDistributions, g, rectWidth, rectHeight, margin);
-
-		}
+		renderChart(nodeDistribution, g, rectWidth, rectHeight, margin);
 
 	});
 

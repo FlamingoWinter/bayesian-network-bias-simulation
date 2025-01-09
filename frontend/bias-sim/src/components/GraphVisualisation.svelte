@@ -1,17 +1,24 @@
 <!--Adapted from https://gist.github.com/mbostock/2675ff61ea5e063ede2b5d63c08020c7 -->
 
 
-<svg bind:this={svg} width={width} height={height} />
+<svg bind:this={svg} width={width} height={height}>
+	<style>
+      text {
+          font-family: 'Roboto', sans-serif;
+          font-weight: 400;
+      }
+	</style>
+</svg>
 
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import type { Graph, Node } from '../types/network';
+	import type { Network, Node } from '../types/network';
 	import { onMount } from 'svelte';
 	import { renderGraph } from '../d3/renderGraph';
 	import type { NodeDistribution } from '../types/nodeDistribution';
 
-	export let graph: Graph;
+	export let network: Network;
 	export let width: number;
 	export let height: number;
 	export let nodeDistributionByName: Record<string, NodeDistribution>;
@@ -33,8 +40,8 @@
 			}));
 
 
-		if (graph) {
-			simulation = renderGraph(graph, nodeDistributionByName, zoomGroup, width, height);
+		if (network) {
+			simulation = renderGraph(network, nodeDistributionByName, zoomGroup, width, height);
 		}
 	});
 

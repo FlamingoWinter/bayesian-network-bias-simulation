@@ -2,6 +2,6 @@ from typing import List, TypedDict
 
 DistributionResponse = TypedDict('DistributionResponse', {
     'distribution': List[float],
-    'isCategoricalVariable': bool,
+    'distributionType': str,
     'categoriesForCategoricalDistributions': List[str] | None
 })
