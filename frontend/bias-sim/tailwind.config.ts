@@ -18,7 +18,11 @@ const config = {
 		)
 	],
 	theme: {
-		extend: {}
+		extend: {
+			fontFamily: {
+				oswald: ['Oswald', 'sans-serif']
+			}
+		}
 	},
 	plugins: [
 		// 4. Append the Skeleton plugin (after other plugins)

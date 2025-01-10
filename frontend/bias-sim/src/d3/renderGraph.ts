@@ -4,6 +4,8 @@ import * as d3 from 'd3';
 import type { NodeDistribution } from '../types/nodeDistribution';
 import { toTitleCase } from '../utiliites/toTitleCase';
 import { renderChart } from './renderChart';
+import { mount } from 'svelte';
+import NodeComponent from '../components/NodeComponent.svelte';
 
 export function renderGraph(network: Network, nodeDistributionByName: Record<string, NodeDistribution>,
 														g: d3.Selection<SVGGElement, unknown, null, undefined>,
@@ -38,11 +40,24 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 		.attr('class', 'link')
 		.attr('stroke', '#aaa');
 
+	const innerNodeByNodeIndex: Record<number, SVGGElement> = {};
+	const rectNodeByNodeIndex: Record<number, SVGRectElement> = {};
+
+
 	const node = g.append('g')
 		.selectAll('.node')
 		.data(graph.nodes)
 		.enter().append('g')
 		.attr('class', 'node');
+
+
+	const innerNode = node.append('g')
+		.attr('class', 'innerNode')
+		.each(function(_, index) {
+			innerNodeByNodeIndex[index] = this as SVGGElement;
+		})
+		.style('transition', 'transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)');
+
 
 	const markers = g.append('defs').selectAll('marker')
 		.data(graph.links)
@@ -61,10 +76,10 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 
 	link.attr('marker-start', d => `url(#arrowhead-${d.index})`);
 
-
 	const rectWidth = 160;
 	const rectHeight = 120;
-	node.append('svg:rect')
+
+	innerNode.append('svg:rect')
 		.attr('rx', 2)
 		.attr('ry', 2)
 		.attr('width', rectWidth)
@@ -76,9 +91,15 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 		.attr('stroke', '#333333')
 		.attr('stroke-width', 0.7)
 		.attr('x', -rectWidth / 2)
-		.attr('y', -rectHeight / 2);
+		.attr('y', -rectHeight / 2)
+		.each(function(_, index) {
+			rectNodeByNodeIndex[index] = this as SVGRectElement;
+		})
+		.style('transition', 'height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)');
+	;
 
-	node.append('svg:text')
+
+	innerNode.append('svg:text')
 		.attr('x', 0)
 		.attr('y', -rectHeight / 2 - 7)
 		.attr('text-anchor', 'middle')
@@ -88,7 +109,7 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 		.text(d => toTitleCase(d.id));
 
 
-	node.each(function(d: Node) {
+	innerNode.each(function(d: Node) {
 		const container = d3.select(this);
 
 		const nodeDistribution = nodeDistributionByName[d.id];
@@ -156,6 +177,28 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 		d.fx = null;
 		d.fy = null;
 	}
+
+	const foreignObjectWidth = rectWidth * 1.1;
+	const foreignObjectHeight = rectHeight * 1.2;
+	innerNode.append('foreignObject')
+		.attr('class', 'expand-button-container')
+		.attr('x', -foreignObjectWidth / 2)
+		.attr('y', -foreignObjectHeight / 2)
+		.attr('width', foreignObjectWidth)
+		.attr('height', foreignObjectHeight)
+		.style('pointer-events', 'all')
+		.style('z-index', 20)
+		.style('transition', 'height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)')
+		.each(function(_, index) {
+			const nodeComponent = mount(NodeComponent, {
+				target: this,
+				props: {
+					'foreignObjectElement': this,
+					'innerNode': innerNodeByNodeIndex[index],
+					'rect': rectNodeByNodeIndex[index]
+				}
+			});
+		});
 
 	return simulation;
 }

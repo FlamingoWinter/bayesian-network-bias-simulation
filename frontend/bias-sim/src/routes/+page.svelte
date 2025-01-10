@@ -4,7 +4,6 @@
 	import type { Network } from '../types/network.js';
 	import * as d3 from 'd3';
 	import type { NodeDistribution } from '../types/nodeDistribution';
-	import Alarm from 'svelte-bootstrap-icons/lib/Alarm.svelte';
 
 	let network: Network | undefined;
 
@@ -43,9 +42,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<button type="button" class="btn-icon variant-filled">
-	<Alarm />
-</button>
+
 {#if initialised && network}
 	<GraphVisualisation network={network} width={width} height={height} nodeDistributionByName={nodeDistributionByName} />
 {/if}
