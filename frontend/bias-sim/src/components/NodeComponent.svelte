@@ -6,10 +6,13 @@
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import ButtonRow from './ButtonRow.svelte';
 
+	import { cancelDescribe, describeNode, expandedNode } from '../stores/store';
+
 
 	export let foreignObjectElement: SVGForeignObjectElement;
 	export let innerNode: SVGGElement;
 	export let rect: SVGRectElement;
+	export let nodeName: string;
 
 	let isHovered = false;
 	let expanded = false;
@@ -58,15 +61,21 @@
 
 	function toggleExpand() {
 		if (!expanded) {
+			$expandedNode = nodeName;
 			d3.select(innerNode).attr('transform', `${originalInnerNodeTransform} scale(${scaleMultiplier})`);
 			d3.select(rect).attr('height', originalRectHeight * heightMultiplier);
 			d3.select(foreignObjectElement).attr('height', originalForeignObjectHeight * heightMultiplier);
 		} else {
+			$cancelDescribe();
 			d3.select(innerNode).attr('transform', `${originalInnerNodeTransform}`);
 			d3.select(rect).attr('height', originalRectHeight);
 			d3.select(foreignObjectElement).attr('height', originalForeignObjectHeight);
 		}
 		expanded = !expanded;
+	}
+
+	$:if (expanded && $expandedNode != nodeName) {
+		toggleExpand();
 	}
 </script>
 
@@ -83,7 +92,7 @@
 			 out:fade={{ duration: 100 }}
 	>
 		<ButtonRow>
-			<ButtonBelowDistribution text="Describe" />
+			<ButtonBelowDistribution text="Describe" callback={()=>{$describeNode(nodeName)}} />
 			<ButtonBelowDistribution text="Condition" />
 		</ButtonRow>
 		<ButtonRow>

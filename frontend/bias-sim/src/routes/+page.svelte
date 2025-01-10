@@ -1,13 +1,13 @@
 <script lang="ts">
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
-	import type { Network } from '../types/network.js';
 	import * as d3 from 'd3';
 	import type { NodeDistribution } from '../types/nodeDistribution';
+	import { network, nodeDistributionByName } from '../stores/store';
 
-	let network: Network | undefined;
+	let expandedNodeName: string;
 
-	let nodeDistributionByName: Record<string, NodeDistribution> = {};
+	let fetchedNodeDistributionByName: Record<string, NodeDistribution> = {};
 
 	let initialised = false;
 
@@ -18,15 +18,17 @@
 	$: height = innerHeight - 4;
 
 	onMount(async () => {
-		network = await d3.json('http://localhost:8000/');
+		$network = await d3.json('http://localhost:8000/');
 
 
-		if (network) {
-			await Promise.all(network.graph.nodes.map(async (node) => {
-				nodeDistributionByName[node.id] = await d3.json(`http://localhost:8000/distribution-${node.id}`) as NodeDistribution;
+		if ($network) {
+			await Promise.all($network.graph.nodes.map(async (node) => {
+				fetchedNodeDistributionByName[node.id] = await d3.json(`http://localhost:8000/distribution-${node.id}`) as NodeDistribution;
 			}));
 
 		}
+
+		$nodeDistributionByName = fetchedNodeDistributionByName;
 		initialised = true;
 
 	});
@@ -44,6 +46,6 @@
 
 
 {#if initialised && network}
-	<GraphVisualisation network={network} width={width} height={height} nodeDistributionByName={nodeDistributionByName} />
+	<GraphVisualisation width={width} height={height} />
 {/if}
 

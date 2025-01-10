@@ -15,7 +15,7 @@ def get_weighted_coin_network() -> BayesianNetwork:
 
     weighted_coin_network = BayesianNetwork(weighted_coin_model)
 
-    weighted_coin_network.set_description_for_characteristic("p_heads", """
+    weighted_coin_network.set_description_for_characteristic("p(heads)", """
         The probability of the weighted coin landing heads side up.
     """)
 

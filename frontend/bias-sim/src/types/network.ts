@@ -19,4 +19,6 @@ export interface Network {
 	graph: Graph;
 	scoreCharacteristic: string;
 	applicationCharacteristics: string;
+	descriptionsByCharacteristic: Record<string, string>;
+	description: string;
 }

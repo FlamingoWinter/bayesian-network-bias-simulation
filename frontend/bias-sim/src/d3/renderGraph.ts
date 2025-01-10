@@ -189,13 +189,14 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 		.style('pointer-events', 'all')
 		.style('z-index', 20)
 		.style('transition', 'height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)')
-		.each(function(_, index) {
+		.each(function(node, index) {
 			const nodeComponent = mount(NodeComponent, {
 				target: this,
 				props: {
 					'foreignObjectElement': this,
 					'innerNode': innerNodeByNodeIndex[index],
-					'rect': rectNodeByNodeIndex[index]
+					'rect': rectNodeByNodeIndex[index],
+					'nodeName': node.id
 				}
 			});
 		});

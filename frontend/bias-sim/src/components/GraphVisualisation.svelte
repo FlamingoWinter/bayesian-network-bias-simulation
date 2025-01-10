@@ -10,18 +10,19 @@
 	</style>
 </svg>
 
+<InfoBox />
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import type { Network, Node } from '../types/network';
+	import type { Node } from '../types/network';
 	import { onMount } from 'svelte';
 	import { renderGraph } from '../d3/renderGraph';
-	import type { NodeDistribution } from '../types/nodeDistribution';
 
-	export let network: Network;
+	import { network, nodeDistributionByName } from '../stores/store';
+	import InfoBox from './InfoBox.svelte';
+
 	export let width: number;
 	export let height: number;
-	export let nodeDistributionByName: Record<string, NodeDistribution>;
 
 	let svg: SVGElement;
 	let svgElement: d3.Selection<SVGElement, unknown, null, undefined>;
@@ -40,8 +41,8 @@
 			}));
 
 
-		if (network) {
-			simulation = renderGraph(network, nodeDistributionByName, zoomGroup, width, height);
+		if ($network) {
+			simulation = renderGraph($network, $nodeDistributionByName, zoomGroup, width, height);
 		}
 	});
 
