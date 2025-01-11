@@ -5,8 +5,6 @@
 	import type { NodeDistribution } from '../types/nodeDistribution';
 	import { network, nodeDistributionByName } from '../stores/store';
 
-	let expandedNodeName: string;
-
 	let fetchedNodeDistributionByName: Record<string, NodeDistribution> = {};
 
 	let initialised = false;

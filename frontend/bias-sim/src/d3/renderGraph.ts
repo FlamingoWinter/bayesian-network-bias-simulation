@@ -6,11 +6,11 @@ import { toTitleCase } from '../utiliites/toTitleCase';
 import { renderChart } from './renderChart';
 import { mount } from 'svelte';
 import NodeComponent from '../components/NodeComponent.svelte';
+import { updateNodeColour } from './updateNodeColour';
 
 export function renderGraph(network: Network, nodeDistributionByName: Record<string, NodeDistribution>,
 														g: d3.Selection<SVGGElement, unknown, null, undefined>,
 														width: number, height: number) {
-
 	const graph = network.graph;
 	const simulation = d3.forceSimulation(graph.nodes)
 		.force('link', d3.forceLink(graph.links).id((d: any) => d.id).distance(200).strength(0.25))
@@ -84,16 +84,17 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 		.attr('ry', 2)
 		.attr('width', rectWidth)
 		.attr('height', rectHeight)
-		.attr('fill', (node: Node) =>
-			network.scoreCharacteristic == node.id ? '#fff8f3' :
-				network.applicationCharacteristics.includes(node.id) ? '#fff3fc' :
-					'#ffffff')
 		.attr('stroke', '#333333')
 		.attr('stroke-width', 0.7)
 		.attr('x', -rectWidth / 2)
 		.attr('y', -rectHeight / 2)
 		.each(function(_, index) {
 			rectNodeByNodeIndex[index] = this as SVGRectElement;
+		})
+		.each(function(node) {
+			updateNodeColour(
+				this as SVGRectElement, network, node.id
+			);
 		})
 		.style('transition', 'height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)');
 	;

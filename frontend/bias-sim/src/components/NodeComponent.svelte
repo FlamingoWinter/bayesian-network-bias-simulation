@@ -5,8 +5,8 @@
 	import { fade } from 'svelte/transition';
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import ButtonRow from './ButtonRow.svelte';
-
-	import { cancelDescribe, describeNode, expandedNode } from '../stores/store';
+	import { cancelDescribe, describeNode, expandedNode, network } from '../stores/store';
+	import { updateNodeColour } from '../d3/updateNodeColour';
 
 
 	export let foreignObjectElement: SVGForeignObjectElement;
@@ -96,7 +96,16 @@
 			<ButtonBelowDistribution text="Condition" />
 		</ButtonRow>
 		<ButtonRow>
-			<ButtonBelowDistribution text="Set Score Characteristic" />
+			<ButtonBelowDistribution text="{$network.scoreCharacteristic === nodeName ? `Unset` : `Set`} Score Characteristic"
+															 callback={()=>{
+																 if($network.scoreCharacteristic === nodeName){
+																	 $network.scoreCharacteristic = ""
+																 }
+																 else{
+																		$network.scoreCharacteristic = nodeName
+																 }
+																updateNodeColour(rect, $network, nodeName)
+															 }} />
 		</ButtonRow>
 
 		<ButtonRow>

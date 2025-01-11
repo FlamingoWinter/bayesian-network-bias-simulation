@@ -9,6 +9,5 @@ export const cancelDescribe = writable(() => {
 
 export const expandedNode = writable('');
 
-export const network: Writable<Network | undefined> = writable(undefined);
+export const network: Writable<Network> = writable({} as Network);
 export const nodeDistributionByName: Writable<Record<string, NodeDistribution>> = writable({});
-

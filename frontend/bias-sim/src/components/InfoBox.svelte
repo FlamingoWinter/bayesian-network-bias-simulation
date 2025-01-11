@@ -15,7 +15,7 @@
 
 	let heading = '';
 	let paragraph = '';
-	let isInfoBoxVisible = true;
+	let isInfoBoxVisible = false;
 
 	onMount(() => {
 		$describeNode = (expandedNode: string) => {
