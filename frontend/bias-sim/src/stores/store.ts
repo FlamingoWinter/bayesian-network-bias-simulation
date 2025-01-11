@@ -2,9 +2,9 @@ import { writable, type Writable } from 'svelte/store';
 import type { Network } from '../types/network';
 import type { NodeDistribution } from '../types/nodeDistribution';
 
-export const describeNode = writable((expandedNode: string) => {
+export const describeNode = writable(async (expandedNode: string) => {
 });
-export const conditionNode = writable((expandedNode: string) => {
+export const conditionNode = writable(async (expandedNode: string) => {
 });
 export const cancelDescribe = writable(() => {
 });

@@ -22,6 +22,17 @@
 													 value={categoricalValue}>{categoricalValue}</RadioItem>
 							{/each}
 						</RadioGroup>
+					{:else}
+						<RangeSlider name="range-slider" bind:value={numericalValueSelected}
+												 min={(conditionSettings.min ?? 0)} max={conditionSettings.max ?? 0}
+												 step={d3.tickStep(0, (conditionSettings.max ?? 0) - (conditionSettings.min ?? 0), 20)}
+						>
+							<div class="flex justify-between items-center">
+								<div class="font-bold">{conditionSettings.min ?? 0}</div>
+								<div class="font-bold">{conditionSettings.max ?? 0}</div>
+							</div>
+						</RangeSlider>
+						<input class="input p-4 my-6" type="text" placeholder="Input" bind:value={numericalValueSelected}>
 					{/if}
 				</div>
 				<div class="flex w-full justify-center">
@@ -38,16 +49,19 @@
 {/if}
 
 <script lang="ts">
-	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+	import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
 	import { cancelDescribe, conditionNode, describeNode, network, nodeDistributionByName } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
+	import * as d3 from 'd3';
 
 	type ConditionSettings = {
 		isCategorical: boolean;
 		categoricalValues: string[];
+		min: number | null;
+		max: number | null;
 	}
 
 
@@ -57,18 +71,29 @@
 
 	let conditionSettings: ConditionSettings = {
 		isCategorical: true,
-		categoricalValues: []
+		categoricalValues: [],
+		min: null,
+		max: null
 	};
 	let isInfoBoxVisible = false;
 	let describe = false;
 	let valueSelected = '';
+	let numericalValueSelected: number;
 
 	onMount(() => {
-		$describeNode = (expandedNode: string) => {
+		$describeNode = async (expandedNode: string) => {
+
 
 			if (nodeName == expandedNode && describe) {
 				$cancelDescribe();
 			} else {
+				if (!describe) {
+					isInfoBoxVisible = false;
+					await new Promise(resolve => setTimeout(resolve, 100));
+					isInfoBoxVisible = true;
+					describe = true;
+				}
+
 				nodeName = expandedNode;
 				paragraph = $network!.descriptionsByCharacteristic[expandedNode];
 				isInfoBoxVisible = true;
@@ -76,13 +101,33 @@
 			describe = true;
 		};
 
-		$conditionNode = (expandedNode: string) => {
-			describe = false;
+		$conditionNode = async (expandedNode: string) => {
+			if (describe) {
+				isInfoBoxVisible = false;
+				await new Promise(resolve => setTimeout(resolve, 100));
+				isInfoBoxVisible = true;
+				describe = false;
+			}
+
 			nodeName = expandedNode;
 			isInfoBoxVisible = true;
+			conditionSettings.isCategorical = ($nodeDistributionByName[expandedNode].distributionType == 'categorical');
+
 			if ($nodeDistributionByName[expandedNode].distributionType == 'categorical') {
-				conditionSettings.isCategorical = true;
 				conditionSettings.categoricalValues = $nodeDistributionByName[expandedNode].categoriesForCategoricalDistributions!;
+			} else {
+				const minValue = d3.min($nodeDistributionByName[expandedNode].distribution)!;
+				const maxValue = d3.max($nodeDistributionByName[expandedNode].distribution)!;
+				const ticks = d3.ticks(minValue, maxValue, 20);
+				conditionSettings.min = ticks[0];
+				conditionSettings.max = ticks[ticks.length - 1];
+
+				if (minValue < ticks[0]) {
+					conditionSettings.min = ticks[0] - (ticks[1] - ticks[0]);
+				}
+				if (maxValue > ticks[ticks.length - 1]) {
+					conditionSettings.max = ticks[ticks.length - 1] + (ticks[1] - ticks[0]);
+				}
 			}
 		};
 
