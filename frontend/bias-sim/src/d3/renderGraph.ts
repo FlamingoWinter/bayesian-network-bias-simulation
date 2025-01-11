@@ -96,7 +96,7 @@ export function renderGraph(network: Network, nodeDistributionByName: Record<str
 				this as SVGRectElement, network, node.id
 			);
 		})
-		.style('transition', 'height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)');
+		.style('transition', 'height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55), fill 300ms');
 	;
 
 

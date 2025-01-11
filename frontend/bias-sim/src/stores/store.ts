@@ -11,3 +11,4 @@ export const expandedNode = writable('');
 
 export const network: Writable<Network> = writable({} as Network);
 export const nodeDistributionByName: Writable<Record<string, NodeDistribution>> = writable({});
+export const rectsByName: Writable<Record<string, SVGRectElement>> = writable({});

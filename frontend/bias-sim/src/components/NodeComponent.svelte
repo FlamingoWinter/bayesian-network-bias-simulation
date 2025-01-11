@@ -5,7 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import ButtonRow from './ButtonRow.svelte';
-	import { cancelDescribe, describeNode, expandedNode, network } from '../stores/store';
+	import { cancelDescribe, describeNode, expandedNode, network, rectsByName } from '../stores/store';
 	import { updateNodeColour } from '../d3/updateNodeColour';
 
 
@@ -30,6 +30,7 @@
 			originalInnerNodeTransform = d3.select(innerNode).attr('transform') || '';
 		}
 		if (rect) {
+			$rectsByName[nodeName] = rect;
 			originalRectHeight = +d3.select(rect).attr('height');
 		}
 		if (foreignObjectElement) {
@@ -98,18 +99,41 @@
 		<ButtonRow>
 			<ButtonBelowDistribution text="{$network.scoreCharacteristic === nodeName ? `Unset` : `Set`} Score Characteristic"
 															 callback={()=>{
-																 if($network.scoreCharacteristic === nodeName){
+																	if($network.scoreCharacteristic === nodeName){
 																	 $network.scoreCharacteristic = ""
-																 }
-																 else{
+																	 updateNodeColour(rect, $network, nodeName)
+																	}
+																	else{
 																		$network.scoreCharacteristic = nodeName
-																 }
-																updateNodeColour(rect, $network, nodeName)
+																		for(const [name, rectElement] of Object.entries($rectsByName)){
+																				updateNodeColour(rectElement, $network, name)
+																		}
+																	}
+																  const index = $network.applicationCharacteristics.indexOf(nodeName);
+																	if (index > -1) {
+																		$network.applicationCharacteristics.splice(index, 1);
+																	}
 															 }} />
 		</ButtonRow>
 
 		<ButtonRow>
-			<ButtonBelowDistribution text="Set Application Characteristic" />
+			<ButtonBelowDistribution
+				text="{$network.applicationCharacteristics.includes(nodeName)  ? `Unset` : `Set`} Application Characteristic"
+				callback={()=>{
+												if($network.scoreCharacteristic === nodeName){
+																	 $network.scoreCharacteristic = ""
+																	 updateNodeColour(rect, $network, nodeName)
+																	}
+												const index = $network.applicationCharacteristics.indexOf(nodeName);
+												if (index > -1) {
+													$network.applicationCharacteristics.splice(index, 1);
+												} else {
+													$network.applicationCharacteristics.push(nodeName);
+												}
+												updateNodeColour(rect, $network, nodeName)
+												$network.applicationCharacteristics = [... $network.applicationCharacteristics]
+															 }}
+			/>
 		</ButtonRow>
 
 	</div>
