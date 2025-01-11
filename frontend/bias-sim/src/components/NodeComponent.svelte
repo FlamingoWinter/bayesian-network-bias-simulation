@@ -5,7 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import ButtonRow from './ButtonRow.svelte';
-	import { cancelDescribe, describeNode, expandedNode, network, rectsByName } from '../stores/store';
+	import { cancelDescribe, conditionNode, describeNode, expandedNode, network, rectsByName } from '../stores/store';
 	import { updateNodeColour } from '../d3/updateNodeColour';
 
 
@@ -94,7 +94,7 @@
 	>
 		<ButtonRow>
 			<ButtonBelowDistribution text="Describe" callback={()=>{$describeNode(nodeName)}} />
-			<ButtonBelowDistribution text="Condition" />
+			<ButtonBelowDistribution text="Condition" callback={()=>{$conditionNode(nodeName)}} />
 		</ButtonRow>
 		<ButtonRow>
 			<ButtonBelowDistribution text="{$network.scoreCharacteristic === nodeName ? `Unset` : `Set`} Score Characteristic"
