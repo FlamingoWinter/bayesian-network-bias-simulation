@@ -49,7 +49,7 @@
 	$: maxBarY = Math.max(...bars.map((bar: Bar) => bar.value));
 
 
-	$: x = d3.scaleBand().range([0, width]).domain(bars.map((bar: Bar) => bar.category.toString())).padding(0.2);
+	$: x = d3.scaleBand().range([0, width]).domain(characteristic.categoryNames).padding(0.2);
 	$: y = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
 
 	interface Bar {
