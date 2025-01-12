@@ -19,6 +19,13 @@ export interface Network {
 	graph: Graph;
 	scoreCharacteristic: string;
 	applicationCharacteristics: string[];
-	descriptionsByCharacteristic: Record<string, string>;
+	characteristics: Record<string, Characteristic>;
 	description: string;
+}
+
+export interface Characteristic {
+	name: string;
+	description: string;
+	type: 'continuous' | 'discrete' | 'categorical';
+	categoryNames: string[];
 }

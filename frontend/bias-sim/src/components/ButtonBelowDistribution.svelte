@@ -11,7 +11,6 @@
 	on:click={callback}
 	on:mousedown|stopPropagation
 	on:click|stopPropagation
-
 >
 	{text}
 </button>

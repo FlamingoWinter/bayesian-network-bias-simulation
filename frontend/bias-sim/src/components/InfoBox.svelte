@@ -50,7 +50,7 @@
 
 <script lang="ts">
 	import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { cancelDescribe, conditionNode, describeNode, network, nodeDistributionByName } from '../stores/store';
+	import { cancelDescribe, conditionNode, describeNode, distributionById, network } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -81,10 +81,10 @@
 	let numericalValueSelected: number;
 
 	onMount(() => {
-		$describeNode = async (expandedNode: string) => {
+		$describeNode = async (nodeId: string) => {
+			const characteristic = $network!.characteristics[nodeId];
 
-
-			if (nodeName == expandedNode && describe) {
+			if (nodeName == nodeId && describe) {
 				$cancelDescribe();
 			} else {
 				if (!describe) {
@@ -94,14 +94,15 @@
 					describe = true;
 				}
 
-				nodeName = expandedNode;
-				paragraph = $network!.descriptionsByCharacteristic[expandedNode];
+				nodeName = nodeId;
+				paragraph = characteristic.description;
 				isInfoBoxVisible = true;
 			}
 			describe = true;
 		};
 
-		$conditionNode = async (expandedNode: string) => {
+		$conditionNode = async (nodeId: string) => {
+			const characteristic = $network!.characteristics[nodeId];
 			if (describe) {
 				isInfoBoxVisible = false;
 				await new Promise(resolve => setTimeout(resolve, 100));
@@ -109,15 +110,15 @@
 				describe = false;
 			}
 
-			nodeName = expandedNode;
+			nodeName = nodeId;
 			isInfoBoxVisible = true;
-			conditionSettings.isCategorical = ($nodeDistributionByName[expandedNode].distributionType == 'categorical');
+			conditionSettings.isCategorical = (characteristic.type === 'categorical');
 
-			if ($nodeDistributionByName[expandedNode].distributionType == 'categorical') {
-				conditionSettings.categoricalValues = $nodeDistributionByName[expandedNode].categoriesForCategoricalDistributions!;
+			if (characteristic.type == 'categorical') {
+				conditionSettings.categoricalValues = characteristic.categoryNames!;
 			} else {
-				const minValue = d3.min($nodeDistributionByName[expandedNode].distribution)!;
-				const maxValue = d3.max($nodeDistributionByName[expandedNode].distribution)!;
+				const minValue = d3.min($distributionById[nodeId].distribution)!;
+				const maxValue = d3.max($distributionById[nodeId].distribution)!;
 				const ticks = d3.ticks(minValue, maxValue, 20);
 				conditionSettings.min = ticks[0];
 				conditionSettings.max = ticks[ticks.length - 1];
