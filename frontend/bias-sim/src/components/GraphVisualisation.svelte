@@ -18,7 +18,7 @@
 			{#each $network.graph.links as link}
 				<marker id={`arrowhead-${link.index}`}
 								viewBox="0 -5 10 10"
-								refY="0"
+								refY={calculateMarkerRefY(asNode(link.source), asNode(link.target))}
 								markerWidth="15" markerHeight="15" orient="auto"
 								class="marker">
 					<path d="M0,-5L10,0L0,5" fill="#aaa" />
@@ -39,6 +39,7 @@
 	import Chart from './characteristic/Chart.svelte';
 	import { applyForceSimulation } from '../animation/forceSimulation';
 	import { applyZoom } from '../animation/zoom';
+	import type { Node } from '../types/network';
 
 	export let width: number;
 	export let height: number;
@@ -64,6 +65,19 @@
 			$simulation.force('center', d3.forceCenter(width / 2, height / 2));
 			$simulation.alpha(1).restart();
 		}
+	}
+
+	function calculateMarkerRefY(source: Node, target: Node): number {
+		const dx = target.x! - source.x!;
+		const dy = target.y! - source.y!;
+		const distance = (Math.sqrt(dx * dx + dy * dy) || 1);
+
+		return dy / distance;
+	}
+
+
+	function asNode(node: Node | any): Node {
+		return node as Node;
 	}
 
 
