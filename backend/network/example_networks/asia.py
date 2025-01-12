@@ -55,17 +55,16 @@ def get_asia_network() -> BayesianNetwork:
 
     asia_model.name = "asia"
 
-    asia_network = BayesianNetwork(asia_model, "dysp", ["either", "bronc"],
-                                   {
-                                       'asia': ['True', 'False'],
-                                       'tub': ['Positive', 'Negative'],
-                                       'smoke': ['Yes', 'No'],
-                                       'lung': ['Present', 'Absent'],
-                                       'bronc': ['Present', 'Absent'],
-                                       'either': ['Present', 'Absent'],
-                                       'xray': ['Positive', 'Negative'],
-                                       'dysp': ['Present', 'Absent'],
-                                   })
+    asia_network = BayesianNetwork(asia_model, "dysp", ["either", "bronc"])
+
+    asia_network.set_category_names_for_characteristic("asia", ['True', 'False'])
+    asia_network.set_category_names_for_characteristic("tub", ['Positive', 'Negative'])
+    asia_network.set_category_names_for_characteristic("smoke", ['Yes', 'No'])
+    asia_network.set_category_names_for_characteristic("lung", ['Present', 'Absent'])
+    asia_network.set_category_names_for_characteristic("bronc", ['Present', 'Absent'])
+    asia_network.set_category_names_for_characteristic("either", ['Present', 'Absent'])
+    asia_network.set_category_names_for_characteristic("xray", ['Positive', 'Negative'])
+    asia_network.set_category_names_for_characteristic("dysp", ['Present', 'Absent'])
 
     asia_network.set_description_for_characteristic("asia", """
     Whether a person has visited Asia recently.

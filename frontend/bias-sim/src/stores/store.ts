@@ -9,9 +9,8 @@ export const conditionNode = writable(async (expandedNode: string) => {
 export const cancelDescribe = writable(() => {
 });
 
-export const expandedNode = writable('');
+export const expandedNodeId = writable('');
 
 export const network: Writable<Network> = writable({} as Network);
-export const nodeDistributionByName: Writable<Record<string, NodeDistribution>> = writable({});
-export const rectsByName: Writable<Record<string, SVGRectElement>> = writable({});
+export const distributionById: Writable<Record<string, NodeDistribution>> = writable({});
 

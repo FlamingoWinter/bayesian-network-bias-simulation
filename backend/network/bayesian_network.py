@@ -1,32 +1,76 @@
 from typing import List, Dict
 
 import pymc as pm
+from networkx.readwrite.json_graph import node_link_data
+
+from backend.api.reponseTypes.networkResponse import CharacteristicResponse, NetworkResponse, DistributionType
 
 
 class BayesianNetwork:
-    def __init__(self, pm_model: pm.Model, score_characteristic: str = "score",
+    def __init__(self,
+                 pm_model: pm.Model,
+                 score_characteristic: str = "score",
                  application_characteristics: List[str] = None,
-                 categories_by_categorical_variable=None,
-                 description_by_characteristic: Dict[str, str] = None,
                  description: str = ""):
+
         if application_characteristics is None:
             application_characteristics = []
 
-        if categories_by_categorical_variable is None:
-            categories_by_categorical_variable = {}
-
-        if description_by_characteristic is None:
-            description_by_characteristic = {}
-
         self.model = pm_model
-        self.categories_by_categorical_variable: Dict[str, List[str]] = categories_by_categorical_variable
+        self.characteristics: Dict[str, Characteristic] = self.initialise_characteristics_from_model(pm_model)
         self.score_characteristic: str = score_characteristic
         self.application_characteristics: List[str] = application_characteristics
-        self.descriptions_by_characteristic: Dict[str, str] = description_by_characteristic
-        self.description = description
+        self.description: str = description
 
     def set_description_for_characteristic(self, characteristic: str, description: str):
-        self.descriptions_by_characteristic[characteristic] = description
+        self.characteristics[characteristic].description = description
+
+    def set_category_names_for_characteristic(self, characteristic: str, category_names: List[str]):
+        self.characteristics[characteristic].category_names = category_names
 
     def set_description(self, description: str):
         self.description = description
+
+    def to_network_response(self) -> NetworkResponse:
+        return {
+            "graph": node_link_data(pm.model_to_networkx(self.model), link="links"),
+            "scoreCharacteristic": self.score_characteristic,
+            "applicationCharacteristics": self.application_characteristics,
+            "characteristics": {name: characteristic.to_characteristic_response() for [name, characteristic] in
+                                self.characteristics.items()},
+            "description": self.description}
+
+    def initialise_characteristics_from_model(self, model: pm.Model):
+        self.characteristics = {}
+        for characteristic in model.named_vars:
+            distribution_type: DistributionType
+            if characteristic in [var.name for var in model.discrete_value_vars]:
+                distribution_type = "discrete"
+            else:
+                distribution_type = "continuous"
+
+            self.characteristics[characteristic] = Characteristic(characteristic, distribution_type)
+        return self.characteristics
+
+
+class Characteristic:
+    def __init__(self, name: str, distribution_type: DistributionType):
+        self.name: str = name
+        self.description: str = ""
+        self.type: DistributionType = distribution_type
+        self.category_names: List[str] = []
+
+    def set_description(self, description):
+        self.description = description
+
+    def set_categories(self, category_names):
+        self.type = "categorical"
+        self.category_names = category_names
+
+    def to_characteristic_response(self) -> CharacteristicResponse:
+        return {
+            'name': self.name,
+            'description': self.description,
+            'type': self.type,
+            'categoryNames': self.category_names
+        }

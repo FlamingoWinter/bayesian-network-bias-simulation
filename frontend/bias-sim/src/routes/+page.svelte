@@ -3,7 +3,8 @@
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
 	import type { NodeDistribution } from '../types/nodeDistribution';
-	import { network, nodeDistributionByName } from '../stores/store';
+	import { distributionById, network } from '../stores/store';
+	import type { Network } from '../types/network';
 
 	let fetchedNodeDistributionByName: Record<string, NodeDistribution> = {};
 
@@ -16,7 +17,7 @@
 	$: height = innerHeight - 4;
 
 	onMount(async () => {
-		$network = await d3.json('http://localhost:8000/');
+		$network = await d3.json('http://localhost:8000/') as Network;
 
 
 		if ($network) {
@@ -26,7 +27,7 @@
 
 		}
 
-		$nodeDistributionByName = fetchedNodeDistributionByName;
+		$distributionById = fetchedNodeDistributionByName;
 		initialised = true;
 
 	});
