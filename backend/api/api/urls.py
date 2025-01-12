@@ -21,4 +21,5 @@ from . import views
 
 urlpatterns = [
     path('', views.get_example_network, name='get_example_network'),
+    path('condition', views.condition, name='condition')
 ]
