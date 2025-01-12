@@ -20,10 +20,10 @@
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import { distributionById } from '../../../stores/store';
 	import { onMount } from 'svelte';
+	import type { Characteristic } from '../../../types/network';
 
-	export let nodeId: string;
+	export let characteristic: Characteristic;
 	export let width: number;
 	export let height: number;
 
@@ -32,7 +32,7 @@
 	let areaPath: SVGPathElement;
 	let strokePath: SVGPathElement;
 
-	$: distribution = $distributionById[nodeId].distribution;
+	$: distribution = characteristic.priorDistribution;
 	$: n = distribution.length;
 	$: bandwidth = 1.4 * d3.deviation(distribution)! * Math.pow(n, -1 / 5);
 	$: minValue = d3.min(distribution)!;

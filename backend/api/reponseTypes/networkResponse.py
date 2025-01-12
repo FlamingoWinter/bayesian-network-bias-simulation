@@ -6,7 +6,9 @@ CharacteristicResponse = TypedDict('CharacteristicResponse', {
     'name': str,
     'description': str,
     'type': DistributionType,
-    'categoryNames': List[str]
+    'categoryNames': List[str],
+    'priorDistribution': Union[List[float], None],
+    'posteriorDistribution': Union[List[float], None]
 })
 
 NetworkResponse = TypedDict('NetworkResponse', {

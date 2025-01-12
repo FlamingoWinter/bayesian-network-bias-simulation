@@ -28,10 +28,10 @@
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import { distributionById, network } from '../../../stores/store';
 	import { onMount } from 'svelte';
+	import type { Characteristic } from '../../../types/network';
 
-	export let nodeId: string;
+	export let characteristic: Characteristic;
 	export let width: number;
 	export let height: number;
 
@@ -39,10 +39,10 @@
 	let axisBottom: SVGGElement;
 	let axisLeft: SVGGElement;
 
-	$: distribution = $distributionById[nodeId].distribution;
+	$: distribution = characteristic.priorDistribution;
 
 	$: bars = Array.from(new Set(distribution)).map(categoryIndex => ({
-		category: $network.characteristics[nodeId].categoryNames[categoryIndex],
+		category: characteristic.categoryNames[categoryIndex],
 		value: distribution.filter(d => d === categoryIndex).length / distribution.length
 	}));
 

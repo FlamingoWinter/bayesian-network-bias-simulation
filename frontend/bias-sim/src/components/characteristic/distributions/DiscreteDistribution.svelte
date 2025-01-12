@@ -27,18 +27,18 @@
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import { distributionById } from '../../../stores/store';
 	import { onMount } from 'svelte';
 	import { defaultTransition } from '../../../animation/transition';
+	import type { Characteristic } from '../../../types/network';
 
-	export let nodeId: string;
+	export let characteristic: Characteristic;
 	export let width: number;
 	export let height: number;
 
 	let mounted = false;
 	let axisBottom: SVGGElement;
 
-	$: distribution = $distributionById[nodeId].distribution;
+	$: distribution = characteristic.priorDistribution;
 	$: minValue = d3.min(distribution)!;
 	$: maxValue = d3.max(distribution)!;
 	$: barWidth = d3.tickStep(0, maxValue - minValue, 20);

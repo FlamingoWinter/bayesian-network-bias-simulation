@@ -73,5 +73,7 @@ class Characteristic:
             'name': self.name,
             'description': self.description,
             'type': self.type,
-            'categoryNames': self.category_names
+            'categoryNames': self.category_names,
+            'priorDistribution': None,
+            'posteriorDistribution': None
         }

@@ -10,7 +10,7 @@
 		<g bind:this={nodeGroup}>
 			{#each $network.graph.nodes as node}
 				<g class="node">
-					<Chart node={node} />
+					<Chart characteristic={$network.characteristics[node.id]} node={node} />
 				</g>
 			{/each}
 		</g>

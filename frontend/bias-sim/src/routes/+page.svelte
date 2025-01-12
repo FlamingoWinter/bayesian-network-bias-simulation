@@ -2,11 +2,8 @@
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import type { NodeDistribution } from '../types/nodeDistribution';
-	import { distributionById, network } from '../stores/store';
+	import { network } from '../stores/store';
 	import type { Network } from '../types/network';
-
-	let fetchedNodeDistributionByName: Record<string, NodeDistribution> = {};
 
 	let initialised = false;
 	let innerWidth: number;
@@ -17,13 +14,6 @@
 
 	onMount(async () => {
 		$network = await d3.json('http://localhost:8000/') as Network;
-
-		if ($network) {
-			await Promise.all($network.graph.nodes.map(async (node) => {
-				fetchedNodeDistributionByName[node.id] = await d3.json(`http://localhost:8000/distribution-${node.id}`) as NodeDistribution;
-			}));
-		}
-		$distributionById = fetchedNodeDistributionByName;
 
 		initialised = true;
 	});

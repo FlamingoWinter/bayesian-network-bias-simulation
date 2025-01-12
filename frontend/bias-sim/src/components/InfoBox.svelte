@@ -50,7 +50,7 @@
 
 <script lang="ts">
 	import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { cancelDescribe, conditionNode, describeNode, distributionById, network } from '../stores/store';
+	import { cancelDescribe, conditionNode, describeNode, network } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -117,8 +117,8 @@
 			if (characteristic.type == 'categorical') {
 				conditionSettings.categoricalValues = characteristic.categoryNames!;
 			} else {
-				const minValue = d3.min($distributionById[nodeId].distribution)!;
-				const maxValue = d3.max($distributionById[nodeId].distribution)!;
+				const minValue = d3.min(characteristic.priorDistribution)!;
+				const maxValue = d3.max(characteristic.priorDistribution)!;
 				const ticks = d3.ticks(minValue, maxValue, 20);
 				conditionSettings.min = ticks[0];
 				conditionSettings.max = ticks[ticks.length - 1];

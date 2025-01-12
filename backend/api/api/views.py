@@ -1,9 +1,10 @@
 from django.core.cache import cache
+from django.http import JsonResponse
+
+from backend.api.reponseTypes.networkResponse import NetworkResponse
 
 
 def get_example_network(request):
-    return cache.get("network")
+    network_response: NetworkResponse = cache.get("network")
 
-
-def get_distribution_for_node(request, node: str):
-    return cache.get(f"prior-distribution-{node}")
+    return JsonResponse(network_response, safe=False)

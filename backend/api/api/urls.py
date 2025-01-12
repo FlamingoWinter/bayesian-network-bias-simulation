@@ -21,5 +21,4 @@ from . import views
 
 urlpatterns = [
     path('', views.get_example_network, name='get_example_network'),
-    path('distribution-<str:node>/', views.get_distribution_for_node, name='get_node_details'),
 ]
