@@ -9,9 +9,8 @@
 	let fetchedNodeDistributionByName: Record<string, NodeDistribution> = {};
 
 	let initialised = false;
-
-	let innerWidth = 0;
-	let innerHeight = 0;
+	let innerWidth: number;
+	let innerHeight: number;
 
 	$: width = innerWidth;
 	$: height = innerHeight - 4;
@@ -19,17 +18,14 @@
 	onMount(async () => {
 		$network = await d3.json('http://localhost:8000/') as Network;
 
-
 		if ($network) {
 			await Promise.all($network.graph.nodes.map(async (node) => {
 				fetchedNodeDistributionByName[node.id] = await d3.json(`http://localhost:8000/distribution-${node.id}`) as NodeDistribution;
 			}));
-
 		}
-
 		$distributionById = fetchedNodeDistributionByName;
-		initialised = true;
 
+		initialised = true;
 	});
 </script>
 

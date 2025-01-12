@@ -1,0 +1,1 @@
+export const defaultTransition = '500ms cubic-bezier(0.68, -0.55, 0.27, 1.55)';

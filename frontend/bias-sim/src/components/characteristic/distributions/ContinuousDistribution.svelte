@@ -20,7 +20,7 @@
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import { distributionById } from '../stores/store';
+	import { distributionById } from '../../../stores/store';
 	import { onMount } from 'svelte';
 
 	export let nodeId: string;

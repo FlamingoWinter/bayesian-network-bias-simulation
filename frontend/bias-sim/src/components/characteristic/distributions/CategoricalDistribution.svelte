@@ -28,7 +28,7 @@
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import { distributionById, network } from '../stores/store';
+	import { distributionById, network } from '../../../stores/store';
 	import { onMount } from 'svelte';
 
 	export let nodeId: string;

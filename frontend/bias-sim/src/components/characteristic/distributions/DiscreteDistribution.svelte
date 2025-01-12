@@ -4,8 +4,8 @@
 			<rect rx="2" x={x(bar.x)} y={ mounted ? y(bar.y) : y(0)}
 						width={(x(barWidth) - x(0)) * 0.9} height={ mounted ? height - y(bar.y) : 0}
 						fill="#0d3b68"
-						style="transition: height 750ms cubic-bezier(0.68, -0.55, 0.27, 1.55),
-															 y 750ms cubic-bezier(0.68, -0.55, 0.27, 1.55)">
+						style="transition: height 750ms {defaultTransition},
+															 y 750ms {defaultTransition}">
 
 			</rect>
 		</g>
@@ -27,8 +27,9 @@
 
 <script lang="ts">
 	import * as d3 from 'd3';
-	import { distributionById } from '../stores/store';
+	import { distributionById } from '../../../stores/store';
 	import { onMount } from 'svelte';
+	import { defaultTransition } from '../../../animation/transition';
 
 	export let nodeId: string;
 	export let width: number;
@@ -36,7 +37,6 @@
 
 	let mounted = false;
 	let axisBottom: SVGGElement;
-	let axisLeft: SVGGElement;
 
 	$: distribution = $distributionById[nodeId].distribution;
 	$: minValue = d3.min(distribution)!;
@@ -75,12 +75,6 @@
 
 	$: if (axisBottom) {
 		d3.select(axisBottom).call(d3.axisBottom(x).ticks(5));
-	}
-
-	function calculateBarY(barValue: number) {
-		const belowBarY = y(barValue) + 11;
-		const aboveBarY = y(barValue) - 4;
-		return (belowBarY < y(0)) ? belowBarY : aboveBarY;
 	}
 
 </script>
