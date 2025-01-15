@@ -52,12 +52,13 @@
 
 <script lang="ts">
 	import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { condition, exitDialog, network, openConditionDialog, openDescribeDialog } from '../stores/store';
+	import { network } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
 	import * as d3 from 'd3';
+	import { condition, exitDialog, openConditionDialog, openDescribeDialog } from '../stores/functions';
 
 	type ConditionSettings = {
 		isCategorical: boolean;

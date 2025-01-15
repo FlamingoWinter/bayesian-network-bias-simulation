@@ -36,7 +36,7 @@
 
 <script lang="ts">
 	import type { Characteristic, Node } from '../../types/network';
-	import { exitDialog, expandedNodeId, network, simulation } from '../../stores/store';
+	import { expandedNodeId, network, simulation } from '../../stores/store';
 	import ExpandButton from './config/CharacteristicExpandButton.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
@@ -48,6 +48,7 @@
 	import CharacteristicConfigContainer from './config/CharacteristicConfigContainer.svelte';
 	import CharacteristicConfig from './config/CharacteristicConfig.svelte';
 	import { addRepelForceFromNode, removeRepelForce } from '../../animation/forceSimulation';
+	import { exitDialog } from '../../stores/functions';
 
 
 	export let node: Node;

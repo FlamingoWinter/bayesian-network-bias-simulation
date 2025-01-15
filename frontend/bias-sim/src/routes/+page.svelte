@@ -2,9 +2,10 @@
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import { condition, conditioned, conditions, network } from '../stores/store';
+	import { conditioned, conditions, network } from '../stores/store';
 	import type { Network } from '../types/network';
 	import { apiRequest, apiUrl } from '../utiliites/api';
+	import { condition } from '../stores/functions';
 
 	let initialised = false;
 	let innerWidth: number;

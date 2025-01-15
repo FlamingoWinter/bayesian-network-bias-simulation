@@ -27,7 +27,8 @@
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import { fade } from 'svelte/transition';
 	import type { Node } from '../../../types/network';
-	import { network, openConditionDialog, openDescribeDialog } from '../../../stores/store';
+	import { network } from '../../../stores/store';
+	import { openConditionDialog, openDescribeDialog } from '../../../stores/functions';
 
 	export let node: Node;
 
