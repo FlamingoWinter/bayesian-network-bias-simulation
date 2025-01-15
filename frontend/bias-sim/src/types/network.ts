@@ -29,5 +29,4 @@ export interface Characteristic {
 	type: 'continuous' | 'discrete' | 'categorical';
 	categoryNames: string[];
 	priorDistribution: number[];
-	posteriorDistribution: number[] | null;
 }

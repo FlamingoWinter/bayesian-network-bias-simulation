@@ -28,7 +28,7 @@
 			$conditioned = true;
 
 			for (const [characteristic, posteriorDistribution] of Object.entries(conditionResponse)) {
-				$network.characteristics[characteristic].posteriorDistribution = posteriorDistribution;
+				// $network.characteristics[characteristic].posteriorDistribution = posteriorDistribution;
 			}
 		};
 	});
