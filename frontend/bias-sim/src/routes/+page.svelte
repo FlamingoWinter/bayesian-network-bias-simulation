@@ -2,10 +2,10 @@
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import { conditioned, conditionedDistributions, conditions, network } from '../stores/store';
+	import { network } from '../stores/store';
 	import type { Network } from '../types/network';
-	import { apiRequest, apiUrl } from '../utiliites/api';
-	import { condition } from '../stores/functions';
+	import { apiUrl } from '../utiliites/api';
+	import ConditionLogic from '../components/ConditionLogic.svelte';
 
 	let initialised = false;
 	let innerWidth: number;
@@ -18,16 +18,6 @@
 		$network = await d3.json(apiUrl) as Network;
 
 		initialised = true;
-
-		$condition = async (characteristic: string, value: number) => {
-			$conditions[characteristic] = value;
-
-			const conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify($conditions)) as Record<string, number[]>;
-
-			$conditioned = true;
-			$conditionedDistributions = conditionResponse;
-			
-		};
 	});
 </script>
 
@@ -41,7 +31,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-
+<ConditionLogic />
 {#if initialised}
 	<GraphVisualisation width={width} height={height} />
 {/if}
