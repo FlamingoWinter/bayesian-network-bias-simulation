@@ -3,7 +3,7 @@
 from django.apps import AppConfig
 
 from backend.api.cache.cache import cache
-from backend.api.reponseTypes.networkResponse import NetworkResponse
+from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork, num_samples

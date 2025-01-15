@@ -6,8 +6,8 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from backend.api.cache.cache import from_cache
-from backend.api.reponseTypes.conditionResponse import ConditionRequest
-from backend.api.reponseTypes.networkResponse import NetworkResponse
+from backend.api.responseTypes.conditionResponse import ConditionRequest
+from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.generate_network import generate_network
 from backend.utilities.time_function import time_function

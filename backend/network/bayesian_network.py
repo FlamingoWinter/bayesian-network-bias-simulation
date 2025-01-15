@@ -3,8 +3,8 @@ from typing import List, Dict, cast
 import pymc as pm
 from networkx.readwrite.json_graph import node_link_data
 
-from backend.api.reponseTypes.conditionResponse import ConditionResponse
-from backend.api.reponseTypes.networkResponse import CharacteristicResponse, NetworkResponse, DistributionType
+from backend.api.responseTypes.conditionResponse import ConditionResponse
+from backend.api.responseTypes.networkResponse import CharacteristicResponse, NetworkResponse, DistributionType
 from backend.type_extensions.prior_trace import PosteriorTrace
 from backend.utilities.time_function import time_function
 
