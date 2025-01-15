@@ -15,7 +15,10 @@
 			{`${median.toPrecision(2)}`}
 		</text>
 	</g>
-	<g bind:this={axisBottom} transform={`translate(0, ${height})`} />
+	<AxisBottom bind:x={x} height={height} width={width} distribution={distribution} />
+	<AxisBottom bind:x={fullX} extend={true} display={false} height={height} width={width} distribution={distribution} />
+
+	<AxisLeft bind:y={y} height={height} maxBarY={maxBarY} display={false} />
 </g>
 
 
@@ -25,6 +28,8 @@
 	import { conditioned, conditions, posteriorDistributions } from '../../../stores/store';
 	import type { Characteristic } from '../../../types/network';
 	import { calculateDistributionFill } from './calculateDistributionFill';
+	import AxisLeft from './AxisLeft.svelte';
+	import AxisBottom from './AxisBottom.svelte';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -46,20 +51,20 @@
 	$: bandwidth = 1.4 * d3.deviation(distribution)! * Math.pow(n, -1 / 5);
 	$: minValue = d3.min(distribution)!;
 	$: maxValue = d3.max(distribution)!;
-	$: range = maxValue - minValue;
-
-	$: fullX = d3.scaleLinear()
-		.domain([minValue - range * 0.05, maxValue + range * 0.05])
-		.range([0, width]);
-
-	$: x = d3.scaleLinear().domain([minValue, maxValue]).range([0, width]);
 
 	$: xValues = d3.range(fullX.domain()[0], fullX.domain()[1], (fullX.domain()[1] - fullX.domain()[0]) / 100);
 	$: density = kernelDensityEstimator(kernelEpanechnikov, xValues)(distribution)
 		.filter((d) => d.x > minValue && d.x < maxValue);
-	$: y = d3.scaleLinear()
-		.domain([0, d3.max(density, d => d.y)!])
-		.range([height, 0]);
+	$: maxBarY = d3.max(density, d => d.y)!;
+
+	let fullX = d3.scaleLinear()
+		.domain([0, 0])
+		.range([0, 0]);
+	let x = d3.scaleLinear().domain([0, 0]).range([0, 0]);
+	let y = d3.scaleLinear()
+		.domain([0, 0])
+		.range([0, 0]);
+
 	$: area = d3.area<{ x: number, y: number }>()
 		.curve(d3.curveBasis).x(d => x(d.x)).y0(height).y1(d => y(d.y));
 	$: line = d3.line<{ x: number, y: number }>()
@@ -100,9 +105,6 @@
 			});
 	});
 
-	$: if (axisBottom) {
-		d3.select(axisBottom).call(d3.axisBottom(x).ticks(5));
-	}
 
 	const kernelDensityEstimator = (kernel: (u: number) => number, xValues: number[]) => {
 		return (sample: number[]) =>

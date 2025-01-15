@@ -8,7 +8,7 @@ from backend.api.responseTypes.networkResponse import CharacteristicResponse, Ne
 from backend.type_extensions.prior_trace import PosteriorTrace
 from backend.utilities.time_function import time_function
 
-num_samples = 10_000
+num_samples = 5000
 
 
 class BayesianNetwork:

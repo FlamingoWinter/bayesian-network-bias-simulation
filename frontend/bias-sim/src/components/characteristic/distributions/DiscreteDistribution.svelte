@@ -22,6 +22,7 @@
 		</text>
 	</g>
 	<AxisBottom bind:x={x} height={height} width={width} distribution={distribution}></AxisBottom>
+	<AxisLeft bind:y={y} height={height} maxBarY={maxBarY} display={false} />
 </g>
 
 
@@ -34,6 +35,7 @@
 	import type { Characteristic } from '../../../types/network';
 	import { calculateDistributionFill } from './calculateDistributionFill';
 	import AxisBottom from './AxisBottom.svelte';
+	import AxisLeft from './AxisLeft.svelte';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -42,14 +44,16 @@
 	let mounted = false;
 	let probabilityType: ProbabilityType;
 
+	$: if (x) {
+		console.log('X changed');
+	}
+
 
 	$: probabilityType = $conditioned
 		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
 		: 'prior';
 
 	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
-
-	let x: d3.ScaleLinear<number, number, never> = d3.scaleLinear().range([0, width]).domain([0, 0]);
 
 
 	$: minValue = d3.min(distribution)!;
@@ -71,8 +75,9 @@
 
 	$: maxBarY = Math.max(...bars.map((bar: Bar) => bar.y));
 
+	let x: d3.ScaleLinear<number, number, never> = d3.scaleLinear().range([0, 0]).domain([0, 0]);
+	let y: d3.ScaleLinear<number, number, never> = d3.scaleLinear().domain([0, 0]).range([0, 0]);
 
-	$: y = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
 	$: median = d3.median(distribution)!;
 
 	interface Bar {
