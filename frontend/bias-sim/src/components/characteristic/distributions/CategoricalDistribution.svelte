@@ -3,10 +3,9 @@
 		<g class="bar">
 			<rect rx="2" x={x(bar.category.toString())??0} y={ mounted ? y(bar.value) : y(0)}
 						width={x.bandwidth()} height={ mounted ? height - y(bar.value) : 0}
-						style="transition: height 750ms cubic-bezier(0.68, -0.55, 0.27, 1.55),
-															 y 750ms cubic-bezier(0.68, -0.55, 0.27, 1.55)"
-						fill="#0d3b68">
-
+						style="transition: height {defaultTransition},
+															 y {defaultTransition}"
+						fill={calculateDistributionFill(probabilityType)}>
 			</rect>
 		</g>
 		<g>
@@ -29,7 +28,10 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
+	import { conditioned, conditions, posteriorDistributions } from '../../../stores/store';
 	import type { Characteristic } from '../../../types/network';
+	import { defaultTransition } from '../../../animation/transition';
+	import { calculateDistributionFill } from './calculateDistributionFill';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -38,9 +40,13 @@
 	let mounted = false;
 	let axisBottom: SVGGElement;
 	let axisLeft: SVGGElement;
+	let probabilityType: ProbabilityType;
 
-	$: distribution = characteristic.priorDistribution;
+	$: probabilityType = $conditioned
+		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
+		: 'prior';
 
+	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
 	$: bars = Array.from(new Set(distribution)).map(categoryIndex => ({
 		category: characteristic.categoryNames[categoryIndex],
 		value: distribution.filter(d => d === categoryIndex).length / distribution.length
@@ -76,5 +82,6 @@
 		const aboveBarY = y(barValue) - 4;
 		return (belowBarY < y(0)) ? belowBarY : aboveBarY;
 	}
+
 
 </script>

@@ -3,7 +3,7 @@
 		<g class="bar">
 			<rect rx="2" x={x(bar.x)} y={ mounted ? y(bar.y) : y(0)}
 						width={(x(barWidth) - x(0)) * 0.9} height={ mounted ? height - y(bar.y) : 0}
-						fill="#0d3b68"
+						fill={calculateDistributionFill(probabilityType)}
 						style="transition: height  {defaultTransition},
 															 y {defaultTransition}">
 
@@ -28,8 +28,11 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
+	import { conditioned, conditions, posteriorDistributions } from '../../../stores/store';
+
 	import { defaultTransition } from '../../../animation/transition';
 	import type { Characteristic } from '../../../types/network';
+	import { calculateDistributionFill } from './calculateDistributionFill';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -37,8 +40,14 @@
 
 	let mounted = false;
 	let axisBottom: SVGGElement;
+	let probabilityType: ProbabilityType;
 
-	$: distribution = characteristic.priorDistribution;
+
+	$: probabilityType = $conditioned
+		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
+		: 'prior';
+
+	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
 	$: minValue = d3.min(distribution)!;
 	$: maxValue = d3.max(distribution)!;
 	$: barWidth = d3.tickStep(0, maxValue - minValue, 20);

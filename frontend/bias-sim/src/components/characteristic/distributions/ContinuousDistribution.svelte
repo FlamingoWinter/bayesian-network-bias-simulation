@@ -1,7 +1,8 @@
 <g>
-	<path fill='#0d3b68' opacity="0.4" stroke="#0d3b68" stroke-width="1.5" stroke-opacity="1"
+	<path fill={calculateDistributionFill(probabilityType)} opacity="0.4" stroke="#0d3b68" stroke-width="1.5"
+				stroke-opacity="1"
 				bind:this={areaPath} d="" />
-	<path stroke="#0d3b68" stroke-width="1.5"
+	<path stroke={calculateDistributionFill(probabilityType)} stroke-width="1.5"
 				bind:this={strokePath} fill="none" d="" />
 	<g>
 		<text class="bar-label"
@@ -21,7 +22,9 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
+	import { conditioned, conditions, posteriorDistributions } from '../../../stores/store';
 	import type { Characteristic } from '../../../types/network';
+	import { calculateDistributionFill } from './calculateDistributionFill';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -31,8 +34,14 @@
 	let axisBottom: SVGGElement;
 	let areaPath: SVGPathElement;
 	let strokePath: SVGPathElement;
+	let probabilityType: ProbabilityType;
 
-	$: distribution = characteristic.priorDistribution;
+
+	$: probabilityType = $conditioned
+		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
+		: 'prior';
+
+	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
 	$: n = distribution.length;
 	$: bandwidth = 1.4 * d3.deviation(distribution)! * Math.pow(n, -1 / 5);
 	$: minValue = d3.min(distribution)!;
