@@ -1,6 +1,7 @@
 {#if isInfoBoxVisible}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+
 	<div transition:fly={{ y: 50, duration: 400 } } on:click|stopPropagation role="alertdialog"
 			 class="fixed bottom-4 right-4 card p-4 bg-surface-200-700-token w-72 min-h-80 drop-shadow-md rounded-lg flex flex-col">
 		<div class="flex flex-col justify-between h-full flex-grow">
@@ -37,7 +38,8 @@
 				</div>
 				<div class="flex w-full justify-center">
 					<button type="button"
-									class="btn btn-lg variant-filled py-2 px-4 rounded-full">
+									class="btn btn-lg variant-filled py-2 px-4 rounded-full"
+									on:click={()=>$condition(nodeName, conditionSettings.isCategorical ? conditionSettings.categoricalValues.indexOf(valueSelected) : numericalValueSelected)}>
 						Condition
 						<CaretRightFill />
 					</button>
@@ -50,7 +52,7 @@
 
 <script lang="ts">
 	import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { cancelDescribe, conditionNode, describeNode, network } from '../stores/store';
+	import { condition, exitDialog, network, openConditionDialog, openDescribeDialog } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -81,11 +83,11 @@
 	let numericalValueSelected: number;
 
 	onMount(() => {
-		$describeNode = async (nodeId: string) => {
+		$openDescribeDialog = async (nodeId: string) => {
 			const characteristic = $network!.characteristics[nodeId];
 
 			if (nodeName == nodeId && describe) {
-				$cancelDescribe();
+				$exitDialog();
 			} else {
 				if (!describe) {
 					isInfoBoxVisible = false;
@@ -101,7 +103,8 @@
 			describe = true;
 		};
 
-		$conditionNode = async (nodeId: string) => {
+
+		$openConditionDialog = async (nodeId: string) => {
 			const characteristic = $network!.characteristics[nodeId];
 			if (describe) {
 				isInfoBoxVisible = false;
@@ -113,6 +116,7 @@
 			nodeName = nodeId;
 			isInfoBoxVisible = true;
 			conditionSettings.isCategorical = (characteristic.type === 'categorical');
+			valueSelected = conditionSettings.categoricalValues[0];
 
 			if (characteristic.type == 'categorical') {
 				conditionSettings.categoricalValues = characteristic.categoryNames!;
@@ -123,16 +127,18 @@
 				conditionSettings.min = ticks[0];
 				conditionSettings.max = ticks[ticks.length - 1];
 
-				if (minValue < ticks[0]) {
-					conditionSettings.min = ticks[0] - (ticks[1] - ticks[0]);
+				if (minValue > ticks[0]) {
+					conditionSettings.min = ticks[0] + (ticks[1] - ticks[0]);
 				}
-				if (maxValue > ticks[ticks.length - 1]) {
-					conditionSettings.max = ticks[ticks.length - 1] + (ticks[1] - ticks[0]);
+				if (maxValue < ticks[ticks.length - 1]) {
+					conditionSettings.max = ticks[ticks.length - 1] - (ticks[1] - ticks[0]);
 				}
+
+				numericalValueSelected = conditionSettings.min;
 			}
 		};
 
-		$cancelDescribe = () => {
+		$exitDialog = () => {
 			nodeName = '';
 			paragraph = '';
 			isInfoBoxVisible = false;

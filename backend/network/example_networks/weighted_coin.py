@@ -1,15 +1,19 @@
+from typing import Dict
+
+import numpy as np
 import pymc as pm
 
 from backend.network.bayesian_network import BayesianNetwork
 from backend.visualisation.visualise import visualise_model_as_network
 
 
-def get_weighted_coin_network() -> BayesianNetwork:
+def get_weighted_coin_network(observed: Dict[str, np.array]) -> BayesianNetwork:
     with pm.Model() as weighted_coin_model:
-        p_heads = pm.Uniform("p(heads)", 0, 1)
+        p_heads = pm.Uniform("p(heads)", 0, 1, observed=observed.get("p(heads)", None))
         # p_heads = pm.TruncatedNormal("p(heads)", mu=0.5, sigma=0.3, lower=0, upper=1)
 
-        heads_in_100_trials = pm.Binomial("heads_in_100_trials", n=100, p=p_heads)
+        heads_in_100_trials = pm.Binomial("heads_in_100_trials", n=100, p=p_heads,
+                                          observed=observed.get("heads_in_100_trials", None))
 
     weighted_coin_model.name = "weighted_coin"
 

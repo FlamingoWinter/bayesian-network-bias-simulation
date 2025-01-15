@@ -36,7 +36,7 @@
 
 <script lang="ts">
 	import type { Characteristic, Node } from '../../types/network';
-	import { cancelDescribe, expandedNodeId, network, simulation } from '../../stores/store';
+	import { exitDialog, expandedNodeId, network, simulation } from '../../stores/store';
 	import ExpandButton from './config/CharacteristicExpandButton.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
@@ -95,7 +95,7 @@
 			addRepelForceFromNode(node, $simulation, $network.graph, 120, 130);
 		} else {
 			removeRepelForce(node, $simulation);
-			$cancelDescribe();
+			$exitDialog();
 		}
 		expanded = !expanded;
 	}

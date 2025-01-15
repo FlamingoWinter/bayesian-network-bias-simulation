@@ -3,8 +3,8 @@
 		 out:fade={{ duration: 100 }}
 >
 	<ButtonRow>
-		<ButtonBelowDistribution text="Describe" callback={()=>{$describeNode(node.id)}} />
-		<ButtonBelowDistribution text="Condition" callback={()=>{$conditionNode(node.id)}} />
+		<ButtonBelowDistribution text="Describe" callback={()=>{$openDescribeDialog(node.id)}} />
+		<ButtonBelowDistribution text="Condition" callback={()=>{$openConditionDialog(node.id)}} />
 	</ButtonRow>
 	<ButtonRow>
 		<ButtonBelowDistribution
@@ -27,7 +27,7 @@
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import { fade } from 'svelte/transition';
 	import type { Node } from '../../../types/network';
-	import { conditionNode, describeNode, network } from '../../../stores/store';
+	import { network, openConditionDialog, openDescribeDialog } from '../../../stores/store';
 
 	export let node: Node;
 

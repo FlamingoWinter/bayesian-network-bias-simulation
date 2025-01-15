@@ -4,8 +4,8 @@
 			<rect rx="2" x={x(bar.x)} y={ mounted ? y(bar.y) : y(0)}
 						width={(x(barWidth) - x(0)) * 0.9} height={ mounted ? height - y(bar.y) : 0}
 						fill="#0d3b68"
-						style="transition: height 750ms {defaultTransition},
-															 y 750ms {defaultTransition}">
+						style="transition: height  {defaultTransition},
+															 y {defaultTransition}">
 
 			</rect>
 		</g>

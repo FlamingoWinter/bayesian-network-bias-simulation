@@ -3,11 +3,9 @@ from typing import cast
 import pymc as pm
 
 from backend.candidates.candidate_group import CandidateGroup
-from backend.network.bayesian_network import BayesianNetwork
+from backend.network.bayesian_network import BayesianNetwork, num_samples
 from backend.type_extensions.prior_trace import PriorTrace
 from backend.utilities.time_function import time_function
-
-num_samples = 10_000
 
 
 @time_function("Generating candidates")

@@ -1,13 +1,14 @@
 from typing import List, Dict, cast
 
-import numpy as np
 import pymc as pm
 from networkx.readwrite.json_graph import node_link_data
 
 from backend.api.reponseTypes.conditionResponse import ConditionResponse
 from backend.api.reponseTypes.networkResponse import CharacteristicResponse, NetworkResponse, DistributionType
-from backend.candidates.generate_candidates import num_samples
 from backend.type_extensions.prior_trace import PosteriorTrace
+from backend.utilities.time_function import time_function
+
+num_samples = 10_000
 
 
 class BayesianNetwork:
@@ -57,20 +58,22 @@ class BayesianNetwork:
             self.characteristics[characteristic] = Characteristic(characteristic, distribution_type)
         return self.characteristics
 
-    def sample_conditioned(self, evidence: Dict[str, float]):
+    @time_function("Sampling Posterior")
+    def sample_conditioned(self):
         model = self.model
 
-        for characteristic in model.named_vars:
-            model[characteristic].observed = None
-            if characteristic in evidence:
-                model[characteristic].observed = np.array([evidence[characteristic]])
-
         with model:
-            posterior: PosteriorTrace = cast(PosteriorTrace, pm.sample(num_samples, return_inferencedata=True))
+            posterior: PosteriorTrace = cast(PosteriorTrace,
+                                             pm.sample(num_samples // 4, return_inferencedata=True, cores=1, chains=4))
 
         condition_response: ConditionResponse = {}
         for characteristic in model.named_vars:
-            condition_response[characteristic] = posterior.posterior[characteristic].values.tolist()
+            if characteristic in [var for var in posterior.posterior]:
+                condition_response[characteristic] = [item for sublist in
+                                                      posterior.posterior[characteristic].values.tolist() for item in
+                                                      sublist]
+
+        return condition_response
 
 
 class Characteristic:

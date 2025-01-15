@@ -1,3 +1,5 @@
+from typing import Dict
+
 import numpy as np
 import pymc as pm
 import pytensor as pt
@@ -8,7 +10,7 @@ from backend.visualisation.visualise import visualise_model_as_network
 
 # Transcribed from https://www.bnlearn.com/bnrepository/discrete-small.html#asia
 
-def get_asia_network() -> BayesianNetwork:
+def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
     def p_asia():
         return [0.01, 0.99]
 
@@ -44,14 +46,14 @@ def get_asia_network() -> BayesianNetwork:
         ]))[bronc, either]
 
     with pm.Model() as asia_model:
-        asia = pm.Categorical('asia', p_asia())
-        tub = pm.Categorical('tub', p_tub(asia))
-        smoke = pm.Categorical('smoke', p_smoke())
-        lung = pm.Categorical('lung', p_lung(smoke))
-        bronc = pm.Categorical('bronc', p_bronc(smoke))
-        either = pm.Categorical('either', p_either(lung, tub))
-        xray = pm.Categorical('xray', p_xray(either))
-        dysp = pm.Categorical('dysp', p_dysp(bronc, either))
+        asia = pm.Categorical('asia', p_asia(), observed=observed.get('asia', None))
+        tub = pm.Categorical('tub', p_tub(asia), observed=observed.get('tub', None))
+        smoke = pm.Categorical('smoke', p_smoke(), observed=observed.get('smoke', None))
+        lung = pm.Categorical('lung', p_lung(smoke), observed=observed.get('lung', None))
+        bronc = pm.Categorical('bronc', p_bronc(smoke), observed=observed.get('bronc', None))
+        either = pm.Categorical('either', p_either(lung, tub), observed=observed.get('either', None))
+        xray = pm.Categorical('xray', p_xray(either), observed=observed.get('xray', None))
+        dysp = pm.Categorical('dysp', p_dysp(bronc, either), observed=observed.get('dysp', None))
 
     asia_model.name = "asia"
 
