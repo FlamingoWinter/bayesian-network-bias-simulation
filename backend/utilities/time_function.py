@@ -4,6 +4,7 @@ import time
 def time_function(pipeline_stage: str):
     def decorator(func):
         def wrapper(*args, **kwargs):
+            print("")
             print(f"{pipeline_stage}...")
             start_time = time.time()
             result = func(*args, **kwargs)
