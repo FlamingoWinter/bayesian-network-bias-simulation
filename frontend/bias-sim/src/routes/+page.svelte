@@ -2,7 +2,7 @@
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import { conditioned, conditions, network } from '../stores/store';
+	import { conditioned, conditionedDistributions, conditions, network } from '../stores/store';
 	import type { Network } from '../types/network';
 	import { apiRequest, apiUrl } from '../utiliites/api';
 	import { condition } from '../stores/functions';
@@ -22,15 +22,11 @@
 		$condition = async (characteristic: string, value: number) => {
 			$conditions[characteristic] = value;
 
-			console.log($conditions);
-
 			const conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify($conditions)) as Record<string, number[]>;
 
 			$conditioned = true;
-
-			for (const [characteristic, posteriorDistribution] of Object.entries(conditionResponse)) {
-				// $network.characteristics[characteristic].posteriorDistribution = posteriorDistribution;
-			}
+			$conditionedDistributions = conditionResponse;
+			
 		};
 	});
 </script>

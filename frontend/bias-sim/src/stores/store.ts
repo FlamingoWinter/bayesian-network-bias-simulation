@@ -6,6 +6,8 @@ export const conditioned = writable(false);
 
 export const conditions: Writable<Record<string, number>> = writable({});
 
+export const conditionedDistributions: Writable<Record<string, number[]>> = writable({});
+
 export const expandedNodeId = writable('');
 
 export const network: Writable<Network> = writable({} as Network);
