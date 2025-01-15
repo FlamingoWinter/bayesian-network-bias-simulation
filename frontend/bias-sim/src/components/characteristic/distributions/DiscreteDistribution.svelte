@@ -21,7 +21,7 @@
 			{`${median.toPrecision(2)}`}
 		</text>
 	</g>
-	<g bind:this={axisBottom} transform={`translate(0, ${height})`} />
+	<AxisBottom bind:x={x} height={height} width={width} distribution={distribution}></AxisBottom>
 </g>
 
 
@@ -33,13 +33,13 @@
 	import { defaultTransition } from '../../../animation/transition';
 	import type { Characteristic } from '../../../types/network';
 	import { calculateDistributionFill } from './calculateDistributionFill';
+	import AxisBottom from './AxisBottom.svelte';
 
 	export let characteristic: Characteristic;
 	export let width: number;
 	export let height: number;
 
 	let mounted = false;
-	let axisBottom: SVGGElement;
 	let probabilityType: ProbabilityType;
 
 
@@ -48,6 +48,10 @@
 		: 'prior';
 
 	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
+
+	let x: d3.ScaleLinear<number, number, never> = d3.scaleLinear().range([0, width]).domain([0, 0]);
+
+
 	$: minValue = d3.min(distribution)!;
 	$: maxValue = d3.max(distribution)!;
 	$: barWidth = d3.tickStep(0, maxValue - minValue, 20);
@@ -67,7 +71,7 @@
 
 	$: maxBarY = Math.max(...bars.map((bar: Bar) => bar.y));
 
-	$: x = d3.scaleLinear().range([0, width]).domain([Math.min(...distribution), Math.max(...distribution)]);
+
 	$: y = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
 	$: median = d3.median(distribution)!;
 
@@ -82,8 +86,5 @@
 		}, 0);
 	});
 
-	$: if (axisBottom) {
-		d3.select(axisBottom).call(d3.axisBottom(x).ticks(5));
-	}
 
 </script>
