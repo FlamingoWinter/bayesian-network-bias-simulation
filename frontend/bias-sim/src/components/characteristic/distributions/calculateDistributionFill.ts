@@ -3,8 +3,8 @@ export function calculateDistributionFill(probabilityType: ProbabilityType) {
 		case 'prior':
 			return '#0d3b68';
 		case 'conditioned':
-			return '#000';
+			return '#d1d1d1';
 		case 'posterior':
-			return '#C47335';
+			return '#bf8b00';
 	}
 }
