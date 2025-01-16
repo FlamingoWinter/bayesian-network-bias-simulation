@@ -2,9 +2,8 @@ from typing import List, Dict
 
 import numpy as np
 from networkx.readwrite.json_graph import node_link_data
+from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianNetwork as pgBN
-from pgmpy.sampling import BayesianModelSampling
-from pgmpy.sampling.Sampling import State
 
 from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
@@ -47,13 +46,12 @@ class PgmPyNetwork(BayesianNetwork):
 
     @time_function("Sampling Posterior")
     def sample_conditioned(self):
-        sampler = BayesianModelSampling(self.model)
-        evidence = [State(var=key, state=value) for key, value in self.observed.items()]
+        inference = VariableElimination(self.model)
+        sampled_data = inference.query([c for c in self.characteristics if c not in self.observed.keys()],
+                                       evidence=self.observed).sample(num_samples)
 
-        sampled_data = sampler.likelihood_weighted_sample(evidence=evidence, size=num_samples)
-        
         condition_response = {}
-        for column in sampled_data.columns:
+        for column in sampled_data:
             condition_response[column] = sampled_data[column].tolist()
 
         return condition_response

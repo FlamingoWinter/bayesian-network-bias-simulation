@@ -32,7 +32,10 @@ def condition(request):
     if network.model_type == "pgmpy":
         network.observed = condition_request
 
-    condition_response = network.sample_conditioned()
+    try:
+        condition_response = network.sample_conditioned()
+    except:
+        return JsonResponse(status=400)
 
     return JsonResponse(condition_response, safe=False, status=200)
 

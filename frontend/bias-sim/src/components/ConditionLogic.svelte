@@ -3,6 +3,9 @@
 	import { conditioned, conditions, posteriorDistributions } from '../stores/store';
 	import { apiRequest } from '../utiliites/api';
 	import { condition } from '../stores/functions';
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+
+	const toastStore = getToastStore();
 
 
 	onMount(async () => {
@@ -14,11 +17,20 @@
 				tempConditions[characteristic] = value;
 			}
 
-			const conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify(tempConditions)) as Record<string, number[]>;
-
-			$conditions = tempConditions;
-			$conditioned = true;
-			$posteriorDistributions = conditionResponse;
+			let conditionResponse: Record<string, number[]> = {};
+			try {
+				conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify(tempConditions)) as Record<string, number[]>;
+				$conditions = tempConditions;
+				$conditioned = true;
+				$posteriorDistributions = conditionResponse;
+			} catch (e) {
+				const t: ToastSettings = {
+					message: 'Conditioning for this variable failed. Did you try to condition on impossible evidence?',
+					timeout: 3000,
+					background: 'variant-filled-error'
+				};
+				toastStore.trigger(t);
+			}
 		};
 	});
 </script>
