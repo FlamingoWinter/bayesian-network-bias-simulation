@@ -26,8 +26,11 @@ def condition(request):
 
     condition_request: ConditionRequest = json.loads(request.body)
     network: BayesianNetwork = from_cache("network")
+
     network.model = generate_network(
         {characteristic: np.array([value]) for characteristic, value in condition_request.items()}).model
+    if network.model_type == "pgmpy":
+        network.observed = condition_request
 
     condition_response = network.sample_conditioned()
 

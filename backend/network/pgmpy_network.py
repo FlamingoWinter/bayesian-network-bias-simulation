@@ -37,7 +37,6 @@ class PgmPyNetwork(BayesianNetwork):
         return self.characteristics
 
     def to_network_response(self) -> NetworkResponse:
-        pass
         return {
             "graph": node_link_data(self.model.to_directed(), link="links"),
             "scoreCharacteristic": self.score_characteristic,
