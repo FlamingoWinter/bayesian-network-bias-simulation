@@ -37,12 +37,24 @@
 					{/if}
 				</div>
 				<div class="flex w-full justify-center">
+
 					<button type="button"
-									class="btn btn-lg variant-filled py-2 px-4 rounded-full"
-									on:click={()=>$condition(nodeName, conditionSettings.isCategorical ? conditionSettings.categoricalValues.indexOf(valueSelected) : numericalValueSelected)}>
-						Condition
-						<CaretRightFill />
+									class="btn btn-lg variant-filled py-2 px-4 rounded-full relative min-w-32"
+									on:click={async ()=>{
+										loading = true;
+										await $condition(nodeName, conditionSettings.isCategorical ? conditionSettings.categoricalValues.indexOf(valueSelected) : numericalValueSelected);
+									  loading = false;
+										$exitDialog()
+										}}>
+						{#if loading}
+							<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
+															strokeLinecap="butt" value={undefined} stroke={100} />
+						{:else}
+							Condition
+							<CaretRightFill />
+						{/if}
 					</button>
+
 				</div>
 
 			{/if}
@@ -51,8 +63,8 @@
 {/if}
 
 <script lang="ts">
-	import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { network } from '../stores/store';
+	import { ProgressRadial, RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
+	import { conditions, network } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -67,7 +79,7 @@
 		max: number | null;
 	}
 
-
+	let loading = false;
 	let nodeName = '';
 	let paragraph = '';
 
@@ -106,6 +118,11 @@
 
 
 		$openConditionDialog = async (nodeId: string) => {
+			if (nodeId in $conditions) {
+				await $condition(nodeId, null);
+				return;
+			}
+
 			const characteristic = $network!.characteristics[nodeId];
 			if (describe) {
 				isInfoBoxVisible = false;

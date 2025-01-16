@@ -6,12 +6,17 @@
 
 
 	onMount(async () => {
-		console.log($posteriorDistributions);
-		$condition = async (characteristic: string, value: number) => {
-			$conditions[characteristic] = value;
+		$condition = async (characteristic: string, value: number | null) => {
+			const tempConditions = { ...$conditions };
+			if (value === null) {
+				delete tempConditions[characteristic];
+			} else {
+				tempConditions[characteristic] = value;
+			}
 
-			const conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify($conditions)) as Record<string, number[]>;
+			const conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify(tempConditions)) as Record<string, number[]>;
 
+			$conditions = tempConditions;
 			$conditioned = true;
 			$posteriorDistributions = conditionResponse;
 		};

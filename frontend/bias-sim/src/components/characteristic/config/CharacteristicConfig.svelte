@@ -4,7 +4,9 @@
 >
 	<ButtonRow>
 		<ButtonBelowDistribution text="Describe" callback={()=>{$openDescribeDialog(node.id)}} />
-		<ButtonBelowDistribution text="Condition" callback={()=>{$openConditionDialog(node.id)}} />
+		<ButtonBelowDistribution
+			text="{node.id in $conditions ? `Decondition` : `Condition`}"
+			callback={()=>{$openConditionDialog(node.id)}} />
 	</ButtonRow>
 	<ButtonRow>
 		<ButtonBelowDistribution
@@ -14,7 +16,7 @@
 
 	<ButtonRow>
 		<ButtonBelowDistribution
-			text="{$network.applicationCharacteristics.includes(node.id)  ? `Unset` : `Set`} Application Characteristic"
+			text="{node.id in $network.applicationCharacteristics  ? `Unset` : `Set`} Application Characteristic"
 			callback={toggleApplicationCharacteristic}
 		/>
 	</ButtonRow>
@@ -27,7 +29,7 @@
 	import ButtonBelowDistribution from './ButtonBelowDistribution.svelte';
 	import { fade } from 'svelte/transition';
 	import type { Node } from '../../../types/network';
-	import { network } from '../../../stores/store';
+	import { conditions, network } from '../../../stores/store';
 	import { openConditionDialog, openDescribeDialog } from '../../../stores/functions';
 
 	export let node: Node;
