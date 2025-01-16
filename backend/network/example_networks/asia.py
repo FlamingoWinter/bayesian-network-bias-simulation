@@ -62,13 +62,13 @@ def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
                                 ["either", "bronc"],
                                 observed=observed)
 
-    asia_network.set_category_names_for_characteristic("asia", ['True', 'False'])
-    asia_network.set_category_names_for_characteristic("tub", ['Positive', 'Negative'])
+    asia_network.set_category_names_for_characteristic("asia", ['Yes', 'No'])
+    asia_network.set_category_names_for_characteristic("tub", ['Present', 'Absent'])
     asia_network.set_category_names_for_characteristic("smoke", ['Yes', 'No'])
     asia_network.set_category_names_for_characteristic("lung", ['Present', 'Absent'])
     asia_network.set_category_names_for_characteristic("bronc", ['Present', 'Absent'])
     asia_network.set_category_names_for_characteristic("either", ['Present', 'Absent'])
-    asia_network.set_category_names_for_characteristic("xray", ['Positive', 'Negative'])
+    asia_network.set_category_names_for_characteristic("xray", ['Abnormal', 'Normal'])
     asia_network.set_category_names_for_characteristic("dysp", ['Present', 'Absent'])
 
     asia_network.set_description_for_characteristic("asia", """
