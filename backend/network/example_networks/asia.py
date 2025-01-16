@@ -97,8 +97,8 @@ def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
     """)
 
     asia_network.set_description_for_characteristic("either", """
-        Whether a person has either bronchitis or lung cancer.
-        Present means the person has either bronchitis or lung cancer. Absent means they have neither bronchitis nor lung cancer.
+        Whether a person has either tuberculosis or lung cancer.
+        Present means the person has either tuberculosis or lung cancer. Absent means they have neither tuberculosis nor lung cancer.
     """)
 
     asia_network.set_description_for_characteristic("xray", """
@@ -114,7 +114,8 @@ def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
     asia_network.set_description("""
     An example network given by Lauritzen and Spigelhalter (1988)
     Whether a person has been to asia is likely to affect whether they have tuberculosis, as incidence of tuberculosis was higher in Asia at the time.
-    Whether a person smoke's may be indicative of lung cancer or bronchitis and either of these features may affect shortness of breath.
+    Whether a person smoke's may be indicative of lung cancer or bronchitis and either lung cancer or tuberculosis may affect shortness of breath,
+    as well as bronchitis.
     The presence of lung cancer or tuberculosis may be identified by an x-ray, but the presence of bronchitis will not be.
     """)
 
