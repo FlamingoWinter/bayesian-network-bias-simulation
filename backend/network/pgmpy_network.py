@@ -50,8 +50,8 @@ class PgmPyNetwork(BayesianNetwork):
         sampler = BayesianModelSampling(self.model)
         evidence = [State(var=key, state=value) for key, value in self.observed.items()]
 
-        sampled_data = sampler.rejection_sample(evidence=evidence, size=num_samples)
-
+        sampled_data = sampler.likelihood_weighted_sample(evidence=evidence, size=num_samples)
+        
         condition_response = {}
         for column in sampled_data.columns:
             condition_response[column] = sampled_data[column].tolist()
