@@ -21,7 +21,7 @@
 		</g>
 	{/each}
 	<g bind:this={axisBottom} transform={`translate(0, ${height})`} />
-	<g bind:this={axisLeft} />
+	<AxisLeft height={height} display={true} maxBarY={maxBarY} bind:y={y} />
 </g>
 
 
@@ -32,6 +32,7 @@
 	import type { Characteristic } from '../../../types/network';
 	import { defaultTransition } from '../../../animation/transition';
 	import { calculateDistributionFill } from './calculateDistributionFill';
+	import AxisLeft from './AxisLeft.svelte';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -56,7 +57,7 @@
 
 
 	$: x = d3.scaleBand().range([0, width]).domain(characteristic.categoryNames).padding(0.2);
-	$: y = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
+	let y = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
 
 	interface Bar {
 		category: string,
@@ -70,11 +71,7 @@
 	});
 
 	$: if (axisBottom) {
-		d3.select(axisBottom).call(d3.axisBottom(x));
-	}
-
-	$: if (axisLeft) {
-		d3.select(axisLeft).call(d3.axisLeft(y).ticks(2));
+		d3.select(axisBottom).transition().call(d3.axisBottom(x));
 	}
 
 	function calculateBarY(barValue: number) {
