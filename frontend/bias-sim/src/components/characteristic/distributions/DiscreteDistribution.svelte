@@ -5,7 +5,8 @@
 						width={(x(barWidth) - x(0)) * 0.9} height={ mounted ? height - y(bar.y) : 0}
 						fill={calculateDistributionFill(probabilityType)}
 						style="transition: height  {defaultTransition},
-															 y {defaultTransition}">
+															 y {defaultTransition},
+																fill {defaultTransition}">
 
 			</rect>
 		</g>
@@ -44,17 +45,19 @@
 	let mounted = false;
 	let probabilityType: ProbabilityType;
 
-	$: if (x) {
-		console.log('X changed');
-	}
-
-
 	$: probabilityType = $conditioned
 		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
 		: 'prior';
 
-	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
-
+	let distribution: number[];
+	$: switch (probabilityType) {
+		case 'posterior':
+			distribution = $posteriorDistributions[characteristic.name];
+		case 'prior':
+			distribution = characteristic.priorDistribution;
+		case 'conditioned':
+			distribution = [$conditions[characteristic.name]];
+	}
 
 	$: minValue = d3.min(distribution)!;
 	$: maxValue = d3.max(distribution)!;

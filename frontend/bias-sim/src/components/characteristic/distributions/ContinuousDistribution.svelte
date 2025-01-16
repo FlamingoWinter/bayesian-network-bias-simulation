@@ -1,9 +1,10 @@
 <g>
-	<path fill={calculateDistributionFill(probabilityType)} opacity="0.4" stroke="#0d3b68" stroke-width="1.5"
+	<path fill={calculateDistributionFill(probabilityType)} opacity="0.4" stroke-width="1.5"
 				stroke-opacity="1"
-				bind:this={areaPath} d="" />
+				bind:this={areaPath} d=""
+				style="transition: fill {defaultTransition}" />
 	<path stroke={calculateDistributionFill(probabilityType)} stroke-width="1.5"
-				bind:this={strokePath} fill="none" d="" />
+				bind:this={strokePath} fill="none" d="" style="transition: stroke {defaultTransition}" />
 	<g>
 		<text class="bar-label"
 					x={x(median)}
@@ -30,6 +31,7 @@
 	import { calculateDistributionFill } from './calculateDistributionFill';
 	import AxisLeft from './AxisLeft.svelte';
 	import AxisBottom from './AxisBottom.svelte';
+	import { defaultTransition } from '../../../animation/transition';
 
 	export let characteristic: Characteristic;
 	export let width: number;
@@ -46,7 +48,16 @@
 		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
 		: 'prior';
 
-	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
+	let distribution: number[];
+	$: switch (probabilityType) {
+		case 'posterior':
+			distribution = $posteriorDistributions[characteristic.name];
+		case 'prior':
+			distribution = characteristic.priorDistribution;
+		case 'conditioned':
+			distribution = [$conditions[characteristic.name]];
+	}
+
 	$: n = distribution.length;
 	$: bandwidth = 1.4 * d3.deviation(distribution)! * Math.pow(n, -1 / 5);
 	$: minValue = d3.min(distribution)!;

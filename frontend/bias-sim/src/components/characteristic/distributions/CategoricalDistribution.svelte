@@ -4,7 +4,8 @@
 			<rect rx="2" x={x(bar.category.toString())??0} y={ mounted ? y(bar.value) : y(0)}
 						width={x.bandwidth()} height={ mounted ? height - y(bar.value) : 0}
 						style="transition: height {defaultTransition},
-															 y {defaultTransition}"
+															 y {defaultTransition},
+															fill {defaultTransition}"
 						fill={calculateDistributionFill(probabilityType)}>
 			</rect>
 		</g>
@@ -47,10 +48,15 @@
 		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
 		: 'prior';
 
-	$: distribution = (probabilityType == 'posterior') ? $posteriorDistributions[characteristic.name] : characteristic.priorDistribution;
-	$: bars = Array.from(new Set(distribution)).map(categoryIndex => ({
-		category: characteristic.categoryNames[categoryIndex],
-		value: distribution.filter(d => d === categoryIndex).length / distribution.length
+	$: distribution = (probabilityType === 'posterior')
+		? $posteriorDistributions[characteristic.name]
+		: (probabilityType === 'prior')
+			? characteristic.priorDistribution
+			: [$conditions[characteristic.name]];
+
+	$: bars = Array.from(characteristic.categoryNames).map((categoryName, index) => ({
+		category: categoryName,
+		value: distribution.filter(d => d === index).length / distribution.length
 	}));
 
 	$: maxBarY = Math.max(...bars.map((bar: Bar) => bar.value));
