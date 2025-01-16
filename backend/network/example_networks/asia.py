@@ -1,63 +1,66 @@
 from typing import Dict
 
 import numpy as np
-import pymc as pm
-import pytensor as pt
+from pgmpy.factors.discrete import TabularCPD
+from pgmpy.models import BayesianNetwork as PgBn
 
 from backend.network.bayesian_network import BayesianNetwork
+from backend.network.pgmpy_network import PgmPyNetwork
 from backend.visualisation.visualise import visualise_model_as_network
 
 
 # Transcribed from https://www.bnlearn.com/bnrepository/discrete-small.html#asia
 
 def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
-    def p_asia():
-        return [0.01, 0.99]
+    asia_model = PgBn([
+        ('asia', 'tub'),
+        ('smoke', 'lung'),
+        ('smoke', 'bronc'),
+        ('lung', 'either'),
+        ('tub', 'either'),
+        ('either', 'xray'),
+        ('either', 'dysp'),
+        ('bronc', 'dysp')
+    ])
 
-    def p_tub(asia):
-        return pt.shared(np.asarray([[0.05, 0.95], [0.01, 0.99]])
-                         )[asia]
+    cpd_asia = TabularCPD(variable='asia', variable_card=2, values=[[0.01], [0.99]])
+    cpd_tub = TabularCPD(variable='tub', variable_card=2,
+                         values=[[0.05, 0.01], [0.95, 0.99]],
+                         evidence=['asia'], evidence_card=[2])
+    cpd_smoke = TabularCPD(variable='smoke', variable_card=2, values=[[0.5], [0.5]])
+    cpd_lung = TabularCPD(variable='lung', variable_card=2,
+                          values=[[0.1, 0.01], [0.9, 0.99]],
+                          evidence=['smoke'], evidence_card=[2])
+    cpd_bronc = TabularCPD(variable='bronc', variable_card=2,
+                           values=[[0.6, 0.3], [0.4, 0.7]],
+                           evidence=['smoke'], evidence_card=[2])
+    cpd_either = TabularCPD(variable='either', variable_card=2,
+                            values=[
+                                [1.0, 1.0, 1.0, 0.0],
+                                [0.0, 0.0, 0.0, 1.0]
+                            ],
+                            evidence=['lung', 'tub'], evidence_card=[2, 2])
+    cpd_xray = TabularCPD(variable='xray', variable_card=2,
+                          values=[[0.98, 0.05], [0.02, 0.95]],
+                          evidence=['either'], evidence_card=[2])
+    cpd_dysp = TabularCPD(variable='dysp', variable_card=2,
+                          values=[
+                              [0.9, 0.7, 0.8, 0.1],
+                              [0.1, 0.3, 0.2, 0.9]
+                          ],
+                          evidence=['bronc', 'either'], evidence_card=[2, 2])
 
-    def p_smoke():
-        return [0.5, 0.5]
+    asia_model.add_cpds(cpd_asia, cpd_tub, cpd_smoke, cpd_lung, cpd_bronc, cpd_either, cpd_xray, cpd_dysp)
 
-    def p_lung(smoke):
-        return pt.shared(np.asarray([[0.1, 0.9], [0.01, 0.99]])
-                         )[smoke]
-
-    def p_bronc(smoke):
-        return pt.shared(np.asarray([[0.6, 0.4], [0.3, 0.7]])
-                         )[smoke]
-
-    def p_either(lung, tub):
-        return pt.shared(np.asarray([
-            [[1.0, 0.0], [1.0, 0.0]],
-            [[1.0, 0.0], [0.0, 1.0]]
-        ]))[lung, tub]
-
-    def p_xray(either):
-        return pt.shared(np.asarray([[0.98, 0.2], [0.05, 0.95]])
-                         )[either]
-
-    def p_dysp(bronc, either):
-        return pt.shared(np.asarray([
-            [[0.9, 0.1], [0.7, 0.3]],
-            [[0.8, 0.2], [0.1, 0.9]]
-        ]))[bronc, either]
-
-    with pm.Model() as asia_model:
-        asia = pm.Categorical('asia', p_asia(), observed=observed.get('asia', None))
-        tub = pm.Categorical('tub', p_tub(asia), observed=observed.get('tub', None))
-        smoke = pm.Categorical('smoke', p_smoke(), observed=observed.get('smoke', None))
-        lung = pm.Categorical('lung', p_lung(smoke), observed=observed.get('lung', None))
-        bronc = pm.Categorical('bronc', p_bronc(smoke), observed=observed.get('bronc', None))
-        either = pm.Categorical('either', p_either(lung, tub), observed=observed.get('either', None))
-        xray = pm.Categorical('xray', p_xray(either), observed=observed.get('xray', None))
-        dysp = pm.Categorical('dysp', p_dysp(bronc, either), observed=observed.get('dysp', None))
+    if not asia_model.check_model():
+        raise ValueError("The Bayesian Network is not valid!")
 
     asia_model.name = "asia"
 
-    asia_network = BayesianNetwork(asia_model, "dysp", ["either", "bronc"])
+    asia_network = PgmPyNetwork(asia_model,
+                                "dysp",
+                                ["either", "bronc"],
+                                observed=observed)
 
     asia_network.set_category_names_for_characteristic("asia", ['True', 'False'])
     asia_network.set_category_names_for_characteristic("tub", ['Positive', 'Negative'])

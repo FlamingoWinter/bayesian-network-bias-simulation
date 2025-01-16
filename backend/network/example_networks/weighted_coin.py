@@ -4,6 +4,7 @@ import numpy as np
 import pymc as pm
 
 from backend.network.bayesian_network import BayesianNetwork
+from backend.network.pymc_network import PyMcNetwork
 from backend.visualisation.visualise import visualise_model_as_network
 
 
@@ -17,7 +18,7 @@ def get_weighted_coin_network(observed: Dict[str, np.array]) -> BayesianNetwork:
 
     weighted_coin_model.name = "weighted_coin"
 
-    weighted_coin_network = BayesianNetwork(weighted_coin_model)
+    weighted_coin_network = PyMcNetwork(weighted_coin_model)
 
     weighted_coin_network.set_description_for_characteristic("p(heads)", """
         The probability of the weighted coin landing heads side up.
