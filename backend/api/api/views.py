@@ -29,6 +29,8 @@ def condition(request):
 
     network.model = generate_network(
         {characteristic: np.array([value]) for characteristic, value in condition_request.items()}).model
+    if network.model_type == "pgmpy":
+        network.observed = condition_request
 
     condition_response = network.sample_conditioned()
 
