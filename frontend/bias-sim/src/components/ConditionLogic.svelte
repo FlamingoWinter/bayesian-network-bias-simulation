@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { conditioned, conditions, posteriorDistributions } from '../stores/store';
 	import { apiRequest } from '../utiliites/api';
-	import { condition } from '../stores/functions';
+	import { condition, deconditionAll } from '../stores/functions';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
 	const toastStore = getToastStore();
@@ -19,9 +19,11 @@
 
 			let conditionResponse: Record<string, number[]> = {};
 			try {
-				conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify(tempConditions)) as Record<string, number[]>;
+				if (Object.keys(tempConditions).length > 0) {
+					conditionResponse = await apiRequest('condition/', 'POST', JSON.stringify(tempConditions)) as Record<string, number[]>;
+				}
 				$conditions = tempConditions;
-				$conditioned = true;
+				$conditioned = Object.keys(tempConditions).length > 0;
 				$posteriorDistributions = conditionResponse;
 			} catch (e) {
 				const t: ToastSettings = {
@@ -31,6 +33,11 @@
 				};
 				toastStore.trigger(t);
 			}
+		};
+
+		$deconditionAll = async () => {
+			$conditions = {};
+			$conditioned = false;
 		};
 	});
 </script>

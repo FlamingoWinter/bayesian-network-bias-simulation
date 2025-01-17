@@ -8,3 +8,5 @@ export const exitDialog = writable(() => {
 });
 export const condition = writable(async (characteristic: string, value: number | null) => {
 });
+export const deconditionAll = writable(async () => {
+});

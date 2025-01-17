@@ -6,6 +6,7 @@
 	import type { Network } from '../types/network';
 	import { apiUrl } from '../utiliites/api';
 	import ConditionLogic from '../components/ConditionLogic.svelte';
+	import Menu from '../components/menu/Menu.svelte';
 
 	let initialised = false;
 	let innerWidth: number;
@@ -35,4 +36,4 @@
 {#if initialised}
 	<GraphVisualisation width={width} height={height} />
 {/if}
-
+<Menu />
