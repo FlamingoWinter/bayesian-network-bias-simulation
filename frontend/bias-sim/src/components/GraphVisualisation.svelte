@@ -72,7 +72,7 @@
 		const dy = target.y! - source.y!;
 		const distance = (Math.sqrt(dx * dx + dy * dy) || 1);
 
-		return dy / distance;
+		return 1 / distance;
 	}
 
 
