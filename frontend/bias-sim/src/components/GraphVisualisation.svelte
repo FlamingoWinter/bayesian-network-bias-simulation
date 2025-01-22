@@ -18,6 +18,7 @@
 			{#each $network.graph.links as link}
 				<marker id={`arrowhead-${link.index}`}
 								viewBox="0 -5 10 10"
+								refY={0}
 								markerWidth="15" markerHeight="15" orient="auto"
 								class="marker">
 					<path d="M0,-5L10,0L0,5" fill="#aaa" />
@@ -55,6 +56,7 @@
 	onMount(async () => {
 		applyZoom(svg, zoomGroup);
 		$simulation = applyForceSimulation($network.graph, width, height, nodeGroup, linkGroup, markerGroup);
+
 	});
 
 
@@ -74,7 +76,6 @@
 
 		return { x: parseFloat(match[1]), y: parseFloat(match[2]) };
 	}
-
 
 	function asNode(node: Node | any): Node {
 		return node as Node;
