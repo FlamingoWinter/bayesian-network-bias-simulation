@@ -1,10 +1,10 @@
 from typing import List, Dict
 
-import numpy as np
 from networkx.readwrite.json_graph import node_link_data
 from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianNetwork as pgBN
 
+from backend.api.responseTypes.conditionResponse import ConditionRequest
 from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
 from backend.utilities.time_function import time_function
@@ -16,7 +16,7 @@ class PgmPyNetwork(BayesianNetwork):
                  score_characteristic: str = "score",
                  application_characteristics: List[str] = None,
                  description: str = "",
-                 observed: Dict[str, np.array] = None):
+                 observed: Dict[str, float] = None):
 
         super().__init__(model=None,
                          characteristics=None,
@@ -44,11 +44,15 @@ class PgmPyNetwork(BayesianNetwork):
                                 self.characteristics.items()},
             "description": self.description}
 
+    def condition_on(self, condition_request: ConditionRequest) -> None:
+        self.observed = condition_request
+
     @time_function("Sampling Posterior")
     def sample_conditioned(self):
         inference = VariableElimination(self.model)
-        sampled_data = inference.query([c for c in self.characteristics if c not in self.observed.keys()],
-                                       evidence=self.observed).sample(num_samples)
+        sampled_data = (inference.query([c for c in self.characteristics if c not in self.observed.keys()],
+                                        evidence=self.observed))
+        sampled_data = sampled_data.sample(num_samples)
 
         condition_response = {}
         for column in sampled_data:

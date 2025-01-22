@@ -14,7 +14,7 @@ class ApiConfig(AppConfig):
     name = 'api'
 
     def ready(self):
-        network: BayesianNetwork = generate_network({})
+        network: BayesianNetwork = generate_network()
 
         network_response: NetworkResponse = network.to_network_response()
 

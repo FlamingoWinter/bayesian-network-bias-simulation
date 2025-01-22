@@ -1,6 +1,3 @@
-from typing import Dict
-
-import numpy as np
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.models import BayesianNetwork as PgBn
 
@@ -11,7 +8,7 @@ from backend.visualisation.visualise import visualise_model_as_network
 
 # Transcribed from https://www.bnlearn.com/bnrepository/discrete-small.html#asia
 
-def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
+def get_asia_network() -> BayesianNetwork:
     asia_model = PgBn([
         ('asia', 'tub'),
         ('smoke', 'lung'),
@@ -59,8 +56,7 @@ def get_asia_network(observed: Dict[str, np.array]) -> BayesianNetwork:
 
     asia_network = PgmPyNetwork(asia_model,
                                 "dysp",
-                                ["either", "bronc"],
-                                observed=observed)
+                                ["either", "bronc"])
 
     asia_network.set_category_names_for_characteristic("asia", ['Yes', 'No'])
     asia_network.set_category_names_for_characteristic("tub", ['Present', 'Absent'])

@@ -1,25 +1,29 @@
 import math
 import random
 from itertools import islice
-from typing import Dict, Union, Literal, List
+from typing import Dict, Union, Literal, List, Any
 
 import networkx as nx
 import numpy as np
+from numpy import ndarray, dtype, floating
+from numpy._typing import _64Bit
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.models import BayesianNetwork as PgBn
 
 from backend.network.bayesian_network import BayesianNetwork
+from backend.network.example_networks.asia import get_asia_network
 from backend.network.pgmpy_network import PgmPyNetwork
 from backend.utilities.time_function import time_function
 
 
 @time_function("Generating network")
-def generate_network(observed: Dict[str, np.array]) -> BayesianNetwork:
+def generate_network() -> BayesianNetwork:
     # TODO: Implement this function.
     #    This is currently returning a placeholder example network, but should return a randomised Bayesian
     #    network which mirrors the dependencies of variables in reality and should be customisable.
 
-    return generate_random_network(10, 2, 3)
+    return get_asia_network()
+    # return generate_random_network(10, 2, 3)
 
 
 def generate_random_network(number_of_nodes, min_parents: int, max_parents: int):
@@ -27,28 +31,30 @@ def generate_random_network(number_of_nodes, min_parents: int, max_parents: int)
     average_dependency: float
     dependency_variance: float
 
-    graph = generate_random_dag(number_of_nodes, 1, 2)
-    return primitive_pgmpy_from_nx(graph)
+    graph = generate_random_dag(number_of_nodes, min_parents, max_parents)
+    return generate_random_categorical_network_from_nx(graph)
 
 
-def primitive_pgmpy_from_nx(graph: nx.DiGraph):
-    "This generates a pgmpy model with completely random probabilities from an nx model. Mostly for testing purposes."
-    print(graph)
-
+def generate_random_categorical_network_from_nx(graph: nx.DiGraph):
     model = PgBn(ebunch=graph)
 
-    for node in graph.nodes:
-        predecessors = list(graph.predecessors(node))
-        predecessor_count = len(predecessors)
-        values_to_generate = range(2 ** predecessor_count)
+    num_categories_by_node: Dict[str, int] = {node: 2 for node in graph.nodes}
 
-        random_values = [random.uniform(0, 1) for _ in values_to_generate]
+    for node in graph.nodes:
+        num_categories = num_categories_by_node[node]
+
+        predecessors = list(graph.predecessors(node))
+        num_categories_for_predecessors = [num_categories_by_node[predecessor] for predecessor in predecessors]
+
+        values_to_generate = range(int(np.prod(num_categories_for_predecessors)))
+
+        random_values = [generate_categorical_distribution_from_dirichlet(num_categories) for _ in
+                         values_to_generate]
 
         cpd = TabularCPD(variable=node, variable_card=2,
-                         values=[[1 - x for x in random_values],
-                                 [x for x in random_values]],
+                         values=list(zip(*random_values)),
                          evidence=predecessors,
-                         evidence_card=[2 for _ in range(predecessor_count)])
+                         evidence_card=num_categories_for_predecessors)
         model.add_cpds(cpd)
 
     network = PgmPyNetwork(model)
@@ -57,6 +63,10 @@ def primitive_pgmpy_from_nx(graph: nx.DiGraph):
         network.set_category_names_for_characteristic(node, ["1", '2'])
 
     return network
+
+
+def generate_categorical_distribution_from_dirichlet(num_categories: int) -> ndarray[Any, dtype[floating[_64Bit]]]:
+    return np.random.dirichlet([1] * num_categories)
 
 
 def generate_random_unconnected_dag_gnp(connectedness: float, nodes: int):

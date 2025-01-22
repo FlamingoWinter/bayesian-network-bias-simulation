@@ -4,6 +4,7 @@ from typing import List, Dict, Union, Literal
 import pymc as pm
 from pgmpy.models import BayesianNetwork as pgBN
 
+from backend.api.responseTypes.conditionResponse import ConditionRequest
 from backend.api.responseTypes.networkResponse import CharacteristicResponse, NetworkResponse, DistributionType
 
 num_samples = 5000
@@ -72,4 +73,8 @@ class BayesianNetwork(ABC):
 
     @abstractmethod
     def sample_conditioned(self) -> Dict[str, List[float]]:
+        pass
+
+    @abstractmethod
+    def condition_on(self, condition_request: ConditionRequest) -> None:
         pass

@@ -1,9 +1,10 @@
 from typing import List, cast
 
 import pymc as pm
+import xarray as xr
 from networkx.readwrite.json_graph import node_link_data
 
-from backend.api.responseTypes.conditionResponse import ConditionResponse
+from backend.api.responseTypes.conditionResponse import ConditionResponse, ConditionRequest
 from backend.api.responseTypes.networkResponse import DistributionType, NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
 from backend.type_extensions.prior_trace import PosteriorTrace
@@ -24,8 +25,12 @@ class PyMcNetwork(BayesianNetwork):
                          description=description)
 
         self.model: pm.Model = model
+        self.conditioned = False
         self.characteristics = self.initialise_characteristics_from_model(model)
         self.model_type = "pymc"
+
+    def set_observed_data(self, condition_request: ConditionRequest):
+        self.model.make_obs_var()
 
     def initialise_characteristics_from_model(self, model: pm.Model):
         self.characteristics = {}
@@ -52,7 +57,6 @@ class PyMcNetwork(BayesianNetwork):
     @time_function("Sampling Posterior")
     def sample_conditioned(self):
         model = self.model
-
         with model:
             posterior: PosteriorTrace = cast(PosteriorTrace,
                                              pm.sample(num_samples // 4, return_inferencedata=True, cores=1, chains=4))
@@ -65,3 +69,12 @@ class PyMcNetwork(BayesianNetwork):
                                                       sublist]
 
         return condition_response
+
+    def condition_on(self, condition_request: ConditionRequest) -> None:
+        observed_data = xr.DataArray(
+            list(condition_request.values()),
+            dims=["variable"],
+            coords={"variable": list(condition_request.keys())}
+        )
+
+        self.model.set_data("observed", observed_data)
