@@ -1,3 +1,4 @@
+import math
 import random
 from itertools import islice
 from typing import Dict, Union, Literal, List
@@ -18,17 +19,15 @@ def generate_network(observed: Dict[str, np.array]) -> BayesianNetwork:
     #    This is currently returning a placeholder example network, but should return a randomised Bayesian
     #    network which mirrors the dependencies of variables in reality and should be customisable.
 
-    return generate_random_network()
+    return generate_random_network(10, 2, 3)
 
 
-def generate_random_network():
+def generate_random_network(number_of_nodes, min_parents: int, max_parents: int):
     categorical_or_continuous: Union[Literal["categorical"], Literal["continuous"]]
     average_dependency: float
     dependency_variance: float
-    number_of_nodes: int = 10
-    graph_connectedness: float = 0.1
 
-    graph = generate_random_dag(number_of_nodes)
+    graph = generate_random_dag(number_of_nodes, 1, 2)
     return primitive_pgmpy_from_nx(graph)
 
 
@@ -68,7 +67,7 @@ def generate_random_unconnected_dag_gnp(connectedness: float, nodes: int):
 
 
 @time_function("Generate random dag")
-def generate_random_dag(nodes: int) -> nx.DiGraph:
+def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.DiGraph:
     # We want a random item out of the space of all connected directed acyclic graphs.
 
     # The difficulty with approaches to generating "random" directed acyclic graphs is that while
@@ -89,7 +88,7 @@ def generate_random_dag(nodes: int) -> nx.DiGraph:
         # We sample from the enumeration of all graphs to determine the number of out-points our graph
         # should have in each layer.
         # Randomly sampling a graph given these values is trivial.
-        out_point_counts = calculate_out_point_counts(nodes)
+        out_point_counts = calculate_out_point_counts(nodes, min_parents, max_parents)
 
         dag = nx.DiGraph()
 
@@ -101,11 +100,17 @@ def generate_random_dag(nodes: int) -> nx.DiGraph:
         for out_point_count in reversed(out_point_counts[:-1]):
             out_points = list(islice(point_names, out_point_count))
             node_list = list(dag.nodes)
+            random.shuffle(node_list)
+
             dag.add_nodes_from(out_points)
             for out_point in out_points:
-                for node in node_list:
-                    if random.randint(0, 1) == 0:
-                        dag.add_edge(node, out_point)
+                while True:
+                    connections = np.random.binomial(n=len(node_list), p=0.5)
+                    if min_parents <= connections <= max_parents:
+                        break
+
+                for node in node_list[:connections]:
+                    dag.add_edge(node, out_point)
 
         if nx.is_weakly_connected:
             break
@@ -113,23 +118,42 @@ def generate_random_dag(nodes: int) -> nx.DiGraph:
     return nx.relabel_nodes(dag, {node: str(node) for node in list(dag.nodes)})
 
 
-def calculate_out_point_counts(nodes: int) -> List[int]:
+def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -> List[int]:
     # An out-node is a node with no direct parents.
-    # The enumeration considers that each DAG can be described by its out-nodes,
+    # The enumeration considers that each DAG can be described by its out-points,
     # their connections and other smaller DAGs. To list all DAGs it is sufficient to
-    # list them in order of the number of outpoints on each layer
+    # list them in order of the number of out-points on each layer.
 
-    # For a given number of nodes, by determining the number of DAGs with each number of out-nodes,
-    # we can then sample that uniformly to determine the number of out-nodes our DAG should have.
-    # We repeat the process, to construct a list of desired numbers of out-nodes.
+    # For a given number of nodes, by determining the number of DAGs with each number of out-points,
+    # we can then sample that uniformly to determine the number of out-points our DAG should have.
+    # We repeat the process, to construct a list of desired numbers of out-points.
     # Once we have those numbers, it is trivial to construct a random DAG
 
     # This algorithm differs from the one in
     # https://link.springer.com/article/10.1007/s11222-013-9428-y#Sec6
-    # because we do not consider permutations. For our purposes, the permutation of node labels in a graph,
-    # will be considered to be the same graph. So we've removed the combinatorial.
+    # because we do not consider permutations. For our purposes, the permutation of node labels in a graph
+    # will be considered to be the same graph. So we've removed the combinatorial coefficient
+    # for relabelling nodes.
 
-    # a[n][k] is how many graphs there are with n nodes and k out-nodes, ignoring permutations.
+    # Next, we use the variation with a minimum and maximum number of parents.
+
+    def frequency_dag_with_m_nodes_and_s_outpoints_appears_in_dag_with_k_outpoints(m, s, k):
+        # For any dag with m nodes and s outpoints, returns the number of dags which
+        # exist with k outpoints for which removing the first layer of outpoints leaves us with the dag.
+        if min_parents == 1 and max_parents > k:
+            ways_outpoints_can_be_connected = 2 ** k
+        else:
+            # https://link.springer.com/article/10.1007/s11222-013-9428-y#Equ21
+            ways_outpoints_can_be_connected = 0
+            for i in range(max(1, min_parents), min(max_parents, k) + 1):
+                ways_outpoints_can_be_connected += math.comb(k, i)
+
+        # each of the s old outpoints must have at least one connection, or else it would be on the same outpoint-level
+        # as the k outpoints we are adding.
+        # so we subtract the case where they have no connections.
+        return (ways_outpoints_can_be_connected - 1) ** s * ways_outpoints_can_be_connected ** (m - s)
+
+    # a[n, k] is how many graphs there are with n nodes and k out-points, ignoring permutations.
     a = np.ones((nodes + 1, nodes + 1), dtype=object)
 
     for n in range(1, nodes + 1):
@@ -137,7 +161,7 @@ def calculate_out_point_counts(nodes: int) -> List[int]:
             m = n - k
 
             if m != 0:
-                # m is the number of nodes in the hypothetical DAG with the k out-nodes removed.
+                # m is the number of nodes in the hypothetical DAG with the k out-points removed.
                 # if that number is zero, then for DP purposes it is still useful to consider that there exists
                 # "one" empty graph.
 
@@ -145,7 +169,9 @@ def calculate_out_point_counts(nodes: int) -> List[int]:
                 a[n, k] = 0
 
             for s in range(1, m + 1):
-                a[n, k] += ((2 ** k - 1) ** s) * (2 ** (k * (m - s))) * a[m, s]
+                # We add to a[n,k] the number of dags with m nodes and s out-points,
+                # multiplied by how many times each appears in a DAG with n nodes and k-outpoints
+                a[n, k] += a[m, s] * frequency_dag_with_m_nodes_and_s_outpoints_appears_in_dag_with_k_outpoints(m, s, k)
 
     a[0, :] = 0
     a[:, 0] = 0
@@ -155,37 +181,39 @@ def calculate_out_point_counts(nodes: int) -> List[int]:
     r = random.randint(1, a_n)
 
     nodes_remaining = nodes
-    out_node_counts = []
+    out_point_counts = []
 
     # First iteration
-    out_nodes = 1
-    while r > a[nodes_remaining][out_nodes]:
-        r -= a[nodes_remaining][out_nodes]
-        out_nodes += 1
+    out_points = 1
+    while r > a[nodes_remaining][out_points]:
+        r -= a[nodes_remaining][out_points]
+        out_points += 1
 
-    out_node_counts.append(out_nodes)
-    nodes_remaining -= out_nodes
-    old_out_nodes = out_nodes
+    out_point_counts.append(out_points)
+    nodes_remaining -= out_points
+    old_out_points = out_points
 
     # Nth iteration
     while nodes_remaining > 0:
-        out_nodes = 1
+        out_points = 1
 
         while True:
-            scaling_factor = ((2 ** old_out_nodes - 1) ** out_nodes) * (
-                    2 ** (old_out_nodes * (nodes_remaining - out_nodes)))
-            next_to_remove = scaling_factor * a[nodes_remaining, out_nodes]
+            scaling_factor = (
+                frequency_dag_with_m_nodes_and_s_outpoints_appears_in_dag_with_k_outpoints(m=nodes_remaining,
+                                                                                           s=out_points,
+                                                                                           k=old_out_points))
+            next_to_remove = scaling_factor * a[nodes_remaining, out_points]
             if r < next_to_remove:
                 r //= scaling_factor
-                out_node_counts.append(out_nodes)
-                nodes_remaining -= out_nodes
-                old_out_nodes = out_nodes
+                out_point_counts.append(out_points)
+                nodes_remaining -= out_points
+                old_out_points = out_points
                 break
 
             r -= next_to_remove
-            out_nodes += 1
+            out_points += 1
 
-    return out_node_counts
+    return out_point_counts
 
 
 if __name__ == "__main__":
