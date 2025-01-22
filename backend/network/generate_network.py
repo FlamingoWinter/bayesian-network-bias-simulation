@@ -1,4 +1,3 @@
-import math
 import random
 from itertools import islice
 from typing import Dict, Union, Literal, List
@@ -73,19 +72,23 @@ def generate_random_dag(nodes: int) -> nx.DiGraph:
     # We want a random item out of the space of all connected directed acyclic graphs.
 
     # The difficulty with approaches to generating "random" directed acyclic graphs is that while
-    # they're often generated to be unpredictable, they're really generated truly randomly.
+    # they're often generated to be unpredictable, they're rarely generated truly randomly.
+    # (i.e.- such that each graph has an equal chance to be chosen).
 
     # We don't want bias in network structure affecting any results, so we generate them at random uniformly
     # from the collection of all connected directed acyclic graphs.
-    # Unfortunately, this is difficult as discussed below.
-
+    # Unfortunately, this is difficult, as discussed below.
     # https://link.springer.com/article/10.1007/s11222-013-9428-y#Sec6
+    # We adapt the algorithm given in this paper for our use case.
 
     # The basic strategy is to determine some ordering or enumeration of all directed acyclic graphs and to sample
     # uniformly from this enumeration.
 
     while True:
         point_names = iter(range(nodes))
+        # We sample from the enumeration of all graphs to determine the number of out-points our graph
+        # should have in each layer.
+        # Randomly sampling a graph given these values is trivial.
         out_point_counts = calculate_out_point_counts(nodes)
 
         dag = nx.DiGraph()
@@ -94,6 +97,7 @@ def generate_random_dag(nodes: int) -> nx.DiGraph:
         out_points = list(islice(point_names, out_point_counts[-1]))
         dag.add_nodes_from(out_points)
 
+        # Build each successive layer of out_points
         for out_point_count in reversed(out_point_counts[:-1]):
             out_points = list(islice(point_names, out_point_count))
             node_list = list(dag.nodes)
@@ -111,19 +115,22 @@ def generate_random_dag(nodes: int) -> nx.DiGraph:
 
 def calculate_out_point_counts(nodes: int) -> List[int]:
     # An out-node is a node with no direct parents.
-    # The enumeration works by considering that each DAG can be described by its out-nodes,
-    # their connections and another smaller DAG.
+    # The enumeration considers that each DAG can be described by its out-nodes,
+    # their connections and other smaller DAGs. To list all DAGs it is sufficient to
+    # list them in order of the number of outpoints on each layer
 
     # For a given number of nodes, by determining the number of DAGs with each number of out-nodes,
     # we can then sample that uniformly to determine the number of out-nodes our DAG should have.
     # We repeat the process, to construct a list of desired numbers of out-nodes.
     # Once we have those numbers, it is trivial to construct a random DAG
 
-    # a[n][k] is how many graphs there are with n nodes and k out-nodes.
-    a = np.ones((nodes + 1, nodes + 1), dtype=object)
+    # This algorithm differs from the one in
+    # https://link.springer.com/article/10.1007/s11222-013-9428-y#Sec6
+    # because we do not consider permutations. For our purposes, the permutation of node labels in a graph,
+    # will be considered to be the same graph. So we've removed the combinatorial.
 
-    # b[n][k] is how many graphs there are with n nodes and k out-nodes, ignoring permutations.
-    b = np.ones((nodes + 1, nodes + 1), dtype=object)
+    # a[n][k] is how many graphs there are with n nodes and k out-nodes, ignoring permutations.
+    a = np.ones((nodes + 1, nodes + 1), dtype=object)
 
     for n in range(1, nodes + 1):
         for k in range(1, n + 1):
@@ -135,12 +142,10 @@ def calculate_out_point_counts(nodes: int) -> List[int]:
                 # "one" empty graph.
 
                 # Otherwise, we initialise b to 0 as we will be building this recursively.
-                b[n, k] = 0
+                a[n, k] = 0
 
             for s in range(1, m + 1):
-                b[n, k] += ((2 ** k - 1) ** s) * (2 ** (k * (m - s))) * a[m, s]
-
-            a[n, k] = math.comb(n, k) * b[n, k]
+                a[n, k] += ((2 ** k - 1) ** s) * (2 ** (k * (m - s))) * a[m, s]
 
     a[0, :] = 0
     a[:, 0] = 0
@@ -158,7 +163,6 @@ def calculate_out_point_counts(nodes: int) -> List[int]:
         r -= a[nodes_remaining][out_nodes]
         out_nodes += 1
 
-    r //= math.comb(nodes_remaining, out_nodes)
     out_node_counts.append(out_nodes)
     nodes_remaining -= out_nodes
     old_out_nodes = out_nodes
@@ -172,7 +176,6 @@ def calculate_out_point_counts(nodes: int) -> List[int]:
                     2 ** (old_out_nodes * (nodes_remaining - out_nodes)))
             next_to_remove = scaling_factor * a[nodes_remaining, out_nodes]
             if r < next_to_remove:
-                r //= math.comb(nodes_remaining, out_nodes)
                 r //= scaling_factor
                 out_node_counts.append(out_nodes)
                 nodes_remaining -= out_nodes
