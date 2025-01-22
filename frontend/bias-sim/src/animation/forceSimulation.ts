@@ -47,7 +47,10 @@ export function applyForceSimulation(graph: Graph,
 					const x2 = (d.target as Node).x!;
 					const y2 = (d.target as Node).y!;
 
-					return -Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) / 3.3;
+					const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+
+					return -distance / 5.1;
 				});
 
 

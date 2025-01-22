@@ -9,7 +9,7 @@
 		</g>
 		<g bind:this={nodeGroup}>
 			{#each $network.graph.nodes as node}
-				<g class="node">
+				<g class="node" id="node-{node.id}">
 					<Chart characteristic={$network.characteristics[node.id]} node={node} />
 				</g>
 			{/each}
@@ -18,7 +18,6 @@
 			{#each $network.graph.links as link}
 				<marker id={`arrowhead-${link.index}`}
 								viewBox="0 -5 10 10"
-								refY={calculateMarkerRefY(asNode(link.source), asNode(link.target))}
 								markerWidth="15" markerHeight="15" orient="auto"
 								class="marker">
 					<path d="M0,-5L10,0L0,5" fill="#aaa" />
@@ -56,7 +55,6 @@
 	onMount(async () => {
 		applyZoom(svg, zoomGroup);
 		$simulation = applyForceSimulation($network.graph, width, height, nodeGroup, linkGroup, markerGroup);
-
 	});
 
 
@@ -67,12 +65,14 @@
 		}
 	}
 
-	function calculateMarkerRefY(source: Node, target: Node): number {
-		const dx = target.x! - source.x!;
-		const dy = target.y! - source.y!;
-		const distance = (Math.sqrt(dx * dx + dy * dy) || 1);
+	function getTranslationFromTransform(s: string) {
+		const match = s.match(/translate\(([-\d.]+),\s*([-\d.]+)\)/);
 
-		return 1 / distance;
+		if (!match || match.length < 2) {
+			return { x: 0, y: 0 };
+		}
+
+		return { x: parseFloat(match[1]), y: parseFloat(match[2]) };
 	}
 
 
