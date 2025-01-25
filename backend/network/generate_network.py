@@ -11,7 +11,6 @@ from pgmpy.factors.discrete import TabularCPD
 from pgmpy.models import BayesianNetwork as PgBn
 
 from backend.network.bayesian_network import BayesianNetwork
-from backend.network.example_networks.asia import get_asia_network
 from backend.network.pgmpy_network import PgmPyNetwork
 from backend.utilities.time_function import time_function
 
@@ -22,8 +21,8 @@ def generate_network() -> BayesianNetwork:
     #    This is currently returning a placeholder example network, but should return a randomised Bayesian
     #    network which mirrors the dependencies of variables in reality and should be customisable.
 
-    return get_asia_network()
-    # return generate_random_network(10, 2, 3)
+    # return get_asia_network()
+    return generate_random_network(10, 2, 3)
 
 
 def generate_random_network(number_of_nodes, min_parents: int, max_parents: int):
@@ -61,6 +60,9 @@ def generate_random_categorical_network_from_nx(graph: nx.DiGraph):
 
     for node in graph.nodes:
         network.set_category_names_for_characteristic(node, ["1", '2'])
+
+    network.score_characteristic = graph.nodes[-1]
+    network.application_characteristics = graph.nodes[:-1]
 
     return network
 
@@ -108,18 +110,41 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
 
         # Build each successive layer of out_points
         for out_point_count in reversed(out_point_counts[:-1]):
+            old_out_points = out_points
             out_points = list(islice(point_names, out_point_count))
             node_list = list(dag.nodes)
-            random.shuffle(node_list)
 
             dag.add_nodes_from(out_points)
+            # At each layer, we want to randomly connect out-points but need to ensure two things.
+            # - Each outpoint has between its minimum and maximum number of parents.
+            # - Each previous outpoint is now connected (or it would be an outpoint on this level).
+
+            # We make the second requirement true first by connecting each old outpoint to a new outpoint.
+            # We make the first requirement true by selecting some connections value
+
+            connections_by_out_point = {out_point: 0 for out_point in out_points}
+
+            for old_out_point in old_out_points:
+                while True:
+                    random_out_point = random.choice(out_points)
+                    if connections_by_out_point[random_out_point] < max_parents:
+                        break
+                dag.add_edge(old_out_point, random_out_point)
+                connections_by_out_point[random_out_point] += 1
+
             for out_point in out_points:
+                random.shuffle(node_list)
+                tried = 0
                 while True:
                     connections = np.random.binomial(n=len(node_list), p=0.5)
-                    if min_parents <= connections <= max_parents:
+                    if max(min_parents, connections_by_out_point[out_point]) <= connections <= max_parents:
+                        break
+                    tried += 1
+                    if tried > 100:
+                        print("failed")
                         break
 
-                for node in node_list[:connections]:
+                for node in node_list[:(connections - connections_by_out_point[out_point])]:
                     dag.add_edge(node, out_point)
 
         if nx.is_weakly_connected:
@@ -147,31 +172,36 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
 
     # Next, we use the variation with a minimum and maximum number of parents.
 
-    def frequency_dag_with_m_nodes_and_s_outpoints_appears_in_dag_with_k_outpoints(m, s, k):
-        # For any dag with m nodes and s outpoints, returns the number of dags which
-        # exist with k outpoints for which removing the first layer of outpoints leaves us with the dag.
-        if min_parents == 1 and max_parents > k:
-            ways_outpoints_can_be_connected = 2 ** k
-        else:
-            # https://link.springer.com/article/10.1007/s11222-013-9428-y#Equ21
-            ways_outpoints_can_be_connected = 0
-            for i in range(max(1, min_parents), min(max_parents, k) + 1):
-                ways_outpoints_can_be_connected += math.comb(k, i)
+    # https://link.springer.com/article/10.1007/s11222-013-9428-y#Equ23
+    # c[m, s, k] is for any dag with m nodes and s outpoints, this returns the number of dags which
+    # exist with k outpoints for which removing the first layer of outpoints leaves us with that dag.
+    c = np.ones((nodes + 1, nodes + 1, nodes + 1), dtype=object)
+    for m in range(1, nodes + 1):
+        for s in range(1, nodes + 1):
+            for k in range(1, nodes + 1):
+                # t is the total ways to link one outpoint to the m nodes on the existing graph
+                t = 0
+                for i in range(min_parents, max_parents):
+                    t += math.comb(m, i)  # The number of ways we can connect our out-point given that it has i parents
 
-        # each of the s old outpoints must have at least one connection, or else it would be on the same outpoint-level
-        # as the k outpoints we are adding.
-        # so we subtract the case where they have no connections.
-        return (ways_outpoints_can_be_connected - 1) ** s * ways_outpoints_can_be_connected ** (m - s)
+                # d is the total ways we could link these out-points such that at least one of the s old outpoints are disconnected
+                # This is a problem because it would mean that that old out-point is still an out-point,
+                # so we remove those from the probabilities.
+                d = 0
+                for i in range(s):
+                    d += math.comb(s, i) * c[m - i, s - i, k]
+
+                c[m, s, k] = t ** k - d
 
     # a[n, k] is how many graphs there are with n nodes and k out-points, ignoring permutations.
     a = np.ones((nodes + 1, nodes + 1), dtype=object)
 
     for n in range(1, nodes + 1):
         for k in range(1, n + 1):
+            # m is the number of nodes in the hypothetical DAG with the k out-points removed.
             m = n - k
 
             if m != 0:
-                # m is the number of nodes in the hypothetical DAG with the k out-points removed.
                 # if that number is zero, then for DP purposes it is still useful to consider that there exists
                 # "one" empty graph.
 
@@ -181,7 +211,7 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
             for s in range(1, m + 1):
                 # We add to a[n,k] the number of dags with m nodes and s out-points,
                 # multiplied by how many times each appears in a DAG with n nodes and k-outpoints
-                a[n, k] += a[m, s] * frequency_dag_with_m_nodes_and_s_outpoints_appears_in_dag_with_k_outpoints(m, s, k)
+                a[n, k] += a[m, s] * c[m, s, k]
 
     a[0, :] = 0
     a[:, 0] = 0
@@ -208,10 +238,7 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
         out_points = 1
 
         while True:
-            scaling_factor = (
-                frequency_dag_with_m_nodes_and_s_outpoints_appears_in_dag_with_k_outpoints(m=nodes_remaining,
-                                                                                           s=out_points,
-                                                                                           k=old_out_points))
+            scaling_factor = c[nodes_remaining][out_points][old_out_points]
             next_to_remove = scaling_factor * a[nodes_remaining, out_points]
             if r < next_to_remove:
                 r //= scaling_factor
@@ -227,4 +254,4 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
 
 
 if __name__ == "__main__":
-    generate_random_dag(10)
+    generate_random_dag(10, 2, 4)
