@@ -1,20 +1,20 @@
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 
 from backend.recruiters.recruiter import Recruiter
 
 
-class LinearModelRecruiter(Recruiter):
+class LogisticRegressionRecruiter(Recruiter):
     @property
     def name(self):
-        return "Linear Model Recruiter"
+        return "Logistic Regression Recruiter"
 
     @property
     def output_type(self):
-        return "continuous"
+        return "categorical"
 
     def __init__(self):
-        self.model = LinearRegression()
+        self.model = LogisticRegression()
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):
         self.model.fit(application_train, score_train)
