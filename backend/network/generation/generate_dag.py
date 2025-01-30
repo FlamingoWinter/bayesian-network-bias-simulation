@@ -1,3 +1,14 @@
+import math
+import random
+from itertools import islice
+from typing import List
+
+import networkx as nx
+import numpy as np
+
+from backend.utilities.time_function import time_function
+
+
 @time_function("Generate random dag")
 def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.DiGraph:
     # We want a random item out of the space of all connected directed acyclic graphs.
@@ -175,6 +186,13 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
             out_points += 1
 
     return out_point_counts
+
+
+def generate_random_unconnected_dag_gnp(connectedness: float, nodes: int):
+    directed_graph = nx.gnp_random_graph(nodes, connectedness, directed=True)
+    directed_acyclic_graph = nx.DiGraph([(u, v) for (u, v) in directed_graph.edges() if u < v])
+
+    return nx.relabel_nodes(directed_acyclic_graph, {node: str(node) for node in list(directed_acyclic_graph.nodes)})
 
 
 if __name__ == "__main__":
