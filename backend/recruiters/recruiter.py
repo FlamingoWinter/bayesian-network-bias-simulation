@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Literal
 
 import pandas as pd
 
@@ -7,6 +8,11 @@ class Recruiter(ABC):
     @property
     @abstractmethod
     def name(self) -> str:
+        pass
+
+    @property
+    @abstractmethod
+    def output_type(self) -> Literal['categorical', 'continuous']:
         pass
 
     @abstractmethod
