@@ -6,7 +6,7 @@ from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork, Characteristic
-from backend.network.generate_network import generate_network
+from backend.network.generation.generate_network import generate_network
 from backend.recruiters.logistic_regression_recruiter import LogisticRegressionRecruiter
 from backend.recruiters.random_forest_recruiter import RandomForestRecruiter
 from backend.recruiters.recruiter import Recruiter

@@ -7,7 +7,7 @@ from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork, num_samples
-from backend.network.generate_network import generate_network
+from backend.network.generation.generate_network import generate_network
 
 
 class ApiConfig(AppConfig):
