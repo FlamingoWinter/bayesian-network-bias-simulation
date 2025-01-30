@@ -61,8 +61,8 @@ def generate_random_categorical_network_from_nx(graph: nx.DiGraph):
     for node in graph.nodes:
         network.set_category_names_for_characteristic(node, ["1", '2'])
 
-    network.score_characteristic = graph.nodes[-1]
-    network.application_characteristics = graph.nodes[:-1]
+    network.score_characteristic = list(graph.nodes)[-1]
+    network.application_characteristics = list(graph.nodes)[:-1]
 
     return network
 
@@ -125,10 +125,14 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
             connections_by_out_point = {out_point: 0 for out_point in out_points}
 
             for old_out_point in old_out_points:
+                tried = 0
                 while True:
                     random_out_point = random.choice(out_points)
+                    tried += 1
                     if connections_by_out_point[random_out_point] < max_parents:
                         break
+                    if tried > 100:
+                        print("failed linking old outpoints")
                 dag.add_edge(old_out_point, random_out_point)
                 connections_by_out_point[random_out_point] += 1
 
@@ -141,7 +145,7 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
                         break
                     tried += 1
                     if tried > 100:
-                        print("failed")
+                        print("failed generating connections within min_parents and max_parents")
                         break
 
                 for node in node_list[:(connections - connections_by_out_point[out_point])]:
