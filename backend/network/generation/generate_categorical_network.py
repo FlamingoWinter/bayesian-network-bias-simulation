@@ -13,14 +13,13 @@ from scipy.stats import rv_discrete
 from backend.entropy.entropy import categorical_entropy
 from backend.network.pgmpy_network import PgmPyNetwork
 
-default_category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
-
 
 def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx.DiGraph,
                                                                        left: float,
                                                                        right: float,
-                                                                       alpha: float = 1,
-                                                                       category_numbers_dist: rv_discrete = default_category_number_dist):
+                                                                       category_numbers_dist: rv_discrete,
+                                                                       alpha: float = 1
+                                                                       ):
     # We're placing a bound on the mutual information between each variable and its set of parents.
 
     # Alpha is how concentrated the Dirichlets are. If the network fails to generate
@@ -104,7 +103,9 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
                     # mutual information. In this case, we just restart network generation with more dense (higher entropy distributions).
                     alpha = alpha / 2
                     print(f"Generation failed. Retrying with alpha = {alpha}....")
-                    return random_categorical_network_from_nx_with_bounded_mutual_information(graph, left, right, alpha)
+                    return random_categorical_network_from_nx_with_bounded_mutual_information(graph, left, right,
+                                                                                              category_numbers_dist,
+                                                                                              alpha)
 
         cpd = TabularCPD(variable=node, variable_card=num_categories,
                          values=list(zip(*cpd)),
@@ -125,7 +126,7 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
 
 
 def random_categorical_network_from_nx(graph: nx.DiGraph,
-                                       category_numbers_dist: rv_discrete = default_category_number_dist):
+                                       category_numbers_dist: rv_discrete):
     return random_categorical_network_from_nx_with_bounded_mutual_information(graph, 0, 1, 1, category_numbers_dist)
 
 

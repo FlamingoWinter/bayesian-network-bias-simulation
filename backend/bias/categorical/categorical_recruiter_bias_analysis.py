@@ -76,7 +76,7 @@ class CategoricalRecruiterBiasAnalysis:
         if len(self.by_group) > 2:
             s += f"""
             The biggest difference among groups in the proportion of people hired is {min_group} and {max_group}, 
-            where""" + explanation.format(min_group=min_group, max_group=max_group, percentage=formatted_percentage)
+            where """ + explanation.format(min_group=min_group, max_group=max_group, percentage=formatted_percentage)
         else:
             s += f"""
             
