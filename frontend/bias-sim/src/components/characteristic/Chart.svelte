@@ -77,6 +77,9 @@
 
 
 	const handleClickOutside = (event: MouseEvent) => {
+		if (isHovered && !expanded) {
+			toggleExpand();
+		}
 		if (!isHovered && expanded) {
 			toggleExpand();
 		}
