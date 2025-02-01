@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Tween } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 
@@ -11,7 +10,7 @@
 
 	export let y: d3.ScaleLinear<number, number, never> = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
 
-	const duration = 750;
+	const duration = 200;
 
 	let axisLeft: SVGGElement;
 
@@ -20,8 +19,7 @@
 
 	onMount(() => {
 		maxBarYTween = new Tween(maxBarY, {
-			duration: duration,
-			easing: cubicOut
+			duration: duration
 		});
 	});
 

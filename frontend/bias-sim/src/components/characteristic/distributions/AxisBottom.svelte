@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Tween } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 
 	import * as d3 from 'd3';
@@ -14,7 +13,7 @@
 
 	export let x: d3.ScaleLinear<number, number, never> = d3.scaleLinear().range([0, width]).domain([Math.min(...distribution), Math.max(...distribution)]);
 
-	const duration = 750;
+	const duration = 200;
 
 	let axisBottom: SVGGElement;
 
@@ -23,12 +22,10 @@
 
 	onMount(() => {
 		minDistribution = new Tween(Math.min(...distribution), {
-			duration: duration,
-			easing: cubicOut
+			duration: duration
 		});
 		maxDistribution = new Tween(Math.max(...distribution), {
-			duration: duration,
-			easing: cubicOut
+			duration: duration
 		});
 	});
 
