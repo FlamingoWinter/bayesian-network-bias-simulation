@@ -35,6 +35,10 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
 
     num_categories_by_node: Dict[str, int] = {node: category_numbers_dist.rvs() for node in graph.nodes}
 
+    # Ensure the score node is 2-valued.
+    score_characteristic = list(graph.nodes)[-1]
+    num_categories_by_node[score_characteristic] = 2
+
     node_probabilities: Dict[str, Dict[int, float]] = {}
 
     for node in graph.nodes:
@@ -102,7 +106,7 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
                     # Network generation might get to a point where no new nodes can be generated with the desired
                     # mutual information. In this case, we just restart network generation with more dense (higher entropy distributions).
                     alpha = alpha / 2
-                    print(f"Generation failed. Retrying with alpha = {alpha}....")
+                    print(f"Generating cpds failed. Retrying with alpha = {alpha}....")
                     return random_categorical_network_from_nx_with_bounded_mutual_information(graph, left, right,
                                                                                               category_numbers_dist,
                                                                                               alpha)
@@ -119,7 +123,7 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
         network.set_category_names_for_characteristic(node, [str(x) for x in
                                                              list(range(1, num_categories_by_node[node] + 1))])
 
-    network.score_characteristic = list(graph.nodes)[-1]
+    network.score_characteristic = score_characteristic
     network.application_characteristics = list(graph.nodes)[:-1]
 
     return network
