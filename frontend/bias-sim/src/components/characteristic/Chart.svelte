@@ -38,7 +38,7 @@
 	import type { Characteristic, Node } from '../../types/network';
 	import { expandedNodeId, network, simulation } from '../../stores/store';
 	import ExpandButton from './config/CharacteristicExpandButton.svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
 	import DiscreteDistribution from './distributions/DiscreteDistribution.svelte';
 	import ContinuousDistribution from './distributions/ContinuousDistribution.svelte';
@@ -87,9 +87,9 @@
 
 	onMount(() => {
 		document.addEventListener('click', handleClickOutside);
-	});
-	onDestroy(() => {
-		document.removeEventListener('click', handleClickOutside);
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
 	});
 
 

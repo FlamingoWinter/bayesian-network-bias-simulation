@@ -18,9 +18,8 @@
 				 on:mouseleave={() => {isHovered = false}}
 				 class="absolute bottom-20 left-4 p-4 card bg-surface-50-900-token w-52 min-h-80 drop-shadow-md rounded-lg flex flex-col items-center justify-start gap-2">
 
-			<MenuButton callback={()=>{}}>
-				New Network...
-			</MenuButton>
+			<NewNetworkButton />
+
 			{#if $conditioned}
 				<MenuButton callback={$deconditionAll}>
 					Decondition all
@@ -39,7 +38,8 @@
 	import MenuButton from './MenuButton.svelte';
 	import { conditioned } from '../../stores/store';
 	import { deconditionAll } from '../../stores/functions';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
+	import NewNetworkButton from './new_network_modal/NewNetworkButton.svelte';
 
 	let isHovered: boolean = false;
 	let isOpen = false;
@@ -53,9 +53,9 @@
 
 	onMount(() => {
 		document.addEventListener('click', handleClickOutside);
-	});
-	onDestroy(() => {
-		document.removeEventListener('click', handleClickOutside);
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
 	});
 
 </script>
