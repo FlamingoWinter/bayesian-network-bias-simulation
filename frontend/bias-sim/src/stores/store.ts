@@ -12,3 +12,4 @@ export const expandedNodeId = writable('');
 
 export const network: Writable<Network> = writable({} as Network);
 export const simulation: Writable<d3.Simulation<Node, undefined>> = writable();
+export const sessionKey: Writable<string> = writable();

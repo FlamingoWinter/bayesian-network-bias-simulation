@@ -1,6 +1,6 @@
 import math
 from itertools import product
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, Literal, Union
 
 import networkx as nx
 import numpy as np
@@ -11,7 +11,23 @@ from pgmpy.models import BayesianNetwork as PgBn
 from scipy.stats import rv_discrete
 
 from backend.entropy.entropy import categorical_entropy
+from backend.network.generation.generate_dag import generate_random_dag
 from backend.network.pgmpy_network import PgmPyNetwork
+
+default_category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
+
+
+def generate_random_categorical_network(number_of_nodes,
+                                        parents: Tuple[int, int] = (2, 3),
+                                        mutual_information: Tuple[float, float] = (0.6, 0.9),
+                                        category_numbers_dist=default_category_number_dist
+                                        ):
+    categorical_or_continuous: Union[Literal["categorical"], Literal["continuous"]]
+
+    graph = generate_random_dag(number_of_nodes, parents[0], parents[1])
+    return random_categorical_network_from_nx_with_bounded_mutual_information(graph, mutual_information[0],
+                                                                              mutual_information[1],
+                                                                              category_numbers_dist)
 
 
 def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx.DiGraph,

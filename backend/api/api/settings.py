@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'corsheaders',
     'api.apps.ApiConfig',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +82,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://your-frontend-domain.com",
 ]
 
-WSGI_APPLICATION = "api.wsgi.application"
+ASGI_APPLICATION = "api.routing.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

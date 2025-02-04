@@ -39,13 +39,11 @@
 	import Chart from './characteristic/Chart.svelte';
 	import { applyForceSimulation } from '../animation/forceSimulation';
 	import { applyZoom } from '../animation/zoom';
-	import type { Node } from '../types/network';
 
 	export let width: number;
 	export let height: number;
 
 	let svg: SVGElement;
-	let svgElement: d3.Selection<SVGElement, unknown, null, undefined>;
 
 	let zoomGroup: SVGGElement;
 	let linkGroup: SVGGElement;
@@ -61,24 +59,21 @@
 
 
 	$: {
+		if ($network) {
+			applyZoom(svg, zoomGroup);
+			if ($simulation) {
+				$simulation.stop();
+
+			}
+			$simulation = applyForceSimulation($network.graph, width, height, nodeGroup, linkGroup, markerGroup);
+		}
+	}
+
+	$: {
 		if ($simulation) {
 			$simulation.force('center', d3.forceCenter(width / 2, height / 2));
 			$simulation.alpha(1).restart();
 		}
-	}
-
-	function getTranslationFromTransform(s: string) {
-		const match = s.match(/translate\(([-\d.]+),\s*([-\d.]+)\)/);
-
-		if (!match || match.length < 2) {
-			return { x: 0, y: 0 };
-		}
-
-		return { x: parseFloat(match[1]), y: parseFloat(match[2]) };
-	}
-
-	function asNode(node: Node | any): Node {
-		return node as Node;
 	}
 
 

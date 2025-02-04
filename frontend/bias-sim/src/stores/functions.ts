@@ -10,3 +10,9 @@ export const condition = writable(async (characteristic: string, value: number |
 });
 export const deconditionAll = writable(async () => {
 });
+
+export const loadProcess = writable(async (socket: WebSocket) => {
+});
+
+export const invalidateNetwork = writable(async () => {
+});

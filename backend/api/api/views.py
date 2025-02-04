@@ -14,7 +14,8 @@ from backend.utilities.time_function import time_function
 
 
 def get_example_network(request):
-    network_response: NetworkResponse = from_cache("network-response")
+    network_response: NetworkResponse = from_cache(f"network-response_{request.session.session_key}",
+                                                   "network-response")
 
     return JsonResponse(network_response, safe=False)
 
@@ -25,7 +26,8 @@ def condition(request):
         return JsonResponse({"error": "POST"}, status=405)
 
     condition_request: ConditionRequest = json.loads(request.body)
-    network: BayesianNetwork = from_cache("network")
+    network: BayesianNetwork = from_cache(f"network_{request.session.session_key}",
+                                          "network")
     if network.model_type == "pgmpy":
         network.model.__class__ = PgBn
     else:
@@ -44,3 +46,13 @@ def condition(request):
 @ensure_csrf_cookie
 def csrf(request):
     return JsonResponse({'token': get_token(request)})
+
+
+def session_key(request):
+    session_key = request.session.session_key
+
+    if not session_key:
+        request.session.save()
+        session_key = request.session.session_key
+
+    return JsonResponse({'key': session_key})

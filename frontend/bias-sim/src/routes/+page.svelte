@@ -1,12 +1,13 @@
 <script lang="ts">
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
-	import * as d3 from 'd3';
-	import { network } from '../stores/store';
+	import { network, sessionKey } from '../stores/store';
 	import type { Network } from '../types/network';
-	import { apiUrl } from '../utiliites/api';
+	import { apiRequest, apiUrl } from '../utiliites/api';
 	import ConditionLogic from '../components/ConditionLogic.svelte';
 	import Menu from '../components/menu/Menu.svelte';
+	import { deconditionAll, invalidateNetwork } from '../stores/functions';
+	import * as d3 from 'd3';
 
 	let initialised = false;
 	let innerWidth: number;
@@ -16,7 +17,15 @@
 	$: height = innerHeight - 4;
 
 	onMount(async () => {
-		$network = await d3.json(apiUrl) as Network;
+		$network = await apiRequest('') as Network;
+
+		$invalidateNetwork = async () => {
+			$network = await apiRequest('') as Network;
+			$deconditionAll();
+		};
+
+		$sessionKey = (await d3.json(`${apiUrl}session/`, { credentials: 'include' }) as { key: string }).key;
+
 
 		initialised = true;
 	});

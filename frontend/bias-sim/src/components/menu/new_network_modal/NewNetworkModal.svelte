@@ -107,7 +107,20 @@
 			<footer class="flex justify-end">
 				<div class="flex gap-2">
 					<button class="btn variant-outline-primary" on:click={()=>{modalStore.close()}}>Cancel</button>
-					<button class="btn variant-outline-secondary">Submit</button>
+					<button class="btn variant-outline-secondary"
+									on:click={async ()=>{
+							await awaitSocketClose(generateNetworkSocket)
+
+							generateNetworkSocket = await awaitSocketOpen(new WebSocket(`${webSocketUrl}/generate-network/?session_key=${$sessionKey}`));
+							modalStore.close()
+
+							const jsonMessage = generateCreateNetworkJson()
+							generateNetworkSocket.send(jsonMessage)
+
+							await $loadProcess(generateNetworkSocket)
+							await $invalidateNetwork()
+						}}>Submit
+					</button>
 				</div>
 			</footer>
 		</div>
@@ -122,6 +135,8 @@
 
 	import { fade } from 'svelte/transition';
 
+	import { awaitSocketClose, awaitSocketOpen } from '../../../utiliites/socket';
+
 
 	import { getModalStore, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import ModalRow from './ModalRow.svelte';
@@ -132,7 +147,13 @@
 	import InfoHover from '../../popups/InfoHover.svelte';
 	import ModalPopups from '../../popups/ModalPopups.svelte';
 
+	import { webSocketUrl } from '../../../utiliites/api';
+	import { invalidateNetwork, loadProcess } from '../../../stores/functions';
+	import { sessionKey } from '../../../stores/store';
+
 	const modalStore = getModalStore();
+
+	let generateNetworkSocket: WebSocket | undefined = undefined;
 
 	let randomOrPredefined: 'random' | 'predefined' = 'random';
 	let continuousOrCategorical: 'categorical' | 'continuous' = 'categorical';
@@ -186,6 +207,19 @@
 		for (let i = 0; i < p.length; i++) {
 			p[i].value = Number(p[i].value.toFixed(10));
 		}
+	}
+
+	function generateCreateNetworkJson() {
+		return JSON.stringify({
+			'random_or_predefined': randomOrPredefined,
+			'categorical_or_continuous': continuousOrCategorical,
+			'number_of_nodes': numberOfNodes,
+			'min_allowed_parents': minParents,
+			'max_allowed_parents': maxParents,
+			'min_allowed_mutual_information': minMutualInformation,
+			'max_allowed_mutual_information': maxMutualInformation,
+			'values_per_variable': Object.fromEntries(p.map(item => [item.name, item.value]))
+		});
 	}
 
 </script>
