@@ -73,6 +73,8 @@
 
 	$: if (axisBottom) {
 		d3.select(axisBottom).transition().call(d3.axisBottom(x));
+		d3.select(axisBottom).selectAll('.tick text')
+			.attr('font-size', `${characteristic.categoryNames.join('').length > 15 ? 7 : 10}`);
 	}
 
 
