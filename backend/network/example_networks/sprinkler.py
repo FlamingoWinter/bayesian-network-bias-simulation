@@ -22,8 +22,8 @@ def get_sprinkler_network() -> BayesianNetwork:
                           values=[[0.8, 0.2], [0.2, 0.8]],
                           evidence=['cloudy'], evidence_card=[2])
     cpd_wet_grass = TabularCPD(variable='wet_grass', variable_card=2,
-                               values=[[1.0, 0.1, 0.1, 0.01],
-                                       [0.0, 0.9, 0.9, 0.99]],
+                               values=[[1.0, 0.7, 0.7, 0.01],
+                                       [0.0, 0.3, 0.3, 0.99]],
                                evidence=['sprinkler', 'rain'], evidence_card=[2, 2])
 
     sprinkler_model.add_cpds(cpd_cloudy, cpd_sprinkler, cpd_rain, cpd_wet_grass)
