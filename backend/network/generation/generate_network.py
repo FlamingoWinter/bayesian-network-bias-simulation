@@ -1,9 +1,9 @@
 from typing import Union, Literal
 
 from backend.network.bayesian_network import BayesianNetwork
+from backend.network.example_networks.sprinkler import get_sprinkler_network
 from backend.network.generation.generate_categorical_network import \
     generate_random_categorical_network
-from backend.network.naming_characteristics.name_characteristics import name_characteristics
 from backend.utilities.time_function import time_function
 
 
@@ -13,10 +13,7 @@ def generate_network() -> BayesianNetwork:
     #    This is currently returning a placeholder example network, but should return a randomised Bayesian
     #    network which mirrors the dependencies of variables in reality and should be customisable.
 
-    # return get_asia_network()
-    network = generate_random_network()
-    name_characteristics(network)
-    return network
+    return get_sprinkler_network()
 
 
 def generate_random_network():

@@ -53,6 +53,7 @@ class BayesianNetwork(ABC):
         self.application_characteristics: List[str] = application_characteristics
         self.description: str = description
         self.model_type: Union[Literal[""], Literal["pymc"], Literal["pgmpy"]] = ""
+        self.predefined = False
 
     def set_description_for_characteristic(self, characteristic: str, description: str):
         self.characteristics[characteristic].description = description

@@ -6,7 +6,7 @@
 
 	const toastStore = getToastStore();
 
-	let loadingText: string;
+	let loadingText: string = 'Loading...';
 	let isLoading: boolean = false;
 
 	onMount(() => {

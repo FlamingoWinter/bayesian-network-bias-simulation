@@ -115,6 +115,8 @@ def get_asia_network() -> BayesianNetwork:
     The presence of lung cancer or tuberculosis may be identified by an x-ray, but the presence of bronchitis will not be.
     """)
 
+    asia_network.predefined = True
+
     return asia_network
 
 

@@ -52,7 +52,8 @@ class PyMcNetwork(BayesianNetwork):
             "applicationCharacteristics": self.application_characteristics,
             "characteristics": {name: characteristic.to_characteristic_response() for [name, characteristic] in
                                 self.characteristics.items()},
-            "description": self.description}
+            "description": self.description,
+            "predefined": self.predefined}
 
     @time_function("Sampling Posterior")
     def sample_conditioned(self):

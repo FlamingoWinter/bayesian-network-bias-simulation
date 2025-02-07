@@ -11,7 +11,7 @@ class RandomNetworkRequestBase:
 
 categoricalNetworkRequestDefaults = {
     "random_or_predefined": "random",
-    "number_of_nodes": 10,
+    "number_of_nodes": 15,
     "min_allowed_parents": 1,
     "max_allowed_parents": 3,
     "categorical_or_continuous": "categorical",

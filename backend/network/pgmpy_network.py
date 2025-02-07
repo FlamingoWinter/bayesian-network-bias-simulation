@@ -87,7 +87,8 @@ class PgmPyNetwork(BayesianNetwork):
             "applicationCharacteristics": application_characteristics,
             "characteristics": {name: characteristic.to_characteristic_response() for [name, characteristic] in
                                 self.characteristics.items()},
-            "description": self.description}
+            "description": self.description,
+            "predefined": self.predefined}
 
     def condition_on(self, condition_request: ConditionRequest) -> None:
         if self.name_mapping is None:

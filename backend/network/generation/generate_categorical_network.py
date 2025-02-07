@@ -1,4 +1,5 @@
 import math
+import random
 from itertools import product
 from typing import Dict, Any, Tuple, Literal, Union
 
@@ -53,8 +54,16 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
 
     # Ensure the score node is 2-valued.
 
-    # We arbitrarily set the default score node to be about 2/3 of the way through the graph.
-    score_characteristic = list(graph.nodes)[int(len(graph.nodes) * 0.67)]
+    # The score characteristic can be any node which isn't a child or grandchild of an in-node
+    nodes_without_ancestors = [node for node, deg in graph.in_degree() if deg == 0]
+    direct_children = list(set([child for p in nodes_without_ancestors for child in graph.successors(p)]))
+    score_non_candidates = nodes_without_ancestors + direct_children
+    score_candidates = [node for node in graph.nodes if node not in score_non_candidates]
+
+    if len(score_candidates) == 0:
+        score_characteristic = list(graph.nodes)[-1]
+    else:
+        score_characteristic = random.sample(score_candidates, 1)[0]
     num_categories_by_node[score_characteristic] = 2
 
     node_probabilities: Dict[str, Dict[int, float]] = {}
@@ -150,6 +159,8 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
     score_direct_parents = list(graph.predecessors(score_characteristic))
 
     network.application_characteristics = score_descendants + score_direct_parents
+
+    network.predefined = False
 
     return network
 

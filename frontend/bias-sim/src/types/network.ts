@@ -21,6 +21,7 @@ export interface Network {
 	applicationCharacteristics: string[];
 	characteristics: Record<string, Characteristic>;
 	description: string;
+	predefined: boolean;
 }
 
 export interface Characteristic {

@@ -68,6 +68,8 @@ def get_sprinkler_network() -> BayesianNetwork:
     Either rain or the sprinkler being on can cause the grass to be wet.
     """)
 
+    sprinkler_network.predefined = True
+
     return sprinkler_network
 
 

@@ -1,11 +1,12 @@
 <script lang="ts">
-	import MenuButton from '../../menu/MenuButton.svelte';
 	import { getModalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
-	import NewNetworkModal from './NewNetworkModal.svelte';
+	import MenuButton from '../menu/MenuButton.svelte';
 
 	const modalStore = getModalStore();
 
-	const modalComponent: ModalComponent = { ref: NewNetworkModal };
+	export let component;
+
+	const modalComponent: ModalComponent = { ref: component };
 
 	const modal: ModalSettings = {
 		type: 'component',
@@ -15,6 +16,6 @@
 
 
 <MenuButton callback={()=>{	modalStore.trigger(modal)}}>
-	New Network...
+	<slot />
 </MenuButton>
 

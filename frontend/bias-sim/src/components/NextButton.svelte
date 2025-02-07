@@ -1,33 +1,45 @@
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<button type="button"
-				class="absolute right-5 bottom-5 btn btn-xl text-2xl variant-filled py-4 px-4 rounded-full min-w-32"
-				on:click={()=>{	modalStore.trigger(modal)}}>
-	{#if loading}
-		<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
-										strokeLinecap="butt" value={undefined} stroke={100} />
-	{:else}
-		New Network...
-		<CaretRightFill class="ml-2" width={20} height={20} />
-	{/if}
-</button>
-
+{#if mode !== "none"}
+	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+	<button type="button"
+					class="absolute right-5 bottom-5 btn btn-xl text-2xl variant-filled py-4 px-4 rounded-full min-w-32 z-[5]"
+					on:click={()=>{	modalStore.trigger(modal)}}>
+		{#if loading}
+			<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
+											strokeLinecap="butt" value={undefined} stroke={100} />
+		{:else}
+			{mode === "new_network" ? "New Network..." : "Label Network..."}
+			<CaretRightFill class="ml-2" width={20} height={20} />
+		{/if}
+	</button>
+{/if}
 <script lang="ts">
 
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
-	import { getModalStore, type ModalComponent, type ModalSettings, ProgressRadial } from '@skeletonlabs/skeleton';
+	import { getModalStore, ProgressRadial } from '@skeletonlabs/skeleton';
 	import NewNetworkModal from './modals/new_network_modal/NewNetworkModal.svelte';
+	import { network } from '../stores/store';
+	import NameNetworkModal from './modals/name_network_modal/NameNetworkModal.svelte';
 
 	let loading: boolean = false;
-	let mode: 'newNetwork' | 'nameNetwork';
+	let mode: 'new_network' | 'none' | 'name_network' = 'new_network';
+
+	$: if ($network.characteristics) {
+		mode = $network.predefined ? 'new_network' :
+			Object.keys($network.characteristics)[0] in ['0', '1', '2', '3'] ? 'name_network' : 'none'
+		;
+		console.log(mode);
+	}
+
 
 	// The mode should be generating a new network. If the network is the predefined demo network.
 
 
 	const modalStore = getModalStore();
 
-	const modalComponent: ModalComponent = { ref: NewNetworkModal };
+	$: modalComponent = (mode == 'new_network' ? { ref: NewNetworkModal } : { ref: NameNetworkModal });
 
-	const modal: ModalSettings = {
+
+	$: modal = {
 		type: 'component',
 		component: modalComponent
 	};

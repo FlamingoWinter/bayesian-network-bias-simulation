@@ -23,11 +23,25 @@ export function applyForceSimulation(graph: Graph,
 		});
 	}
 
+	function startForce(alpha: number) {
+		const strength = 80;
+
+		const predecessors = new Set(graph.links.map((l: Link) => l.target));
+
+		graph.nodes.forEach((node: Node) => {
+			if (!predecessors.has(node)) {
+				node.x! -= alpha * strength;
+			}
+		});
+	}
+
+
 	const simulation = d3.forceSimulation(graph.nodes)
 		.force('link', d3.forceLink(graph.links).id((d: any) => d.id).distance(15 * graph.nodes.length).strength(0.1))
 		.force('charge', d3.forceManyBody().strength(-300 * graph.nodes.length))
 		.force('center', d3.forceCenter(width / 2, height / 2).strength(120 * graph.nodes.length))
-		.force('left-right', leftRightForce);
+		.force('left-right', leftRightForce)
+		.force('start-force', startForce);
 
 	simulation
 		.nodes(graph.nodes)

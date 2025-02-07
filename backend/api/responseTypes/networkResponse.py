@@ -15,5 +15,6 @@ NetworkResponse = TypedDict('NetworkResponse', {
     'scoreCharacteristic': str,
     'applicationCharacteristics': List[str],
     'characteristics': Dict[str, CharacteristicResponse],
-    'description': str
+    'description': str,
+    'predefined': bool
 })

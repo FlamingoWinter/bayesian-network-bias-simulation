@@ -36,6 +36,8 @@ def get_weighted_coin_network() -> BayesianNetwork:
         A (possibly naive) uniform prior is used, and the weighting can be estimated from the result of 100 coin flips.
     """)
 
+    weighted_coin_network.predefined = True
+
     return weighted_coin_network
 
 
