@@ -139,9 +139,9 @@
 
 
 	import { getModalStore, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
-	import ModalRow from './ModalRow.svelte';
-	import ModalDivider from './ModalDivider.svelte';
-	import ModalMinMaxAny from './ModalMinMaxAny.svelte';
+	import ModalRow from '../ModalRow.svelte';
+	import ModalDivider from '../ModalDivider.svelte';
+	import ModalMinMaxAny from '../ModalMinMaxAny.svelte';
 	import VariableValueDistributionPieChart, { type DataItem } from './VariableValueDistributionPieChart.svelte';
 	import PInputAndLabel from './PInputAndLabel.svelte';
 	import InfoHover from '../../popups/InfoHover.svelte';

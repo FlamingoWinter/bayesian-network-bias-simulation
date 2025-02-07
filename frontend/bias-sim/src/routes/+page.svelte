@@ -8,6 +8,7 @@
 	import Menu from '../components/menu/Menu.svelte';
 	import { deconditionAll, invalidateNetwork } from '../stores/functions';
 	import * as d3 from 'd3';
+	import NextButton from '../components/NextButton.svelte';
 
 	let initialised = false;
 	let innerWidth: number;
@@ -46,3 +47,4 @@
 	<GraphVisualisation width={width} height={height} />
 {/if}
 <Menu />
+<NextButton />
