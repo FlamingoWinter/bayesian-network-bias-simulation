@@ -3,6 +3,7 @@ from typing import Union, Literal
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.generation.generate_categorical_network import \
     generate_random_categorical_network
+from backend.network.naming_characteristics.name_characteristics import name_characteristics
 from backend.utilities.time_function import time_function
 
 
@@ -13,10 +14,12 @@ def generate_network() -> BayesianNetwork:
     #    network which mirrors the dependencies of variables in reality and should be customisable.
 
     # return get_asia_network()
-    return generate_random_network()
+    network = generate_random_network()
+    name_characteristics(network)
+    return network
 
 
 def generate_random_network():
     categorical_or_continuous: Union[Literal["categorical"], Literal["continuous"]]
 
-    return generate_random_categorical_network(10)
+    return generate_random_categorical_network(15)

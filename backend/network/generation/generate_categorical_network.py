@@ -52,7 +52,9 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
     num_categories_by_node: Dict[str, int] = {node: category_numbers_dist.rvs() for node in graph.nodes}
 
     # Ensure the score node is 2-valued.
-    score_characteristic = list(graph.nodes)[-1]
+
+    # We arbitrarily set the default score node to be about 2/3 of the way through the graph.
+    score_characteristic = list(graph.nodes)[int(len(graph.nodes) * 0.67)]
     num_categories_by_node[score_characteristic] = 2
 
     node_probabilities: Dict[str, Dict[int, float]] = {}
@@ -140,7 +142,14 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
                                                              list(range(1, num_categories_by_node[node] + 1))])
 
     network.score_characteristic = score_characteristic
-    network.application_characteristics = list(graph.nodes)[:-1]
+
+    # We arbitrarily set the application characteristics to be the direct
+    # parents and descendants of the score characteristic
+
+    score_descendants = list(nx.descendants(graph, score_characteristic))
+    score_direct_parents = list(graph.predecessors(score_characteristic))
+
+    network.application_characteristics = score_descendants + score_direct_parents
 
     return network
 
