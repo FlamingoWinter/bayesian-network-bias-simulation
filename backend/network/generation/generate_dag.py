@@ -108,24 +108,44 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
     # Next, we use the variation with a minimum and maximum number of parents.
 
     # https://link.springer.com/article/10.1007/s11222-013-9428-y#Equ23
-    # c[m, s, k] is for any dag with m nodes and s outpoints, this returns the number of dags which
+    # c[m, s, k]: For any dag with m nodes and s outpoints, this is the number of dags which
     # exist with k outpoints for which removing the first layer of outpoints leaves us with that dag.
     c = np.ones((nodes + 1, nodes + 1, nodes + 1), dtype=object)
+    c[0, :, :] = 0
+    c[:, :, 0] = 0
+
     for m in range(1, nodes + 1):
-        for s in range(1, nodes + 1):
+        for s in range(1, m + 1):
             for k in range(1, nodes + 1):
                 # t is the total ways to link one outpoint to the m nodes on the existing graph
                 t = 0
-                for i in range(min_parents, max_parents):
+                for i in range(min(m, min_parents), min(m, max_parents) + 1):
                     t += math.comb(m, i)  # The number of ways we can connect our out-point given that it has i parents
 
-                # d is the total ways we could link these out-points such that at least one of the s old outpoints are disconnected
+                # d is the total dags we could have had where we linked these out-points such that at least one of the s old outpoints are disconnected
                 # This is a problem because it would mean that that old out-point is still an out-point,
                 # so we remove those from the probabilities.
                 d = 0
-                for i in range(s):
-                    d += math.comb(s, i) * c[m - i, s - i, k]
+                for i in range(1, s + 1):
+                    # This part is the number of ways we could link these out-points such that less than or equal to i outpoints are disconnected
+                    # Explain the inclusion-exclusion principle
+                    # Then there are (s-i) "real" outpoints
 
+                    # (2 ** ((m - i) * s - 1)) is how many ways we can link our outpoints to the non-isolated points
+                    # math.comb(s, i) is how many ways the i isolated outpoints can be selected from the s total outpoints
+
+                    # ways outpoints can be linked to non-isolated points
+                    l = 0
+                    for x in range(min(m, min_parents), min(m - i, max_parents) + 1):
+                        l += math.comb(m - i, x)
+
+                    sign = (-1) ** (i + 1)
+
+                    if m - i != 0:
+                        d += sign * math.comb(s, i) * (l ** k)
+
+                if t ** k < d:
+                    print(t ** k, "<", d, f"({m}, {s}, {k}) t={t}")
                 c[m, s, k] = t ** k - d
 
     # a[n, k] is how many graphs there are with n nodes and k out-points, ignoring permutations.
@@ -151,7 +171,7 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
     a[0, :] = 0
     a[:, 0] = 0
 
-    a_n = np.sum(a[-1])
+    a_n = np.sum(a[-1], dtype=object)
 
     r = random.randint(1, a_n)
 
@@ -196,4 +216,4 @@ def generate_random_unconnected_dag_gnp(connectedness: float, nodes: int):
 
 
 if __name__ == "__main__":
-    generate_random_dag(10, 2, 4)
+    generate_random_dag(10, 2, 3)
