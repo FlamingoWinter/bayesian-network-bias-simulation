@@ -18,6 +18,10 @@
 				 on:mouseleave={() => {isHovered = false}}
 				 class="absolute bottom-20 left-4 p-4 card bg-surface-50-900-token w-52 min-h-80 drop-shadow-md rounded-lg flex flex-col items-center justify-start gap-2">
 
+			<OpenModalMenuButton component={SimulateModal}>Run Simulation...</OpenModalMenuButton>
+			<OpenModalMenuButton component={ShowBiasModal}>Show Bias...</OpenModalMenuButton>
+
+
 			<OpenModalMenuButton component={NewNetworkModal}>New Network...</OpenModalMenuButton>
 			<OpenModalMenuButton component={NameNetworkModal}>Name Network...</OpenModalMenuButton>
 
@@ -44,6 +48,8 @@
 	import OpenModalMenuButton from '../modals/OpenModalMenuButton.svelte';
 	import NewNetworkModal from '../modals/new_network_modal/NewNetworkModal.svelte';
 	import NameNetworkModal from '../modals/name_network_modal/NameNetworkModal.svelte';
+	import SimulateModal from '../modals/simulate_modal/SimulateModal.svelte';
+	import ShowBiasModal from '../modals/show_bias_modal/ShowBiasModal.svelte';
 
 	let isHovered: boolean = false;
 	let isOpen = false;

@@ -18,7 +18,7 @@
 
 				const t: ToastSettings = {
 					message: `${statusText}`,
-					timeout: 5000,
+					timeout: 2500,
 					background: 'variant-filled-primary'
 				};
 				toastStore.trigger(t);

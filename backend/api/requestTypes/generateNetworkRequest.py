@@ -11,7 +11,7 @@ class RandomNetworkRequestBase:
 
 categoricalNetworkRequestDefaults = {
     "random_or_predefined": "random",
-    "number_of_nodes": 15,
+    "number_of_nodes": 12,
     "min_allowed_parents": 1,
     "max_allowed_parents": 3,
     "categorical_or_continuous": "categorical",
@@ -45,3 +45,14 @@ class PredefinedNetworkRequest:
 
 RandomNetworkRequest = Union[CategoricalNetworkRequest, ContinuousNetworkRequest]
 GenerateNetworkRequest = Union[RandomNetworkRequest, PredefinedNetworkRequest]
+
+
+def new_generate_network_request(**kwargs) -> GenerateNetworkRequest:
+    if kwargs.get("random_or_predefined") == "predefined":
+        return PredefinedNetworkRequest()
+
+    if kwargs.get("categorical_or_continuous") == "categorical":
+        return CategoricalNetworkRequest(**kwargs)
+
+    if kwargs.get("categorical_or_continuous") == "continuous":
+        return ContinuousNetworkRequest()

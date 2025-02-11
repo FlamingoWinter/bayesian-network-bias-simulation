@@ -48,7 +48,7 @@ if __name__ == "__main__":
     network: BayesianNetwork = generate_network()
     candidate_group: CandidateGroup = generate_candidate_group(network, 1_000_000)
 
-    protected_characteristic = network.characteristics["0"]
+    protected_characteristic = list(network.characteristics.values())[0]
 
     recruiters: List[Recruiter] = [RandomForestRecruiter(), LogisticRegressionRecruiter()]
 

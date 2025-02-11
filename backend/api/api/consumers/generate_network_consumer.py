@@ -28,6 +28,7 @@ class GenerateNetworkConsumer(AsyncWebsocketConsumer):
     async def receive(self,
                       text_data: Any = None,
                       bytes_data: Any = None) -> None:
+        # TODO: This shouldn't work for just categorical network requests
         generate_network_request = CategoricalNetworkRequest(**json.loads(text_data))
 
         parents = (generate_network_request.min_allowed_parents, generate_network_request.max_allowed_parents)

@@ -7,7 +7,7 @@
 			<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
 											strokeLinecap="butt" value={undefined} stroke={100} />
 		{:else}
-			{mode === "new_network" ? "New Network..." : "Label Network..."}
+			{mode === "new_network" ? "New Network..." : mode === "name_network" ? "Label Network..." : "Run Simulation"}
 			<CaretRightFill class="ml-2" width={20} height={20} />
 		{/if}
 	</button>
@@ -19,15 +19,16 @@
 	import NewNetworkModal from './modals/new_network_modal/NewNetworkModal.svelte';
 	import { network } from '../stores/store';
 	import NameNetworkModal from './modals/name_network_modal/NameNetworkModal.svelte';
+	import SimulateModal from './modals/simulate_modal/SimulateModal.svelte';
 
 	let loading: boolean = false;
-	let mode: 'new_network' | 'none' | 'name_network' = 'new_network';
+	let mode: 'new_network' | 'none' | 'name_network' | 'run_simulation' = 'new_network';
 
 	$: if ($network.characteristics) {
 		mode = $network.predefined ? 'new_network' :
-			Object.keys($network.characteristics)[0] in ['0', '1', '2', '3'] ? 'name_network' : 'none'
-		;
-		console.log(mode);
+			Object.keys($network.characteristics)[0] in ['0', '1', '2', '3'] ? 'name_network' :
+				Object.keys($network.characteristics).some(a => a.includes('Characteristic')) ? 'run_simulation' :
+					'none';
 	}
 
 
@@ -36,7 +37,9 @@
 
 	const modalStore = getModalStore();
 
-	$: modalComponent = (mode == 'new_network' ? { ref: NewNetworkModal } : { ref: NameNetworkModal });
+	$: modalComponent = (mode == 'new_network' ? { ref: NewNetworkModal } :
+		(mode == 'run_simulation') ? { ref: SimulateModal } :
+			{ ref: NameNetworkModal });
 
 
 	$: modal = {

@@ -2,6 +2,8 @@ from typing import Dict
 
 import pandas as pd
 
+from backend.api.responseTypes.recruiterBiasAnalysisResponse.recruiterBiasAnalysisResponse import \
+    RecruiterBiasAnalysisResponse
 from backend.bias.categorical.categorical_recruiter_bias_analysis import CategoricalRecruiterBiasAnalysis
 from backend.bias.continuous.continuous_recruiter_bias_analysis import ContinuousRecruiterBiasAnalysis
 from backend.bias.threshold_score import threshold_score
@@ -13,7 +15,7 @@ from backend.recruiters.recruiter import Recruiter
 class RecruiterBiasAnalysis:
     def __init__(self, recruiter: Recruiter,
                  candidate_group: CandidateGroup, application_test: pd.DataFrame,
-                 protected_characteristic: Characteristic, score_threshold: float):
+                 protected_characteristic: Characteristic, score_threshold: float = None):
 
         is_score_categorical: bool = candidate_group.network.characteristics[
                                          candidate_group.network.score_characteristic].type == "categorical"
@@ -52,6 +54,12 @@ class RecruiterBiasAnalysis:
             self.categorical_recruiter_bias_analysis.print_summary()
         if self.continuous_recruiter_bias_analysis is not None:
             self.continuous_recruiter_bias_analysis.print_summary()
+
+    def to_response(self) -> RecruiterBiasAnalysisResponse:
+        return {
+            "categoricalBiasAnalysis": None if self.categorical_recruiter_bias_analysis is None else self.categorical_recruiter_bias_analysis.to_response(),
+            "continuousBiasAnalysis": None if self.continuous_recruiter_bias_analysis is None else self.continuous_recruiter_bias_analysis.to_response(),
+        }
 
 
 def print_bias_summary(bias_by_recruiter: Dict[Recruiter, RecruiterBiasAnalysis]) -> None:

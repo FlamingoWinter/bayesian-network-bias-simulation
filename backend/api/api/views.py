@@ -9,6 +9,8 @@ from pgmpy.models import BayesianNetwork as PgBn
 from backend.api.cache.cache import from_cache
 from backend.api.responseTypes.conditionResponse import ConditionRequest
 from backend.api.responseTypes.networkResponse import NetworkResponse
+from backend.api.responseTypes.recruiterBiasAnalysisResponse.biasResponse import \
+    BiasResponse
 from backend.network.bayesian_network import BayesianNetwork
 from backend.utilities.time_function import time_function
 
@@ -18,6 +20,12 @@ def get_example_network(request):
                                                    "network-response")
 
     return JsonResponse(network_response, safe=False)
+
+
+def get_bias(request):
+    bias_response: BiasResponse = from_cache(f"bias_{request.session.session_key}", "")
+
+    return JsonResponse(bias_response, safe=False)
 
 
 @time_function("Responding to Condition")

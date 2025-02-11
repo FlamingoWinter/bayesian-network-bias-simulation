@@ -1,5 +1,8 @@
 import pandas as pd
 
+from backend.api.responseTypes.recruiterBiasAnalysisResponse.categoricalRecruiterBiasAnalysisResponse import \
+    CategoricalGroupPredictionInformationResponse
+
 
 def confusion_matrix(df):
     tp = ((df["predicted_score"] == 1) & (df["actual_score"] == 1)).sum()
@@ -36,3 +39,30 @@ class CategoricalGroupPredictionInformation:
         self.false_positive_rate = self.hired_but_not_competent / self.not_competent
         self.false_discovery_rate = self.hired_but_not_competent / self.hired
         self.false_omission_rate = self.not_hired_and_not_competent / self.not_hired
+
+    def to_response(self) -> CategoricalGroupPredictionInformationResponse:
+        return {
+            "total": int(self.total),
+            "hiredAndCompetent": int(self.hired_and_competent),
+            "hiredButNotCompetent": int(self.hired_but_not_competent),
+            "notHiredButCompetent": int(self.not_hired_but_competent),
+            "notHiredAndNotCompetent": int(self.not_hired_and_not_competent),
+
+            "hired": int(self.hired),
+            "hiredRate": float(self.hired_rate),
+            "notHired": int(self.not_hired),
+            "notHiredRate": float(self.not_hired_rate),
+            "correct": int(self.correct),
+            "correctRate": float(self.correct_rate),
+            "incorrect": int(self.incorrect),
+            "incorrectRate": float(self.incorrect_rate),
+            "competent": int(self.competent),
+            "competentRate": float(self.competent_rate),
+            "notCompetent": int(self.not_competent),
+            "notCompetentRate": float(self.not_competent_rate),
+            "accuracy": float(self.accuracy),
+            "falseNegativeRate": float(self.false_negative_rate),
+            "falsePositiveRate": float(self.false_positive_rate),
+            "falseDiscoveryRate": float(self.false_discovery_rate),
+            "falseOmissionRate": float(self.false_omission_rate),
+        }

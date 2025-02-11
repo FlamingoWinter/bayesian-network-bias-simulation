@@ -63,7 +63,7 @@
 	let nameNetworkSocket: WebSocket | undefined = undefined;
 
 	const caveatString = `
-	This will generate randomised labels for each characteristic, using a small set of stochastic rules.
+This will generate randomised labels for each characteristic, using a small set of stochastic rules.
 
 It's important to be aware that these characteristics are generated with little knowledge of actual
 dependencies and are therefore solely illustrative.

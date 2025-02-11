@@ -1,14 +1,15 @@
 <script lang="ts">
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
 	import { onMount } from 'svelte';
-	import { network, sessionKey } from '../stores/store';
+	import { biasAnalysis, network, sessionKey } from '../stores/store';
 	import type { Network } from '../types/network';
 	import { apiRequest, apiUrl } from '../utiliites/api';
 	import ConditionLogic from '../components/ConditionLogic.svelte';
 	import Menu from '../components/menu/Menu.svelte';
-	import { deconditionAll, invalidateNetwork } from '../stores/functions';
+	import { deconditionAll, invalidateBias, invalidateNetwork } from '../stores/functions';
 	import * as d3 from 'd3';
 	import NextButton from '../components/NextButton.svelte';
+	import type { BiasAnalysis } from '../types/Bias';
 
 	let initialised = false;
 	let innerWidth: number;
@@ -23,6 +24,10 @@
 		$invalidateNetwork = async () => {
 			$network = await apiRequest('') as Network;
 			$deconditionAll();
+		};
+
+		$invalidateBias = async () => {
+			$biasAnalysis = await apiRequest('bias/') as BiasAnalysis;
 		};
 
 		$sessionKey = (await d3.json(`${apiUrl}session/`, { credentials: 'include' }) as { key: string }).key;

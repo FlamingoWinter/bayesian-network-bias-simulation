@@ -21,6 +21,7 @@ from . import views
 
 urlpatterns = [
     path('', views.get_example_network, name='get_example_network'),
+    path('bias/', views.get_bias, name='bias'),
     path('condition/', views.condition, name='condition'),
     path('csrf/', views.csrf, name="csrf"),
     path('session/', views.session_key, name="session")

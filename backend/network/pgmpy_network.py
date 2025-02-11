@@ -64,6 +64,8 @@ class PgmPyNetwork(BayesianNetwork):
             characteristic.name = new_characteristic.name
             new_characteristics[characteristic.name] = characteristic
         self.characteristics = new_characteristics
+        self.application_characteristics = [self.name_mapping[old_ac] for old_ac in self.application_characteristics]
+        self.score_characteristic = self.name_mapping[self.score_characteristic]
 
     def initialise_characteristics_from_model(self, model: pgBN):
         self.characteristics = {}
@@ -78,8 +80,6 @@ class PgmPyNetwork(BayesianNetwork):
 
         if self.name_mapping is not None:
             directed_graph = nx.relabel_nodes(directed_graph, self.name_mapping)
-            score_characteristic = self.name_mapping[score_characteristic]
-            application_characteristics = [self.name_mapping[c] for c in application_characteristics]
 
         return {
             "graph": node_link_data(directed_graph, link="links"),

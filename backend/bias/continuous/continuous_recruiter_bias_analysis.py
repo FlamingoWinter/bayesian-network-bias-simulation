@@ -17,3 +17,7 @@ class ContinuousRecruiterBiasAnalysis:
         print(f"---")
         print(f"R2: {self.r2}")
         print(f"---")
+
+    def to_response(self):
+        # Todo
+        return {}

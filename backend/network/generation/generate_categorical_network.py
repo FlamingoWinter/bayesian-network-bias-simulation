@@ -57,7 +57,9 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
     # The score characteristic can be any node which isn't a child or grandchild of an in-node
     nodes_without_ancestors = [node for node, deg in graph.in_degree() if deg == 0]
     direct_children = list(set([child for p in nodes_without_ancestors for child in graph.successors(p)]))
-    score_non_candidates = nodes_without_ancestors + direct_children
+    direct_grandchildren = list(set([child for p in direct_children for child in graph.successors(p)]))
+
+    score_non_candidates = set(nodes_without_ancestors + direct_children + direct_grandchildren)
     score_candidates = [node for node in graph.nodes if node not in score_non_candidates]
 
     if len(score_candidates) == 0:

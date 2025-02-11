@@ -16,3 +16,6 @@ export const loadProcess = writable(async (socket: WebSocket) => {
 
 export const invalidateNetwork = writable(async () => {
 });
+
+export const invalidateBias = writable(async () => {
+});

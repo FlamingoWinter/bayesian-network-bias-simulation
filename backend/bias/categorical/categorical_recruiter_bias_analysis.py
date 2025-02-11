@@ -2,6 +2,8 @@ from typing import Dict, Callable
 
 import pandas as pd
 
+from backend.api.responseTypes.recruiterBiasAnalysisResponse.categoricalRecruiterBiasAnalysisResponse import \
+    CategoricalRecruiterBiasAnalysisResponse
 from backend.bias.categorical.categorical_group_prediction_information import CategoricalGroupPredictionInformation
 from backend.network.bayesian_network import Characteristic
 from backend.utilities.capitalise_first import capitalise_first
@@ -150,3 +152,9 @@ class CategoricalRecruiterBiasAnalysis:
                                     positive_correlation_between_metric_and_advantage=False)
 
         print(s)
+
+    def to_response(self) -> CategoricalRecruiterBiasAnalysisResponse:
+        return {
+            "general": self.general.to_response(),
+            "byGroup": {g_name: g.to_response() for g_name, g in self.by_group.items()}
+        }
