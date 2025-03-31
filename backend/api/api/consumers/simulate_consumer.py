@@ -13,6 +13,8 @@ from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
+from backend.recruiters.categorical_output.deep_mlp_recruiter import DeepMLPRecruiter
+from backend.recruiters.categorical_output.encoder_only_transformer_recruiter import EncoderOnlyTransformerRecruiter
 from backend.recruiters.categorical_output.logistic_regression_recruiter import LogisticRegressionRecruiter
 from backend.recruiters.categorical_output.random_forest_recruiter import RandomForestRecruiter
 from backend.recruiters.categorical_output.shallow_mlp_recruiter import ShallowMLPRecruiter
@@ -24,9 +26,9 @@ def recruiter_string_to_recruiter(s: str) -> Recruiter:
     recruiter_map = {
         "random_forest": RandomForestRecruiter,
         "logistic_regression": LogisticRegressionRecruiter,
-        # "transformer": TransformerRecruiter,
+        "transformer": EncoderOnlyTransformerRecruiter,
         "shallow_mlp": ShallowMLPRecruiter,
-        # "deep_mlp": DeepMLPRecruiter,
+        "deep_mlp": DeepMLPRecruiter,
         # "bayesian_network": BayesianNetworkRecruiter,
         # "svm": SVMRecruiter,
     }

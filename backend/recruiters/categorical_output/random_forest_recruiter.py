@@ -5,8 +5,6 @@ from backend.recruiters.recruiter import Recruiter
 
 
 class RandomForestRecruiter(Recruiter):
-    proportion_hired: float
-
     @property
     def name(self):
         return "Random Forest Recruiter"
