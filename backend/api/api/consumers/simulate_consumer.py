@@ -49,9 +49,7 @@ class SimulateConsumer(GenericConsumer):
 
         candidate_group: CandidateGroup = generate_candidate_group(network, request.candidates_to_generate)
 
-        await self.send(text_data=json.dumps({
-            'message': f"{request.candidates_to_generate} Candidates Generated"
-        }))
+        await self.send_and_flush(f"{request.candidates_to_generate} Candidates Generated")
 
         recruiters: List[Recruiter] = [recruiter_string_to_recruiter(s) for s in request.recruiters]
 
@@ -83,9 +81,7 @@ class SimulateConsumer(GenericConsumer):
                                                                  protected_characteristic,
                                                                  request.score_threshold
                                                                  )
-            await self.send(text_data=json.dumps({
-                'message': f"Trained recruiter: {recruiter.name}"
-            }))
+            await self.send_and_flush(f"Trained recruiter: {recruiter.name}")
 
         bias_response: BiasResponse = {recruiter.name: bias.to_response() for [recruiter, bias] in
                                        bias_by_recruiter.items()}

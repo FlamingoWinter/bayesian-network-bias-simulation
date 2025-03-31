@@ -29,14 +29,10 @@ class GenerateRandomNetworkConsumer(GenericConsumer):
                                                                     request.mutual_information_range,
                                                                     category_number_dist)
 
-        await self.send(text_data=json.dumps({
-            'message': f"Network Generation Completed"
-        }))
+        await self.send_and_flush(f"Network Generation Completed")
 
         cache_network_and_generate_candidates(network, self.session_key)
 
-        await self.send(text_data=json.dumps({
-            'message': f"Candidate Generation Completed"
-        }))
+        await self.send_and_flush(f"Candidate Generation Completed")
 
         await self.close(code=1000)

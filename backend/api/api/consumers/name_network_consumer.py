@@ -1,4 +1,3 @@
-import json
 from typing import Any, cast
 
 from backend.api.api.cache_network import cache_network_and_generate_candidates, get_network_from_cache
@@ -20,19 +19,12 @@ class NameNetworkConsumer(GenericConsumer):
             network: PgmPyNetwork = cast(PgmPyNetwork, network)
             network = name_characteristics(network)
 
-            await self.send(text_data=json.dumps({
-                'message': f"Network Renaming Completed"
-            }))
+            await self.send_and_flush(f"Network Renaming Completed")
 
             cache_network_and_generate_candidates(network, self.session_key)
 
-            await self.send(text_data=json.dumps({
-                'message': f"Candidate Generation Completed"
-            }))
+            await self.send_and_flush(f"Candidate Generation Completed")
         else:
-            await self.send(text_data=json.dumps({
-                'message': f"Error: Network is not a categorical one.",
-                'error': 'true'
-            }))
+            await self.send_and_flush("Error: Network is not a categorical one.", error=True)
 
         await self.close(code=1000)

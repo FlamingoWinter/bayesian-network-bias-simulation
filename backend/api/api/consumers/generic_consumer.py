@@ -1,3 +1,5 @@
+import asyncio
+import json
 from urllib.parse import parse_qs
 
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -14,3 +16,10 @@ class GenericConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         pass
+
+    async def send_and_flush(self, message: str, error=False):
+        await self.send(text_data=json.dumps({
+            'message': f"{message}",
+            **({"error": True} if error else {})
+        }))
+        await asyncio.sleep(0.1)
