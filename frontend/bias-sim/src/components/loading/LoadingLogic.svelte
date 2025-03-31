@@ -10,37 +10,39 @@
 	let isLoading: boolean = false;
 
 	onMount(() => {
-		$loadProcess = async (socket: WebSocket) => {
-			isLoading = true;
+		$loadProcess = (socket: WebSocket): Promise<void> => {
+			return new Promise((resolve) => {
+				isLoading = true;
 
-			socket.onmessage = (event) => {
-				const statusText = JSON.parse(event.data).message;
+				socket.onmessage = (event) => {
+					const statusText = JSON.parse(event.data).message;
 
-				const t: ToastSettings = {
-					message: `${statusText}`,
-					timeout: 2500,
-					background: 'variant-filled-primary'
+					const t: ToastSettings = {
+						message: `${statusText}`,
+						timeout: 2500,
+						background: 'variant-filled-primary'
+					};
+					toastStore.trigger(t);
 				};
-				toastStore.trigger(t);
-			};
 
-			socket.onclose = () => {
-				isLoading = false;
-			};
-
-			socket.onerror = () => {
-				const t: ToastSettings = {
-					message: 'Encountered an error in websocket.',
-					timeout: 3000,
-					background: 'variant-filled-error'
+				const resolve_promise = () => {
+					isLoading = false;
+					resolve();
 				};
-				toastStore.trigger(t);
 
-
-				isLoading = false;
-			};
-
+				socket.onclose = resolve_promise;
+				socket.onerror = () => {
+					const t: ToastSettings = {
+						message: 'Encountered an error in websocket.',
+						timeout: 3000,
+						background: 'variant-filled-error'
+					};
+					toastStore.trigger(t);
+					resolve_promise();
+				};
+			});
 		};
+
 	});
 </script>
 
