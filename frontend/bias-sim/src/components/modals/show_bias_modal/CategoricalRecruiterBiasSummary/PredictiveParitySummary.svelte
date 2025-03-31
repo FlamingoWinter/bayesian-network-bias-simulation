@@ -27,7 +27,7 @@
 	);
 
 	$: absoluteFalseDiscoveryRateDisparity = minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate - minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate;
-	$: falseDiscoveryBiasLevel = absoluteDisparityToLevel(absoluteFalseOmissionRateDisparity);
+	$: falseDiscoveryBiasLevel = absoluteDisparityToLevel(absoluteFalseDiscoveryRateDisparity);
 
 	$: minAndMaxFalseOmissionRates = Object.entries(recruiter.byGroup).reduce(
 		(acc, [groupName, info]) => {
