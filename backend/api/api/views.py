@@ -1,11 +1,10 @@
 import json
 
-import pymc as pm
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
-from pgmpy.models import BayesianNetwork as PgBn
 
+from backend.api.api.cache_network import get_network_from_cache
 from backend.api.cache.cache import from_cache
 from backend.api.responseTypes.conditionResponse import ConditionRequest
 from backend.api.responseTypes.networkResponse import NetworkResponse
@@ -34,12 +33,7 @@ def condition(request):
         return JsonResponse({"error": "POST"}, status=405)
 
     condition_request: ConditionRequest = json.loads(request.body)
-    network: BayesianNetwork = from_cache(f"network_{request.session.session_key}",
-                                          "network")
-    if network.model_type == "pgmpy":
-        network.model.__class__ = PgBn
-    else:
-        network.model.__class__ = pm.Model
+    network: BayesianNetwork = get_network_from_cache(request.session.session_key)
 
     network.condition_on(condition_request)
 

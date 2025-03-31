@@ -221,10 +221,9 @@
 
 	function generateSimulateJson() {
 		return JSON.stringify({
-			'categorical_or_continuous': 'categorical', // TODO
 			'candidates_to_generate': candidatesToGenerate,
 			'train_proportion': trainProportion,
-			'recruiters': ['Random Forest Recruiter'], // TODO
+			'recruiters': [], // TODO
 			'protected_characteristic': selectedProtectedCharacteristic
 		});
 	}

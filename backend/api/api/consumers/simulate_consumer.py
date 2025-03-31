@@ -1,14 +1,11 @@
 import json
 from typing import Any
 from typing import List, Dict
-from urllib.parse import parse_qs
 
-import pymc as pm
-from channels.generic.websocket import AsyncWebsocketConsumer
-from pgmpy.models import BayesianNetwork as PgBn
-
-from backend.api.cache.cache import from_cache, cache
-from backend.api.requestTypes.SimulateRequest import new_simulate_request
+from backend.api.api.cache_network import get_network_from_cache
+from backend.api.api.consumers.generic_consumer import GenericConsumer
+from backend.api.cache.cache import cache
+from backend.api.requestTypes.simulate_request import new_simulate_request, SimulateRequest
 from backend.api.responseTypes.recruiterBiasAnalysisResponse.biasResponse import \
     BiasResponse
 from backend.bias.recruiter_bias_analysis import print_bias_summary, RecruiterBiasAnalysis
@@ -16,79 +13,75 @@ from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
-from backend.recruiters.random_forest_recruiter import RandomForestRecruiter
+from backend.recruiters.categorical_output.logistic_regression_recruiter import LogisticRegressionRecruiter
+from backend.recruiters.categorical_output.random_forest_recruiter import RandomForestRecruiter
 from backend.recruiters.recruiter import Recruiter
 from backend.utilities.replace_nan import replace_nan
 
 
 def recruiter_string_to_recruiter(s: str) -> Recruiter:
-    return RandomForestRecruiter()
-    # TODO: Implement mapping from strings to recruiters
+    recruiter_map = {
+        "random_forest": RandomForestRecruiter,
+        "logistic_regression": LogisticRegressionRecruiter,
+        # "transformer": TransformerRecruiter,
+        # "shallow_mlp": ShallowMLPRecruiter,
+        # "deep_mlp": DeepMLPRecruiter,
+        # "bayesian_network": BayesianNetworkRecruiter,
+        # "svm": SVMRecruiter,
+    }
+
+    if s not in recruiter_map:
+        raise ValueError(f"Unknown recruiter type: {s}")
+
+    return recruiter_map[s]()
 
 
-class SimulateConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        query_string = self.scope.get("query_string", b"").decode("utf-8")
-
-        query_params = parse_qs(query_string)
-        self.session_key = query_params.get("session_key", [None])[0]
-
-        self.room_name = "simulate"
-
-        await self.accept()
-
-    async def disconnect(self, close_code):
-        pass
+class SimulateConsumer(GenericConsumer):
+    session_key: str
 
     async def receive(self,
                       text_data: Any = None,
                       bytes_data: Any = None) -> None:
-        simulate_request = new_simulate_request(**json.loads(text_data))
+        request: SimulateRequest = new_simulate_request(**json.loads(text_data))
 
-        network: BayesianNetwork = from_cache(f"network_{self.session_key}",
-                                              "network")
-        if network.model_type == "pgmpy":
-            network.model.__class__ = PgBn
-        else:
-            network.model.__class__ = pm.Model
+        network: BayesianNetwork = get_network_from_cache(self.session_key)
 
-        candidate_group: CandidateGroup = generate_candidate_group(network, simulate_request.candidates_to_generate)
+        candidate_group: CandidateGroup = generate_candidate_group(network, request.candidates_to_generate)
 
         await self.send(text_data=json.dumps({
-            'message': f"{simulate_request.candidates_to_generate} Candidates Generated"
+            'message': f"{request.candidates_to_generate} Candidates Generated"
         }))
 
-        recruiters: List[Recruiter] = [recruiter_string_to_recruiter(s) for s in simulate_request.recruiters]
+        recruiters: List[Recruiter] = [recruiter_string_to_recruiter(s) for s in request.recruiters]
 
         train_candidates, test_candidates = candidate_group.train_test_split(
-            test_size=(1 - simulate_request.train_proportion))
+            train_size=request.train_proportion)
 
-        application_train = train_candidates.get_applications()
+        application_train = train_candidates.get_applications(one_hot_encode_categorical_variables=True)
         score_train = train_candidates.get_scores()
-        application_test = test_candidates.get_applications()
+        application_test = test_candidates.get_applications(one_hot_encode_categorical_variables=True)
 
         bias_by_recruiter: Dict[Recruiter, RecruiterBiasAnalysis] = {}
 
-        protected_characteristic = network.characteristics[simulate_request.protected_characteristic]
+        protected_characteristic = network.characteristics[request.protected_characteristic]
+
+        is_score_categorical: bool = (candidate_group.network.characteristics[
+                                          candidate_group.network.score_characteristic].type == "categorical")
 
         for recruiter in recruiters:
-            if simulate_request.categorical_or_continuous == "continuous":
-                if recruiter.output_type == "categorical":
-                    score_train = threshold_score(score_train, simulate_request.score_threshold)
+            is_recruiter_categorical: bool = (recruiter.output_type == "categorical")
+
+            if is_recruiter_categorical and not is_score_categorical:
+                score_train = threshold_score(score_train, request.score_threshold)
+
             recruiter.train(application_train, score_train)
-            if simulate_request.categorical_or_continuous == "continuous":
-                bias_by_recruiter[recruiter] = RecruiterBiasAnalysis(recruiter,
-                                                                     test_candidates,
-                                                                     application_test,
-                                                                     protected_characteristic,
-                                                                     simulate_request.score_threshold
-                                                                     )
-            else:
-                bias_by_recruiter[recruiter] = RecruiterBiasAnalysis(recruiter,
-                                                                     test_candidates,
-                                                                     application_test,
-                                                                     protected_characteristic,
-                                                                     )
+
+            bias_by_recruiter[recruiter] = RecruiterBiasAnalysis(recruiter,
+                                                                 test_candidates,
+                                                                 application_test,
+                                                                 protected_characteristic,
+                                                                 request.score_threshold
+                                                                 )
             await self.send(text_data=json.dumps({
                 'message': f"Trained recruiter: {recruiter.name}"
             }))

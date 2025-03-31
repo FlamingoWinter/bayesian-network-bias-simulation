@@ -18,17 +18,17 @@ from backend.network.pgmpy_network import PgmPyNetwork
 default_category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
 
 
-def generate_random_categorical_network(number_of_nodes,
-                                        parents: Tuple[int, int] = (2, 3),
-                                        mutual_information: Tuple[float, float] = (0.6, 0.9),
-                                        category_numbers_dist=default_category_number_dist
+def generate_random_categorical_network(nodes: int,
+                                        parents_range: Tuple[int, int] = (2, 3),
+                                        mutual_information_range: Tuple[float, float] = (0.6, 0.9),
+                                        category_numbers: rv_discrete = default_category_number_dist
                                         ):
     categorical_or_continuous: Union[Literal["categorical"], Literal["continuous"]]
 
-    graph = generate_random_dag(number_of_nodes, parents[0], parents[1])
-    return random_categorical_network_from_nx_with_bounded_mutual_information(graph, mutual_information[0],
-                                                                              mutual_information[1],
-                                                                              category_numbers_dist)
+    graph = generate_random_dag(nodes, parents_range[0], parents_range[1])
+    return random_categorical_network_from_nx_with_bounded_mutual_information(graph, mutual_information_range[0],
+                                                                              mutual_information_range[1],
+                                                                              category_numbers)
 
 
 def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx.DiGraph,

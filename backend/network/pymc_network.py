@@ -29,9 +29,6 @@ class PyMcNetwork(BayesianNetwork):
         self.characteristics = self.initialise_characteristics_from_model(model)
         self.model_type = "pymc"
 
-    def set_observed_data(self, condition_request: ConditionRequest):
-        self.model.make_obs_var()
-
     def initialise_characteristics_from_model(self, model: pm.Model):
         self.characteristics = {}
         for characteristic in model.named_vars:

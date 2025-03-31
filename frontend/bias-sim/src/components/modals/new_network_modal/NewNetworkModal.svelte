@@ -111,7 +111,7 @@
 									on:click={async ()=>{
 							await awaitSocketClose(generateNetworkSocket)
 
-							generateNetworkSocket = await awaitSocketOpen(new WebSocket(`${webSocketUrl}/generate-network/?session_key=${$sessionKey}`));
+							generateNetworkSocket = await awaitSocketOpen(new WebSocket(`${webSocketUrl}/generate-random-network/?session_key=${$sessionKey}`));
 							modalStore.close()
 
 							const jsonMessage = generateCreateNetworkJson()
@@ -214,10 +214,8 @@
 			'random_or_predefined': randomOrPredefined,
 			'categorical_or_continuous': continuousOrCategorical,
 			'number_of_nodes': numberOfNodes,
-			'min_allowed_parents': minParents,
-			'max_allowed_parents': maxParents,
-			'min_allowed_mutual_information': minMutualInformation,
-			'max_allowed_mutual_information': maxMutualInformation,
+			'parents_range': [minParents, maxParents],
+			'mutual_information_range': [minMutualInformation, maxMutualInformation],
 			'values_per_variable': Object.fromEntries(p.map(item => [item.name, item.value]))
 		});
 	}
