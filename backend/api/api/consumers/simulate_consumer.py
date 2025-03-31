@@ -15,6 +15,7 @@ from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
 from backend.recruiters.categorical_output.logistic_regression_recruiter import LogisticRegressionRecruiter
 from backend.recruiters.categorical_output.random_forest_recruiter import RandomForestRecruiter
+from backend.recruiters.categorical_output.shallow_mlp_recruiter import ShallowMLPRecruiter
 from backend.recruiters.recruiter import Recruiter
 from backend.utilities.replace_nan import replace_nan
 
@@ -24,7 +25,7 @@ def recruiter_string_to_recruiter(s: str) -> Recruiter:
         "random_forest": RandomForestRecruiter,
         "logistic_regression": LogisticRegressionRecruiter,
         # "transformer": TransformerRecruiter,
-        # "shallow_mlp": ShallowMLPRecruiter,
+        "shallow_mlp": ShallowMLPRecruiter,
         # "deep_mlp": DeepMLPRecruiter,
         # "bayesian_network": BayesianNetworkRecruiter,
         # "svm": SVMRecruiter,
