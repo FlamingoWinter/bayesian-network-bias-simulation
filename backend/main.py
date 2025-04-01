@@ -6,7 +6,7 @@ from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork, Characteristic
 from backend.network.generation.generate_network import generate_network
-from backend.recruiters.categorical_output.random_forest_recruiter import RandomForestRecruiter
+from backend.recruiters.categorical_output.bayesian_recruiter import BayesianRecruiter
 from backend.recruiters.recruiter import Recruiter
 from backend.utilities.time_function import time_function
 
@@ -17,9 +17,11 @@ def simulate(candidate_group: CandidateGroup, recruiters: List[Recruiter], prote
 
     train_candidates, test_candidates = candidate_group.train_test_split(0.9)
 
-    application_train = train_candidates.get_applications(one_hot_encode_categorical_variables=True)
+    application_train_one_hot = train_candidates.get_applications(one_hot_encode_categorical_variables=True)
     score_train = train_candidates.get_scores()
-    application_test = test_candidates.get_applications(one_hot_encode_categorical_variables=True)
+    application_test_one_hot = test_candidates.get_applications(one_hot_encode_categorical_variables=True)
+    application_train_raw = train_candidates.get_applications()
+    application_test_raw = test_candidates.get_applications()
 
     bias_by_recruiter: Dict[Recruiter, RecruiterBiasAnalysis] = {}
 
@@ -31,6 +33,11 @@ def simulate(candidate_group: CandidateGroup, recruiters: List[Recruiter], prote
 
         if is_recruiter_categorical and not is_score_categorical:
             score_train = threshold_score(score_train, score_threshold)
+
+        if recruiter.name == "Bayesian Recruiter":
+            application_test, application_train = application_test_raw, application_train_raw
+        else:
+            application_test, application_train = application_test_one_hot, application_train_one_hot
 
         recruiter.train(application_train, score_train)
         bias_by_recruiter[recruiter] = RecruiterBiasAnalysis(recruiter,
@@ -48,6 +55,6 @@ if __name__ == "__main__":
 
     protected_characteristic = list(network.characteristics.values())[0]
 
-    recruiters: List[Recruiter] = [RandomForestRecruiter()]
+    recruiters: List[Recruiter] = [BayesianRecruiter()]
 
     simulate(candidate_group, recruiters, protected_characteristic)

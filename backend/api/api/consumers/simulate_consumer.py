@@ -13,11 +13,13 @@ from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
+from backend.recruiters.categorical_output.bayesian_recruiter import BayesianRecruiter
 from backend.recruiters.categorical_output.deep_mlp_recruiter import DeepMLPRecruiter
 from backend.recruiters.categorical_output.encoder_only_transformer_recruiter import EncoderOnlyTransformerRecruiter
 from backend.recruiters.categorical_output.logistic_regression_recruiter import LogisticRegressionRecruiter
 from backend.recruiters.categorical_output.random_forest_recruiter import RandomForestRecruiter
 from backend.recruiters.categorical_output.shallow_mlp_recruiter import ShallowMLPRecruiter
+from backend.recruiters.categorical_output.svm_recruiter import SVMRecruiter
 from backend.recruiters.recruiter import Recruiter
 from backend.utilities.replace_nan import replace_nan
 
@@ -29,8 +31,8 @@ def recruiter_string_to_recruiter(s: str) -> Recruiter:
         "transformer": EncoderOnlyTransformerRecruiter,
         "shallow_mlp": ShallowMLPRecruiter,
         "deep_mlp": DeepMLPRecruiter,
-        # "bayesian_network": BayesianNetworkRecruiter,
-        # "svm": SVMRecruiter,
+        "bayesian": BayesianRecruiter,
+        "svm": SVMRecruiter,
     }
 
     if s not in recruiter_map:
@@ -58,9 +60,11 @@ class SimulateConsumer(GenericConsumer):
         train_candidates, test_candidates = candidate_group.train_test_split(
             train_size=request.train_proportion)
 
-        application_train = train_candidates.get_applications(one_hot_encode_categorical_variables=True)
+        application_train_one_hot = train_candidates.get_applications(one_hot_encode_categorical_variables=True)
         score_train = train_candidates.get_scores()
-        application_test = test_candidates.get_applications(one_hot_encode_categorical_variables=True)
+        application_test_one_hot = test_candidates.get_applications(one_hot_encode_categorical_variables=True)
+        application_train_raw = train_candidates.get_applications()
+        application_test_raw = test_candidates.get_applications()
 
         bias_by_recruiter: Dict[Recruiter, RecruiterBiasAnalysis] = {}
 
@@ -74,6 +78,11 @@ class SimulateConsumer(GenericConsumer):
 
             if is_recruiter_categorical and not is_score_categorical:
                 score_train = threshold_score(score_train, request.score_threshold)
+
+            if recruiter.name == "Bayesian Recruiter":
+                application_test, application_train = application_test_raw, application_train_raw
+            else:
+                application_test, application_train = application_test_one_hot, application_train_one_hot
 
             recruiter.train(application_train, score_train)
 

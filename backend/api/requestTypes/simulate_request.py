@@ -11,7 +11,7 @@ class SimulateRequest:
     recruiters: List[str] = field(
         default_factory=lambda: ["random_forest", "logistic_regression",
                                  "shallow_mlp", "deep_mlp",
-                                 "transformer"])
+                                 "transformer", "svm", "bayesian"])
     protected_characteristic: str = ""
     score_threshold: float = 0
 
