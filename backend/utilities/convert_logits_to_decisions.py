@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def convert_logits_to_decision(predicted_score_logits: pd.Series, proportion_hired: float) -> pd.Series:
+def convert_logits_to_decisions(predicted_score_logits: pd.Series, proportion_hired: float) -> pd.Series:
     threshold = predicted_score_logits.quantile(1 - proportion_hired)
     num_selected = int(len(predicted_score_logits) * proportion_hired)
 

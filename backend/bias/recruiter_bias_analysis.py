@@ -10,7 +10,7 @@ from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.network.bayesian_network import Characteristic
 from backend.recruiters.recruiter import Recruiter
-from backend.utilities.convert_logits_to_decision import convert_logits_to_decision
+from backend.utilities.convert_logits_to_decisions import convert_logits_to_decisions
 
 
 class RecruiterBiasAnalysis:
@@ -28,7 +28,7 @@ class RecruiterBiasAnalysis:
         predicted_scores = recruiter.predict_scores(application_test)
         if is_recruiter_categorical:
             proportion_hired = actual_scores.sum() / len(actual_scores)
-            predicted_scores = convert_logits_to_decision(predicted_scores, proportion_hired)
+            predicted_scores = convert_logits_to_decisions(predicted_scores, proportion_hired)
 
         group = candidate_group.characteristics[protected_characteristic.name]
 
