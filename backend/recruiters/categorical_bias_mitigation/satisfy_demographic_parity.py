@@ -6,6 +6,7 @@ from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 class SatisfyDemographicParity(Mitigation):
     proportion_hired: float
 
+    @property
     def name(self) -> str:
         return "Ensure Demographic Parity"
 

@@ -4,8 +4,7 @@ import pandas as pd
 
 from backend.api.responseTypes.recruiterBiasAnalysisResponse.recruiterBiasAnalysisResponse import \
     RecruiterBiasAnalysisResponse
-from backend.bias.categorical.categorical_recruiter_bias_analysis import CategoricalRecruiterBiasAnalysis
-from backend.bias.continuous.continuous_recruiter_bias_analysis import ContinuousRecruiterBiasAnalysis
+from backend.bias.mitigation_bias_analysis import MitigationBiasAnalysis
 from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.network.bayesian_network import Characteristic
@@ -31,37 +30,17 @@ class RecruiterBiasAnalysis:
         groups.reset_index(drop=True, inplace=True)
         actual_scores.reset_index(drop=True, inplace=True)
 
-        if is_score_categorical:
-            predicted_scores = recruiter.predict_decisions(application_test, groups)
-        else:
-            predicted_scores = recruiter.predict_scores(application_test)
+        predicted_scores_for_each_mitigation = recruiter.predict_decisions_for_each_mitigation(application_test, groups)
 
-        self.applications = pd.concat(
-            [actual_scores, predicted_scores, groups], axis=1)
-        self.applications.columns = ['actual_score', 'predicted_score', 'group']
-        self.protected_characteristic = protected_characteristic
-
-        self.categorical_recruiter_bias_analysis = None
-        self.continuous_recruiter_bias_analysis = None
-
-        if not is_recruiter_categorical and not is_score_categorical:
-            self.continuous_recruiter_bias_analysis = ContinuousRecruiterBiasAnalysis(self.applications,
-                                                                                      self.protected_characteristic)
-
-            self.applications['actual_score'] = threshold_score(self.applications['actual_score'], score_threshold)
-            self.applications['predicted_score'] = threshold_score(self.applications['predicted_score'],
-                                                                   score_threshold)
-            self.categorical_recruiter_bias_analysis = CategoricalRecruiterBiasAnalysis(self.applications,
-                                                                                        self.protected_characteristic)
-        else:
-            self.categorical_recruiter_bias_analysis = CategoricalRecruiterBiasAnalysis(self.applications,
-                                                                                        self.protected_characteristic)
+        self.analysis_by_mitigation = {}
+        for mitigation_name, predicted_scores in predicted_scores_for_each_mitigation.items():
+            self.analysis_by_mitigation[mitigation_name] = MitigationBiasAnalysis(actual_scores, predicted_scores,
+                                                                                  groups, protected_characteristic)
 
     def print_summary(self):
-        if self.categorical_recruiter_bias_analysis is not None:
-            self.categorical_recruiter_bias_analysis.print_summary()
-        if self.continuous_recruiter_bias_analysis is not None:
-            self.continuous_recruiter_bias_analysis.print_summary()
+        for mitigation_name, mitigation_bias_analysis in self.analysis_by_mitigation.items():
+            print("\nMitigation: ", mitigation_name)
+            mitigation_bias_analysis.print_summary()
 
     def to_response(self) -> RecruiterBiasAnalysisResponse:
         return {

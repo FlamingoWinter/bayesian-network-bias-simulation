@@ -4,7 +4,7 @@ from typing import Callable
 
 import numpy as np
 import pandas as pd
-from scipy.optimize import basinhopping
+from scipy.optimize import dual_annealing
 
 from backend.utilities.time_function import time_function
 
@@ -24,7 +24,9 @@ class Mitigation(ABC):
 
     @staticmethod
     def threshold_scores(scores: pd.Series, proportion_hired: float, randomise=True) -> pd.Series:
-
+        if np.isnan(proportion_hired):
+            proportion_hired = 0
+        proportion_hired = np.clip(proportion_hired, 0.01, 0.99)
         threshold = scores.quantile(1 - proportion_hired)
         num_selected = int(len(scores) * proportion_hired)
 
@@ -67,12 +69,13 @@ class Mitigation(ABC):
         group_proportions = groups_holdout.value_counts(normalize=True).sort_index()
 
         warnings.simplefilter("ignore", category=RuntimeWarning)
-        proportion_hired_partial = basinhopping(
+
+        proportion_hired_partial = dual_annealing(
             loss_function,
-            np.full(len(group_proportions) - 1, total_proportion_hired),
-            niter=100,
-            minimizer_kwargs={'bounds': [(0, 1)] * (len(group_proportions) - 1)}
+            bounds=[(0, 1)] * (len(group_proportions) - 1),
+            maxiter=200,
         ).x
+
         warnings.simplefilter("default", category=RuntimeWarning)
 
         last_value = (total_proportion_hired - np.sum(proportion_hired_partial * group_proportions[:-1])
@@ -80,6 +83,7 @@ class Mitigation(ABC):
 
         print("solution found", np.append(proportion_hired_partial, last_value))
         print("creates loss", loss_function(proportion_hired_partial))
+
         return np.append(proportion_hired_partial, last_value)
 
     @abstractmethod

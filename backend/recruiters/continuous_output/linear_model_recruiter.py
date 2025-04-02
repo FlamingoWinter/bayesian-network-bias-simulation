@@ -1,3 +1,5 @@
+from typing import List
+
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
@@ -14,8 +16,8 @@ class LinearModelRecruiter(Recruiter):
     def output_type(self):
         return "continuous"
 
-    def __init__(self, mitigation: Mitigation):
-        super().__init__(mitigation)
+    def __init__(self, mitigations: List[Mitigation]):
+        super().__init__(mitigations)
         self.model = LinearRegression()
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):

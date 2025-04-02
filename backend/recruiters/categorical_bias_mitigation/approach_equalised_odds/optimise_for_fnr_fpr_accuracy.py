@@ -8,6 +8,7 @@ class OptimiseForFNRFPRAccuracy(Mitigation):
     proportion_hireds: np.array
     protected_characteristic_name: str
 
+    @property
     def name(self) -> str:
         return "Optimise for FNR and FPR Equality, and Accuracy"
 

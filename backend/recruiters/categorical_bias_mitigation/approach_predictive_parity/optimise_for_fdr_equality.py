@@ -8,6 +8,7 @@ class OptimiseForFDREquality(Mitigation):
     proportion_hireds: np.array
     protected_characteristic_name: str
 
+    @property
     def name(self) -> str:
         return "Optimise for FDR Equality"
 

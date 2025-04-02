@@ -30,10 +30,10 @@ class CandidateGroup:
                                    in self.network.characteristics.items()
                                    if characteristic.type == "categorical" and column_name in df.columns]
             df = pd.get_dummies(df, columns=categorical_columns, drop_first=True)
-        return df
+        return df.reset_index(drop=True)
 
     def get_scores(self) -> pd.Series:
-        return self.characteristics[self.network.score_characteristic]
+        return self.characteristics[self.network.score_characteristic].reset_index(drop=True)
 
     def characteristic_to_distribution(self, characteristic: str) -> List[float]:
         return self.characteristics[characteristic].to_list()

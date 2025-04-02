@@ -8,6 +8,7 @@ class OptimiseForFOREquality(Mitigation):
     proportion_hireds: np.array
     protected_characteristic_name: str
 
+    @property
     def name(self) -> str:
         return "Optimise for FOR Equality"
 
@@ -44,4 +45,4 @@ class OptimiseForFOREquality(Mitigation):
                                                              groups_holdout: pd.Series):
         total_proportion_hired = score_train.sum() / len(score_train)
         self.proportion_hireds = self.get_proportions_to_minimise_loss(
-            total_proportion_hired, score_holdout, predicted_holdout, groups_holdout, self.calculate_fdr_variance)
+            total_proportion_hired, score_holdout, predicted_holdout, groups_holdout, self.calculate_for_variance)

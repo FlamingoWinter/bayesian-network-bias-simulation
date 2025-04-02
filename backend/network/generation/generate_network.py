@@ -18,4 +18,4 @@ def generate_network() -> BayesianNetwork:
 def generate_random_network():
     categorical_or_continuous: Union[Literal["categorical"], Literal["continuous"]]
 
-    return generate_random_categorical_network(15)
+    return generate_random_categorical_network(50)

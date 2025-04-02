@@ -160,7 +160,13 @@ def random_categorical_network_from_nx_with_bounded_mutual_information(graph: nx
     score_descendants = list(nx.descendants(graph, score_characteristic))
     score_direct_parents = list(graph.predecessors(score_characteristic))
 
-    network.application_characteristics = score_descendants + score_direct_parents
+    all_nodes = set(graph.nodes)
+    connected_nodes = set(score_descendants + score_direct_parents + [score_characteristic])
+    unconnected_nodes = list(all_nodes - connected_nodes)
+
+    network.application_characteristics = random.sample(unconnected_nodes, len(unconnected_nodes) // 2)
+
+    # network.application_characteristics = score_descendants + score_direct_parents
 
     network.predefined = False
 

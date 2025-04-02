@@ -6,8 +6,9 @@ from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 class SatisfyProportionalParity(Mitigation):
     proportion_hired_by_group: dict[int, float]
 
+    @property
     def name(self) -> str:
-        return "Ensure Equalised odds"
+        return "Satisfy Proportional Parity"
 
     def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series) -> pd.Series:
         decisions = pd.Series(0, index=predicted_score.index)
@@ -25,4 +26,3 @@ class SatisfyProportionalParity(Mitigation):
         self.proportion_hired_by_group = {}
         for group, group_scores in score_train.groupby(groups_train):
             self.proportion_hired_by_group[group] = group_scores.sum() / len(group_scores)
-        print(self.proportion_hired_by_group)

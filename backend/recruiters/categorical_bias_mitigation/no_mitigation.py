@@ -6,6 +6,7 @@ from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 class NoMitigation(Mitigation):
     proportion_hired: float
 
+    @property
     def name(self) -> str:
         return "No Mitigation"
 

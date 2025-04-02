@@ -1,3 +1,5 @@
+from typing import List
+
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
@@ -14,8 +16,8 @@ class RandomForestRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, mitigation: Mitigation):
-        super().__init__(mitigation)
+    def __init__(self, mitigations: List[Mitigation]):
+        super().__init__(mitigations)
         self.model = RandomForestClassifier()
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):

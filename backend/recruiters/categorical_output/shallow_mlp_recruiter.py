@@ -1,3 +1,5 @@
+from typing import List
+
 import pandas as pd
 import torch
 from torch import nn, optim
@@ -29,8 +31,8 @@ class ShallowMLPRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, mitigation: Mitigation, width=64, epochs=4, lr=0.01, batch_size=512):
-        super().__init__(mitigation)
+    def __init__(self, mitigations: List[Mitigation], width=64, epochs=4, lr=0.01, batch_size=512):
+        super().__init__(mitigations)
         self.model = None
         self.width = width
         self.epochs = epochs

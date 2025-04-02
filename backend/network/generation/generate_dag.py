@@ -1,12 +1,32 @@
 import math
 import random
 from itertools import islice
-from typing import List
+from typing import List, Tuple
 
 import networkx as nx
 import numpy as np
 
 from backend.utilities.time_function import time_function
+
+
+def binomial_pmf(n, k, p):
+    comb = math.comb(n, k)  # n choose k
+    return comb * (p ** k) * ((1 - p) ** (n - k))
+
+
+def sample_bounded_binomial(n: int, p: float, bounds: Tuple[int, int]):
+    if n < bounds[0]:
+        return n
+    probabilities = np.array([binomial_pmf(n, k, p) for k in range(n + 1)])
+    for k in range(n + 1):
+        if not bounds[0] <= k <= bounds[1]:
+            probabilities[k] = 0
+
+    if sum(probabilities) == 0:
+        print("Probabilities = 0: n, p, bounds", n, p, bounds)
+
+    probabilities /= sum(probabilities)
+    return random.choices(range(n + 1), weights=probabilities, k=1)[0]
 
 
 @time_function("Generate random dag")
@@ -69,16 +89,8 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
 
             for out_point in out_points:
                 random.shuffle(node_list)
-                tried = 0
-                while True:
-                    connections = np.random.binomial(n=len(node_list), p=0.5)
-                    if max(min_parents, connections_by_out_point[out_point]) <= connections <= max_parents:
-                        break
-                    tried += 1
-                    if tried > 100:
-                        print("failed generating connections within min_parents and max_parents")
-                        break
-
+                connections = sample_bounded_binomial(len(node_list), 0.5, (
+                    max(min_parents, connections_by_out_point[out_point]), max_parents))
                 for node in node_list[:(connections - connections_by_out_point[out_point])]:
                     dag.add_edge(node, out_point)
 
