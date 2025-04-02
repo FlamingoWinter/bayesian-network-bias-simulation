@@ -57,7 +57,7 @@ class SimulateConsumer(GenericConsumer):
 
         recruiters: List[Recruiter] = [recruiter_string_to_recruiter(s) for s in request.recruiters]
 
-        train_candidates, test_candidates = candidate_group.train_test_split(
+        train_candidates, test_candidates = candidate_group.random_split(
             train_size=request.train_proportion)
 
         application_train_one_hot = train_candidates.get_applications(one_hot_encode_categorical_variables=True)
@@ -84,7 +84,7 @@ class SimulateConsumer(GenericConsumer):
             else:
                 application_test, application_train = application_test_one_hot, application_train_one_hot
 
-            recruiter.train(application_train, score_train)
+            recruiter.initalise_mitigation(application_train, score_train)
 
             bias_by_recruiter[recruiter] = RecruiterBiasAnalysis(recruiter,
                                                                  test_candidates,

@@ -3,6 +3,7 @@ from pgmpy.estimators import MaximumLikelihoodEstimator, HillClimbSearch, BicSco
 from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianNetwork
 
+from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 from backend.recruiters.recruiter import Recruiter
 
 
@@ -15,7 +16,8 @@ class BayesianRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self):
+    def __init__(self, mitigation: Mitigation):
+        super().__init__(mitigation)
         self.model = BayesianNetwork()
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):

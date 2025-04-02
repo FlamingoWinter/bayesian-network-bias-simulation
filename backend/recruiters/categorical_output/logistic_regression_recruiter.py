@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
+from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 from backend.recruiters.recruiter import Recruiter
 
 
@@ -13,7 +14,8 @@ class LogisticRegressionRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self):
+    def __init__(self, mitigation: Mitigation):
+        super().__init__(mitigation)
         self.model = LogisticRegression()
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):

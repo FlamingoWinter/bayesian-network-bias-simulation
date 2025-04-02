@@ -21,7 +21,7 @@ def generate_candidate_group(network: BayesianNetwork, count: int = num_samples)
     if network.model_type == "pgmpy":
         sampler = BayesianModelSampling(network.model)
 
-        sampled_data = sampler.forward_sample(size=num_samples)
+        sampled_data = sampler.forward_sample(size=count)
 
         if network.name_mapping is None:
             candidate_group = CandidateGroup(network, sampled_data)

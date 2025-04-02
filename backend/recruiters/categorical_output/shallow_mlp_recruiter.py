@@ -3,6 +3,7 @@ import torch
 from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 
+from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 from backend.recruiters.recruiter import Recruiter
 
 
@@ -28,7 +29,8 @@ class ShallowMLPRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, width=64, epochs=4, lr=0.01, batch_size=512):
+    def __init__(self, mitigation: Mitigation, width=64, epochs=4, lr=0.01, batch_size=512):
+        super().__init__(mitigation)
         self.model = None
         self.width = width
         self.epochs = epochs

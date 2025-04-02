@@ -10,7 +10,6 @@ from backend.bias.threshold_score import threshold_score
 from backend.candidates.candidate_group import CandidateGroup
 from backend.network.bayesian_network import Characteristic
 from backend.recruiters.recruiter import Recruiter
-from backend.utilities.convert_logits_to_decisions import convert_logits_to_decisions
 
 
 class RecruiterBiasAnalysis:
@@ -24,21 +23,21 @@ class RecruiterBiasAnalysis:
         is_recruiter_categorical: bool = recruiter.output_type == "categorical"
 
         actual_scores = candidate_group.get_scores()
-
-        predicted_scores = recruiter.predict_scores(application_test)
-        if is_recruiter_categorical:
-            proportion_hired = actual_scores.sum() / len(actual_scores)
-            predicted_scores = convert_logits_to_decisions(predicted_scores, proportion_hired)
-
-        group = candidate_group.characteristics[protected_characteristic.name]
-
         if is_recruiter_categorical and not is_score_categorical:
             actual_scores = threshold_score(actual_scores, score_threshold)
 
+        groups = candidate_group.characteristics[protected_characteristic.name]
+
+        groups.reset_index(drop=True, inplace=True)
         actual_scores.reset_index(drop=True, inplace=True)
-        group.reset_index(drop=True, inplace=True)
+
+        if is_score_categorical:
+            predicted_scores = recruiter.predict_decisions(application_test, groups)
+        else:
+            predicted_scores = recruiter.predict_scores(application_test)
+
         self.applications = pd.concat(
-            [actual_scores, predicted_scores, group], axis=1)
+            [actual_scores, predicted_scores, groups], axis=1)
         self.applications.columns = ['actual_score', 'predicted_score', 'group']
         self.protected_characteristic = protected_characteristic
 

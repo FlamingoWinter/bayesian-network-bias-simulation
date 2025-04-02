@@ -11,10 +11,17 @@ class CandidateGroup:
         self.network: BayesianNetwork = network
         self.characteristics: pd.DataFrame = characteristics
 
-    def train_test_split(self, train_size: float = 0.9) -> Tuple['CandidateGroup', 'CandidateGroup']:
-        train, test = train_test_split(self.characteristics, test_size=1 - train_size)
+    def random_split(self, split_sizes: List[float]) -> Tuple['CandidateGroup', ...]:
+        remaining = self.characteristics
+        characteristic_splits: List[pd.DataFrame] = []
+        split_size_left = 1
+        for size in split_sizes[:-1]:
+            remaining, characteristic_split = train_test_split(remaining, test_size=1 - (size / split_size_left))
+            split_size_left -= size
+            characteristic_splits.append(characteristic_split)
+        characteristic_splits.append(remaining)
 
-        return CandidateGroup(self.network, train), CandidateGroup(self.network, test)
+        return tuple(CandidateGroup(self.network, split) for split in characteristic_splits)
 
     def get_applications(self, one_hot_encode_categorical_variables=False) -> pd.DataFrame:
         df = self.characteristics[self.network.application_characteristics]

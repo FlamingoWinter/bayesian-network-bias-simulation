@@ -3,6 +3,7 @@ import torch
 from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 
+from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 from backend.recruiters.recruiter import Recruiter
 
 
@@ -34,7 +35,8 @@ class EncoderOnlyTransformerRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, width=16, depth=4, epochs=3, lr=1e-4, batch_size=512, num_heads=2):
+    def __init__(self, mitigation: Mitigation, width=16, depth=4, epochs=3, lr=1e-4, batch_size=512, num_heads=2):
+        super().__init__(mitigation)
         self.model = None
         self.width = width
         self.depth = depth
