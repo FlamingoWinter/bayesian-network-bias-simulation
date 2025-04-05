@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import timedelta
 
 import numpy as np
 import pandas as pd
@@ -22,7 +23,7 @@ def get_engine() -> Engine:
 
 def save_run_to_db(engine: Engine,
                    network: PgmPyNetwork, candidate_group: CandidateGroup,
-                   protected_characteristic_name: str, condition: int) -> int:
+                   protected_characteristic_name: str, condition: int, run_duration: timedelta) -> int:
     graph = json.dumps(network.to_network_response())
 
     protected = candidate_group.characteristics[protected_characteristic_name]
@@ -48,7 +49,9 @@ def save_run_to_db(engine: Engine,
         "protected_score_mut_inf": protected_score_mut_inf,
         "protected_characteristic": protected_characteristic_name,
         "application_characteristics": network.application_characteristics,
-        "score_characteristic": network.score_characteristic
+        "score_characteristic": network.score_characteristic,
+        "date": pd.Timestamp.now(tz='UTC'),
+        "run_duration": run_duration,
     }])
 
     with engine.connect() as conn:

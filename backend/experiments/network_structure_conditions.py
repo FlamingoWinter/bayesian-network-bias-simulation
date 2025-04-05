@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 from typing import List
 
 import networkx as nx
@@ -6,7 +7,6 @@ from pgmpy.models import BayesianNetwork as PgBn
 from scipy.stats import rv_discrete
 from sqlalchemy import Engine
 
-from backend.bias.recruiter_bias_analysis import print_bias_summary
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.db.save_to_db import save_run_to_db, save_recruiter_run_to_db, get_engine
@@ -32,6 +32,7 @@ category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
 
 @time_function("Network Structure Conditions Run")
 def network_structure_conditions_run():
+    start_time = datetime.now()
     engine: Engine = get_engine()
 
     parents_range = (2, 3)
@@ -64,7 +65,10 @@ def network_structure_conditions_run():
 
     candidate_group: CandidateGroup = generate_candidate_group(network, 10_000)
 
+    network_creation_time = datetime.now()
+
     for condition in [1, 2, 3, 4]:
+        condition_start_time = datetime.now()
         network.application_characteristics = choose_application_characteristics_modified(
             graph, condition, score_characteristic, protected_characteristic_name)
 
@@ -88,12 +92,13 @@ def network_structure_conditions_run():
         protected_characteristic = network.characteristics[protected_characteristic_name]
         bias_by_recruiter = simulate(candidate_group, recruiters, protected_characteristic)
 
-        db_run_id = save_run_to_db(engine, network, candidate_group, protected_characteristic_name, condition)
+        db_run_id = save_run_to_db(engine, network, candidate_group, protected_characteristic_name, condition,
+                                   datetime.now() - condition_start_time + network_creation_time - start_time)
         for bias, recruiter_bias_analysis in bias_by_recruiter.items():
             recruiter_run_id = save_recruiter_run_to_db(engine, db_run_id, recruiter_bias_analysis)
 
         # TODO: Remove
-        print_bias_summary(bias_by_recruiter)
+        # print_bias_summary(bias_by_recruiter)
 
 
 def choose_application_characteristics_modified(

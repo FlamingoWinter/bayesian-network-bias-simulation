@@ -29,7 +29,7 @@ from backend.recruiters.recruiter import Recruiter
 from backend.simulate import simulate
 
 if __name__ == "__main__":
-    network: BayesianNetwork = generate_random_network()
+    network: BayesianNetwork = generate_random_network(20)
 
     candidate_group: CandidateGroup = generate_candidate_group(network, 10_000)
 
