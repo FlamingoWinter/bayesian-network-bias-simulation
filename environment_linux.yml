@@ -1,0 +1,258 @@
+# This is copied from environment_no_builds with m2w64 packages removed
+
+name: bayesian-network-bias-simulation
+channels:
+  - conda-forge
+  - defaults
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+  - https://repo.anaconda.com/pkgs/msys2
+dependencies:
+  - arviz=0.17.1
+  - asgiref=3.8.1
+  - blas=1.0
+  - boost-cpp=1.82.0
+  - bottleneck=1.4.2
+  - brotli=1.0.9
+  - brotli-bin=1.0.9
+  - bzip2=1.0.8
+  - ca-certificates=2025.2.25
+  - cairo=1.16.0
+  - cloudpickle=3.0.0
+  - cons=0.4.6
+  - contourpy=1.3.1
+  - cpp-expected=1.1.0
+  - cycler=0.11.0
+  - dill=0.3.8
+  #  - distutils-activate-mingw=2.3
+  - django=5.1.3
+  - django-cors-headers=4.6.0
+  - etuples=0.3.9
+  - expat=2.6.4
+  - fmt=11.0.2
+  - font-ttf-dejavu-sans-mono=2.37
+  - font-ttf-inconsolata=2.001
+  - font-ttf-source-code-pro=2.030
+  - font-ttf-ubuntu=0.83
+  - fontconfig=2.14.1
+  - fonts-anaconda=1
+  - fonts-conda-ecosystem=1
+  - fonttools=4.51.0
+  - freetype=2.12.1
+  - fribidi=1.0.10
+  #  - getopt-win32=0.1
+  - giflib=5.2.2
+  - glib=2.78.4
+  - glib-tools=2.78.4
+  - graphite2=1.3.14
+  - graphviz=2.50.0
+  - greenlet=3.1.1
+  - gts=0.7.6
+  - h5netcdf=1.2.0
+  - h5py=3.12.1
+  - harfbuzz=4.3.0
+  - hdf5=1.12.1
+  #  - icc_rt=2022.1.0
+  - icu=73.1
+  - intel-openmp=2023.1.0
+  - jpeg=9e
+  - jsonpickle=2.2.0
+  - kiwisolver=1.4.4
+  - lcms2=2.16
+  - lerc=4.0.0
+  - libarchive=3.7.7
+  - libboost=1.82.0
+  - libbrotlicommon=1.0.9
+  - libbrotlidec=1.0.9
+  - libbrotlienc=1.0.9
+  - libcurl=8.11.1
+  - libdeflate=1.22
+  - libexpat=2.6.4
+  - libffi=3.4.4
+  - libgd=2.3.3
+  - libglib=2.78.4
+  - libiconv=1.16
+  - libmamba=2.0.5
+  - libopenblas=0.3.28
+  - libpng=1.6.39
+  #  - libpython=2.3
+  - libsolv=0.7.30
+  #  - libsqlite=3.47.2
+  - libssh2=1.11.1
+  - libtiff=4.5.1
+  - libwebp=1.3.2
+  - libwebp-base=1.3.2
+  - libxml2=2.13.5
+  #  - libzlib=1.2.13
+  - logical-unification=0.4.6
+  #  - lz4-c=1.9.4
+  #  - m2w64-binutils=2.25.1
+  #  - m2w64-bzip2=1.0.6
+  #  - m2w64-crt-git=5.0.0.4636.2595836
+  #  - m2w64-gcc=5.3.0
+  #  - m2w64-gcc-ada=5.3.0
+  #  - m2w64-gcc-fortran=5.3.0
+  #  - m2w64-gcc-libgfortran=5.3.0
+  #  - m2w64-gcc-libs=5.3.0
+  #  - m2w64-gcc-libs-core=5.3.0
+  #  - m2w64-gcc-objc=5.3.0
+  #  - m2w64-gmp=6.1.0
+  #  - m2w64-headers-git=5.0.0.4636.c0ad18a
+  #  - m2w64-isl=0.16.1
+  #  - m2w64-libiconv=1.14
+  #  - m2w64-libmangle-git=5.0.0.4509.2e5a9a2
+  #  - m2w64-libwinpthread-git=5.0.0.4634.697f757
+  #  - m2w64-make=4.1.2351.a80a8b8
+  #  - m2w64-mpc=1.0.3
+  #  - m2w64-mpfr=3.1.4
+  #  - m2w64-pkg-config=0.29.1
+  #  - m2w64-toolchain=5.3.0
+  #  - m2w64-toolchain_win-64=2.5.0
+  #  - m2w64-tools-git=5.0.0.4592.90b8472
+  #  - m2w64-windows-default-manifest=6.4
+  #  - m2w64-winpthreads-git=5.0.0.4634.697f757
+  #  - m2w64-zlib=1.2.8
+  - mamba=2.0.5
+  - markdown-it-py=2.2.0
+  - matplotlib-base=3.9.2
+  - mdurl=0.1.0
+  - minikanren=1.0.3
+  - mkl=2023.1.0
+  - mkl-service=2.4.0
+  - mkl_fft=1.3.11
+  - mkl_random=1.2.8
+  #  - msys2-conda-epoch=20160418
+  - multipledispatch=0.6.0
+  - nlohmann_json=3.11.3
+  - numexpr=2.10.1
+  - numpy=1.26.4
+  - numpy-base=1.26.4
+  - openjpeg=2.5.2
+  - openssl=3.4.0
+  - packaging=24.2
+  - pandas=2.2.3
+  - pango=1.50.7
+  - pcre2=10.42
+  - pillow=11.0.0
+  - pip=24.2
+  - pixman=0.40.0
+  - poppler=24.09.0
+  - poppler-data=0.4.11
+  - pygments=2.15.1
+  - pymc=5.16.1
+  - pymc-base=5.16.1
+  - pytensor=2.23.0
+  - pytensor-base=2.23.0
+  - python=3.12.3
+  - python-dateutil=2.9.0post0
+  - python-graphviz=0.20.1
+  - python_abi=3.12
+  - reproc=14.2.5.post0
+  - reproc-cpp=14.2.5.post0
+  - rich=13.9.4
+  - scipy=1.12.0
+  - setuptools=75.1.0
+  - simdjson=3.11.3
+  - spdlog=1.15.0
+  - sqlalchemy=2.0.37
+  - sqlite=3.45.3
+  - sqlparse=0.5.2
+  - tbb=2021.8.0
+  - threadpoolctl=3.5.0
+  - tk=8.6.14
+  - toolz=0.12.0
+  - typing-extensions=4.12.2
+  - typing_extensions=4.12.2
+  #  - ucrt=10.0.22621.0
+  - unicodedata2=15.1.0
+  #  - vc=14.40
+  #  - vc14_runtime=14.42.34433
+  #  - vs2015_runtime=14.42.34433
+  #  - vs2019_win-64=19.29.30154
+  #  - vswhere=2.8.4
+  - wheel=0.44.0
+  - xarray=2024.11.0
+  - xarray-einstats=0.6.0
+  - xz=5.4.6
+  - yaml-cpp=0.8.0
+  - zlib=1.2.13
+  - zstd=1.5.6
+  - pip:
+      - annotated-types==0.7.0
+      - attrs==25.1.0
+      - autobahn==24.4.2
+      - automat==24.8.1
+      - cachetools==5.5.0
+      - certifi==2024.12.14
+      - cffi==1.17.1
+      - channels==4.2.0
+      - charset-normalizer==3.4.1
+      - clarabel==0.10.0
+      - colorama==0.4.6
+      - constantly==23.10.4
+      - cryptography==44.0.0
+      - cvxpy==1.6.4
+      - daphne==4.1.2
+      - filelock==3.16.1
+      - fsspec==2024.12.0
+      - google-ai-generativelanguage==0.6.10
+      - google-api-core==2.24.0
+      - google-api-python-client==2.156.0
+      - google-auth==2.37.0
+      - google-auth-httplib2==0.2.0
+      - google-generativeai==0.8.3
+      - googleapis-common-protos==1.66.0
+      - grpcio==1.68.1
+      - grpcio-status==1.68.1
+      - httplib2==0.22.0
+      - hyperlink==21.0.0
+      - idna==3.10
+      - imbalanced-learn==0.13.0
+      - imblearn==0.0
+      - incremental==24.7.2
+      - itmo-fs==0.3.3
+      - jinja2==3.1.5
+      - joblib==1.4.2
+      - llvmlite==0.42.0
+      - markupsafe==3.0.2
+      - mpmath==1.3.0
+      - msgpack==1.1.0
+      - networkx==3.4.2
+      - numba==0.59.1
+      - opt-einsum==3.4.0
+      - osqp==1.0.1
+      - patsy==1.0.1
+      - pgmpy==0.1.26
+      - proto-plus==1.25.0
+      - protobuf==5.29.2
+      - psycopg2==2.9.10
+      - pyasn1==0.6.1
+      - pyasn1-modules==0.4.1
+      - pycparser==2.22
+      - pydantic==2.10.4
+      - pydantic-core==2.27.2
+      - pyopenssl==25.0.0
+      - pyparsing==3.2.1
+      - python-dotenv==1.1.0
+      - pytz==2024.2
+      - qpsolvers==4.5.0
+      - redis==5.2.1
+      - requests==2.32.3
+      - rsa==4.9
+      - scikit-learn==1.6.0
+      - scs==3.2.7.post2
+      - service-identity==24.2.0
+      - six==1.17.0
+      - sklearn-compat==0.1.3
+      - statsmodels==0.14.4
+      - sympy==1.13.1
+      - torch==2.5.1
+      - tqdm==4.67.1
+      - twisted==24.11.0
+      - txaio==23.1.1
+      - tzdata==2024.2
+      - uritemplate==4.1.1
+      - urllib3==2.3.0
+      - xgboost==2.1.3
+      - zope-interface==7.2
+prefix: C:\Users\david\.conda\envs\bayesian-network-bias-simulation
