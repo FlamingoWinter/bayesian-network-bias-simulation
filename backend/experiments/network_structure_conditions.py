@@ -158,8 +158,8 @@ def choose_score_characteristic_modified(graph: nx.DiGraph) -> str:
 
 
 if __name__ == "__main__":
-    # while True:
-    #     try:
-    network_structure_conditions_run()
-# except:
-#     pass
+    while True:
+        try:
+            network_structure_conditions_run()
+        except:
+            pass
