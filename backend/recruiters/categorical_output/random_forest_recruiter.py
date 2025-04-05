@@ -10,7 +10,7 @@ from backend.recruiters.recruiter import Recruiter
 class RandomForestRecruiter(Recruiter):
     @property
     def name(self):
-        return "Random Forest Recruiter"
+        return "Random Forest"
 
     @property
     def output_type(self):

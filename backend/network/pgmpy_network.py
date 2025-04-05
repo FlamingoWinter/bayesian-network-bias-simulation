@@ -99,13 +99,16 @@ class PgmPyNetwork(BayesianNetwork):
 
     @time_function("Sampling Posterior")
     def sample_conditioned(self):
+        if len(self.model.nodes) > 22:
+            raise "Error! Too many nodes for variable elimination"
         inference = VariableElimination(self.model)
+
         model_formatted_characteristics = self.characteristics.keys()
         if self.name_mapping is not None:
             model_formatted_characteristics = [self.inv_name_mapping[c] for c in model_formatted_characteristics]
 
         sampled_data = (inference.query([c for c in model_formatted_characteristics if c not in self.observed.keys()],
-                                        evidence=self.observed))
+                                        evidence=self.observed, show_progress=True))
         sampled_data = sampled_data.sample(num_samples)
 
         condition_response = {}

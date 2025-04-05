@@ -1,3 +1,4 @@
+import warnings
 from typing import cast
 
 import pymc as pm
@@ -13,7 +14,9 @@ from backend.utilities.time_function import time_function
 def generate_candidate_group(network: BayesianNetwork, count: int = num_samples) -> CandidateGroup:
     if network.model_type == "pymc":
         with network.model:
+            warnings.simplefilter("ignore", category=RuntimeWarning)
             prior_trace: PriorTrace = cast(PriorTrace, pm.sample_prior_predictive(count))
+            warnings.simplefilter("default", category=RuntimeWarning)
 
         candidate_group = CandidateGroup(network, prior_trace.prior.to_dataframe())
         return candidate_group

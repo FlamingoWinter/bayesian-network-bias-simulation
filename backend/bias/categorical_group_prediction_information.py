@@ -12,7 +12,7 @@ def confusion_matrix(df):
     return tp, fp, tn, fn
 
 
-class CategoricalGroupPredictionInformation:
+class GroupPredictionInformation:
     def __init__(self, application_subset: pd.DataFrame):
         self.total = len(application_subset)
 

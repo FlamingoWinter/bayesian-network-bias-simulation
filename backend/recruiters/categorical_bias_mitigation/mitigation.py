@@ -30,13 +30,13 @@ class Mitigation(ABC):
         threshold = scores.quantile(1 - proportion_hired)
         num_selected = int(len(scores) * proportion_hired)
 
-        above_threshold = scores > threshold
+        above_threshold = (scores > threshold)
         equal_threshold = scores == threshold
 
         remaining_needed = num_selected - above_threshold.sum()
         if remaining_needed > 0:
             equal_indices = scores[equal_threshold].index
-            if randomise:
+            if randomise and len(equal_indices) > 0:
                 drop_indices = np.random.choice(equal_indices, len(equal_indices) - remaining_needed, replace=False)
                 equal_threshold.loc[drop_indices] = False
             else:

@@ -2,9 +2,10 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import BiasSubTitle from '../BiasSubTitle.svelte';
 	import BiasTitle from '../BiasTitle.svelte';
-	import type { CategoricalRecruiterBiasAnalysis } from '../../../../types/Bias.js';
+	import type { MitigationBiasAnalysis } from '../../../../types/Bias.js';
 
-	export let recruiter: CategoricalRecruiterBiasAnalysis;
+	export let recruiter: MitigationBiasAnalysis;
+
 
 </script>
 

@@ -29,7 +29,7 @@ class DeepMLP(nn.Module):
 class DeepMLPRecruiter(Recruiter):
     @property
     def name(self):
-        return "Deep MLP Recruiter"
+        return "Deep MLP"
 
     @property
     def output_type(self):
@@ -51,7 +51,6 @@ class DeepMLPRecruiter(Recruiter):
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"torch is using {device} device")
         self.model.to(device)
 
         X_train = torch.tensor(application_train.values, dtype=torch.float32)

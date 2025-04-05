@@ -2,10 +2,11 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import BiasSubTitle from '../BiasSubTitle.svelte';
 	import BiasTitle from '../BiasTitle.svelte';
-	import { type CategoricalRecruiterBiasAnalysis, multiplierToLevel } from '../../../../types/Bias';
+	import { type MitigationBiasAnalysis, multiplierToLevel } from '../../../../types/Bias';
 	import { levelToColorMapping } from '../../../../types/Bias.js';
 
-	export let recruiter: CategoricalRecruiterBiasAnalysis;
+	export let recruiter: MitigationBiasAnalysis;
+	export let withoutMitigation: MitigationBiasAnalysis | null;
 
 	$: minAndMaxHiredRates = Object.entries(recruiter.byGroup).reduce(
 		(acc, [groupName, info]) => {
@@ -39,7 +40,7 @@
 					<span style="color: {levelToColorMapping[biasLevel]}" class="font-bold block center text-3xl">
 						{disparity.toFixed(3)}x
 					</span>
-					as likely to be hired than a random person
+					as likely to be hired as a random person
 					from group {minAndMaxHiredRates.min}
 				</p>
 				<p class="mt-8 text-center">By this metric, there is a <span
@@ -74,12 +75,25 @@
 							{#each Object.keys(recruiter.byGroup) as group}
 								<tr>
 									<td>{group}</td>
-									<td class="font-bold">{recruiter.byGroup[group].hiredRate.toFixed(3)}</td>
+									{#if withoutMitigation === null}
+																				<td><span class="font-bold">
+																					{recruiter.byGroup[group].hiredRate.toFixed(3)}
+																				</span></td>
+
+									{:else}
+										<td>
+											<span class="font-bold">{recruiter.byGroup[group].hiredRate.toFixed(3)}</span>
+											<span class="text-xs">{withoutMitigation.byGroup[group].hiredRate.toFixed(3)}</span>
+										</td>
+									{/if}
 									<td>{recruiter.byGroup[group].competentRate.toFixed(3)}</td>
 								</tr>
 							{/each}
 							</tbody>
 						</table>
+						{#if withoutMitigation !== null}
+							<p class="text-xs py-2">* Bracketed values are from the model without the mitigation applied.</p>
+						{/if}
 					</div>
 				</svelte:fragment>
 			</AccordionItem>

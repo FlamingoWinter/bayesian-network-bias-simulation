@@ -8,7 +8,7 @@ export function applyForceSimulation(graph: Graph,
 																		 linkGroup: SVGGElement,
 																		 markerGroup: SVGDefsElement) {
 	function leftRightForce(alpha: number) {
-		const strength = 20;
+		const strength = 15 * Math.pow(graph.nodes.length, 1 / 4);
 
 		graph.links.forEach((link: Link) => {
 			const sourceNode = link.source as Node;
@@ -38,8 +38,8 @@ export function applyForceSimulation(graph: Graph,
 
 	const simulation = d3.forceSimulation(graph.nodes)
 		.force('link', d3.forceLink(graph.links).id((d: any) => d.id).distance(8 * Math.sqrt(graph.nodes.length)).strength(0.1))
-		.force('charge', d3.forceManyBody().strength(-300 * graph.nodes.length))
-		.force('center', d3.forceCenter(width / 2, height / 2).strength(120 * graph.nodes.length))
+		.force('charge', d3.forceManyBody().strength(-1200 * Math.pow(graph.nodes.length, 1 / 4)))
+		.force('center', d3.forceCenter(width / 2, height / 2).strength(240 * Math.pow(graph.nodes.length, 1 / 4)))
 		.force('left-right', leftRightForce)
 		.force('start-force', startForce);
 

@@ -38,13 +38,6 @@ RandomNetworkRequest = Union[CategoricalNetworkRequest, ContinuousNetworkRequest
 GenerateNetworkRequest = Union[RandomNetworkRequest, PredefinedNetworkRequest]
 
 
-def new_generate_network_request(**kwargs) -> GenerateNetworkRequest:
-    if kwargs.get("random_or_predefined") == "predefined":
-        return PredefinedNetworkRequest()
-
-    if kwargs.get("categorical_or_continuous") == "categorical":
-        kwargs = replace_blanks_with_defaults(kwargs, CategoricalNetworkRequest)
-        return CategoricalNetworkRequest(**kwargs)
-
-    if kwargs.get("categorical_or_continuous") == "continuous":
-        return ContinuousNetworkRequest()
+def new_categorical_network_request(**kwargs) -> CategoricalNetworkRequest:
+    kwargs = replace_blanks_with_defaults(kwargs, CategoricalNetworkRequest)
+    return CategoricalNetworkRequest(**kwargs)

@@ -49,7 +49,7 @@
 							<input class="input p-2 rounded-container-token"
 										 type="number" placeholder="Number of Nodes..."
 										 bind:value={numberOfNodes}
-										 min={1} max={50} />
+										 min={4} max={20} />
 						</ModalRow>
 						<ModalRow center={false}>
 							<div class="absolute left-4">
@@ -74,7 +74,7 @@
 									<div class="w-[10rem] ">
 										<h3 class="text-md w-[8rem] font-bold">Allowed Mutual Information:</h3>
 									</div>
-									<ModalMinMaxAny bind:min={maxMutualInformation} bind:max={minMutualInformation}
+									<ModalMinMaxAny bind:min={minMutualInformation} bind:max={maxMutualInformation}
 																	bind:any={anyMutualInformation}
 																	minBound={0.1} maxBound={0.9} step={0.01} />
 								</ModalRow>

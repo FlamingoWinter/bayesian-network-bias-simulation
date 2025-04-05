@@ -25,7 +25,7 @@ class ShallowMLP(nn.Module):
 class ShallowMLPRecruiter(Recruiter):
     @property
     def name(self):
-        return "Shallow MLP Recruiter"
+        return "Shallow MLP"
 
     @property
     def output_type(self):
@@ -46,7 +46,6 @@ class ShallowMLPRecruiter(Recruiter):
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"torch is using {device} device")
         self.model.to(device)
 
         X_train = torch.tensor(application_train.values, dtype=torch.float32)

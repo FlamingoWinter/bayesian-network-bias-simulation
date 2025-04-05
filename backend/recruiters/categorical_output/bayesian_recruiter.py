@@ -12,7 +12,7 @@ from backend.recruiters.recruiter import Recruiter
 class BayesianRecruiter(Recruiter):
     @property
     def name(self):
-        return "Bayesian Recruiter"
+        return "Bayesian"
 
     @property
     def output_type(self):

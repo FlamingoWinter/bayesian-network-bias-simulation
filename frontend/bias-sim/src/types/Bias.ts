@@ -26,19 +26,12 @@ interface CategoricalGroupPredictionInformation {
 }
 
 
-export interface CategoricalRecruiterBiasAnalysis {
+export interface MitigationBiasAnalysis {
 	general: CategoricalGroupPredictionInformation;
 	byGroup: Record<string, CategoricalGroupPredictionInformation>;
 }
 
-interface ContinuousRecruiterBiasAnalysis {
-
-}
-
-interface RecruiterBiasAnalysis {
-	categoricalBiasAnalysis: CategoricalRecruiterBiasAnalysis,
-	continuousBiasAnalysis: ContinuousRecruiterBiasAnalysis
-}
+export type RecruiterBiasAnalysis = Record<string, MitigationBiasAnalysis>
 
 export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>
 

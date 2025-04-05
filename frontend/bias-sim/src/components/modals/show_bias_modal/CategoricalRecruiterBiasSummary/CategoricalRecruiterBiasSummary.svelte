@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { Accordion } from '@skeletonlabs/skeleton';
-	import type { CategoricalRecruiterBiasAnalysis } from '../../../../types/Bias.js';
+	import type { MitigationBiasAnalysis } from '../../../../types/Bias.js';
 	import PerformanceSummary from './PerformanceSummary.svelte';
 	import DemographicParitySummary from './DemographicParitySummary.svelte';
 	import EqualisedOddsSummary from './EqualisedOddsSummary.svelte';
 	import PredictiveParitySummary from './PredictiveParitySummary.svelte';
 
-	export let recruiter: CategoricalRecruiterBiasAnalysis;
+	export let recruiter: MitigationBiasAnalysis;
+	export let withoutMitigation: MitigationBiasAnalysis | null;
+
 </script>
 
 <div>
@@ -15,12 +17,12 @@
 		<Accordion>
 			<PerformanceSummary recruiter={recruiter} />
 			<hr />
-			<DemographicParitySummary recruiter={recruiter} />
+			<DemographicParitySummary recruiter={recruiter} withoutMitigation={withoutMitigation} />
 			<hr />
-			<EqualisedOddsSummary recruiter={recruiter} />
+			<EqualisedOddsSummary recruiter={recruiter} withoutMitigation={withoutMitigation} />
 
 			<hr />
-			<PredictiveParitySummary recruiter={recruiter} />
+			<PredictiveParitySummary recruiter={recruiter} withoutMitigation={withoutMitigation} />
 
 
 		</Accordion>

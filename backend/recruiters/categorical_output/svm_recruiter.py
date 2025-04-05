@@ -10,7 +10,7 @@ from backend.recruiters.recruiter import Recruiter
 class SVMRecruiter(Recruiter):
     @property
     def name(self):
-        return "SVM Recruiter"
+        return "SVM"
 
     @property
     def output_type(self):

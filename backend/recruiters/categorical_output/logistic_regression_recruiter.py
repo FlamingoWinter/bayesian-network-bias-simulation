@@ -10,7 +10,7 @@ from backend.recruiters.recruiter import Recruiter
 class LogisticRegressionRecruiter(Recruiter):
     @property
     def name(self):
-        return "Logistic Regression Recruiter"
+        return "Logistic Regression"
 
     @property
     def output_type(self):

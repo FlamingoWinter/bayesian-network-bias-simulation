@@ -4,12 +4,15 @@
 	import BiasTitle from '../BiasTitle.svelte';
 	import {
 		absoluteDisparityToLevel,
-		type CategoricalRecruiterBiasAnalysis,
+		type MitigationBiasAnalysis,
 		multiplierToLevel
 	} from '../../../../types/Bias';
 	import { levelToColorMapping } from '../../../../types/Bias.js';
 
-	export let recruiter: CategoricalRecruiterBiasAnalysis;
+	export let recruiter: MitigationBiasAnalysis;
+		export let withoutMitigation: MitigationBiasAnalysis | null;
+
+
 
 	$: minAndMaxFalseNegativeRates = Object.entries(recruiter.byGroup).reduce(
 		(acc, [groupName, info]) => {
@@ -102,12 +105,26 @@
 								{#each Object.keys(recruiter.byGroup) as group}
 									<tr>
 										<td>{group}</td>
+										<td>{group}</td>
+									{#if withoutMitigation === null}
+																														<td class="font-bold">{recruiter.byGroup[group].falseNegativeRate.toFixed(3)}</td>
+
+
+									{:else}
+										<td>
+											<span class="font-bold">{recruiter.byGroup[group].falseNegativeRate.toFixed(3)}</span>
+											<span class="text-xs">({withoutMitigation.byGroup[group].falseNegativeRate.toFixed(3)})</span>
+										</td>
+									{/if}
 										<td class="font-bold">{recruiter.byGroup[group].falseNegativeRate.toFixed(3)}</td>
 										<td>{recruiter.byGroup[group].competentRate.toFixed(3)}</td>
 									</tr>
 								{/each}
 								</tbody>
 							</table>
+							{#if withoutMitigation !== null}
+							<p class="text-xs py-2">* Bracketed values are from the model without the mitigation applied.</p>
+						{/if}
 						</div>
 					</svelte:fragment>
 				</AccordionItem>
@@ -160,12 +177,23 @@
 								{#each Object.keys(recruiter.byGroup) as group}
 									<tr>
 										<td>{group}</td>
+										{#if withoutMitigation === null}
+											<td class="font-bold">{recruiter.byGroup[group].falsePositiveRate.toFixed(3)}</td>
+									{:else}
+										<td>
+											<span class="font-bold">{recruiter.byGroup[group].falsePositiveRate.toFixed(3)}</span>
+											<span class="text-xs">{withoutMitigation.byGroup[group].falsePositiveRate.toFixed(3)}</span>
+										</td>
+									{/if}
 										<td class="font-bold">{recruiter.byGroup[group].falsePositiveRate.toFixed(3)}</td>
 										<td>{recruiter.byGroup[group].notCompetentRate.toFixed(3)}</td>
 									</tr>
 								{/each}
 								</tbody>
 							</table>
+							{#if withoutMitigation !== null}
+							<p class="text-xs py-2">* Bracketed values are from the model without the mitigation applied.</p>
+						{/if}
 						</div>
 					</svelte:fragment>
 				</AccordionItem>

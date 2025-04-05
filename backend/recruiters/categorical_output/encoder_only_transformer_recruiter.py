@@ -31,7 +31,7 @@ class Transformer(nn.Module):
 class EncoderOnlyTransformerRecruiter(Recruiter):
     @property
     def name(self):
-        return "Encoder-Only Transformer Recruiter"
+        return "Encoder-Only Transformer"
 
     @property
     def output_type(self):

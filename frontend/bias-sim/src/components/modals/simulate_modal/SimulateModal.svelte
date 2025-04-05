@@ -18,7 +18,7 @@
 					<input class="input p-2 rounded-container-token"
 								 type="number" placeholder="Candidates to Generate..."
 								 bind:value={candidatesToGenerate}
-								 min={1000} max={10_000_000} />
+								 min={1000} max={100_000} />
 				</ModalRow>
 
 				<ModalRow center={true} gap={10}>
