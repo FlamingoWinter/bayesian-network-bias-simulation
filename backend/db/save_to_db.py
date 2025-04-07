@@ -106,6 +106,4 @@ def save_recruiter_run_to_db(engine: Engine,
 
         print("Inserted IDs:", inserted_ids)
 
-        return ""
-
     return ""

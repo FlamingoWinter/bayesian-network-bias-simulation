@@ -105,9 +105,8 @@
 								{#each Object.keys(recruiter.byGroup) as group}
 									<tr>
 										<td>{group}</td>
-										<td>{group}</td>
 									{#if withoutMitigation === null}
-																														<td class="font-bold">{recruiter.byGroup[group].falseNegativeRate.toFixed(3)}</td>
+										<td class="font-bold">{recruiter.byGroup[group].falseNegativeRate.toFixed(3)}</td>
 
 
 									{:else}
@@ -116,7 +115,6 @@
 											<span class="text-xs">({withoutMitigation.byGroup[group].falseNegativeRate.toFixed(3)})</span>
 										</td>
 									{/if}
-										<td class="font-bold">{recruiter.byGroup[group].falseNegativeRate.toFixed(3)}</td>
 										<td>{recruiter.byGroup[group].competentRate.toFixed(3)}</td>
 									</tr>
 								{/each}
@@ -185,7 +183,6 @@
 											<span class="text-xs">{withoutMitigation.byGroup[group].falsePositiveRate.toFixed(3)}</span>
 										</td>
 									{/if}
-										<td class="font-bold">{recruiter.byGroup[group].falsePositiveRate.toFixed(3)}</td>
 										<td>{recruiter.byGroup[group].notCompetentRate.toFixed(3)}</td>
 									</tr>
 								{/each}

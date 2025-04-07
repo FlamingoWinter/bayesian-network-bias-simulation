@@ -28,8 +28,13 @@
 									{#each Object.keys($biasAnalysis[recruiterName]) as mitigation}
 										<div class="bg-gray-100 p-2 rounded-lg mb-3">
 											<h3 class="text-xl font-bold pb-4 pl-4 pt-2 text-secondary-700">{mitigation}:</h3>
-											<CategoricalRecruiterBiasSummary recruiter={$biasAnalysis[recruiterName][mitigation]}
-																											 withoutMitigation={$biasAnalysis[recruiterName][mitigation]} />
+											<CategoricalRecruiterBiasSummary
+												recruiter={$biasAnalysis[recruiterName][mitigation]}
+												withoutMitigation={mitigation === "No Mitigation"
+												? null
+												: $biasAnalysis[recruiterName]?.["No Mitigation"] ?? null}
+											/>
+
 										</div>
 									{/each}
 								</div>

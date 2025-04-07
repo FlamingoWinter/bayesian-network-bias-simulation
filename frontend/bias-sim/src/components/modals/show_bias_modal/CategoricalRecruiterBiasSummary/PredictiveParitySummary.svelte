@@ -105,14 +105,13 @@
 									<tr>
 										<td>{group}</td>
 										{#if withoutMitigation === null}
-										<td class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</td>
-									{:else}
-										<td>
-											<span class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</span>
-											<span class="text-xs">{withoutMitigation.byGroup[group].falseDiscoveryRate.toFixed(3)}</span>
-										</td>
-									{/if}
-										<td class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</td>
+											<td class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</td>
+										{:else}
+											<td>
+												<span class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</span>
+												<span class="text-xs">{withoutMitigation.byGroup[group].falseDiscoveryRate.toFixed(3)}</span>
+											</td>
+										{/if}
 										<td>{recruiter.byGroup[group].hiredRate.toFixed(3)}</td>
 									</tr>
 								{/each}

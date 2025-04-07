@@ -14,8 +14,6 @@ from backend.network.generation.generate_categorical_network import assign_cpds
 from backend.network.generation.generate_dag import generate_random_dag
 from backend.network.pgmpy_network import PgmPyNetwork
 from backend.recruiters.categorical_bias_mitigation.no_mitigation import NoMitigation
-from backend.recruiters.categorical_bias_mitigation.satisfy_demographic_parity import SatisfyDemographicParity
-from backend.recruiters.categorical_bias_mitigation.satisfy_proportional_parity import SatisfyProportionalParity
 from backend.recruiters.categorical_output.bayesian_recruiter import BayesianRecruiter
 from backend.recruiters.categorical_output.deep_mlp_recruiter import DeepMLPRecruiter
 from backend.recruiters.categorical_output.encoder_only_transformer_recruiter import EncoderOnlyTransformerRecruiter
@@ -74,19 +72,19 @@ def network_structure_conditions_run():
 
         recruiters: List[Recruiter] = [
             RandomForestRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
             BayesianRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
             ShallowMLPRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
             DeepMLPRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
             EncoderOnlyTransformerRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
             LogisticRegressionRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
             SVMRecruiter(
-                [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+                [NoMitigation()]),
         ]
 
         protected_characteristic = network.characteristics[protected_characteristic_name]
@@ -116,7 +114,7 @@ def choose_application_characteristics_modified(
                            node != score_characteristic and node != protected_characteristic]
         return random.sample(candidate_nodes, application_size - 1) + [protected_characteristic]
     elif condition == 3:
-        # 10 Random nodes are selected as application. This doesn't include protected characteristics but includes 5 characteristics close to it with steps <=2
+        # 10 Random nodes are selected as application. This doesn't include protected characteristics but includes 5 neighbour characteristics
         proxy_nodes = set(graph.neighbors(protected_characteristic))
         candidate_nodes = [node for node in graph.nodes if
                            node != score_characteristic and node != protected_characteristic and node not in proxy_nodes]
@@ -124,7 +122,7 @@ def choose_application_characteristics_modified(
                                                                                      application_size // 2)
     elif condition == 4:
         # 15 Random nodes are selected as application.
-        # This doesn't include protected characteristics or any nodes connected by protected characteristic with steps<=3.
+        # This doesn't include protected characteristics or any nodes connected by protected characteristic with steps<=2.
         proxy_nodes = set(
             two_hop for one_hop in [protected_characteristic] + list(graph.neighbors(protected_characteristic))
             for two_hop in [one_hop] + list(graph.neighbors(one_hop))
