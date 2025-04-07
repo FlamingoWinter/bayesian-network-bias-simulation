@@ -41,7 +41,7 @@ category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
 
 
 @time_function("Network Structure Conditions Run")
-def mitigations():
+def mitigations_run():
     start_time = datetime.now()
     engine: Engine = get_engine()
 
@@ -54,7 +54,7 @@ def mitigations():
     try:
         score_characteristic = choose_score_characteristic_modified(graph)
     except:
-        return mitigations()
+        return mitigations_run()
 
     protected_characteristic_name = choose_protected_characteristic_modfied(graph)
 
@@ -98,4 +98,8 @@ def mitigations():
 
 
 if __name__ == "__main__":
-    mitigations()
+    while True:
+        try:
+            mitigations_run()
+        except:
+            pass
