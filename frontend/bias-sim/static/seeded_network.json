@@ -1,0 +1,620 @@
+{
+  "graph": {
+    "directed": true,
+    "multigraph": false,
+    "graph": {},
+    "nodes": [
+      {
+        "weight": null,
+        "id": "Protected Characteristic"
+      },
+      {
+        "weight": null,
+        "id": "1"
+      },
+      {
+        "weight": null,
+        "id": "2"
+      },
+      {
+        "weight": null,
+        "id": "3"
+      },
+      {
+        "weight": null,
+        "id": "4"
+      },
+      {
+        "weight": null,
+        "id": "5"
+      },
+      {
+        "weight": null,
+        "id": "6"
+      },
+      {
+        "weight": null,
+        "id": "7"
+      },
+      {
+        "weight": null,
+        "id": "8"
+      },
+      {
+        "weight": null,
+        "id": "9"
+      },
+      {
+        "weight": null,
+        "id": "10"
+      },
+      {
+        "weight": null,
+        "id": "11"
+      },
+      {
+        "weight": null,
+        "id": "12"
+      },
+      {
+        "weight": null,
+        "id": "13"
+      },
+      {
+        "weight": null,
+        "id": "14"
+      },
+      {
+        "weight": null,
+        "id": "15"
+      },
+      {
+        "weight": null,
+        "id": "16"
+      },
+      {
+        "weight": null,
+        "id": "Competence"
+      },
+      {
+        "weight": null,
+        "id": "18"
+      },
+      {
+        "weight": null,
+        "id": "19"
+      }
+    ],
+    "links": [
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "2"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "1"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "4"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "5"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "11"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "3"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "7"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "8"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "10"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "12"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "13"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "16"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "3"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "9"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "12"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "14"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "19"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "4"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "5"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "6"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "12"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "5"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "7"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "9"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "10"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "6"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "13"
+      },
+      {
+        "weight": null,
+        "source": "6",
+        "target": "8"
+      },
+      {
+        "weight": null,
+        "source": "6",
+        "target": "16"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "11"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "9"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "10"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "15"
+      },
+      {
+        "weight": null,
+        "source": "9",
+        "target": "15"
+      },
+      {
+        "weight": null,
+        "source": "9",
+        "target": "14"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "14"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "13"
+      },
+      {
+        "weight": null,
+        "source": "11",
+        "target": "15"
+      },
+      {
+        "weight": null,
+        "source": "12",
+        "target": "Competence"
+      },
+      {
+        "weight": null,
+        "source": "12",
+        "target": "19"
+      },
+      {
+        "weight": null,
+        "source": "13",
+        "target": "Competence"
+      },
+      {
+        "weight": null,
+        "source": "13",
+        "target": "19"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "18"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "16"
+      },
+      {
+        "weight": null,
+        "source": "15",
+        "target": "Competence"
+      }
+    ]
+  },
+  "scoreCharacteristic": "18",
+  "applicationCharacteristics": [
+    "11",
+    "13",
+    "6",
+    "15",
+    "10",
+    "3",
+    "5",
+    "1",
+    "2"
+  ],
+  "characteristics": {
+    "Protected Characteristic": {
+      "name": "Protected Characteristic",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.643,
+        0.357
+      ]
+    },
+    "1": {
+      "name": "1",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2868,
+        0.6166,
+        0.0966
+      ]
+    },
+    "2": {
+      "name": "2",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5624,
+        0.4376
+      ]
+    },
+    "3": {
+      "name": "3",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5046,
+        0.4954
+      ]
+    },
+    "4": {
+      "name": "4",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2736,
+        0.5944,
+        0.132
+      ]
+    },
+    "5": {
+      "name": "5",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2008,
+        0.3118,
+        0.4874
+      ]
+    },
+    "6": {
+      "name": "6",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3398,
+        0.6602
+      ]
+    },
+    "7": {
+      "name": "7",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6138,
+        0.3862
+      ]
+    },
+    "8": {
+      "name": "8",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3158,
+        0.3534,
+        0.3308
+      ]
+    },
+    "9": {
+      "name": "9",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.2386,
+        0.7614
+      ]
+    },
+    "10": {
+      "name": "10",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.218,
+        0.782
+      ]
+    },
+    "11": {
+      "name": "11",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.1168,
+        0.2652,
+        0.3856,
+        0.2324
+      ]
+    },
+    "12": {
+      "name": "12",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.4634,
+        0.1506,
+        0.0538,
+        0.3322
+      ]
+    },
+    "13": {
+      "name": "13",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.2538,
+        0.7462
+      ]
+    },
+    "14": {
+      "name": "14",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3778,
+        0.6222
+      ]
+    },
+    "15": {
+      "name": "15",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.57,
+        0.43
+      ]
+    },
+    "16": {
+      "name": "16",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.1552,
+        0.157,
+        0.1916,
+        0.4962
+      ]
+    },
+    "Competence": {
+      "name": "Competence",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.2874,
+        0.2402,
+        0.3206,
+        0.1518
+      ]
+    },
+    "18": {
+      "name": "18",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.416,
+        0.584
+      ]
+    },
+    "19": {
+      "name": "19",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.0906,
+        0.1656,
+        0.0936,
+        0.6502
+      ]
+    }
+  },
+  "description": "",
+  "predefined": false
+}

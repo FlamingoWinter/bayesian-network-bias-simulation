@@ -8,10 +8,8 @@ from backend.utilities.replace_blanks_with_defaults import replace_blanks_with_d
 class SimulateRequest:
     candidates_to_generate: int = 10_000
     train_proportion: float = 0.9
-    recruiters: List[str] = field(
-        default_factory=lambda: ["random_forest", "logistic_regression",
-                                 "shallow_mlp", "deep_mlp",
-                                 "transformer", "svm", "bayesian"])
+    recruiters: dict[str, List[str]] = field(
+        default_factory=lambda: {"random_forest": ["no_mitigation"]})
     protected_characteristic: str = ""
     score_threshold: float = 0
 

@@ -1,0 +1,335 @@
+{
+  "graph": {
+    "directed": true,
+    "multigraph": false,
+    "graph": {},
+    "nodes": [
+      {
+        "weight": null,
+        "id": "Cognitive Ability"
+      },
+      {
+        "weight": null,
+        "id": "Protected Characteristic 2"
+      },
+      {
+        "weight": null,
+        "id": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "id": "Success on First Impression"
+      },
+      {
+        "weight": null,
+        "id": "Access to Career Advice"
+      },
+      {
+        "weight": null,
+        "id": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "id": "Healthcare Access"
+      },
+      {
+        "weight": null,
+        "id": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "id": "Creative Skills"
+      },
+      {
+        "weight": null,
+        "id": "Mental Health Stability"
+      },
+      {
+        "weight": null,
+        "id": "Pressure of Other Responsibilities"
+      },
+      {
+        "weight": null,
+        "id": "Job Competency"
+      }
+    ],
+    "links": [
+      {
+        "weight": null,
+        "source": "Cognitive Ability",
+        "target": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "source": "Cognitive Ability",
+        "target": "Success on First Impression"
+      },
+      {
+        "weight": null,
+        "source": "Cognitive Ability",
+        "target": "Mental Health Stability"
+      },
+      {
+        "weight": null,
+        "source": "Cognitive Ability",
+        "target": "Job Competency"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 2",
+        "target": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 2",
+        "target": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 2",
+        "target": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "source": "Nutritional Access",
+        "target": "Success on First Impression"
+      },
+      {
+        "weight": null,
+        "source": "Success on First Impression",
+        "target": "Access to Career Advice"
+      },
+      {
+        "weight": null,
+        "source": "Success on First Impression",
+        "target": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "source": "Success on First Impression",
+        "target": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Mental Health Stability"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Threats or Violence",
+        "target": "Healthcare Access"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Threats or Violence",
+        "target": "Creative Skills"
+      },
+      {
+        "weight": null,
+        "source": "Healthcare Access",
+        "target": "Mental Health Stability"
+      },
+      {
+        "weight": null,
+        "source": "Healthcare Access",
+        "target": "Creative Skills"
+      },
+      {
+        "weight": null,
+        "source": "Financial Stability",
+        "target": "Creative Skills"
+      },
+      {
+        "weight": null,
+        "source": "Creative Skills",
+        "target": "Job Competency"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Pressure of Other Responsibilities"
+      }
+    ]
+  },
+  "scoreCharacteristic": "Job Competency",
+  "applicationCharacteristics": [
+    "Nutritional Access",
+    "Pressure of Other Responsibilities",
+    "Mental Health Stability",
+    "Success on First Impression"
+  ],
+  "characteristics": {
+    "Cognitive Ability": {
+      "name": "Cognitive Ability",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.6236,
+        0.3764
+      ]
+    },
+    "Protected Characteristic 2": {
+      "name": "Protected Characteristic 2",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.1356,
+        0.8644
+      ]
+    },
+    "Nutritional Access": {
+      "name": "Nutritional Access",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.332,
+        0.3222,
+        0.3458
+      ]
+    },
+    "Success on First Impression": {
+      "name": "Success on First Impression",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.531,
+        0.469
+      ]
+    },
+    "Access to Career Advice": {
+      "name": "Access to Career Advice",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.7706,
+        0.2294
+      ]
+    },
+    "Exposure to Threats or Violence": {
+      "name": "Exposure to Threats or Violence",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.6134,
+        0.3866
+      ]
+    },
+    "Healthcare Access": {
+      "name": "Healthcare Access",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.5014,
+        0.4986
+      ]
+    },
+    "Financial Stability": {
+      "name": "Financial Stability",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.4712,
+        0.5288
+      ]
+    },
+    "Creative Skills": {
+      "name": "Creative Skills",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.461,
+        0.539
+      ]
+    },
+    "Mental Health Stability": {
+      "name": "Mental Health Stability",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.3244,
+        0.4656,
+        0.21
+      ]
+    },
+    "Pressure of Other Responsibilities": {
+      "name": "Pressure of Other Responsibilities",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.3842,
+        0.6158
+      ]
+    },
+    "Job Competency": {
+      "name": "Job Competency",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "Competent",
+        "Not Competent"
+      ],
+      "priorDistribution": [
+        0.4132,
+        0.5868
+      ]
+    }
+  },
+  "description": "",
+  "predefined": false
+}

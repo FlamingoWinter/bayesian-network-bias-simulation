@@ -1,11 +1,13 @@
 <g class="innerNode"
 	 style="transition: transform {defaultTransition}"
-	 transform={expanded ? `scale(${scaleMultiplier})` : ""}
+	 transform={(expanded && !disableInteraction) ? `scale(${scaleMultiplier})` : ""}
 >
 
 	<CharacteristicRectangle width={rectWidth} height={rectHeight}
-													 expanded={expanded} nodeId={node.id}
-													 heightMultiplier={heightMultiplier} />
+													 expanded={(expanded && !disableInteraction)} nodeId={node.id}
+													 heightMultiplier={heightMultiplier}
+													 network={network}
+													 scoreAndApplication={scoreAndApplication} />
 
 	<CharacteristicTitle nodeId={node.id} rectHeight={rectHeight} />
 
@@ -13,30 +15,41 @@
 		 transform={`translate(${chartMargin.left - rectWidth / 2}, ${chartMargin.top - rectHeight / 2})`}
 	>
 		{#if characteristic.type === "categorical"}
-			<CategoricalDistribution characteristic={characteristic} width={chartWidth} height={chartHeight} />
+			<CategoricalDistribution
+				conditions={conditions} conditioned={conditioned} posteriorDistributions={posteriorDistributions}
+				characteristic={characteristic} width={chartWidth} height={chartHeight} />
 		{:else if characteristic.type === "discrete"}
-			<DiscreteDistribution characteristic={characteristic} width={chartWidth} height={chartHeight} />
-
+			<DiscreteDistribution
+				conditions={conditions} conditioned={conditioned} posteriorDistributions={posteriorDistributions}
+				characteristic={characteristic} width={chartWidth} height={chartHeight} />
 		{:else}
-			<ContinuousDistribution characteristic={characteristic} width={chartWidth} height={chartHeight} />
+			<ContinuousDistribution
+				conditions={conditions} conditioned={conditioned} posteriorDistributions={posteriorDistributions}
+				characteristic={characteristic} width={chartWidth} height={chartHeight} />
 		{/if}
 	</g>
 
 	<CharacteristicConfigContainer height={foreignObjectHeight} width={foreignObjectWidth}
-																 heightMultiplier={heightMultiplier} expanded={expanded} bind:isHovered={isHovered}
+																 heightMultiplier={heightMultiplier} expanded={(expanded && !disableInteraction)}
+																 bind:isHovered={isHovered}
 	>
-		{#if !expanded}
-			<ExpandButton isHovered={isHovered} callbackFunction={toggleExpand} />
-		{:else}
-			<CharacteristicConfig node={node} />
+		{#if !disableInteraction}
+			{#if !expanded}
+				<ExpandButton isHovered={isHovered} callbackFunction={toggleExpand} />
+			{:else}
+				<CharacteristicConfig
+					openConditionDialog={openConditionDialog} openDescribeDialog={openDescribeDialog}
+					conditions={conditions}
+					network={network} node={node} scoreAndApplication={scoreAndApplication} />
+			{/if}
 		{/if}
 
 	</CharacteristicConfigContainer>
 </g>
 
 <script lang="ts">
-	import type { Characteristic, Node } from '../../types/network';
-	import { expandedNodeId, network, simulation } from '../../stores/store';
+	import type { Characteristic, Network, Node } from '../../types/network';
+	import { expandedNodeId } from '../../stores/store';
 	import ExpandButton from './config/CharacteristicExpandButton.svelte';
 	import { onMount } from 'svelte';
 	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
@@ -48,15 +61,27 @@
 	import CharacteristicConfigContainer from './config/CharacteristicConfigContainer.svelte';
 	import CharacteristicConfig from './config/CharacteristicConfig.svelte';
 	import { addRepelForceFromNode, removeRepelForce } from '../../animation/forceSimulation';
-	import { exitDialog } from '../../stores/functions';
+	import * as d3 from 'd3';
 
 
+	export let network: Network;
 	export let node: Node;
 	export let characteristic: Characteristic;
+	export let disableInteraction: boolean;
+	export let conditions: Record<string, number>;
+	export let conditioned: boolean;
+	export let posteriorDistributions: Record<string, number[]>;
+
+	export let scoreAndApplication: boolean;
+	export let simulation: d3.Simulation<Node, undefined>;
+	export let openConditionDialog: (expandedNode: string) => Promise<void>;
+	export let openDescribeDialog: (expandedNode: string) => Promise<void>;
+	export let exitDialog: () => void;
+
 
 	const rectWidth = 160;
 	const rectHeight = 120;
-	const heightMultiplier = 1.58;
+	const heightMultiplier = scoreAndApplication ? 1.58 : 1.3;
 	const scaleMultiplier = 1.4;
 	const foreignObjectWidth = rectWidth * 1.1;
 	const foreignObjectHeight = rectHeight * 1.2;
@@ -96,10 +121,10 @@
 	function toggleExpand() {
 		if (!expanded) {
 			$expandedNodeId = node.id;
-			addRepelForceFromNode(node, $simulation, $network.graph, 120, 130);
+			addRepelForceFromNode(node, simulation, network.graph, 120, 130);
 		} else {
-			removeRepelForce(node, $simulation);
-			$exitDialog();
+			removeRepelForce(node, simulation);
+			exitDialog();
 		}
 		expanded = !expanded;
 	}

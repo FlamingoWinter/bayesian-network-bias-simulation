@@ -21,7 +21,10 @@ default_category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
 
 def generate_random_categorical_network(nodes: int = 50, parents_range: Tuple[int, int] = (2, 3),
                                         mutual_information_range: Tuple[float, float] = (0.6, 0.9),
-                                        category_number_dist=None):
+                                        category_number_dist=None, seed=None):
+    if seed:
+        random.seed(seed)
+
     if category_number_dist is None:
         category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
 

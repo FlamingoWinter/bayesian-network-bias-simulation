@@ -42,9 +42,9 @@
 									class="btn btn-lg variant-filled py-2 px-4 rounded-full relative min-w-32"
 									on:click={async ()=>{
 										loading = true;
-										await $condition(nodeName, conditionSettings.isCategorical ? conditionSettings.categoricalValues.indexOf(valueSelected) : numericalValueSelected);
+										await condition(nodeName, conditionSettings.isCategorical ? conditionSettings.categoricalValues.indexOf(valueSelected) : numericalValueSelected);
 									  loading = false;
-										$exitDialog()
+										exitDialog()
 										}}>
 						{#if loading}
 							<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
@@ -64,13 +64,12 @@
 
 <script lang="ts">
 	import { ProgressRadial, RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { conditions, network } from '../stores/store';
 	import { toTitleCase } from '../utiliites/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
 	import * as d3 from 'd3';
-	import { condition, exitDialog, openConditionDialog, openDescribeDialog } from '../stores/functions';
+	import type { Network } from '../types/network';
 
 	type ConditionSettings = {
 		isCategorical: boolean;
@@ -82,6 +81,14 @@
 	let loading = false;
 	let nodeName = '';
 	let paragraph = '';
+
+	export let network: Network;
+	export let conditions: Record<string, number>;
+	export let condition: (characteristic: string, value: (number | null)) => Promise<void>;
+
+	export let openConditionDialog: (expandedNode: string) => Promise<void>;
+	export let openDescribeDialog: (expandedNode: string) => Promise<void>;
+	export let exitDialog: () => void;
 
 
 	let conditionSettings: ConditionSettings = {
@@ -96,11 +103,11 @@
 	let numericalValueSelected: number;
 
 	onMount(() => {
-		$openDescribeDialog = async (nodeId: string) => {
-			const characteristic = $network!.characteristics[nodeId];
+		openDescribeDialog = async (nodeId: string) => {
+			const characteristic = network!.characteristics[nodeId];
 
 			if (nodeName == nodeId && describe) {
-				$exitDialog();
+				exitDialog();
 			} else {
 				if (!describe) {
 					isInfoBoxVisible = false;
@@ -117,13 +124,13 @@
 		};
 
 
-		$openConditionDialog = async (nodeId: string) => {
-			if (nodeId in $conditions) {
-				await $condition(nodeId, null);
+		openConditionDialog = async (nodeId: string) => {
+			if (nodeId in conditions) {
+				await condition(nodeId, null);
 				return;
 			}
 
-			const characteristic = $network!.characteristics[nodeId];
+			const characteristic = network!.characteristics[nodeId];
 			if (describe) {
 				isInfoBoxVisible = false;
 				await new Promise(resolve => setTimeout(resolve, 100));
@@ -156,7 +163,7 @@
 			}
 		};
 
-		$exitDialog = () => {
+		exitDialog = () => {
 			nodeName = '';
 			paragraph = '';
 			isInfoBoxVisible = false;

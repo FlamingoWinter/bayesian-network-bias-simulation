@@ -22,18 +22,21 @@ def get_example_network(request):
 
 
 def get_bias(request):
-    bias_response: BiasResponse = from_cache(f"bias_{request.session.session_key}", "")
+    session_id = request.COOKIES.get('sessionid')
+    bias_response: BiasResponse = from_cache(f"bias_{session_id}", "")
 
     return JsonResponse(bias_response, safe=False)
 
 
 @time_function("Responding to Condition")
-def condition(request):
-    if request.method != 'POST':
-        return JsonResponse({"error": "POST"}, status=405)
+def condition(request, predefined=None):
+    session_id = request.COOKIES.get('sessionid')
 
     condition_request: ConditionRequest = json.loads(request.body)
-    network: BayesianNetwork = get_network_from_cache(request.session.session_key)
+    if predefined is None:
+        network: BayesianNetwork = get_network_from_cache(session_id)
+    else:
+        network: BayesianNetwork = get_network_from_cache(predefined)
 
     network.condition_on(condition_request)
 
@@ -51,10 +54,10 @@ def csrf(request):
 
 
 def session_key(request):
-    session_key = request.session.session_key
+    session_id = request.COOKIES.get('sessionid')
 
-    if not session_key:
+    if not session_id:
         request.session.save()
-        session_key = request.session.session_key
+        session_id = request.session.session_key
 
-    return JsonResponse({'key': session_key})
+    return JsonResponse({'key': session_id})

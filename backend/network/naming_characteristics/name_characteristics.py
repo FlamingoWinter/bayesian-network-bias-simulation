@@ -70,7 +70,9 @@ affected_characteristics = [
 score_characteristic = CharacteristicName("Job Competency", ["Competent", "Not Competent"])
 
 
-def name_characteristics(network: PgmPyNetwork) -> PgmPyNetwork:
+def name_characteristics(network: PgmPyNetwork, seed=None) -> PgmPyNetwork:
+    if seed:
+        random.seed(seed)
     old_to_new: Dict[str, CharacteristicName] = {}
 
     graph = network.model.to_directed()

@@ -3,7 +3,7 @@
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<div class="h-full flex flex-col gap-5 justify-center items-center">
 		<div transition:fade={{ duration: 400 } } on:click|stopPropagation role="alertdialog"
-				 class="card p-4 bg-surface-200-700-token view w-[50vw] min-w-64 h-[40rem] max-h-[90vh] overflow-y-scroll drop-shadow-md rounded-lg flex flex-col justify-between">
+				 class="card p-4 bg-surface-200-700-token view w-[50vw] min-w-64 h-[40rem] max-h-[90vh] overflow-y-scroll hide-scrollbar drop-shadow-md rounded-lg flex flex-col justify-between">
 			<div>
 				<ModalDivider />
 				<ModalRow center={false}>

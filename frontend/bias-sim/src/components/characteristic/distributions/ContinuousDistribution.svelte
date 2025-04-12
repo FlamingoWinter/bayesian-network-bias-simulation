@@ -26,7 +26,6 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import { conditioned, conditions, posteriorDistributions } from '../../../stores/store';
 	import type { Characteristic } from '../../../types/network';
 	import { calculateDistributionFill } from './calculateDistributionFill';
 	import AxisLeft from './AxisLeft.svelte';
@@ -36,6 +35,9 @@
 	export let characteristic: Characteristic;
 	export let width: number;
 	export let height: number;
+	export let conditions: Record<string, number>;
+	export let conditioned: boolean;
+	export let posteriorDistributions: Record<string, number[]>;
 
 	let mounted = false;
 	let axisBottom: SVGGElement;
@@ -44,18 +46,18 @@
 	let probabilityType: ProbabilityType;
 
 
-	$: probabilityType = $conditioned
-		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
+	$: probabilityType = conditioned
+		? (characteristic.name in conditions ? 'conditioned' : 'posterior')
 		: 'prior';
 
 	let distribution: number[];
 	$: switch (probabilityType) {
 		case 'posterior':
-			distribution = $posteriorDistributions[characteristic.name];
+			distribution = posteriorDistributions[characteristic.name];
 		case 'prior':
 			distribution = characteristic.priorDistribution;
 		case 'conditioned':
-			distribution = [$conditions[characteristic.name]];
+			distribution = [conditions[characteristic.name]];
 	}
 
 	$: n = distribution.length;

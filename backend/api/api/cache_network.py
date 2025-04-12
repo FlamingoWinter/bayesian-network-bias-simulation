@@ -1,3 +1,5 @@
+from collections import Counter
+
 import pymc as pm
 from pgmpy.models import BayesianNetwork as PgBn
 
@@ -14,8 +16,14 @@ def cache_network_and_generate_candidates(network: BayesianNetwork, session_id: 
     candidate_group: CandidateGroup = generate_candidate_group(network, num_samples)
 
     for characteristic in network.characteristics:
+        distribution = candidate_group.characteristic_to_distribution(characteristic)
+        total_count = len(distribution)
+        value_counts = Counter(distribution)
+        expected_values = range(max(value_counts.keys(), default=0) + 1)
+        proportions = [value_counts.get(x, 0) / total_count for x in expected_values]
+
         network_response["characteristics"][characteristic]["priorDistribution"] \
-            = candidate_group.characteristic_to_distribution(characteristic)
+            = proportions
 
     if session_id is not None:
         cache(f"network_{session_id}", network)

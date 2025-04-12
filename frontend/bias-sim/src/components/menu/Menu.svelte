@@ -18,12 +18,17 @@
 				 on:mouseleave={() => {isHovered = false}}
 				 class="absolute bottom-20 left-4 p-4 card bg-surface-50-900-token w-52 min-h-80 drop-shadow-md rounded-lg flex flex-col items-center justify-start gap-2">
 
-			<OpenModalMenuButton component={SimulateModal}>Run Simulation...</OpenModalMenuButton>
-			<OpenModalMenuButton component={ShowBiasModal}>Show Bias...</OpenModalMenuButton>
+			<OpenModalMenuButton component={{ref: SimulateModal, props:{network: network}}} classList="bg-primary-900">Run
+				Simulation...
+			</OpenModalMenuButton>
+			<OpenModalMenuButton component={{ref: ShowBiasModal}} classList="bg-primary-700">Show Bias...
+			</OpenModalMenuButton>
 
 
-			<OpenModalMenuButton component={NewNetworkModal}>New Network...</OpenModalMenuButton>
-			<OpenModalMenuButton component={NameNetworkModal}>Name Network...</OpenModalMenuButton>
+			<OpenModalMenuButton component={{ref:NewNetworkModal}} classList="bg-primary-900">New Network...
+			</OpenModalMenuButton>
+			<OpenModalMenuButton component={{ref:NameNetworkModal}} classList="bg-primary-700">Name Network...
+			</OpenModalMenuButton>
 
 
 			{#if $conditioned}
@@ -50,6 +55,9 @@
 	import NameNetworkModal from '../modals/name_network_modal/NameNetworkModal.svelte';
 	import SimulateModal from '../modals/simulate_modal/SimulateModal.svelte';
 	import ShowBiasModal from '../modals/show_bias_modal/ShowBiasModal.svelte';
+	import type { Network } from '../../types/network';
+
+	export let network: Network;
 
 	let isHovered: boolean = false;
 	let isOpen = false;

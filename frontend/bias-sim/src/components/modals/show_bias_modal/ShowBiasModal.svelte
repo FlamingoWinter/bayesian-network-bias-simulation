@@ -3,7 +3,7 @@
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<div class="h-full flex flex-col gap-5 justify-center items-center">
 		<div transition:fade={{ duration: 400 } } on:click|stopPropagation role="alertdialog"
-				 class="card p-1 bg-surface-200-700-token view w-[50vw] min-w-64 h-[95vh]  drop-shadow-md rounded-lg flex flex-col justify-between">
+				 class="card p-1 bg-surface-200-700-token view w-[50vw] min-w-64 h-[95vh] overflow-hidden drop-shadow-md  rounded-lg flex flex-col justify-between">
 			<div>
 				<ModalDivider />
 				<div class="flex pt-2 px-10 justify-between items-center gap-4 gap-4">
@@ -13,36 +13,39 @@
 						<X />
 					</button>
 				</div>
+			</div>
 
 
-				<TabGroup class="px-8" justify="flex-wrap">
+			<TabGroup class="px-8 flex-grow" justify="flex-wrap">
+				{#each Object.keys($biasAnalysis) as recruiterName}
+					<Tab bind:group={tabSet} name="{recruiterName}" value={recruiterName}>
+						{recruiterName}
+					</Tab>
+				{/each}
+				<svelte:fragment slot="panel">
 					{#each Object.keys($biasAnalysis) as recruiterName}
-						<Tab bind:group={tabSet} name="{recruiterName}" value={recruiterName}>
-							{recruiterName}
-						</Tab>
-					{/each}
-					<svelte:fragment slot="panel">
-						{#each Object.keys($biasAnalysis) as recruiterName}
-							<div class="{tabSet === recruiterName ? 'block' : 'hidden'}">
-								<div class="overflow-y-scroll max-h-[65vh]">
-									{#each Object.keys($biasAnalysis[recruiterName]) as mitigation}
-										<div class="bg-gray-100 p-2 rounded-lg mb-3">
-											<h3 class="text-xl font-bold pb-4 pl-4 pt-2 text-secondary-700">{mitigation}:</h3>
-											<CategoricalRecruiterBiasSummary
-												recruiter={$biasAnalysis[recruiterName][mitigation]}
-												withoutMitigation={mitigation === "No Mitigation"
+						<div class="{tabSet === recruiterName ? 'block' : 'hidden'}">
+							<div class="overflow-y-scroll hide-scrollbar max-h-[80vh]">
+								{#each Object.keys($biasAnalysis[recruiterName]) as mitigation}
+									<div class="bg-gray-100 p-2 rounded-lg mb-3">
+										<h3 class="text-xl font-bold pb-4 pl-4 pt-2 text-secondary-700">{mitigation}:</h3>
+										<CategoricalRecruiterBiasSummary
+											recruiter={$biasAnalysis[recruiterName][mitigation]}
+											withoutMitigation={mitigation === "No Mitigation"
 												? null
 												: $biasAnalysis[recruiterName]?.["No Mitigation"] ?? null}
-											/>
+										/>
 
-										</div>
-									{/each}
-								</div>
+									</div>
+
+								{/each}
+								<div class="h-[10em]"></div>
 							</div>
-						{/each}
-					</svelte:fragment>
-				</TabGroup>
-			</div>
+						</div>
+					{/each}
+
+				</svelte:fragment>
+			</TabGroup>
 
 
 		</div>

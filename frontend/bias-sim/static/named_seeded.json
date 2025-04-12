@@ -1,0 +1,610 @@
+{
+  "graph": {
+    "directed": true,
+    "multigraph": false,
+    "graph": {},
+    "nodes": [
+      {
+        "weight": null,
+        "id": "Protected Characteristic 1"
+      },
+      {
+        "weight": null,
+        "id": "Mental Health Stability"
+      },
+      {
+        "weight": null,
+        "id": "Encouragement to Pursue Job from Family"
+      },
+      {
+        "weight": null,
+        "id": "Access to Career Advice"
+      },
+      {
+        "weight": null,
+        "id": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "id": "Geographical Mobility"
+      },
+      {
+        "weight": null,
+        "id": "Confidence in Abilities"
+      },
+      {
+        "weight": null,
+        "id": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "id": "Pressure of Other Responsibilities"
+      },
+      {
+        "weight": null,
+        "id": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "id": "Encouragement to Pursue Job from Friends"
+      },
+      {
+        "weight": null,
+        "id": "Networking Opportunities"
+      },
+      {
+        "weight": null,
+        "id": "Cognitive Ability"
+      },
+      {
+        "weight": null,
+        "id": "Interpersonal Skills"
+      },
+      {
+        "weight": null,
+        "id": "Exposure to Role Models"
+      },
+      {
+        "weight": null,
+        "id": "Healthcare Access"
+      },
+      {
+        "weight": null,
+        "id": "Work Experience Opportunities"
+      },
+      {
+        "weight": null,
+        "id": "Education Opportunities"
+      },
+      {
+        "weight": null,
+        "id": "Happiness Within Community"
+      },
+      {
+        "weight": null,
+        "id": "Job Competency"
+      }
+    ],
+    "links": [
+      {
+        "weight": null,
+        "source": "Protected Characteristic 1",
+        "target": "Encouragement to Pursue Job from Family"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 1",
+        "target": "Mental Health Stability"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 1",
+        "target": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 1",
+        "target": "Geographical Mobility"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic 1",
+        "target": "Networking Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Access to Career Advice"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Pressure of Other Responsibilities"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Encouragement to Pursue Job from Friends"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Cognitive Ability"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Interpersonal Skills"
+      },
+      {
+        "weight": null,
+        "source": "Mental Health Stability",
+        "target": "Work Experience Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Family",
+        "target": "Access to Career Advice"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Family",
+        "target": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Family",
+        "target": "Cognitive Ability"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Family",
+        "target": "Exposure to Role Models"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Family",
+        "target": "Job Competency"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Financial Stability"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Geographical Mobility"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Confidence in Abilities"
+      },
+      {
+        "weight": null,
+        "source": "Access to Career Advice",
+        "target": "Cognitive Ability"
+      },
+      {
+        "weight": null,
+        "source": "Financial Stability",
+        "target": "Geographical Mobility"
+      },
+      {
+        "weight": null,
+        "source": "Financial Stability",
+        "target": "Exposure to Threats or Violence"
+      },
+      {
+        "weight": null,
+        "source": "Financial Stability",
+        "target": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "source": "Financial Stability",
+        "target": "Encouragement to Pursue Job from Friends"
+      },
+      {
+        "weight": null,
+        "source": "Geographical Mobility",
+        "target": "Confidence in Abilities"
+      },
+      {
+        "weight": null,
+        "source": "Geographical Mobility",
+        "target": "Interpersonal Skills"
+      },
+      {
+        "weight": null,
+        "source": "Confidence in Abilities",
+        "target": "Pressure of Other Responsibilities"
+      },
+      {
+        "weight": null,
+        "source": "Confidence in Abilities",
+        "target": "Work Experience Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Threats or Violence",
+        "target": "Networking Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Threats or Violence",
+        "target": "Nutritional Access"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Threats or Violence",
+        "target": "Encouragement to Pursue Job from Friends"
+      },
+      {
+        "weight": null,
+        "source": "Pressure of Other Responsibilities",
+        "target": "Healthcare Access"
+      },
+      {
+        "weight": null,
+        "source": "Nutritional Access",
+        "target": "Healthcare Access"
+      },
+      {
+        "weight": null,
+        "source": "Nutritional Access",
+        "target": "Exposure to Role Models"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Friends",
+        "target": "Exposure to Role Models"
+      },
+      {
+        "weight": null,
+        "source": "Encouragement to Pursue Job from Friends",
+        "target": "Interpersonal Skills"
+      },
+      {
+        "weight": null,
+        "source": "Networking Opportunities",
+        "target": "Healthcare Access"
+      },
+      {
+        "weight": null,
+        "source": "Cognitive Ability",
+        "target": "Education Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Cognitive Ability",
+        "target": "Job Competency"
+      },
+      {
+        "weight": null,
+        "source": "Interpersonal Skills",
+        "target": "Education Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Interpersonal Skills",
+        "target": "Job Competency"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Role Models",
+        "target": "Happiness Within Community"
+      },
+      {
+        "weight": null,
+        "source": "Exposure to Role Models",
+        "target": "Work Experience Opportunities"
+      },
+      {
+        "weight": null,
+        "source": "Healthcare Access",
+        "target": "Education Opportunities"
+      }
+    ]
+  },
+  "scoreCharacteristic": "Job Competency",
+  "applicationCharacteristics": [
+    "Job Competency",
+    "Protected Characteristic 1",
+    "Interpersonal Skills",
+    "Encouragement to Pursue Job from Friends",
+    "Encouragement to Pursue Job from Family",
+    "Pressure of Other Responsibilities",
+    "Networking Opportunities",
+    "Financial Stability",
+    "Access to Career Advice"
+  ],
+  "characteristics": {
+    "Protected Characteristic 1": {
+      "name": "Protected Characteristic 1",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4734,
+        0.5266
+      ]
+    },
+    "Mental Health Stability": {
+      "name": "Mental Health Stability",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.1768,
+        0.3208,
+        0.5024
+      ]
+    },
+    "Encouragement to Pursue Job from Family": {
+      "name": "Encouragement to Pursue Job from Family",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.486,
+        0.514
+      ]
+    },
+    "Access to Career Advice": {
+      "name": "Access to Career Advice",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "Very High",
+        "High",
+        "Low",
+        "Very Low"
+      ],
+      "priorDistribution": [
+        0.6156,
+        0.1714,
+        0.1684,
+        0.0446
+      ]
+    },
+    "Financial Stability": {
+      "name": "Financial Stability",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.5116,
+        0.4884
+      ]
+    },
+    "Geographical Mobility": {
+      "name": "Geographical Mobility",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.4534,
+        0.2602,
+        0.2864
+      ]
+    },
+    "Confidence in Abilities": {
+      "name": "Confidence in Abilities",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.0394,
+        0.5224,
+        0.4382
+      ]
+    },
+    "Exposure to Threats or Violence": {
+      "name": "Exposure to Threats or Violence",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.604,
+        0.396
+      ]
+    },
+    "Pressure of Other Responsibilities": {
+      "name": "Pressure of Other Responsibilities",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.3194,
+        0.6806
+      ]
+    },
+    "Nutritional Access": {
+      "name": "Nutritional Access",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.7236,
+        0.2764
+      ]
+    },
+    "Encouragement to Pursue Job from Friends": {
+      "name": "Encouragement to Pursue Job from Friends",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "Very High",
+        "High",
+        "Low",
+        "Very Low"
+      ],
+      "priorDistribution": [
+        0.1792,
+        0.2088,
+        0.3474,
+        0.2646
+      ]
+    },
+    "Networking Opportunities": {
+      "name": "Networking Opportunities",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.4526,
+        0.5474
+      ]
+    },
+    "Cognitive Ability": {
+      "name": "Cognitive Ability",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.733,
+        0.267
+      ]
+    },
+    "Interpersonal Skills": {
+      "name": "Interpersonal Skills",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.522,
+        0.478
+      ]
+    },
+    "Exposure to Role Models": {
+      "name": "Exposure to Role Models",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.3444,
+        0.6556
+      ]
+    },
+    "Healthcare Access": {
+      "name": "Healthcare Access",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.5976,
+        0.4024
+      ]
+    },
+    "Work Experience Opportunities": {
+      "name": "Work Experience Opportunities",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.4026,
+        0.5974
+      ]
+    },
+    "Education Opportunities": {
+      "name": "Education Opportunities",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "Very High",
+        "High",
+        "Low",
+        "Very Low"
+      ],
+      "priorDistribution": [
+        0.3158,
+        0.1284,
+        0.18,
+        0.3758
+      ]
+    },
+    "Happiness Within Community": {
+      "name": "Happiness Within Community",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.7014,
+        0.2986
+      ]
+    },
+    "Job Competency": {
+      "name": "Job Competency",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "Competent",
+        "Not Competent"
+      ],
+      "priorDistribution": [
+        0.5398,
+        0.4602
+      ]
+    }
+  },
+  "description": "",
+  "predefined": false
+}

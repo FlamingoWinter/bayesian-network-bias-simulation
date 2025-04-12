@@ -23,7 +23,6 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import { conditioned, conditions, posteriorDistributions } from '../../../stores/store';
 	import type { Characteristic } from '../../../types/network';
 	import { defaultTransition } from '../../../animation/transition';
 	import { calculateDistributionFill } from './calculateDistributionFill';
@@ -34,24 +33,27 @@
 	export let width: number;
 	export let height: number;
 
+	export let conditions: Record<string, number>;
+	export let conditioned: boolean;
+	export let posteriorDistributions: Record<string, number[]>;
+
 	let mounted = false;
 	let axisBottom: SVGGElement;
-	let axisLeft: SVGGElement;
 	let probabilityType: ProbabilityType;
 
-	$: probabilityType = $conditioned
-		? (characteristic.name in $conditions ? 'conditioned' : 'posterior')
+	$: probabilityType = conditioned
+		? (characteristic.name in conditions ? 'conditioned' : 'posterior')
 		: 'prior';
 
 	$: distribution = (probabilityType === 'posterior')
-		? $posteriorDistributions[characteristic.name]
+		? posteriorDistributions[characteristic.name]
 		: (probabilityType === 'prior')
 			? characteristic.priorDistribution
-			: [$conditions[characteristic.name]];
+			: [conditions[characteristic.name]];
 
 	$: bars = Array.from(characteristic.categoryNames).map((categoryName, index) => ({
 		category: categoryName,
-		value: distribution.filter(d => d === index).length / distribution.length
+		value: (probabilityType === 'conditioned') ? (index == distribution[0] ? 1 : 0) : (index < distribution.length ? distribution[index] : 0)
 	}));
 
 	$: maxBarY = Math.max(...bars.map((bar: Bar) => bar.value));

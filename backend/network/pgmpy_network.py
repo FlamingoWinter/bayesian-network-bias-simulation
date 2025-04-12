@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import List, Dict
 
 import networkx as nx
@@ -113,9 +114,14 @@ class PgmPyNetwork(BayesianNetwork):
 
         condition_response = {}
         for column in sampled_data:
+            total_count = len(sampled_data[column])
+            value_counts = Counter(sampled_data[column])
+
+            expected_values = range(max(value_counts.keys(), default=0) + 1)
+            proportions = [value_counts.get(x, 0) / total_count for x in expected_values]
             if self.name_mapping is None:
-                condition_response[column] = sampled_data[column].tolist()
+                condition_response[column] = proportions
             else:
-                condition_response[self.name_mapping[column]] = sampled_data[column].tolist()
+                condition_response[self.name_mapping[column]] = proportions
 
         return condition_response

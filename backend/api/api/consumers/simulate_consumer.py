@@ -8,11 +8,30 @@ from backend.api.cache.cache import cache
 from backend.api.requestTypes.simulate_request import new_simulate_request, SimulateRequest
 from backend.api.responseTypes.recruiterBiasAnalysisResponse.biasResponse import \
     BiasResponse
-from backend.bias.recruiter_bias_analysis import print_bias_summary, RecruiterBiasAnalysis
+from backend.bias.recruiter_bias_analysis import RecruiterBiasAnalysis
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group
 from backend.network.bayesian_network import BayesianNetwork
+from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_and_fpr_equality import \
+    OptimiseForFNRAndFPREquality
+from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_equality import \
+    OptimiseForFNREquality
+from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_fpr_accuracy import \
+    OptimiseForFNRFPRAccuracy
+from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fpr_equality import \
+    OptimiseForFPREquality
+from backend.recruiters.categorical_bias_mitigation.approach_predictive_parity.optimise_for_fdr_and_for_equality import \
+    OptimiseForFDRAndFOREquality
+from backend.recruiters.categorical_bias_mitigation.approach_predictive_parity.optimise_for_fdr_equality import \
+    OptimiseForFDREquality
+from backend.recruiters.categorical_bias_mitigation.approach_predictive_parity.optimise_for_fdr_for_accuracy import \
+    OptimiseForFDRFORAccuracy
+from backend.recruiters.categorical_bias_mitigation.approach_predictive_parity.optimise_for_for_equality import \
+    OptimiseForFOREquality
+from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
 from backend.recruiters.categorical_bias_mitigation.no_mitigation import NoMitigation
+from backend.recruiters.categorical_bias_mitigation.satisfy_demographic_parity import SatisfyDemographicParity
+from backend.recruiters.categorical_bias_mitigation.satisfy_proportional_parity import SatisfyProportionalParity
 from backend.recruiters.categorical_output.bayesian_recruiter import BayesianRecruiter
 from backend.recruiters.categorical_output.deep_mlp_recruiter import DeepMLPRecruiter
 from backend.recruiters.categorical_output.encoder_only_transformer_recruiter import EncoderOnlyTransformerRecruiter
@@ -24,7 +43,7 @@ from backend.recruiters.recruiter import Recruiter
 from backend.utilities.replace_nan import replace_nan
 
 
-def recruiter_string_to_recruiter(s: str) -> Recruiter:
+def recruiter_string_to_recruiter(recruiter: str, mitigations: List[str]) -> Recruiter:
     recruiter_map = {
         "random_forest": RandomForestRecruiter,
         "logistic_regression": LogisticRegressionRecruiter,
@@ -35,10 +54,31 @@ def recruiter_string_to_recruiter(s: str) -> Recruiter:
         "svm": SVMRecruiter,
     }
 
-    if s not in recruiter_map:
-        raise ValueError(f"Unknown recruiter type: {s}")
+    if recruiter not in recruiter_map:
+        raise ValueError(f"Unknown recruiter type: {recruiter}")
 
-    return recruiter_map[s]([NoMitigation()])
+    return recruiter_map[recruiter]([mitigation_string_to_mitigation(s) for s in mitigations])
+
+
+def mitigation_string_to_mitigation(s: str) -> Mitigation:
+    mitigation_map = {
+        "no_mitigation": NoMitigation(),
+        "satisfy_dp": SatisfyDemographicParity(),
+        "satisfy_pp": SatisfyProportionalParity(),
+        "optimise_fnr_fpr_accuracy": OptimiseForFNRFPRAccuracy(),
+        "optimise_fnr_fpr": OptimiseForFNRAndFPREquality(),
+        "optimise_fnr": OptimiseForFNREquality(),
+        "optimise_fpr": OptimiseForFPREquality(),
+        "optimise_fdr_for_accuracy": OptimiseForFDRFORAccuracy(),
+        "optimise_fdr_for": OptimiseForFDRAndFOREquality(),
+        "optimise_fdr": OptimiseForFDREquality(),
+        "optimise_for": OptimiseForFOREquality(),
+    }
+
+    if s not in mitigation_map:
+        raise ValueError(f"Unknown mitigation: {s}")
+
+    return mitigation_map[s]
 
 
 class SimulateConsumer(GenericConsumer):
@@ -55,7 +95,9 @@ class SimulateConsumer(GenericConsumer):
 
         await self.send_and_flush(f"{request.candidates_to_generate} Candidates Generated")
 
-        recruiters: List[Recruiter] = [recruiter_string_to_recruiter(s) for s in request.recruiters]
+        recruiters: List[Recruiter] = [
+            recruiter_string_to_recruiter(recruiter, request.recruiters[recruiter])
+            for recruiter in request.recruiters.keys()]
 
         train_candidates, holdout_candidates, test_candidates = candidate_group.random_split([0.5, 0.25, 0.25])
 
@@ -99,7 +141,5 @@ class SimulateConsumer(GenericConsumer):
                                        bias_by_recruiter.items()}
 
         cache(f"bias_{self.session_key}", replace_nan(bias_response))
-
-        print_bias_summary(bias_by_recruiter)
 
         await self.close(code=1000)

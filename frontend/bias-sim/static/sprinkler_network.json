@@ -1,0 +1,106 @@
+{
+  "graph": {
+    "directed": true,
+    "multigraph": false,
+    "graph": {
+      "name": "sprinkler"
+    },
+    "nodes": [
+      {
+        "id": "cloudy"
+      },
+      {
+        "id": "sprinkler"
+      },
+      {
+        "id": "rain"
+      },
+      {
+        "id": "wet_grass"
+      }
+    ],
+    "links": [
+      {
+        "weight": null,
+        "source": "cloudy",
+        "target": "sprinkler"
+      },
+      {
+        "weight": null,
+        "source": "cloudy",
+        "target": "rain"
+      },
+      {
+        "weight": null,
+        "source": "sprinkler",
+        "target": "wet_grass"
+      },
+      {
+        "weight": null,
+        "source": "rain",
+        "target": "wet_grass"
+      }
+    ]
+  },
+  "scoreCharacteristic": "wet_grass",
+  "applicationCharacteristics": [
+    "sprinkler",
+    "rain"
+  ],
+  "characteristics": {
+    "cloudy": {
+      "name": "cloudy",
+      "description": "\n    Whether the weather is cloudy.\n    Yes means it is cloudy, No means it is not cloudy.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "Yes",
+        "No"
+      ],
+      "priorDistribution": [
+        0.5074,
+        0.4926
+      ]
+    },
+    "sprinkler": {
+      "name": "sprinkler",
+      "description": "\n    Whether the sprinkler is on.\n    On means the sprinkler is running, Off means it is not.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "On",
+        "Off"
+      ],
+      "priorDistribution": [
+        0.7004,
+        0.2996
+      ]
+    },
+    "rain": {
+      "name": "rain",
+      "description": "\n    Whether it is raining.\n    Yes means it is raining, No means it is not raining.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "Yes",
+        "No"
+      ],
+      "priorDistribution": [
+        0.505,
+        0.495
+      ]
+    },
+    "wet_grass": {
+      "name": "wet_grass",
+      "description": "\n    Whether the grass is wet.\n    Wet means the grass is wet, Dry means it is dry.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "Wet",
+        "Dry"
+      ],
+      "priorDistribution": [
+        0.7288,
+        0.2712
+      ]
+    }
+  },
+  "description": "\n    A simple Bayesian Network describing the probability of grass being wet.\n    The presence of clouds influences the likelihood of rain and the sprinkler being turned on (the sprinkler is solar-powered).\n    Either rain or the sprinkler being on can cause the grass to be wet.\n    ",
+  "predefined": true
+}

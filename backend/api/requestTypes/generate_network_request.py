@@ -32,6 +32,7 @@ class ContinuousNetworkRequest(RandomNetworkRequestBase):
 
 class PredefinedNetworkRequest(NetworkRequestBase):
     random_or_predefined: Literal['predefined']
+    predefined_model: str
 
 
 RandomNetworkRequest = Union[CategoricalNetworkRequest, ContinuousNetworkRequest]
@@ -40,4 +41,5 @@ GenerateNetworkRequest = Union[RandomNetworkRequest, PredefinedNetworkRequest]
 
 def new_categorical_network_request(**kwargs) -> CategoricalNetworkRequest:
     kwargs = replace_blanks_with_defaults(kwargs, CategoricalNetworkRequest)
+    kwargs.pop("predefined_model", None)
     return CategoricalNetworkRequest(**kwargs)

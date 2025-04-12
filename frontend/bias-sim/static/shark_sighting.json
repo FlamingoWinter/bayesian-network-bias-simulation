@@ -1,0 +1,106 @@
+{
+  "graph": {
+    "directed": true,
+    "multigraph": false,
+    "graph": {
+      "name": "shark_sightings"
+    },
+    "nodes": [
+      {
+        "id": "hot_weather"
+      },
+      {
+        "id": "ice_cream_sales"
+      },
+      {
+        "id": "beach_visits"
+      },
+      {
+        "id": "shark_sightings"
+      }
+    ],
+    "links": [
+      {
+        "weight": null,
+        "source": "hot_weather",
+        "target": "ice_cream_sales"
+      },
+      {
+        "weight": null,
+        "source": "hot_weather",
+        "target": "beach_visits"
+      },
+      {
+        "weight": null,
+        "source": "beach_visits",
+        "target": "shark_sightings"
+      },
+      {
+        "weight": null,
+        "source": "beach_visits",
+        "target": "ice_cream_sales"
+      }
+    ]
+  },
+  "scoreCharacteristic": "shark_sightings",
+  "applicationCharacteristics": [
+    "ice_cream_sales",
+    "beach_visits"
+  ],
+  "characteristics": {
+    "hot_weather": {
+      "name": "hot_weather",
+      "description": "\n    Indicates whether the weather is hot.\n    Yes means hot weather, No means not hot.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "Yes",
+        "No"
+      ],
+      "priorDistribution": [
+        0.6922,
+        0.3078
+      ]
+    },
+    "ice_cream_sales": {
+      "name": "ice_cream_sales",
+      "description": "\n    Level of ice cream sales.\n    High means stronger sales, Low means weaker sales.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "High",
+        "Low"
+      ],
+      "priorDistribution": [
+        0.7364,
+        0.2636
+      ]
+    },
+    "beach_visits": {
+      "name": "beach_visits",
+      "description": "\n    Frequency of beach visits.\n    Many means the beach is busy, Few means low attendance.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "Many",
+        "Few"
+      ],
+      "priorDistribution": [
+        0.6452,
+        0.3548
+      ]
+    },
+    "shark_sightings": {
+      "name": "shark_sightings",
+      "description": "\n    Whether shark sightings have occurred.\n    Yes means sharks were spotted, No means no sightings.\n    ",
+      "type": "categorical",
+      "categoryNames": [
+        "Yes",
+        "No"
+      ],
+      "priorDistribution": [
+        0.7536,
+        0.2464
+      ]
+    }
+  },
+  "description": "\n    A Bayesian Network showing how hot weather can lead to increased ice cream sales and beach visits,\n    with beach visits increasing the likelihood of shark sightings.\n    ",
+  "predefined": true
+}

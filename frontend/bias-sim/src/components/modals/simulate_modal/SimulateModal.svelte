@@ -3,7 +3,7 @@
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<div class="h-full flex flex-col gap-5 justify-center items-center">
 		<div transition:fade={{ duration: 400 } } on:click|stopPropagation role="alertdialog"
-				 class="card p-4 bg-surface-200-700-token view w-[50vw] min-w-64 h-[40rem] max-h-[90vh] overflow-y-scroll drop-shadow-md rounded-lg flex flex-col justify-between">
+				 class="card p-4 bg-surface-200-700-token view w-[50vw] min-w-64 h-[40rem] max-h-[90vh] overflow-y-scroll hide-scrollbar drop-shadow-md rounded-lg flex flex-col justify-between">
 			<div>
 				<ModalDivider />
 				<ModalRow center={false}>
@@ -27,7 +27,7 @@
 					</div>
 					<h3 class="text-md font-bold min-w-[10rem]">Training Proportion:</h3>
 
-					<RangeSlider name="range-slider" bind:value={trainProportion} max={1} step={0.01} ticked
+					<RangeSlider name="range-slider" bind:value={trainProportion} min={0.1} max={0.9} step={0.01} ticked
 											 class="w-[250%]">
 					</RangeSlider>
 					<input class="input p-2 rounded-container-token flex-shrink"
@@ -43,30 +43,45 @@
 					<h3 class="text-md font-bold min-w-[10rem]">Recruiters:</h3>
 					<div class="flex-grow"></div>
 				</ModalRow>
-				{#each chipsets as chipset}
-					<p class="pl-12">{chipset.name}:</p>
 
-					<ModalRow>
-						<div class="flex justify-start gap-2 flex-grow flex-wrap">
-
-							{#each Object.keys(chipset.chips) as c}
-								<button
-									class="chip {chipset.chips[c] ? 'variant-filled' : 'variant-soft'}"
-									on:click={() => { chipset.chips[c] = !chipset.chips[c]; }}
-									on:keypress
-								>
-									{#if chipset.chips[c]}
-										<Check2Square />
+				<Accordion class="px-8">
+					{#each Object.values(recruiterStates) as recruiterAndMitigationState}
+						<AccordionItem
+							on:click={() => { recruiterAndMitigationState.ticked = !recruiterAndMitigationState.ticked; }}>
+							<svelte:fragment slot="summary">
+								<div>
+									{#if recruiterAndMitigationState.ticked}
+										<Check2Square class="size-5 inline" />
+									{:else}
+										<Square class="size-5 inline" />
 									{/if}
-									<span class="capitalize">{c}</span>
-								</button>
-							{/each}
-						</div>
-					</ModalRow>
-					<ModalDivider />
-					<hr />
-					<ModalDivider />
-				{/each}
+									<h3
+										class="text-xl font-bold align-top inline px-2"
+									>{recruiterAndMitigationState.recruiterName}</h3>
+								</div>
+							</svelte:fragment>
+							<svelte:fragment slot="content">
+								<div class="flex justify-start gap-2 flex-grow flex-wrap">
+									{#each Object.values(recruiterAndMitigationState.mitigations) as mitigationState}
+										<button
+											class="chip {mitigationState.ticked ? 'variant-filled' : 'variant-soft'}"
+											on:click={() => { mitigationState.ticked = !mitigationState.ticked; }}
+										>
+
+											{#if mitigationState.ticked}
+												<Check2Square class="size-4 inline" />
+											{:else}
+												<Square class="size-4 inline" />
+											{/if}
+											<span class="capitalize">{mitigationState.mitigationName}</span>
+										</button>
+									{/each}
+								</div>
+							</svelte:fragment>
+						</AccordionItem>
+					{/each}
+				</Accordion>
+
 
 				<ModalRow center={true}>
 					<div class="absolute left-4">
@@ -75,7 +90,7 @@
 					<h3 class="text-md font-bold min-w-[10rem]">Protected Characteristic:</h3>
 
 					<select class="select" bind:value={selectedProtectedCharacteristic} required>
-						{#each Object.values($network.characteristics) as characteristic}
+						{#each Object.values(network.characteristics) as characteristic}
 							<option value={characteristic.name}>{characteristic.name}</option>
 						{/each}
 					</select>
@@ -121,18 +136,29 @@
 	import { awaitSocketClose, awaitSocketOpen } from '../../../utiliites/socket';
 
 
-	import { getModalStore, type ModalComponent, type ModalSettings, RangeSlider } from '@skeletonlabs/skeleton';
+	import {
+		Accordion,
+		AccordionItem,
+		getModalStore,
+		type ModalComponent,
+		type ModalSettings,
+		RangeSlider
+	} from '@skeletonlabs/skeleton';
 	import ModalPopups from '../../popups/ModalPopups.svelte';
 	import Check2Square from 'svelte-bootstrap-icons/lib/Check2Square.svelte';
+	import Square from 'svelte-bootstrap-icons/lib/Square.svelte';
 
 
 	import { webSocketUrl } from '../../../utiliites/api';
 	import { deconditionAll, invalidateBias, loadProcess } from '../../../stores/functions';
-	import { network, sessionKey } from '../../../stores/store';
+	import { sessionKey } from '../../../stores/store';
 	import ModalDivider from '../ModalDivider.svelte';
 	import ModalRow from '../ModalRow.svelte';
 	import InfoHover from '../../popups/InfoHover.svelte';
 	import ShowBiasModal from '../show_bias_modal/ShowBiasModal.svelte';
+	import type { Network } from '../../../types/network';
+
+	export let network: Network;
 
 	const modalStore = getModalStore();
 
@@ -140,90 +166,86 @@
 
 	const showBiasModal: ModalSettings = {
 		type: 'component',
-		component: showBiasModalComponent
+		component: showBiasModalComponent,
+		backdropClasses: 'bg-gradient-to-tr from-indigo-500/50 via-purple-500/50 to-pink-500/50'
+
 	};
 
 	let simulateSocket: WebSocket | undefined = undefined;
 
-	let candidatesToGenerate: number;
+	let candidatesToGenerate: number = 10_000;
 	let trainProportion: number = 0.9;
 	let selectedProtectedCharacteristic: string;
 
-	const categoricalRecruiters: string[] = [
-		'Random Forest',
-		'Logistic Regression',
-		'One-Hot Encoded Neural Network',
-		'Categorical Bayesian Network Approximation'];
+	const recruiterNamesAndSlugs: Record<string, string> = {
+		'Random Forest': 'random_forest',
+		'Logistic Regression': 'logistic_regression',
+		'Encoder-Only Transformer': 'transformer',
+		'Shallow Multi-Layer Perceptron': 'shallow_mlp',
+		'Deep Multi-Layer Perceptron': 'deep_mlp',
+		'Bayesian Network Approximation': 'bayesian',
+		'Support Vector Machine': 'svm'
+	};
+
+	const mitigationNamesAndSlugs: Record<string, string> = {
+		'Satisfy Demographic Parity': 'satisfy_dp',
+		'Satisfy Proportional Parity': 'satisfy_pp',
+		'Optimise FNR Parity, FPR Parity, and Accuracy': 'optimise_fnr_fpr_accuracy',
+		'Optimise FNR Parity and FPR Parity': 'optimise_fnr_fpr',
+		'Optimise FNR Parity': 'optimise_fnr',
+		'Optimise FPR Parity': 'optimise_fpr',
+		'Optimise FDR Parity, FOR Parity and Accuracy': 'optimise_fdr_for_accuracy',
+		'Optimise FDR Parity and FOR Parity': 'optimise_fdr_for',
+		'Optimise FDR Parity': 'optimise_fdr',
+		'Optimise FOR Parity': 'optimise_for'
+	};
 
 	const continuousRecruiters: string[] = [
-		'Simple Linear Regression',
-		'Polynomial-Featured Linear Regression',
-		'Fourier-Featured Linear Regression',
-		'Neural Network',
-		'Continuous Bayesian Network Approximation',
-		'Support Vector Machine'];
+		'Simple Linear Regression'
+	];
 
-	type Chipset = {
-		name: string
-		chips: Record<string, boolean>
+	type MitigationState = {
+		mitigationName: string,
+		ticked: boolean
 	}
 
-	let noMitigationChips: Chipset = {
-		name: 'Without Bias Mitigation',
-		chips: {}
-	};
-
-	$: if ($network.characteristics[$network.scoreCharacteristic].type == 'categorical') {
-		noMitigationChips.chips = categoricalRecruiters.reduce<Record<string, boolean>>(
-			(acc, key) => {
-				acc[key] = false;
-				return acc;
-			},
-			{}
-		);
-		updateChipset();
-	} else {
-		noMitigationChips.chips = categoricalRecruiters.concat(continuousRecruiters).reduce<Record<string, boolean>>(
-			(acc, key) => {
-				acc[key] = false;
-				return acc;
-			},
-			{}
-		);
-		updateChipset();
+	type RecruiterAndMitigationState = {
+		recruiterName: string,
+		ticked: boolean,
+		mitigations: Record<string, MitigationState>
 	}
 
-	let chipsets: Chipset[] = [];
-	let ensureDemographicParityChipset: Chipset = {
-		name: 'Ensure Demographic Parity',
-		chips: {}
-	};
-
-	let ensureEqualisedOddsChipset: Chipset = {
-		name: 'Ensure Equalised Odds',
-		chips: {}
-	};
-
-	let ensurePredictiveParityChipset: Chipset = {
-		name: 'Ensure Predictive Parity',
-		chips: {}
-	};
-
-
-	function updateChipset() {
-		ensureDemographicParityChipset.chips = { ...noMitigationChips.chips };
-
-		ensureEqualisedOddsChipset.chips = { ...noMitigationChips.chips };
-		ensurePredictiveParityChipset.chips = { ...noMitigationChips.chips };
-		chipsets = [noMitigationChips, ensureDemographicParityChipset, ensureEqualisedOddsChipset, ensurePredictiveParityChipset];
-	}
+	const recruiterStates: Record<string, RecruiterAndMitigationState> = Object.fromEntries(
+		Object.keys(recruiterNamesAndSlugs).map(recruiter => [
+			recruiter,
+			{
+				recruiterName: recruiter,
+				ticked: false,
+				mitigations: Object.fromEntries(
+					Object.keys(mitigationNamesAndSlugs).map(mitigation => [mitigation, {
+						mitigationName: mitigation,
+						ticked: false
+					}])
+				)
+			}
+		])
+	);
 
 
 	function generateSimulateJson() {
 		return JSON.stringify({
 			'candidates_to_generate': candidatesToGenerate,
 			'train_proportion': trainProportion,
-			'recruiters': [], // TODO
+			'recruiters': Object.fromEntries(
+				Object.values(recruiterStates)
+					.filter(recruiterState => recruiterState.ticked)
+					.map(recruiterState => [
+						recruiterNamesAndSlugs[recruiterState.recruiterName],
+						['no_mitigation'].concat(Object.values(recruiterState.mitigations)
+							.filter(mitigationState => mitigationState.ticked)
+							.map(mitigationState => mitigationNamesAndSlugs[mitigationState.mitigationName]))
+					])
+			),
 			'protected_characteristic': selectedProtectedCharacteristic
 		});
 	}
