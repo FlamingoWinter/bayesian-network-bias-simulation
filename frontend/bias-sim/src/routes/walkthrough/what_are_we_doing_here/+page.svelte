@@ -1,7 +1,7 @@
 <script>
-	import Citation from '../../components/Citation.svelte';
-	import RecruiterAnimation from '../../components/animations/RecruiterAnimation.svelte';
-	import ApplicationIcon from '../../components/svgs/ApplicationIcon.svelte';
+	import Citation from '../../../components/Citation.svelte';
+	import RecruiterAnimation from '../../../components/animations/RecruiterAnimation.svelte';
+	import ApplicationIcon from '../../../components/svgs/ApplicationIcon.svelte';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
 </script>
 

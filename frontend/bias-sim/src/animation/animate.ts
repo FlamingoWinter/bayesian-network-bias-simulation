@@ -8,12 +8,12 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
 type AnimationType = keyof typeof gsap;
 
-interface AnimationOptions extends GSAPTweenVars {
+export interface AnimationOptions extends GSAPTweenVars {
 	type: AnimationType;
 	scrollTrigger?: ScrollTrigger.Vars;
 }
 
-type AnimateOptions = {
+export type AnimateOptions = {
 	anims: AnimationOptions[];
 	then?: () => void;
 };

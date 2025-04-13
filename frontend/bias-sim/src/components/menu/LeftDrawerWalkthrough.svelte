@@ -14,9 +14,6 @@
 	];
 
 	function toSlug(str: string) {
-		if (str.substring(0, 1) == '1') {
-			return '';
-		}
 		return str.toLowerCase().replace(/\s+/g, '_').substring(3).replace(/[^\w\s]/g, '');
 	}
 

@@ -38,7 +38,11 @@
 		<TopUtilityButtons utilityButtonInfos={[
 			{name: "New Network", callback: () => openModal(NewNetworkModal)},
 			{name: "Label Network", callback: () => openModal(NameNetworkModal)},
-			{name: "Run Simulation", callback: () => openModal(SimulateModal)},
+			{name: "Run Simulation", callback: () => {
+				modal.component = { ref: SimulateModal, props: {network: network} };
+				modalStore.trigger(modal);
+				drawerStore.close();
+				}},
 			...(showBias ? [{name: "Show Bias", callback: () => openModal(ShowBiasModal)}] : []),
 			...($conditioned ? [{name: "Decondition All", callback: $deconditionAll}] : []),
 		]} />

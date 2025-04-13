@@ -10,8 +10,6 @@
 	export let showBias: boolean = false;
 	export let showCompetence: boolean = false;
 
-	let scrollElement: Element;
-
 	type OnEnterViewportOptions = {
 		callback: () => void
 	}
