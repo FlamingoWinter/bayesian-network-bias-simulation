@@ -32,7 +32,7 @@
 					Network</a>).
 			</li>
 			<li>Split the applicants into a set for training and a set for validation.</li>
-			<li>Train each recruiter using the training set. The applicants' application is the features and the applicants'
+			<li>Train each recruiter using the training set. The applicants' application are the features and the applicants'
 				competence
 				is the target variable. (See <a href="/guide/training_recruiters"
 																				class="font-bold text-secondary-600 underline">Training Recruiters</a>)

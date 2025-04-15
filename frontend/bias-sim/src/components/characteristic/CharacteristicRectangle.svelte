@@ -26,10 +26,10 @@
 		}
 
 		if (characteristic == scoreCharacteristic) {
-			return '#fffade';
+			return '#fff1a1';
 		}
 		if (applicationCharacteristics.includes(characteristic)) {
-			return '#fff3fc';
+			return '#ffa5e9';
 		}
 		return '#ffffff';
 	}

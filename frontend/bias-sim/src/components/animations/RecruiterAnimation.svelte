@@ -86,7 +86,7 @@
 
 		addApplicant();
 		applicantTimeline?.to({}, {
-			duration: 4, repeat: 25,
+			duration: 4, repeat: showCompetence ? 40 : 25,
 			onRepeat: addApplicant
 		});
 	}

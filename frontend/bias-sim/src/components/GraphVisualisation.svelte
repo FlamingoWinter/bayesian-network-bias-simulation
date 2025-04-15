@@ -64,6 +64,12 @@
 	export let scoreAndApplication: boolean = true;
 	export let initialZoom: number = 1;
 	export let predefinedModel: string | null = null;
+	export let initialTranslate: Point | null = null;
+
+	type Point = {
+		x: number;
+		y: number;
+	};
 
 	export let network: Network | undefined;
 
@@ -91,7 +97,7 @@
 	onMount(async () => {
 		const toastStore = getToastStore();
 
-		applyZoom(svg, zoomGroup, initialZoom, noPan);
+		applyZoom(svg, zoomGroup, initialZoom, initialTranslate, noPan);
 		if (network) {
 			simulation = applyForceSimulation(network.graph, width, height, nodeGroup, linkGroup, markerGroup);
 		}
@@ -134,7 +140,7 @@
 
 	$: {
 		if (network) {
-			applyZoom(svg, zoomGroup, initialZoom, noPan);
+			applyZoom(svg, zoomGroup, initialZoom, initialTranslate, noPan);
 			if (simulation) {
 				simulation.stop();
 

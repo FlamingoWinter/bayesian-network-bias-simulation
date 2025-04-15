@@ -1,0 +1,2553 @@
+{
+  "graph": {
+    "directed": true,
+    "multigraph": false,
+    "graph": {},
+    "nodes": [
+      {
+        "weight": null,
+        "id": "Protected Characteristic"
+      },
+      {
+        "weight": null,
+        "id": "1"
+      },
+      {
+        "weight": null,
+        "id": "2"
+      },
+      {
+        "weight": null,
+        "id": "3"
+      },
+      {
+        "weight": null,
+        "id": "4"
+      },
+      {
+        "weight": null,
+        "id": "5"
+      },
+      {
+        "weight": null,
+        "id": "6"
+      },
+      {
+        "weight": null,
+        "id": "7"
+      },
+      {
+        "weight": null,
+        "id": "8"
+      },
+      {
+        "weight": null,
+        "id": "9"
+      },
+      {
+        "weight": null,
+        "id": "10"
+      },
+      {
+        "weight": null,
+        "id": "11"
+      },
+      {
+        "weight": null,
+        "id": "12"
+      },
+      {
+        "weight": null,
+        "id": "13"
+      },
+      {
+        "weight": null,
+        "id": "14"
+      },
+      {
+        "weight": null,
+        "id": "15"
+      },
+      {
+        "weight": null,
+        "id": "16"
+      },
+      {
+        "weight": null,
+        "id": "17"
+      },
+      {
+        "weight": null,
+        "id": "18"
+      },
+      {
+        "weight": null,
+        "id": "19"
+      },
+      {
+        "weight": null,
+        "id": "20"
+      },
+      {
+        "weight": null,
+        "id": "21"
+      },
+      {
+        "weight": null,
+        "id": "22"
+      },
+      {
+        "weight": null,
+        "id": "23"
+      },
+      {
+        "weight": null,
+        "id": "24"
+      },
+      {
+        "weight": null,
+        "id": "25"
+      },
+      {
+        "weight": null,
+        "id": "26"
+      },
+      {
+        "weight": null,
+        "id": "27"
+      },
+      {
+        "weight": null,
+        "id": "28"
+      },
+      {
+        "weight": null,
+        "id": "Competency Characteristic"
+      },
+      {
+        "weight": null,
+        "id": "30"
+      },
+      {
+        "weight": null,
+        "id": "31"
+      },
+      {
+        "weight": null,
+        "id": "32"
+      },
+      {
+        "weight": null,
+        "id": "33"
+      },
+      {
+        "weight": null,
+        "id": "34"
+      },
+      {
+        "weight": null,
+        "id": "35"
+      },
+      {
+        "weight": null,
+        "id": "36"
+      },
+      {
+        "weight": null,
+        "id": "37"
+      },
+      {
+        "weight": null,
+        "id": "38"
+      },
+      {
+        "weight": null,
+        "id": "39"
+      },
+      {
+        "weight": null,
+        "id": "40"
+      },
+      {
+        "weight": null,
+        "id": "41"
+      },
+      {
+        "weight": null,
+        "id": "42"
+      },
+      {
+        "weight": null,
+        "id": "43"
+      },
+      {
+        "weight": null,
+        "id": "44"
+      },
+      {
+        "weight": null,
+        "id": "45"
+      },
+      {
+        "weight": null,
+        "id": "46"
+      },
+      {
+        "weight": null,
+        "id": "47"
+      },
+      {
+        "weight": null,
+        "id": "48"
+      },
+      {
+        "weight": null,
+        "id": "49"
+      },
+      {
+        "weight": null,
+        "id": "50"
+      },
+      {
+        "weight": null,
+        "id": "51"
+      },
+      {
+        "weight": null,
+        "id": "52"
+      },
+      {
+        "weight": null,
+        "id": "53"
+      },
+      {
+        "weight": null,
+        "id": "54"
+      },
+      {
+        "weight": null,
+        "id": "55"
+      },
+      {
+        "weight": null,
+        "id": "56"
+      },
+      {
+        "weight": null,
+        "id": "57"
+      },
+      {
+        "weight": null,
+        "id": "58"
+      },
+      {
+        "weight": null,
+        "id": "59"
+      },
+      {
+        "weight": null,
+        "id": "60"
+      },
+      {
+        "weight": null,
+        "id": "61"
+      },
+      {
+        "weight": null,
+        "id": "62"
+      },
+      {
+        "weight": null,
+        "id": "63"
+      },
+      {
+        "weight": null,
+        "id": "64"
+      },
+      {
+        "weight": null,
+        "id": "65"
+      },
+      {
+        "weight": null,
+        "id": "66"
+      },
+      {
+        "weight": null,
+        "id": "67"
+      },
+      {
+        "weight": null,
+        "id": "68"
+      },
+      {
+        "weight": null,
+        "id": "69"
+      },
+      {
+        "weight": null,
+        "id": "70"
+      },
+      {
+        "weight": null,
+        "id": "71"
+      },
+      {
+        "weight": null,
+        "id": "72"
+      },
+      {
+        "weight": null,
+        "id": "73"
+      },
+      {
+        "weight": null,
+        "id": "74"
+      },
+      {
+        "weight": null,
+        "id": "75"
+      },
+      {
+        "weight": null,
+        "id": "76"
+      },
+      {
+        "weight": null,
+        "id": "77"
+      },
+      {
+        "weight": null,
+        "id": "78"
+      },
+      {
+        "weight": null,
+        "id": "79"
+      }
+    ],
+    "links": [
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "3"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "4"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "6"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "7"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "10"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "15"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "30"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "40"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "52"
+      },
+      {
+        "weight": null,
+        "source": "Protected Characteristic",
+        "target": "75"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "3"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "5"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "38"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "44"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "57"
+      },
+      {
+        "weight": null,
+        "source": "1",
+        "target": "60"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "3"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "4"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "12"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "16"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "55"
+      },
+      {
+        "weight": null,
+        "source": "2",
+        "target": "75"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "4"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "14"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "15"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "38"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "41"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "42"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "54"
+      },
+      {
+        "weight": null,
+        "source": "3",
+        "target": "65"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "5"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "6"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "7"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "8"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "9"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "19"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "40"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "42"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "49"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "51"
+      },
+      {
+        "weight": null,
+        "source": "4",
+        "target": "69"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "7"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "8"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "18"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "22"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "24"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "30"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "51"
+      },
+      {
+        "weight": null,
+        "source": "5",
+        "target": "69"
+      },
+      {
+        "weight": null,
+        "source": "6",
+        "target": "8"
+      },
+      {
+        "weight": null,
+        "source": "6",
+        "target": "10"
+      },
+      {
+        "weight": null,
+        "source": "6",
+        "target": "13"
+      },
+      {
+        "weight": null,
+        "source": "6",
+        "target": "23"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "9"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "10"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "11"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "16"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "22"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "23"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "24"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "30"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "59"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "63"
+      },
+      {
+        "weight": null,
+        "source": "7",
+        "target": "77"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "12"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "11"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "16"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "20"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "22"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "46"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "50"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "53"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "58"
+      },
+      {
+        "weight": null,
+        "source": "8",
+        "target": "70"
+      },
+      {
+        "weight": null,
+        "source": "9",
+        "target": "14"
+      },
+      {
+        "weight": null,
+        "source": "9",
+        "target": "24"
+      },
+      {
+        "weight": null,
+        "source": "9",
+        "target": "27"
+      },
+      {
+        "weight": null,
+        "source": "9",
+        "target": "71"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "13"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "12"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "14"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "20"
+      },
+      {
+        "weight": null,
+        "source": "10",
+        "target": "42"
+      },
+      {
+        "weight": null,
+        "source": "11",
+        "target": "17"
+      },
+      {
+        "weight": null,
+        "source": "11",
+        "target": "27"
+      },
+      {
+        "weight": null,
+        "source": "11",
+        "target": "33"
+      },
+      {
+        "weight": null,
+        "source": "11",
+        "target": "36"
+      },
+      {
+        "weight": null,
+        "source": "11",
+        "target": "38"
+      },
+      {
+        "weight": null,
+        "source": "12",
+        "target": "17"
+      },
+      {
+        "weight": null,
+        "source": "12",
+        "target": "41"
+      },
+      {
+        "weight": null,
+        "source": "12",
+        "target": "61"
+      },
+      {
+        "weight": null,
+        "source": "13",
+        "target": "17"
+      },
+      {
+        "weight": null,
+        "source": "13",
+        "target": "55"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "15"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "25"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "37"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "60"
+      },
+      {
+        "weight": null,
+        "source": "14",
+        "target": "79"
+      },
+      {
+        "weight": null,
+        "source": "15",
+        "target": "21"
+      },
+      {
+        "weight": null,
+        "source": "15",
+        "target": "19"
+      },
+      {
+        "weight": null,
+        "source": "15",
+        "target": "58"
+      },
+      {
+        "weight": null,
+        "source": "16",
+        "target": "19"
+      },
+      {
+        "weight": null,
+        "source": "16",
+        "target": "18"
+      },
+      {
+        "weight": null,
+        "source": "16",
+        "target": "34"
+      },
+      {
+        "weight": null,
+        "source": "16",
+        "target": "36"
+      },
+      {
+        "weight": null,
+        "source": "16",
+        "target": "52"
+      },
+      {
+        "weight": null,
+        "source": "16",
+        "target": "58"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "21"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "18"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "25"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "Competency Characteristic"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "35"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "39"
+      },
+      {
+        "weight": null,
+        "source": "17",
+        "target": "52"
+      },
+      {
+        "weight": null,
+        "source": "18",
+        "target": "26"
+      },
+      {
+        "weight": null,
+        "source": "18",
+        "target": "34"
+      },
+      {
+        "weight": null,
+        "source": "18",
+        "target": "49"
+      },
+      {
+        "weight": null,
+        "source": "18",
+        "target": "59"
+      },
+      {
+        "weight": null,
+        "source": "18",
+        "target": "73"
+      },
+      {
+        "weight": null,
+        "source": "19",
+        "target": "28"
+      },
+      {
+        "weight": null,
+        "source": "19",
+        "target": "26"
+      },
+      {
+        "weight": null,
+        "source": "19",
+        "target": "36"
+      },
+      {
+        "weight": null,
+        "source": "19",
+        "target": "77"
+      },
+      {
+        "weight": null,
+        "source": "20",
+        "target": "26"
+      },
+      {
+        "weight": null,
+        "source": "20",
+        "target": "25"
+      },
+      {
+        "weight": null,
+        "source": "20",
+        "target": "67"
+      },
+      {
+        "weight": null,
+        "source": "21",
+        "target": "28"
+      },
+      {
+        "weight": null,
+        "source": "21",
+        "target": "47"
+      },
+      {
+        "weight": null,
+        "source": "21",
+        "target": "71"
+      },
+      {
+        "weight": null,
+        "source": "22",
+        "target": "27"
+      },
+      {
+        "weight": null,
+        "source": "22",
+        "target": "Competency Characteristic"
+      },
+      {
+        "weight": null,
+        "source": "22",
+        "target": "32"
+      },
+      {
+        "weight": null,
+        "source": "22",
+        "target": "40"
+      },
+      {
+        "weight": null,
+        "source": "23",
+        "target": "Competency Characteristic"
+      },
+      {
+        "weight": null,
+        "source": "23",
+        "target": "33"
+      },
+      {
+        "weight": null,
+        "source": "23",
+        "target": "46"
+      },
+      {
+        "weight": null,
+        "source": "23",
+        "target": "77"
+      },
+      {
+        "weight": null,
+        "source": "24",
+        "target": "28"
+      },
+      {
+        "weight": null,
+        "source": "24",
+        "target": "31"
+      },
+      {
+        "weight": null,
+        "source": "24",
+        "target": "32"
+      },
+      {
+        "weight": null,
+        "source": "24",
+        "target": "54"
+      },
+      {
+        "weight": null,
+        "source": "24",
+        "target": "64"
+      },
+      {
+        "weight": null,
+        "source": "25",
+        "target": "37"
+      },
+      {
+        "weight": null,
+        "source": "26",
+        "target": "39"
+      },
+      {
+        "weight": null,
+        "source": "26",
+        "target": "32"
+      },
+      {
+        "weight": null,
+        "source": "26",
+        "target": "35"
+      },
+      {
+        "weight": null,
+        "source": "27",
+        "target": "31"
+      },
+      {
+        "weight": null,
+        "source": "27",
+        "target": "35"
+      },
+      {
+        "weight": null,
+        "source": "27",
+        "target": "37"
+      },
+      {
+        "weight": null,
+        "source": "27",
+        "target": "65"
+      },
+      {
+        "weight": null,
+        "source": "28",
+        "target": "33"
+      },
+      {
+        "weight": null,
+        "source": "28",
+        "target": "66"
+      },
+      {
+        "weight": null,
+        "source": "28",
+        "target": "79"
+      },
+      {
+        "weight": null,
+        "source": "Competency Characteristic",
+        "target": "39"
+      },
+      {
+        "weight": null,
+        "source": "Competency Characteristic",
+        "target": "34"
+      },
+      {
+        "weight": null,
+        "source": "Competency Characteristic",
+        "target": "48"
+      },
+      {
+        "weight": null,
+        "source": "Competency Characteristic",
+        "target": "56"
+      },
+      {
+        "weight": null,
+        "source": "Competency Characteristic",
+        "target": "61"
+      },
+      {
+        "weight": null,
+        "source": "30",
+        "target": "45"
+      },
+      {
+        "weight": null,
+        "source": "30",
+        "target": "43"
+      },
+      {
+        "weight": null,
+        "source": "30",
+        "target": "57"
+      },
+      {
+        "weight": null,
+        "source": "31",
+        "target": "53"
+      },
+      {
+        "weight": null,
+        "source": "31",
+        "target": "72"
+      },
+      {
+        "weight": null,
+        "source": "32",
+        "target": "45"
+      },
+      {
+        "weight": null,
+        "source": "32",
+        "target": "60"
+      },
+      {
+        "weight": null,
+        "source": "33",
+        "target": "44"
+      },
+      {
+        "weight": null,
+        "source": "33",
+        "target": "64"
+      },
+      {
+        "weight": null,
+        "source": "33",
+        "target": "67"
+      },
+      {
+        "weight": null,
+        "source": "33",
+        "target": "68"
+      },
+      {
+        "weight": null,
+        "source": "34",
+        "target": "50"
+      },
+      {
+        "weight": null,
+        "source": "34",
+        "target": "44"
+      },
+      {
+        "weight": null,
+        "source": "34",
+        "target": "76"
+      },
+      {
+        "weight": null,
+        "source": "35",
+        "target": "48"
+      },
+      {
+        "weight": null,
+        "source": "35",
+        "target": "66"
+      },
+      {
+        "weight": null,
+        "source": "36",
+        "target": "47"
+      },
+      {
+        "weight": null,
+        "source": "36",
+        "target": "56"
+      },
+      {
+        "weight": null,
+        "source": "36",
+        "target": "64"
+      },
+      {
+        "weight": null,
+        "source": "36",
+        "target": "67"
+      },
+      {
+        "weight": null,
+        "source": "36",
+        "target": "72"
+      },
+      {
+        "weight": null,
+        "source": "36",
+        "target": "78"
+      },
+      {
+        "weight": null,
+        "source": "37",
+        "target": "54"
+      },
+      {
+        "weight": null,
+        "source": "38",
+        "target": "48"
+      },
+      {
+        "weight": null,
+        "source": "38",
+        "target": "43"
+      },
+      {
+        "weight": null,
+        "source": "38",
+        "target": "63"
+      },
+      {
+        "weight": null,
+        "source": "39",
+        "target": "46"
+      },
+      {
+        "weight": null,
+        "source": "39",
+        "target": "50"
+      },
+      {
+        "weight": null,
+        "source": "40",
+        "target": "47"
+      },
+      {
+        "weight": null,
+        "source": "40",
+        "target": "43"
+      },
+      {
+        "weight": null,
+        "source": "40",
+        "target": "51"
+      },
+      {
+        "weight": null,
+        "source": "40",
+        "target": "78"
+      },
+      {
+        "weight": null,
+        "source": "41",
+        "target": "70"
+      },
+      {
+        "weight": null,
+        "source": "41",
+        "target": "72"
+      },
+      {
+        "weight": null,
+        "source": "41",
+        "target": "73"
+      },
+      {
+        "weight": null,
+        "source": "42",
+        "target": "63"
+      },
+      {
+        "weight": null,
+        "source": "42",
+        "target": "57"
+      },
+      {
+        "weight": null,
+        "source": "43",
+        "target": "73"
+      },
+      {
+        "weight": null,
+        "source": "43",
+        "target": "70"
+      },
+      {
+        "weight": null,
+        "source": "44",
+        "target": "76"
+      },
+      {
+        "weight": null,
+        "source": "45",
+        "target": "66"
+      },
+      {
+        "weight": null,
+        "source": "46",
+        "target": "74"
+      },
+      {
+        "weight": null,
+        "source": "46",
+        "target": "59"
+      },
+      {
+        "weight": null,
+        "source": "47",
+        "target": "62"
+      },
+      {
+        "weight": null,
+        "source": "48",
+        "target": "75"
+      },
+      {
+        "weight": null,
+        "source": "48",
+        "target": "56"
+      },
+      {
+        "weight": null,
+        "source": "48",
+        "target": "68"
+      },
+      {
+        "weight": null,
+        "source": "48",
+        "target": "76"
+      },
+      {
+        "weight": null,
+        "source": "49",
+        "target": "62"
+      },
+      {
+        "weight": null,
+        "source": "49",
+        "target": "65"
+      },
+      {
+        "weight": null,
+        "source": "49",
+        "target": "68"
+      },
+      {
+        "weight": null,
+        "source": "50",
+        "target": "71"
+      },
+      {
+        "weight": null,
+        "source": "51",
+        "target": "74"
+      },
+      {
+        "weight": null,
+        "source": "52",
+        "target": "69"
+      },
+      {
+        "weight": null,
+        "source": "52",
+        "target": "78"
+      },
+      {
+        "weight": null,
+        "source": "53",
+        "target": "61"
+      },
+      {
+        "weight": null,
+        "source": "53",
+        "target": "55"
+      },
+      {
+        "weight": null,
+        "source": "53",
+        "target": "79"
+      },
+      {
+        "weight": null,
+        "source": "54",
+        "target": "74"
+      }
+    ]
+  },
+  "scoreCharacteristic": "Competency Characteristic",
+  "applicationCharacteristics": [
+    "76",
+    "22",
+    "31",
+    "69",
+    "9",
+    "66",
+    "71",
+    "33",
+    "43",
+    "Protected Characteristic"
+  ],
+  "characteristics": {
+    "Protected Characteristic": {
+      "name": "Protected Characteristic",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.9208,
+        0.0792
+      ]
+    },
+    "1": {
+      "name": "1",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.1925,
+        0.0618,
+        0.0105,
+        0.7352
+      ]
+    },
+    "2": {
+      "name": "2",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3936,
+        0.6064
+      ]
+    },
+    "3": {
+      "name": "3",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3593,
+        0.6407
+      ]
+    },
+    "4": {
+      "name": "4",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.712,
+        0.288
+      ]
+    },
+    "5": {
+      "name": "5",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.2219,
+        0.1486,
+        0.0401,
+        0.5894
+      ]
+    },
+    "6": {
+      "name": "6",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.2357,
+        0.0706,
+        0.63,
+        0.0637
+      ]
+    },
+    "7": {
+      "name": "7",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.1014,
+        0.5706,
+        0.328
+      ]
+    },
+    "8": {
+      "name": "8",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.7195,
+        0.2805
+      ]
+    },
+    "9": {
+      "name": "9",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.2956,
+        0.7044
+      ]
+    },
+    "10": {
+      "name": "10",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6208,
+        0.3792
+      ]
+    },
+    "11": {
+      "name": "11",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3651,
+        0.6349
+      ]
+    },
+    "12": {
+      "name": "12",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.7273,
+        0.2727
+      ]
+    },
+    "13": {
+      "name": "13",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3554,
+        0.6446
+      ]
+    },
+    "14": {
+      "name": "14",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5951,
+        0.4049
+      ]
+    },
+    "15": {
+      "name": "15",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3558,
+        0.3443,
+        0.2999
+      ]
+    },
+    "16": {
+      "name": "16",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4351,
+        0.5649
+      ]
+    },
+    "17": {
+      "name": "17",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4486,
+        0.5514
+      ]
+    },
+    "18": {
+      "name": "18",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6955,
+        0.3045
+      ]
+    },
+    "19": {
+      "name": "19",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.535,
+        0.465
+      ]
+    },
+    "20": {
+      "name": "20",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2536,
+        0.2084,
+        0.538
+      ]
+    },
+    "21": {
+      "name": "21",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.4216,
+        0.253,
+        0.3254
+      ]
+    },
+    "22": {
+      "name": "22",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.286,
+        0.4513,
+        0.2627
+      ]
+    },
+    "23": {
+      "name": "23",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.45,
+        0.55
+      ]
+    },
+    "24": {
+      "name": "24",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.1446,
+        0.7702,
+        0.0852
+      ]
+    },
+    "25": {
+      "name": "25",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2252,
+        0.2642,
+        0.5106
+      ]
+    },
+    "26": {
+      "name": "26",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5935,
+        0.4065
+      ]
+    },
+    "27": {
+      "name": "27",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5031,
+        0.4969
+      ]
+    },
+    "28": {
+      "name": "28",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5601,
+        0.4399
+      ]
+    },
+    "Competency Characteristic": {
+      "name": "Competency Characteristic",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5128,
+        0.4872
+      ]
+    },
+    "30": {
+      "name": "30",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2651,
+        0.4912,
+        0.2437
+      ]
+    },
+    "31": {
+      "name": "31",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.129,
+        0.4172,
+        0.3208,
+        0.133
+      ]
+    },
+    "32": {
+      "name": "32",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4885,
+        0.5115
+      ]
+    },
+    "33": {
+      "name": "33",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3062,
+        0.2532,
+        0.4406
+      ]
+    },
+    "34": {
+      "name": "34",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.5782,
+        0.4218
+      ]
+    },
+    "35": {
+      "name": "35",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6663,
+        0.3337
+      ]
+    },
+    "36": {
+      "name": "36",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4488,
+        0.5512
+      ]
+    },
+    "37": {
+      "name": "37",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.732,
+        0.268
+      ]
+    },
+    "38": {
+      "name": "38",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.2919,
+        0.7081
+      ]
+    },
+    "39": {
+      "name": "39",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2349,
+        0.4223,
+        0.3428
+      ]
+    },
+    "40": {
+      "name": "40",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4946,
+        0.5054
+      ]
+    },
+    "41": {
+      "name": "41",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.205,
+        0.44,
+        0.355
+      ]
+    },
+    "42": {
+      "name": "42",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2981,
+        0.2705,
+        0.4314
+      ]
+    },
+    "43": {
+      "name": "43",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2162,
+        0.3838,
+        0.4
+      ]
+    },
+    "44": {
+      "name": "44",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3626,
+        0.2007,
+        0.4367
+      ]
+    },
+    "45": {
+      "name": "45",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.6137,
+        0.2552,
+        0.1311
+      ]
+    },
+    "46": {
+      "name": "46",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.4605,
+        0.2556,
+        0.2839
+      ]
+    },
+    "47": {
+      "name": "47",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3856,
+        0.6144
+      ]
+    },
+    "48": {
+      "name": "48",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.2772,
+        0.7228
+      ]
+    },
+    "49": {
+      "name": "49",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.765,
+        0.235
+      ]
+    },
+    "50": {
+      "name": "50",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.33,
+        0.67
+      ]
+    },
+    "51": {
+      "name": "51",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.1968,
+        0.2528,
+        0.2899,
+        0.2605
+      ]
+    },
+    "52": {
+      "name": "52",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4452,
+        0.5548
+      ]
+    },
+    "53": {
+      "name": "53",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.3466,
+        0.2704,
+        0.266,
+        0.117
+      ]
+    },
+    "54": {
+      "name": "54",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3745,
+        0.6255
+      ]
+    },
+    "55": {
+      "name": "55",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4769,
+        0.5231
+      ]
+    },
+    "56": {
+      "name": "56",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.407,
+        0.593
+      ]
+    },
+    "57": {
+      "name": "57",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.5504,
+        0.2015,
+        0.2481
+      ]
+    },
+    "58": {
+      "name": "58",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3528,
+        0.6472
+      ]
+    },
+    "59": {
+      "name": "59",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.7823,
+        0.2177
+      ]
+    },
+    "60": {
+      "name": "60",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4577,
+        0.5423
+      ]
+    },
+    "61": {
+      "name": "61",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.1894,
+        0.4912,
+        0.3194
+      ]
+    },
+    "62": {
+      "name": "62",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.2738,
+        0.7262
+      ]
+    },
+    "63": {
+      "name": "63",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4751,
+        0.5249
+      ]
+    },
+    "64": {
+      "name": "64",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6168,
+        0.3832
+      ]
+    },
+    "65": {
+      "name": "65",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4446,
+        0.5554
+      ]
+    },
+    "66": {
+      "name": "66",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.3708,
+        0.6292
+      ]
+    },
+    "67": {
+      "name": "67",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3266,
+        0.4573,
+        0.2161
+      ]
+    },
+    "68": {
+      "name": "68",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3057,
+        0.4078,
+        0.2865
+      ]
+    },
+    "69": {
+      "name": "69",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6787,
+        0.3213
+      ]
+    },
+    "70": {
+      "name": "70",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.211,
+        0.789
+      ]
+    },
+    "71": {
+      "name": "71",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.445,
+        0.555
+      ]
+    },
+    "72": {
+      "name": "72",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3669,
+        0.3822,
+        0.2509
+      ]
+    },
+    "73": {
+      "name": "73",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.3169,
+        0.319,
+        0.3641
+      ]
+    },
+    "74": {
+      "name": "74",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.4861,
+        0.5139
+      ]
+    },
+    "75": {
+      "name": "75",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2609,
+        0.2411,
+        0.498
+      ]
+    },
+    "76": {
+      "name": "76",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3"
+      ],
+      "priorDistribution": [
+        0.2567,
+        0.4109,
+        0.3324
+      ]
+    },
+    "77": {
+      "name": "77",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2"
+      ],
+      "priorDistribution": [
+        0.6971,
+        0.3029
+      ]
+    },
+    "78": {
+      "name": "78",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.2462,
+        0.3162,
+        0.2455,
+        0.1921
+      ]
+    },
+    "79": {
+      "name": "79",
+      "description": "",
+      "type": "categorical",
+      "categoryNames": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "priorDistribution": [
+        0.2838,
+        0.2408,
+        0.2593,
+        0.2161
+      ]
+    }
+  },
+  "description": "",
+  "predefined": false
+}

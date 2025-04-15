@@ -1,9 +1,15 @@
 import * as d3 from 'd3';
 
+type Point = {
+	x: number;
+	y: number;
+};
+
 export function applyZoom(
 	svg: SVGElement,
 	zoomGroup: SVGGElement,
 	initialScale: number = 1,
+	initialTranslate: Point | null = null,
 	noPan: boolean = false
 ) {
 	const zoom = d3
@@ -27,6 +33,8 @@ export function applyZoom(
 	let initialTransform = d3.zoomIdentity.scale(initialScale);
 	if (noPan) {
 		initialTransform = initialTransform.translate(135, 100);
+	} else if (initialTranslate !== null) {
+		initialTransform = initialTransform.translate(initialTranslate.x, initialTranslate.y);
 	}
 	svgSelection.call(zoom.transform, initialTransform);
 }

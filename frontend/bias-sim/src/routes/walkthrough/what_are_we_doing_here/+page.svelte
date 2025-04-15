@@ -164,8 +164,19 @@
 		</p>
 
 		<p class="mt-12">
-			Another thing we can try is thinking about what decisions a hypothetical unbiased recruiter might make.
-			That recruiter would hire everyone who's actually competent and ignore everyone else.
+			It turns out that there are different ways we can define fairness, and each of which carries a different
+			implication for what a fair society would look like.
+		</p>
+		<p class="mt-12">
+			But we're getting ahead of ourselves.
+			The definition of bias we've used above, where an unbiased recruiter is one which has the
+			same hiring rates across protected groups, is a valid definition under some assumptions.
+		</p>
+
+		<p class="mt-12">
+			But another thing we can try is to think about what decisions a hypothetical unbiased recruiter might make.
+			That recruiter would ignore which group a person is in,
+			hiring everyone who's actually competent and skipping everyone else.
 		</p>
 		<p class="mt-4 mb-6">
 			Maybe we could measure how biased a recruiter is by comparing the decisions it makes to those
@@ -201,7 +212,7 @@
 
 			Of course that means that any of our findings are limited to these simulated scenarios.
 
-			But by repeating the simulation 1000s of times with random scenarios, we can find consistent patterns across
+			But by repeating the simulation thousands of times with random scenarios, we can find consistent patterns across
 			those randomised experiments.
 
 			And it's likely that those findings will generalise to real-world recruiting.
@@ -218,7 +229,7 @@
 		</p>
 		<p class="mt-12">
 			If we find that bias still exists in the simulation, we can be fairly sure it will exist
-			in the real-world where the data provided to recruiters already contains bias.
+			in the real world, where the data provided to recruiters already contains bias.
 		</p>
 
 		<h3 class="text-3xl font-bold mt-16">
