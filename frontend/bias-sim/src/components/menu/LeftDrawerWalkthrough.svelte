@@ -10,7 +10,8 @@
 		'3) What\'s a Recruiter, Exactly?',
 		'4) How do we Measure Bias?',
 		'5) Putting it all Together!',
-		'6) Where to Go Next'
+		'6) The Results',
+		'7) Where to Go Next?'
 	];
 
 	function toSlug(str: string) {

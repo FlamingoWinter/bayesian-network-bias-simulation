@@ -14,7 +14,7 @@
 
 
 		<p class="mt-16">
-			Suppose every applicant is from one of two groups, group A and group B.
+			Suppose every applicant is from one of two groups, <i>Group A</i> and <i>Group B</i>.
 		</p>
 		<p class="mt-16">
 			Below, I give three definitions of an "unbiased" recruiter.

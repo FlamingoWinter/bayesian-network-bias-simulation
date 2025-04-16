@@ -21,7 +21,7 @@
 			</p>
 		</div>
 
-		<div class="text-left p-4  card rounded-4 drop-shadow-xl">
+		<div class="text-left p-4  card rounded-4 drop-shadow-xl text-base">
 			<Accordion autocollapse>
 				<AccordionItem open>
 					<svelte:fragment slot="summary"><span class="font-bold text-2xl">1) Bias is Common</span></svelte:fragment>
@@ -54,7 +54,7 @@
 						<div class="rounded-md bg-surface-200 p-4">
 
 							If group A tends to be worse at the job than group B on average,
-							this actually makes group A <i>more</i> likely to face unfair treatment in hiring.
+							this makes group A <i>more</i> likely to face unfair treatment in hiring.
 							In other words, existing performance differences can lead to even stronger bias.
 							<p class="mt-8">
 								However, by only looking at the selection of people who were hired,
@@ -111,9 +111,17 @@
 		<div class="max-w-[40rem]">
 
 			<p class="mt-8">
-				But these findings take some time to explain.
+				If they are true, these findings have enormous implications for machine learning across domains.
 			</p>
-			<p class="mt-8">
+			<p class="mt-16">
+				But they'll take some time to explain.
+
+			</p>
+			<p class="mt-16">
+				With that context, these findings may appear more or less impressive. Indeed you'll be able to
+				judge whether the assumptions we've made are sensible.
+			</p>
+			<p class="mt-16">
 				This walkthrough goes through each aspect of the simulation to explain how it works,
 				and is aimed for the general audience.
 			</p>
@@ -121,15 +129,15 @@
 				We'll introduce the recruiting scenario we're modelling,
 				discuss how we generate applicants and applications with something called a
 				<span class="text-surface-600 font-bold">Bayesian Network</span>,
-				discuss how we measure bias and finally bring everything together.
+				discuss how we measure bias, and finally bring everything together.
 			</p>
-			<p class="mt-8 font-bold">
+			<p class="mt-16 font-bold">
 				Enjoy!
 			</p>
 		</div>
 
 		<button type="button"
-						class="btn btn-xl text-2xl variant-filled py-4 px-4 rounded-full min-w-32 z-[5] mt-12"
+						class="btn btn-xl text-2xl variant-filled py-4 px-4 rounded-full min-w-32 z-[5] mt-16"
 						onclick={() => window.location.href = '/walkthrough/what_are_we_doing_here'}>
 			Next
 			<CaretRightFill class="ml-2" width={20} height={20} />

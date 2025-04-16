@@ -3,12 +3,13 @@
 	import type { Network } from '../../../types/network';
 	import { onMount } from 'svelte';
 	import GraphVisualisation from '../../../components/GraphVisualisation.svelte';
+	import { CaretRightFill } from 'svelte-bootstrap-icons';
 
 	type TabInfo = {
 		network: Network;
 	}
 	let tabInfos: Record<string, TabInfo> | undefined = undefined;
-	let tabSet: string = 'Condition 1';
+	let tabSet: string = '1 - Omit Protected Characteristic';
 
 	let innerWidth: number;
 	let innerHeight: number;
@@ -18,10 +19,10 @@
 
 	onMount(async () => {
 		tabInfos = {
-			'Condition 1': { network: await (await fetch('/condition_1.json')).json() as unknown as Network },
-			'Condition 2': { network: await (await fetch('/condition_2.json')).json() as unknown as Network },
-			'Condition 3': { network: await (await fetch('/condition_3.json')).json() as unknown as Network },
-			'Condition 4': { network: await (await fetch('/condition_4.json')).json() as unknown as Network }
+			'1 - Omit Protected Characteristic': { network: await (await fetch('/condition_1.json')).json() as unknown as Network },
+			'2 - Include Protected Characteristic': { network: await (await fetch('/condition_2.json')).json() as unknown as Network },
+			'3 - Include Proxy Characteristics': { network: await (await fetch('/condition_3.json')).json() as unknown as Network },
+			'4 - Omit Distant Proxy Characteristics': { network: await (await fetch('/condition_4.json')).json() as unknown as Network }
 		};
 	});
 
@@ -65,11 +66,11 @@
 				<span class="text-surface-600 font-bold">Testing Set</span>.
 			</li>
 			<li>
-				We train each recruiter on the <i>training examples</i>. Each example includes
+				We train each recruiter on the training examples. Each example includes
 				the application and the applicant's actual competence.
 			</li>
 			<li>
-				We ask each trained recruiter to use each application in the <i>testing</i> set to make a decision.
+				We ask each trained recruiter to use each application in the testing set to make a decision.
 			</li>
 			<li>
 				For each recruiter, we measure and record how biased those decisions are.
@@ -96,7 +97,7 @@
 
 		<p class="mt-24">
 			Next, we can modify <span class="text-surface-600 font-bold">
-			How an Applicant Becomes an Application
+			How an Application is Created from an Applicant
 			</span>.
 			There are four different ideas we try here:
 		</p>
@@ -145,8 +146,72 @@
 		{/if}
 
 		<p class="mt-24">
-			We also experiment with different <span class="text-surface-600 font-bold">Post-Training Recruiter Bias Mitigations</span>
+			We also experiment with different <span class="text-surface-600 font-bold">Post-Training Recruiter Bias Mitigations</span>:
 		</p>
+		<p class="mt-4">
+			We've assumed that each recruiter simply <i>makes a decision</i> on each applicant, but they're very easy to
+			change such that they <i>rank</i> each applicant instead.
+		</p>
+		<p class="mt-4">
+			One idea we could try is to hire the same proportion of applicants from both groups,
+			while still hiring the highest-ranked applicants first.
+			. For example
+			we hire the highest-ranked half of group A and the highest-ranked half of group B.
+		</p>
+		<p class="mt-4">
+			This satisfies <span class="text-surface-600 font-bold">Demographic Parity</span>,
+			but we could ask if there ways we could satisfy the other definitions of unbiasedness.
+		</p>
+		<p class="mt-12">
+			It turns out that we can, but it's a little more difficult.
+		</p>
+		<ol class="list-decimal list-inside ml-10 text-lg text-left space-y-4 min-w-[40rem] mt-8">
+			<li>
+				As well as the training examples and testing examples, we create another set of applicants,
+				we'll call the <span class="text-surface-600 font-bold">Mitigation Applicants</span>
+			</li>
+			<li>
+				After training each recruiter, we look for <span class="text-surface-600 font-bold">Hiring Proportions</span>,
+				(the proportion of people to hire from each group), which minimise some measure of bias on the
+				set of <span class="text-surface-600 font-bold">Mitigation Applicants</span>.
+			</li>
+			<li>
+				When using that recruiter, we hire the highest-ranked specified proportion of people from each group.
+			</li>
+		</ol>
+
+		<p class="mt-8">
+			Remember we're not allowed to use the competence of our testing applicants.
+			If we had access to this, we wouldn't need to make decisions about them in the first place!
+		</p>
+
+		<p class="mt-16">
+			For this reason, we usually can't completely satisfy these definitions of unbiasedness.
+			In practice, we do get closer to them.
+		</p>
+
+		<h3 class="text-3xl font-bold mt-16">
+			Next Steps
+		</h3>
+		<p class="mt-4">
+			We've now collected lots of data on how bias changes with
+			<span class="text-surface-600 font-bold">Different Recruiters</span>,
+			<span class="text-surface-600 font-bold">Different Mitigations</span>
+			and
+			<span class="text-surface-600 font-bold">Different Applications</span>.
+			All that's left is to find patterns and draw conclusions.
+		</p>
+		<p class="mt-12">
+			We're almost done! In the next section we'll be putting the results we presented in the first section
+			into context.
+		</p>
+
+		<button type="button"
+						class="btn btn-xl text-2xl variant-filled py-4 px-4 rounded-full min-w-32 z-[5] mt-12"
+						onclick={() => window.location.href = '/walkthrough/the_results'}>
+			Next
+			<CaretRightFill class="ml-2" width={20} height={20} />
+		</button>
 
 
 	</div>

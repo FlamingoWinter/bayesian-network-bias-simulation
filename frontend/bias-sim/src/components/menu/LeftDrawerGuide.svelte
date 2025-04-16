@@ -49,7 +49,7 @@
 			'Comparing Recruiters',
 			'Accuracy and Bias',
 			'Agreement between Bias Metrics',
-			'Affect of Mitigations'
+			'Effect of Mitigations'
 		],
 		'Tools Used': [
 			'Backend',
