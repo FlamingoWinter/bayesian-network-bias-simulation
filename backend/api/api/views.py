@@ -5,7 +5,7 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from backend.api.api.cache_network import get_network_from_cache
-from backend.api.cache.cache import from_cache
+from backend.api.cache import from_cache
 from backend.api.responseTypes.conditionResponse import ConditionRequest
 from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.api.responseTypes.recruiterBiasAnalysisResponse.biasResponse import \

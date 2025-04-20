@@ -3,7 +3,7 @@ from collections import Counter
 import pymc as pm
 from pgmpy.models import BayesianNetwork as PgBn
 
-from backend.api.cache.cache import cache, from_cache
+from backend.api.cache import cache, from_cache
 from backend.api.responseTypes.networkResponse import NetworkResponse
 from backend.candidates.candidate_group import CandidateGroup
 from backend.candidates.generate_candidates import generate_candidate_group

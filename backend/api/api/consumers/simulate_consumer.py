@@ -4,7 +4,7 @@ from typing import List, Dict
 
 from backend.api.api.cache_network import get_network_from_cache
 from backend.api.api.consumers.generic_consumer import GenericConsumer
-from backend.api.cache.cache import cache
+from backend.api.cache import cache
 from backend.api.requestTypes.simulate_request import new_simulate_request, SimulateRequest
 from backend.api.responseTypes.recruiterBiasAnalysisResponse.biasResponse import \
     BiasResponse
