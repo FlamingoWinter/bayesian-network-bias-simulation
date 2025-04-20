@@ -15,14 +15,14 @@ class PyMcNetwork(BayesianNetwork):
     def __init__(self,
                  model: pm.Model,
                  score_characteristic: str = "score",
-                 application_characteristics: List[str] = None,
-                 description: str = ""):
+                 application_characteristics: List[str] = None
+                 ):
 
         super().__init__(model=None,
                          characteristics=None,
                          score_characteristic=score_characteristic,
-                         application_characteristics=application_characteristics,
-                         description=description)
+                         application_characteristics=application_characteristics
+                         )
 
         self.model: pm.Model = model
         self.conditioned = False
@@ -49,7 +49,6 @@ class PyMcNetwork(BayesianNetwork):
             "applicationCharacteristics": self.application_characteristics,
             "characteristics": {name: characteristic.to_characteristic_response() for [name, characteristic] in
                                 self.characteristics.items()},
-            "description": self.description,
             "predefined": self.predefined}
 
     @time_function("Sampling Posterior")

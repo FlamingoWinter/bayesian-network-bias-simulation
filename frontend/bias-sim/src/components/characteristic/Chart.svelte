@@ -38,7 +38,7 @@
 				<ExpandButton isHovered={isHovered} callbackFunction={toggleExpand} />
 			{:else}
 				<CharacteristicConfig
-					openConditionDialog={openConditionDialog} openDescribeDialog={openDescribeDialog}
+					openConditionDialog={openConditionDialog}
 					conditions={conditions}
 					network={network} node={node} scoreAndApplication={scoreAndApplication} />
 			{/if}
@@ -75,7 +75,6 @@
 	export let scoreAndApplication: boolean;
 	export let simulation: d3.Simulation<Node, undefined>;
 	export let openConditionDialog: (expandedNode: string) => Promise<void>;
-	export let openDescribeDialog: (expandedNode: string) => Promise<void>;
 	export let exitDialog: () => void;
 
 

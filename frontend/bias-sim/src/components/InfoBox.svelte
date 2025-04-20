@@ -6,58 +6,52 @@
 			 class="fixed bottom-4 right-4 card p-4 bg-surface-200-700-token w-72 min-h-80 drop-shadow-md rounded-lg flex flex-col z-10">
 		<div class="flex flex-col justify-between h-full flex-grow">
 
-			{#if describe}
-				<div>
-					<h3 class="text-xl font-bold mb-4">{toTitleCase(nodeName)}</h3>
-					<p class="text-base text-gray-600">{paragraph}</p>
-				</div>
-			{:else}
-				<div>
-					<h3 class="text-2xl font-bold mb-4 text-center">Condition {toTitleCase(nodeName)}</h3>
-					<p class="text-xs text-gray-600 mb-4">Select a value to see how its observation affects uncertainty in the
-						network:</p>
-					{#if conditionSettings.isCategorical}
-						<RadioGroup class="flex flex-wrap w-full mb-10" rounded="rounded-container-token">
-							{#each conditionSettings.categoricalValues as categoricalValue}
-								<RadioItem bind:group={valueSelected} name="justify"
-													 value={categoricalValue}>{categoricalValue}</RadioItem>
-							{/each}
-						</RadioGroup>
-					{:else}
-						<RangeSlider name="range-slider" bind:value={numericalValueSelected}
-												 min={(conditionSettings.min ?? 0)} max={conditionSettings.max ?? 0}
-												 step={d3.tickStep(0, (conditionSettings.max ?? 0) - (conditionSettings.min ?? 0), 20)}
-						>
-							<div class="flex justify-between items-center">
-								<div class="font-bold">{conditionSettings.min ?? 0}</div>
-								<div class="font-bold">{conditionSettings.max ?? 0}</div>
-							</div>
-						</RangeSlider>
-						<input class="input p-4 my-6" type="text" placeholder="Input" bind:value={numericalValueSelected}>
-					{/if}
-				</div>
-				<div class="flex w-full justify-center">
 
-					<button type="button"
-									class="btn btn-lg variant-filled py-2 px-4 rounded-full relative min-w-32"
-									on:click={async ()=>{
+			<div>
+				<h3 class="text-2xl font-bold mb-4 text-center">Condition {toTitleCase(nodeName)}</h3>
+				<p class="text-xs text-gray-600 mb-4">Select a value to see how its observation affects uncertainty in the
+					network:</p>
+				{#if conditionSettings.isCategorical}
+					<RadioGroup class="flex flex-wrap w-full mb-10" rounded="rounded-container-token">
+						{#each conditionSettings.categoricalValues as categoricalValue}
+							<RadioItem bind:group={valueSelected} name="justify"
+												 value={categoricalValue}>{categoricalValue}</RadioItem>
+						{/each}
+					</RadioGroup>
+				{:else}
+					<RangeSlider name="range-slider" bind:value={numericalValueSelected}
+											 min={(conditionSettings.min ?? 0)} max={conditionSettings.max ?? 0}
+											 step={d3.tickStep(0, (conditionSettings.max ?? 0) - (conditionSettings.min ?? 0), 20)}
+					>
+						<div class="flex justify-between items-center">
+							<div class="font-bold">{conditionSettings.min ?? 0}</div>
+							<div class="font-bold">{conditionSettings.max ?? 0}</div>
+						</div>
+					</RangeSlider>
+					<input class="input p-4 my-6" type="text" placeholder="Input" bind:value={numericalValueSelected}>
+				{/if}
+			</div>
+			<div class="flex w-full justify-center">
+
+				<button type="button"
+								class="btn btn-lg variant-filled py-2 px-4 rounded-full relative min-w-32"
+								on:click={async ()=>{
 										loading = true;
 										await condition(nodeName, conditionSettings.isCategorical ? conditionSettings.categoricalValues.indexOf(valueSelected) : numericalValueSelected);
 									  loading = false;
 										exitDialog()
 										}}>
-						{#if loading}
-							<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
-															strokeLinecap="butt" value={undefined} stroke={100} />
-						{:else}
-							Condition
-							<CaretRightFill />
-						{/if}
-					</button>
+					{#if loading}
+						<ProgressRadial class="w-7" meter="stroke-primary-100" track="stroke-primary-100/30"
+														strokeLinecap="butt" value={undefined} stroke={100} />
+					{:else}
+						Condition
+						<CaretRightFill />
+					{/if}
+				</button>
 
-				</div>
+			</div>
 
-			{/if}
 		</div>
 	</div>
 {/if}
@@ -87,7 +81,6 @@
 	export let condition: (characteristic: string, value: (number | null)) => Promise<void>;
 
 	export let openConditionDialog: (expandedNode: string) => Promise<void>;
-	export let openDescribeDialog: (expandedNode: string) => Promise<void>;
 	export let exitDialog: () => void;
 
 
@@ -98,32 +91,10 @@
 		max: null
 	};
 	let isInfoBoxVisible = false;
-	let describe = false;
 	let valueSelected = '';
 	let numericalValueSelected: number;
 
 	onMount(() => {
-		openDescribeDialog = async (nodeId: string) => {
-			const characteristic = network!.characteristics[nodeId];
-
-			if (nodeName == nodeId && describe) {
-				exitDialog();
-			} else {
-				if (!describe) {
-					isInfoBoxVisible = false;
-					await new Promise(resolve => setTimeout(resolve, 100));
-					isInfoBoxVisible = true;
-					describe = true;
-				}
-
-				nodeName = nodeId;
-				paragraph = characteristic.description;
-				isInfoBoxVisible = true;
-			}
-			describe = true;
-		};
-
-
 		openConditionDialog = async (nodeId: string) => {
 			if (nodeId in conditions) {
 				await condition(nodeId, null);
@@ -131,12 +102,6 @@
 			}
 
 			const characteristic = network!.characteristics[nodeId];
-			if (describe) {
-				isInfoBoxVisible = false;
-				await new Promise(resolve => setTimeout(resolve, 100));
-				isInfoBoxVisible = true;
-				describe = false;
-			}
 
 			nodeName = nodeId;
 			isInfoBoxVisible = true;

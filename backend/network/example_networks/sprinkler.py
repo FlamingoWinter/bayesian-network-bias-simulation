@@ -41,32 +41,6 @@ def get_sprinkler_network() -> BayesianNetwork:
     sprinkler_network.set_category_names_for_characteristic("rain", ['Yes', 'No'])
     sprinkler_network.set_category_names_for_characteristic("wet_grass", ['Wet', 'Dry'])
 
-    sprinkler_network.set_description_for_characteristic("cloudy", """
-    Whether the weather is cloudy.
-    Yes means it is cloudy, No means it is not cloudy.
-    """)
-
-    sprinkler_network.set_description_for_characteristic("sprinkler", """
-    Whether the sprinkler is on.
-    On means the sprinkler is running, Off means it is not.
-    """)
-
-    sprinkler_network.set_description_for_characteristic("rain", """
-    Whether it is raining.
-    Yes means it is raining, No means it is not raining.
-    """)
-
-    sprinkler_network.set_description_for_characteristic("wet_grass", """
-    Whether the grass is wet.
-    Wet means the grass is wet, Dry means it is dry.
-    """)
-
-    sprinkler_network.set_description("""
-    A simple Bayesian Network describing the probability of grass being wet.
-    The presence of clouds influences the likelihood of rain and the sprinkler being turned on (the sprinkler is solar-powered).
-    Either rain or the sprinkler being on can cause the grass to be wet.
-    """)
-
     sprinkler_network.predefined = True
 
     return sprinkler_network

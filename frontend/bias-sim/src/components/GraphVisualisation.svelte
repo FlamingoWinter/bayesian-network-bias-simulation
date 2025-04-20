@@ -13,7 +13,6 @@
 					<g class="node" id="node-{node.id}">
 						<Chart
 							openConditionDialog={openConditionDialog}
-							openDescribeDialog={openDescribeDialog}
 							exitDialog={exitDialog}
 							simulation={simulation}
 							conditions={conditions} conditioned={conditioned} posteriorDistributions={posteriorDistributions}
@@ -38,7 +37,6 @@
 	</svg>
 	<InfoBox
 		bind:openConditionDialog={openConditionDialog}
-		bind:openDescribeDialog={openDescribeDialog}
 		bind:exitDialog={exitDialog}
 		network={network} conditions={conditions} condition={condition} />
 {/if}
@@ -88,8 +86,7 @@
 
 	let openConditionDialog: (expandedNode: string) => Promise<void> = async () => {
 	};
-	let openDescribeDialog: (expandedNode: string) => Promise<void> = async () => {
-	};
+
 	let exitDialog: () => void = () => {
 	};
 

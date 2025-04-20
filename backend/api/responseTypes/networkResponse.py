@@ -4,7 +4,6 @@ type DistributionType = Union[Literal["discrete"], Literal["categorical"], Liter
 
 CharacteristicResponse = TypedDict('CharacteristicResponse', {
     'name': str,
-    'description': str,
     'type': DistributionType,
     'categoryNames': List[str],
     'priorDistribution': Union[List[float], None],
@@ -15,6 +14,5 @@ NetworkResponse = TypedDict('NetworkResponse', {
     'scoreCharacteristic': str,
     'applicationCharacteristics': List[str],
     'characteristics': Dict[str, CharacteristicResponse],
-    'description': str,
     'predefined': bool
 })

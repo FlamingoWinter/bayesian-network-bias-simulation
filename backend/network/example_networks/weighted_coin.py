@@ -22,19 +22,6 @@ def get_weighted_coin_network() -> BayesianNetwork:
 
     weighted_coin_network = PyMcNetwork(weighted_coin_model)
 
-    weighted_coin_network.set_description_for_characteristic("p(heads)", """
-        The probability of the weighted coin landing heads side up.
-    """)
-
-    weighted_coin_network.set_description_for_characteristic("heads_in_100_trials", """
-        The number of observed heads after flipping the coin 100 times.
-    """)
-
-    weighted_coin_network.set_description("""
-        A coin is known to be weighted but the probability of it landing heads isn't known. 
-        A (possibly naive) uniform prior is used, and the weighting can be estimated from the result of 100 coin flips.
-    """)
-
     weighted_coin_network.predefined = True
 
     return weighted_coin_network

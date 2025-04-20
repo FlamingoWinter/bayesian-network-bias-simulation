@@ -38,14 +38,12 @@ class PgmPyNetwork(BayesianNetwork):
                  model: pgBN,
                  score_characteristic: str = "score",
                  application_characteristics: List[str] = None,
-                 description: str = "",
                  observed: Dict[str, float] = None):
 
         super().__init__(model=None,
                          characteristics=None,
                          score_characteristic=score_characteristic,
-                         application_characteristics=application_characteristics,
-                         description=description)
+                         application_characteristics=application_characteristics)
 
         self.name_mapping: Dict[str, str] = None
         self.inv_name_mapping = None
@@ -88,7 +86,6 @@ class PgmPyNetwork(BayesianNetwork):
             "applicationCharacteristics": application_characteristics,
             "characteristics": {name: characteristic.to_characteristic_response() for [name, characteristic] in
                                 self.characteristics.items()},
-            "description": self.description,
             "predefined": self.predefined}
 
     def condition_on(self, condition_request: ConditionRequest) -> None:

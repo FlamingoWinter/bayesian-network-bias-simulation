@@ -46,31 +46,6 @@ def get_shark_sighting_network() -> BayesianNetwork:
     shark_network.set_category_names_for_characteristic("beach_visits", ['Many', 'Few'])
     shark_network.set_category_names_for_characteristic("shark_sightings", ['Yes', 'No'])
 
-    shark_network.set_description_for_characteristic("hot_weather", """
-    Indicates whether the weather is hot.
-    Yes means hot weather, No means not hot.
-    """)
-
-    shark_network.set_description_for_characteristic("ice_cream_sales", """
-    Level of ice cream sales.
-    High means stronger sales, Low means weaker sales.
-    """)
-
-    shark_network.set_description_for_characteristic("beach_visits", """
-    Frequency of beach visits.
-    Many means the beach is busy, Few means low attendance.
-    """)
-
-    shark_network.set_description_for_characteristic("shark_sightings", """
-    Whether shark sightings have occurred.
-    Yes means sharks were spotted, No means no sightings.
-    """)
-
-    shark_network.set_description("""
-    A Bayesian Network showing how hot weather can lead to increased ice cream sales and beach visits,
-    with beach visits increasing the likelihood of shark sightings.
-    """)
-
     shark_network.predefined = True
 
     return shark_network

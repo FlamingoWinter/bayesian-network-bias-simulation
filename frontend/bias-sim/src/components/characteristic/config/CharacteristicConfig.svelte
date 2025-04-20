@@ -3,7 +3,6 @@
 		 out:fade={{ duration: 100 }}
 >
 	<ButtonRow>
-		<ButtonBelowDistribution text="Describe" callback={()=>{openDescribeDialog(node.id)}} />
 		<ButtonBelowDistribution
 			text="{node.id in conditions ? `Decondition` : `Condition`}"
 			callback={()=>{openConditionDialog(node.id)}} />
@@ -37,7 +36,6 @@
 	export let scoreAndApplication: boolean = true;
 	export let conditions: Record<string, number>;
 	export let openConditionDialog: (expandedNode: string) => Promise<void>;
-	export let openDescribeDialog: (expandedNode: string) => Promise<void>;
 
 
 	function toggleScoreCharacteristic() {
