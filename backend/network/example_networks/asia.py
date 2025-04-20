@@ -3,7 +3,6 @@ from pgmpy.models import BayesianNetwork as PgBn
 
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pgmpy_network import PgmPyNetwork
-from backend.visualisation.visualise import visualise_model_as_network
 
 
 # Transcribed from https://www.bnlearn.com/bnrepository/discrete-small.html#asia
@@ -118,8 +117,3 @@ def get_asia_network() -> BayesianNetwork:
     asia_network.predefined = True
 
     return asia_network
-
-
-if __name__ == "__main__":
-    asia_network = get_asia_network()
-    visualise_model_as_network(asia_network.model)

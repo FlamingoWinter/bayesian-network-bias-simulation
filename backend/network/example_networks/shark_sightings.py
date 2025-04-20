@@ -3,7 +3,6 @@ from pgmpy.models import BayesianNetwork as PgBn
 
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pgmpy_network import PgmPyNetwork
-from backend.visualisation.visualise import visualise_model_as_network
 
 
 def get_shark_sighting_network() -> BayesianNetwork:
@@ -75,8 +74,3 @@ def get_shark_sighting_network() -> BayesianNetwork:
     shark_network.predefined = True
 
     return shark_network
-
-
-if __name__ == "__main__":
-    shark_network = get_shark_sighting_network()
-    visualise_model_as_network(shark_network.model)

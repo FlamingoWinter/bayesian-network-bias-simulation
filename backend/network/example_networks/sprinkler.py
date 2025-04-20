@@ -3,7 +3,6 @@ from pgmpy.models import BayesianNetwork as PgBn
 
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pgmpy_network import PgmPyNetwork
-from backend.visualisation.visualise import visualise_model_as_network
 
 
 def get_sprinkler_network() -> BayesianNetwork:
@@ -71,8 +70,3 @@ def get_sprinkler_network() -> BayesianNetwork:
     sprinkler_network.predefined = True
 
     return sprinkler_network
-
-
-if __name__ == "__main__":
-    sprinkler_network = get_sprinkler_network()
-    visualise_model_as_network(sprinkler_network.model)

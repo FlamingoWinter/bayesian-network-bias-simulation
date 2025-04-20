@@ -4,7 +4,6 @@ import xarray as xr
 
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pymc_network import PyMcNetwork
-from backend.visualisation.visualise import visualise_model_as_network
 
 
 def get_weighted_coin_network() -> BayesianNetwork:
@@ -39,8 +38,3 @@ def get_weighted_coin_network() -> BayesianNetwork:
     weighted_coin_network.predefined = True
 
     return weighted_coin_network
-
-
-if __name__ == "__main__":
-    weighted_coin_network = get_weighted_coin_network()
-    visualise_model_as_network(weighted_coin_network.model)
