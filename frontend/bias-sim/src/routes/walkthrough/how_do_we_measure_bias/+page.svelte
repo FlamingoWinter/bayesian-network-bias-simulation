@@ -46,7 +46,7 @@
 
 		<p class="mt-8">
 			Of people I've asked, most have said that the 2nd definition is most fitting.
-			But, each of these are reasonable definitions of bias under some circumstances, and each
+			But, each of these are reasonable definitions of bias under some circumstances, and each of
 			these have been used before in machine learning.
 		</p>
 
@@ -100,7 +100,7 @@
 			In the context of recruiting, we can think of failing to satisfy
 			<span class="text-surface-600 font-bold">Predictive Parity</span>
 			as <i>bias from the outside</i>.
-			A recruiter which fails to satisfy this produces decisions which appear to be biased.
+			A recruiter which fails to satisfy this produces decisions which <i>appear</i> to be biased.
 			Those decisions perpetuate inequality.
 		</p>
 		<p class="mt-16">
@@ -313,7 +313,7 @@
 			FPR Difference
 				</span>,
 			but they do have the main features we'd want in a metric.
-			They increases as bias does, and if they have are zero, there isn't any bias by that metric.
+			They increase with bias, and if they are zero, there isn't any bias by that metric.
 		</p>
 
 		<h3 class="text-3xl font-bold mt-24">
@@ -336,8 +336,8 @@
 			in which the system is used.
 		</p>
 		<p class="mt-12">
-			Defining it only based on outcomes means it's easier to measure, and isn't influenced on our own biases.
-			In a simulated context, it still allows us to make meaningful conclusion about how bias looks like in the real
+			However, defining it only based on outcomes means it's easier to measure, and isn't influenced on our own biases.
+			In a simulated context, it still allows us to make meaningful conclusion about what bias looks like in the real
 			world.
 		</p>
 
@@ -346,7 +346,7 @@
 			Next Steps
 		</h3>
 		<p class="mt-4">
-			We've identified three definitions of bias and associated metrics.
+			We've identified three definitions of bias and associated metrics. TODO: MORE CLEAR
 		</p>
 		<p class="mt-4">
 			Those are

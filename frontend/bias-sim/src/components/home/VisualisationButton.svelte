@@ -1,6 +1,10 @@
+<script lang="ts">
+	export let center: boolean = false;
+</script>
+
 <button class="rounded-2xl border-none block relative bg-white cursor-pointer select-none
 							py-10 px-10 text-2xl font-semibold h-fit
-							overflow-hidden text-tertiary-700 z-10 ml-auto flex-grow basis-0 drop-shadow-2xl"
+							overflow-hidden text-tertiary-700 z-10 {center ? '' : 'ml-auto flex-grow basis-0'} drop-shadow-2xl"
 				on:click={() => window.location.href = '/visualisation'}>
 	Visualisation
 	<span class="rounded-2xl absolute left-0 top-0 w-full h-full bg-transparent -z-10 border-4 border-solid

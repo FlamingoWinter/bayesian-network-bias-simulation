@@ -25,7 +25,7 @@
 		</p>
 		<p class="mt-4">
 			Most of these require quite a background in computer science to understand. However, it's
-			difficult to understand this project fully unless you have some sort of idea of how exactly they
+			difficult to understand this project fully unless you have some sort of idea on how exactly they
 			make decisions.
 		</p>
 		<p class="mt-4">
@@ -65,10 +65,10 @@
 			But how do we build that decision tree in the first place?
 		</p>
 		<p class="mt-12">
-			This happens in the recruiters training stage.
+			This happens in the recruiter's training stage.
 			When we give the recruiter the training examples,
 			it looks through every possible question it could ask about the data and then chooses
-			the question which is most useful to ask first.
+			the question which is most <span class="text-surface-600 font-bold">useful</span> to ask first.
 		</p>
 		<p class="mt-12">
 			It works out which question is most useful, by calculating which one splits the training examples
@@ -110,7 +110,7 @@
 		<p class="mt-12">
 			During <span class="text-surface-600 font-bold">Training</span>, we create multiple
 			<span class="text-surface-600 font-bold">Decision Tree Subrecruiters</span>,
-			each with a slightly different version of the training examples
+			each with a slightly different version of the training
 			examples.
 		</p>
 		<p class="mt-6">

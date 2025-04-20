@@ -26,7 +26,7 @@
 			<Citation number={3}
 								link="https://www.theguardian.com/uk-news/2025/apr/08/uk-creating-prediction-tool-to-identify-people-most-likely-to-kill" />
 			,
-			or even whether you're hired to a company
+			or even whether you're hired by a company
 			<Citation number={4}
 								link="https://www.youtube.com/watch?v=6nGM37ThEsU" />
 			.
@@ -123,7 +123,7 @@
 		<RecruiterAnimation showBias={true} />
 
 		<p class="mt-12">
-			It certainly seems like this recruiter is biased. In fact, purple has only a 30% chance of being hired
+			It certainly seems like this recruiter is biased. In fact, purple only has a 30% chance of being hired
 			while gray has a 70% chance.
 		</p>
 
@@ -138,16 +138,16 @@
 		</p>
 
 		<p class="mt-12">
-			Also, on average, men are more likely to apply for jobs they're under-qualified for
+			Also, men may be more likely to apply for jobs they consider themselves to be under-qualified for
 			<Citation number={5} link="https://hbr.org/2014/08/why-women-dont-apply-for-jobs-unless-theyre-100-qualified" />
 			,
-			so we might expect there to be some competency differences among applicants,
+			so we might expect there to be some competency differences among applicants
 			if this were the protected characteristic too.
 		</p>
 
 		<p class="mt-12">
 			Often these links between competency and the protected characteristic aren't causal but correlational.
-			Humans are very complicated systems, shaped by entire lifetimes,
+			We are complicated beings, shaped by entire lifetimes,
 			and many of our characteristics are deeply related to all our other characteristics.
 		</p>
 
@@ -164,7 +164,7 @@
 		</p>
 
 		<p class="mt-12">
-			It turns out that there are different ways we can define fairness, and each of which carries a different
+			It turns out that there are different ways we can define fairness, and each of these carries a different
 			implication for what a fair society would look like.
 		</p>
 		<p class="mt-12">
@@ -175,22 +175,24 @@
 
 		<p class="mt-12">
 			But another thing we can try is to think about what decisions a hypothetical unbiased recruiter might make.
+		</p>
+		<p class="mt-8">
 			That recruiter would ignore which group a person is in,
 			hiring everyone who's actually competent and skipping everyone else.
 		</p>
-		<p class="mt-4 mb-6">
+		<p class="mt-12 mb-6">
 			Maybe we could measure how biased a recruiter is by comparing the decisions it makes to those
 			unbiased decisions?
 		</p>
 
 		<RecruiterAnimation showBias={true} showCompetence={true} />
-
-		<p class="mt-8">
-			And now we see that a competent purple only has a 50% chance of being hired, whereas a competent gray has an
+		<p>
+			In the hypothetical example I've illustrated above, a competent purple
+			only has a 50% chance of being hired, whereas a competent gray has an
 			80% chance of being hired.
 		</p>
 		<p class="mt-8">
-			So we can be a bit more convinced that it isn't treating the two groups fairly.
+			So we can be a bit more convinced that the recruiter isn't treating the two groups fairly.
 		</p>
 
 		<p class="mt-12">
@@ -209,25 +211,34 @@
 			In this project, we investigate bias within simulated models of recruitment.
 		</p>
 		<p class="mt-12">
+			This means we can sidestep the problem we've just discussed -
+			We <i>can't</i> decide which real candidates should actually be fired or hired, because this would
+			be introducing our own biases into the process.
+		</p>
+		<p class="mt-4">
+			However, we <i>can</i> effectively decide which simulated
+			candidates should actually be fired or hired. This is just another feature of the simulation:
+			when we create each simulated candidate we do so as a random collection of related unnamed characteristics,
+			and one of those characteristics is competence.
+		</p>
+		<p class="mt-12">
 
 			Of course that means that any of our findings are limited to these simulated scenarios.
 
 			But by repeating the simulation thousands of times with random scenarios, we can find consistent patterns across
 			those randomised experiments.
-
+		</p>
+		<p class="mt-4">
 			And it's likely that those findings will generalise to real-world recruiting.
 		</p>
 
+
 		<p class="mt-12">
-			This means we can sidestep the problem we've just discussed.
-			We can decide which candidates should actually be fired or hired, since they're all hypothetical anyway.
-		</p>
-		<p class="mt-12">
-			In fact, we go one step further.
-			We give that information directly to our recruiters during training.
+			In fact we go one step further than generating how competent each simulated candidate is:
+			We can give that information directly to our Machine Learning recruiters during their training process.
 			That is, <span class="text-surface-600 font-bold">the Training Examples are Completely Unbiased</span>.
 		</p>
-		<p class="mt-12">
+		<p class="mt-4">
 			If we find that bias still exists in the simulation, we can be fairly sure it will exist
 			in the real world, where the data provided to recruiters already contains bias.
 		</p>

@@ -1,15 +1,7 @@
 <script lang="ts">
-	import { biasAnalysis } from '../../stores/store';
 	import BottomHrefButtons from './BottomHrefButtons.svelte';
 	import TopUtilityButtons from './TopUtilityButtons.svelte';
-	import type { Network } from '../../types/network';
 
-	let showBias: boolean = false;
-	export let network: Network;
-
-	$: if (network.characteristics) {
-		showBias = ($biasAnalysis !== undefined);
-	}
 
 	const menu = {
 		'Motivation': [],

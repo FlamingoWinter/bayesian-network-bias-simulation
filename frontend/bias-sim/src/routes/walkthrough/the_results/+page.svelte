@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Accordion, AccordionItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
+	import { CaretRightFill } from 'svelte-bootstrap-icons';
 
 	const biasMetrics: string[] = [
 		'FNR Difference',
@@ -58,7 +59,7 @@
 								class="text-surface-600 font-bold">Bayesian Networks</span>.
 							</p>
 							<p class="mt-4">
-								Learning about some
+								That means learning about some
 								characteristic of an applicant gives us information about every other characteristic of the applicant.
 							</p>
 							<p class="mt-4">
@@ -198,18 +199,18 @@
 								But even if we only consider the accurate recruiters (with accuracy >95%),
 								the average bias displayed by these metrics
 								is <span
-								class="text-surface-600 font-bold">Above 10%</span>:
+								class="text-surface-600 font-bold">above 10%</span>:
 							</p>
 							<p class="mt-2">
 								Only about <span
 								class="text-surface-600 font-bold">25%</span> of those accurate recruiters display an FPR or FNR
 								Difference
-								<span class="text-surface-600 font-bold">below 2%</span>.
+								below 2%.
 							</p>
 							<p class="mt-2">
 								Only about <span class="text-surface-600 font-bold">30%</span> of those accurate recruiters display an
 								FDR or FOR Difference
-								<span class="text-surface-600 font-bold">below 2%</span>.
+								below 2%.
 							</p>
 							<p class="mt-16">
 								We can visualise how much bias each of our recruiters shows using a <span
@@ -295,7 +296,7 @@
 							</p>
 							<p>
 								The <span class="text-surface-600 font-bold">Competence Difference</span> is the difference between
-								these values for different groups.
+								these values for two groups.
 							</p>
 							<p class="mt-8">
 								When the competence difference value is low, the bias metrics are strongly correlated.
@@ -571,7 +572,7 @@
 								<p class="mt-8">
 									However, by only looking at the selection of people who were hired,
 									and the selection of people who weren't, we are likely to conclude that the bias is
-									actually in <i>favour</i> of group A, contradicting this finding.
+									actually in <i>favour</i> of group A.
 								</p>
 								<p class="mt-8">
 									If both groups are just as good at the job on average, bias is <i>lower</i>
@@ -815,7 +816,7 @@
 
 							<p class="mt-12">
 								However, we also see that by revealing the protected characteristic to a recruiter,
-								we reduce it's bias from a Predictive Parity perspective.
+								we reduce its bias from a Predictive Parity perspective.
 							</p>
 
 							<p class="mt-24">
@@ -994,7 +995,7 @@
 
 							<p class="mt-12">
 								Finally, we can ask whether these bias mitigations come at the expense of accuracy.
-								We find that they don't, expect for the Demographic Parity mitigation:
+								We find that they only have a small effect, expect for the Demographic Parity mitigation:
 							</p>
 
 							<table class="table table-hover px-4 mt-8">
@@ -1046,5 +1047,11 @@
 				</AccordionItem>
 			</Accordion>
 		</div>
+		<button type="button"
+						class="btn btn-xl text-2xl variant-filled py-4 px-4 rounded-full min-w-32 z-[5] mt-20"
+						onclick={() => window.location.href = '/walkthrough/where_to_go_next'}>
+			Next
+			<CaretRightFill class="ml-2" width={20} height={20} />
+		</button>
 	</div>
 </div>

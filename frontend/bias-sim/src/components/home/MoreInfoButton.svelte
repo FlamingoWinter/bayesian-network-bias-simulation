@@ -1,6 +1,10 @@
+<script lang="ts">
+	export let center: boolean = false;
+</script>
+
 <button class="rounded-2xl border-none block relative bg-white cursor-pointer select-none
 							py-6 px-10 text-2xl font-semibold h-fit
-							overflow-hidden text-warning-600 z-10 mr-auto flex-grow basis-0 drop-shadow-2xl"
+							overflow-hidden text-warning-600 z-10 {center ? '' : 'mr-auto flex-grow basis-0'} drop-shadow-2xl"
 				on:click={() => window.location.href = '/guide'}>
 	More Information
 	<span class="rounded-2xl absolute left-0 top-0 w-full h-full bg-transparent -z-10 border-4 border-solid

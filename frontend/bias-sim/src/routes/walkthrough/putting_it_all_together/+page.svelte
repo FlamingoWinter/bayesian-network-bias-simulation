@@ -119,13 +119,16 @@
 			</li>
 			<li>
 				...this doesn't include <i>any</i> <span
-				class="text-surface-600 font-bold">Distance Proxy Characteristics</span>
+				class="text-surface-600 font-bold">Distant Proxy Characteristics</span>
 				(characteristics
 				linked to the Protected Characteristic <i>by one or two edges</i> on the Bayesian Network).
 			</li>
 		</ol>
 		<p class="mt-8">
-			Here's an example of what this looks like. Pink characteristics are included in the application:
+			Here's an example of what this looks like.
+			<span
+				class="text-pink-500 font-bold">Pink characteristics are the only characteristics included in the application:
+			</span>
 		</p>
 		{#if tabInfos !== undefined}
 
@@ -149,23 +152,25 @@
 			We also experiment with different <span class="text-surface-600 font-bold">Post-Training Recruiter Bias Mitigations</span>:
 		</p>
 		<p class="mt-4">
-			We've assumed that each recruiter simply <i>makes a decision</i> on each applicant, but they're very easy to
+			We've assumed that each recruiter simply <i>makes a decision</i> on each applicant, but they're easy to
 			change such that they <i>rank</i> each applicant instead.
 		</p>
-		<p class="mt-4">
+		<p class="mt-16">
 			One idea we could try is to hire the same proportion of applicants from both groups,
 			while still hiring the highest-ranked applicants first.
-			. For example
-			we hire the highest-ranked half of group A and the highest-ranked half of group B.
 		</p>
 		<p class="mt-4">
+			For example
+			we might hire the highest-ranked half of group A and the highest-ranked half of group B.
+		</p>
+		<p class="mt-8">
 			This satisfies <span class="text-surface-600 font-bold">Demographic Parity</span>,
 			but we could ask if there ways we could satisfy the other definitions of unbiasedness.
 		</p>
-		<p class="mt-12">
+		<p class="mt-16">
 			It turns out that we can, but it's a little more difficult.
 		</p>
-		<ol class="list-decimal list-inside ml-10 text-lg text-left space-y-4 min-w-[40rem] mt-8">
+		<ol class="list-decimal list-inside ml-10 text-lg text-left space-y-4 min-w-[40rem] mt-16">
 			<li>
 				As well as the training examples and testing examples, we create another set of applicants,
 				we'll call the <span class="text-surface-600 font-bold">Mitigation Applicants</span>
@@ -187,7 +192,6 @@
 
 		<p class="mt-16">
 			For this reason, we usually can't completely satisfy these definitions of unbiasedness.
-			In practice, we do get closer to them.
 		</p>
 
 		<h3 class="text-3xl font-bold mt-16">

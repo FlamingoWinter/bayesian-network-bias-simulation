@@ -41,19 +41,21 @@
 			Each node represents a <span class="text-surface-600 font-bold">Random Variable</span>.
 		</p>
 		<p class="mt-4">
-			For example, there's a 50% chance of it being cloudy and a 50% chance of it not being cloudy.
+			For example, there's a 50% chance of it being cloudy and a 50% chance of it being not cloudy.
+		</p>
+		<p class="mt-4">
+			An arrow from the node <span class="text-surface-600 font-bold">Cloudy</span> to the node <span
+			class="text-surface-600 font-bold">Rain</span> means that
+			whether it's raining <span class="text-surface-600 font-bold">depends</span> on whether it's cloudy.
 		</p>
 		<p class="mt-12">
-			An arrow from node A to node B means that node B depends on node A.
+			This example comes from a scenario where the Sprinkler is solar-powered.
+			So the chance of the Sprinkler being on depends
+			on whether there are Clouds in the sky.
 		</p>
 		<p class="mt-4">
-			This example comes from a scenario where the sprinkler is solar-powered.
-			So the chance of the sprinkler being on depends
-			on whether there are clouds in the sky.
-		</p>
-		<p class="mt-4">
-			Whether it's raining or not also depends on whether there are clouds in the sky, and whether
-			the grass is wet depends on both the rain and the sprinkler.
+			Whether it's Raining or not also depends on whether there are clouds in the sky, and whether
+			the Grass is wet depends on both the Rain and the Sprinkler.
 		</p>
 		<p class="mt-20">
 			What's interesting here is that all the variables are related to each other.
@@ -75,10 +77,12 @@
 			If we wanted to <span class="text-surface-600 font-bold">Sample</span> this network
 			(get a random value for each variable),
 			it wouldn't be enough to use the initial probabilities to sample each variable at once.
+		</p>
+		<p class="mt-8">
 			To see why this is, consider that this would result in a reasonable chance of
-			both the <span class="text-surface-600 font-bold">Sprinkler</span> being
-			<span class="text-red-600 font-bold">Off</span> and there being
-			<span class="text-red-600 font-bold">No</span> <span class="text-surface-600 font-bold">Rain</span>.
+			both the Sprinkler being
+			off and there being
+			no Rain.
 			But you can test for yourself that it's very unlikely for this combination to actually appear.
 		</p>
 		<p class="mt-4">
@@ -108,8 +112,12 @@
 			CauseWEB </a>
 		</p>
 		<p class="mt-12">
-			There is a high correlation between ice cream sales and shark sightings,
-			and we might naively think that this is because ice cream sales are alluring sharks out to the beach,
+			If there are more ice cream sales in the UK, there also tend to be more shark sightings,
+			and if there are fewer ice cream sales in the UK, there tend to be fewer.
+			Therefore, we say that ice cream sales and shark sightings are correlated.
+		</p>
+		<p class="mt-8">
+			We might naively think that this is because sharks like ice cream,
 			or because seeing a shark makes a person want to buy an ice cream.
 		</p>
 		<p class="mt-6 mb-6">
@@ -129,23 +137,27 @@
 		<p class="mt-8">
 			Let's go back to the problem we're trying to solve.
 			We know that whether a person is in a protected group has some correlation
-			to every other thing about them, including competence.
+			to all their other characteristics, including competence.
 		</p>
 		<p class="mt-8">
-			But we also know that that correlation is not causal and would be unfair to rely upon.
+			But that correlation is not directly causal and would be unfair to rely upon.
 		</p>
 		<p class="mt-16 font-bold text-xl">
 			It happens that Bayesian networks are exactly what we're looking for here!
 		</p>
 		<p class="mt-12">
 			The majority of protected characteristics aren't something the person themselves can control,
-			so we assume that these also aren't causally dependent on anything.
+			so we assume that these aren't causally dependent on anything.
 		</p>
 		<p class="mt-8">
 			Job competency will depend directly on many variables (perhaps problem-solving skills,
 			team-working skills, domain knowledge and so on).
+		</p>
+		<p class="mt-4">
 			Each of these variables will depend on other variables, and each of those variables will depend on other
 			variables.
+		</p>
+		<p class="mt-4">
 			Eventually, some of these variables might be dependent on the protected characteristic,
 			which results in the correlation we might see.
 		</p>

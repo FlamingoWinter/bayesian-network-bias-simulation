@@ -53,16 +53,16 @@
 					<svelte:fragment slot="content">
 						<div class="rounded-md bg-surface-200 p-4">
 
-							If group A tends to be worse at the job than group B on average,
+							If group A tends to be worse at the role than group B on average,
 							this makes group A <i>more</i> likely to face unfair treatment in hiring.
 							In other words, existing performance differences can lead to even stronger bias.
 							<p class="mt-8">
 								However, by only looking at the selection of people who were hired,
 								and the selection of people who weren't, we are likely to conclude that the bias is
-								actually in <i>favour</i> of group A, contradicting this finding.
+								actually in <i>favour</i> of group A.
 							</p>
 							<p class="mt-8">
-								If both groups are just as good at the job on average, bias is <i>lower</i>
+								If both groups are just as good at the role on average, bias is <i>lower</i>
 								but is still usually significant.
 							</p>
 						</div>
@@ -119,17 +119,18 @@
 			</p>
 			<p class="mt-16">
 				With that context, these findings may appear more or less impressive. Indeed you'll be able to
-				judge whether the assumptions we've made are sensible.
+				judge whether the assumptions I've made are sensible.
 			</p>
 			<p class="mt-16">
 				This walkthrough goes through each aspect of the simulation to explain how it works,
 				and is aimed for the general audience.
 			</p>
 			<p class="mt-8">
-				We'll introduce the recruiting scenario we're modelling,
+				I'll introduce the recruiting scenario we're modelling,
 				discuss how we generate applicants and applications with something called a
 				<span class="text-surface-600 font-bold">Bayesian Network</span>,
-				discuss how we measure bias, and finally bring everything together.
+				discuss how we measure bias, and finally bring everything together
+				to talk about the simulation we perform.
 			</p>
 			<p class="mt-16 font-bold">
 				Enjoy!

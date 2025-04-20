@@ -11,7 +11,7 @@
 			The decisions made by machine learning systems may have significant
 			consequences to the people they affect.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			Their use is becoming increasingly prevalent. Automated tools are finding use in
 			resume-screening
 			<Citation number={1}
@@ -34,7 +34,7 @@
 			search
 			engines.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			There is a concern that these systems exhibit bias, whereby the decisions they make are unfair against
 			certain groups of people. Indeed existing research has shown that many modern systems do
 			systematically disadvantage certain groups
@@ -47,13 +47,14 @@
 			.
 			However, important questions remain largely unanswered:
 		</p>
-		<p class="mt-2 pl-4">
-			Why are these systems biased?
-			Can we expect them to be more biased than the corresponding human systems?
-			How can we work towards minimising these biases?
-		</p>
+		<ul class="mt-6 pl-4 list-disc">
+			<li>Why are these systems biased?</li>
+			<li>Can we expect them to be more biased than the corresponding human systems?</li>
+			<li>How can we work towards minimising these biases?</li>
+		</ul>
 
-		<p class="mt-4">
+
+		<p class="mt-6">
 			For the remainder of this project, we focus on recruitment, whereby a
 			<span class="text-surface-600 font-bold">Recruiter</span> classifies <span class="text-surface-600 font-bold">Applicants</span>,
 			into
@@ -62,63 +63,67 @@
 
 			We define bias as <span class="text-surface-600 font-bold">Unfairness Towards a Protected Group</span>.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			In order to answer the questions above, we need a rigorous and scientific approach to bias.
 			Ultimately, this is a difficult requirement.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			For example, one could make the claim that a
 			recruiting system is biased against group A,
 			because an applicant from group A is less likely to get a job when they apply.
 			However, a commentator could argue that such an observation is to be expected,
 			because that group comprises less-qualified candidates.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			Indeed, in many domains, there are differences in competency between groups.
 
-			This doesn't mean that a person is more or less competent solely because of their group membership,
+			This doesn't mean that a person is more or less competent only because of their group membership,
 			instead it may be due to a combination of different education opportunities, differing access to networking,
 			different exposure to role models, and so on.
 			Different backgrounds may be associated with different economic status, and a lifetime influenced by
 			stereotypes may lead to eventual change.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			In this case, a person's membership of the protected group and a person's competence in performing a job
 			are related features. In a statistical sense, they are dependent variables.
-			Regardless, if group membership were independent to the inputs and outputs of a decision-making
-			algorithm, it will be unbiased by most measurements, so this isn't an interesting case to consider.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
+			If group membership were independent to the inputs and outputs of a decision-making
+			algorithm, the decisions made by any model will be unbiased by most measurements, so this isn't an interesting
+			case to consider.
+		</p>
+		<p class="mt-6">
 			In many instances, it may be desirable to ensure two random members of different groups have
-			the same likelihood to receive a job, regardless of differences in competence to promote diversity or
-			mitigate systemic biases. For the remainder of this project, we only consider competence-based hiring.
+			the same likelihood of receiving a job, regardless of differences in competence to promote diversity or
+			mitigate systemic biases. We limit the scope of this project to
+			largely consider competence-based hiring.
 		</p>
-		<p class="mt-4">
-			Since protected group membership and competency are statistically independent,
+		<p class="mt-6">
+			Since protected group membership and competence are not statistically independent,
 			most investigations into the bias exhibited by a decision-making system involve some
 			notion of what decisions the system should have made.
 			We then compare the deviation between these and the decisions the system did make, and whether that deviation
 			is dependent on the group membership of the person it was classifying.
 		</p>
-		<p class="mt-4">
-			Unfortunately, the "decisions the systems should have made" are influenced by our own biases as well.
+		<p class="mt-6">
+			Unfortunately, our notion of the "decisions the systems should have made" is influenced by our own biases as well.
 			So any attempt to measure the bias within a system will be influenced by our own preconceptions.
 		</p>
-		<p class="mt-4">
-			In this project, we try a different approach.
+		<p class="mt-6">
+			In this project, we take a different approach.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			The understanding of bias we can attain from existing systems is limited because the "correct" decisions
 			are shaped by human assumptions.
 			But, the same limitation doesn't exist in simulated systems.
 
 			Instead, as simulators we are able to define ground truth
-			and provide it to recruiters during training.
+			and provide it directly to recruiters during training.
 
 			If recruiters exhibit bias in this instance of unbiased training data, we can presume they will continue to
 			exhibit that bias when extrapolating to the real world.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			By simulating this recruiting scenario thousands of times with randomised applicant generation,
 			we can see which patterns in bias are prevalent throughout the results.
 
@@ -127,7 +132,7 @@
 
 			Under the assumptions we've made in the simulation we can then extrapolate these results to real-world systems.
 		</p>
-		<p class="mt-4">
+		<p class="mt-6">
 			While we focus on recruiting, this is for ease of communication and conceptualisation. The simulation
 			generalises to all fields of automated decision-making.
 		</p>
