@@ -1,11 +1,10 @@
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.models import BayesianNetwork as PgBn
 
-from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pgmpy_network import PgmPyNetwork
 
 
-def get_shark_sighting_network() -> BayesianNetwork:
+def get_shark_sighting_network() -> PgmPyNetwork:
     shark_model = PgBn([
         ('hot_weather', 'ice_cream_sales'),
         ('hot_weather', 'beach_visits'),

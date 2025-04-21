@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Literal, List
+from typing import Literal, List, Callable, Any
 
 import pandas as pd
 
@@ -22,12 +22,14 @@ class Recruiter(ABC):
 
     def initalise_mitigation(self,
                              score_train: pd.Series, groups_train: pd.Series,
-                             score_holdout: pd.Series, application_holdout: pd.DataFrame, groups_holdout: pd.Series):
+                             score_holdout: pd.Series, application_holdout: pd.DataFrame, groups_holdout: pd.Series,  #
+                             after_mitigation_initialised: Callable[[str], Any] = lambda _: None):
         predicted_holdout = self.predict_scores(application_holdout)
         for mitigation in self.mitigations:
             mitigation.extract_hiring_proportions_from_training_and_holdout(
                 score_train, groups_train,
                 score_holdout.reset_index(drop=True), predicted_holdout, groups_holdout.reset_index(drop=True))
+            after_mitigation_initialised(mitigation.name)
 
     @abstractmethod
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):

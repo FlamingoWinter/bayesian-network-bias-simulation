@@ -1,8 +1,8 @@
 from typing import List
 
-from backend.bias.recruiter_bias_analysis import print_bias_summary
-from backend.candidates.candidate_group import CandidateGroup
-from backend.candidates.generate_candidates import generate_candidate_group
+from backend.applicants.applicants import Applicants
+from backend.applicants.sample_applicants import sample_applicants
+from backend.bias.print_bias_summary import print_bias_summary
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.generation.generate_network import generate_random_network
 from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_and_fpr_equality import \
@@ -31,7 +31,7 @@ from backend.simulate import simulate
 if __name__ == "__main__":
     network: BayesianNetwork = generate_random_network(20)
 
-    candidate_group: CandidateGroup = generate_candidate_group(network, 10_000)
+    candidate_group: Applicants = sample_applicants(network, 10_000)
 
     protected_characteristic = list(network.characteristics.values())[0]
 

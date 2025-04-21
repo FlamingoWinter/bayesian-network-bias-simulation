@@ -2,23 +2,11 @@ from typing import Dict, Callable
 
 import pandas as pd
 
-from backend.api.responseTypes.recruiterBiasAnalysisResponse.categoricalRecruiterBiasAnalysisResponse import \
-    CategoricalRecruiterBiasAnalysisResponse
-from backend.bias.categorical_group_prediction_information import GroupPredictionInformation
+from backend.api.responseTypes.recruiter_bias_analysis_response import \
+    RecruiterBiasAnalysisResponse
+from backend.bias.group_prediction_information import GroupPredictionInformation
 from backend.network.bayesian_network import Characteristic
 from backend.utilities.capitalise_first import capitalise_first
-
-
-def get_pretty_title(title: str) -> str:
-    return f"""
-    -------------------------------------------------------------------
-    {title}:
-    -------------------------------------------------------------------"""
-
-
-def get_space() -> str:
-    return f"""
-    ---"""
 
 
 class MitigationBiasAnalysis:
@@ -37,7 +25,42 @@ class MitigationBiasAnalysis:
             if len(application_subset) > 0:
                 self.by_group[group] = GroupPredictionInformation(application_subset)
 
-        self.show_interpretation = True
+    def print_summary(self):
+        s = ""
+        s += self.get_pretty_performance_summary()
+
+        s += get_pretty_title("Demographic Parity (Independence)")
+        s += self.get_pretty_metric(lambda info: info.hired_rate,
+                                    "Proportion of People Hired",
+                                    "a random person from group {max_group} is {percentage} more likely to be hired than a person from group {min_group}.",
+                                    with_competence=True)
+
+        s += get_pretty_title("Equalised Odds (Separation)")
+
+        s += self.get_pretty_metric(lambda info: info.false_negative_rate,
+                                    "False Negative Rate",
+                                    "a random competent person from group {max_group} is {percentage} more likely to be rejected than a random competent person from group {min_group}.",
+                                    positive_correlation_between_metric_and_advantage=False)
+
+        s += get_space()
+
+        s += self.get_pretty_metric(lambda info: info.false_positive_rate,
+                                    "False Positive Rate",
+                                    "a random person from group {max_group} who isn't competent is {percentage} more likely to be hired than a random person from group {min_group} who also isn't competent.")
+
+        s += get_pretty_title("Predictive Parity (Sufficiency)")
+
+        s += self.get_pretty_metric(lambda info: info.false_discovery_rate,
+                                    "False Discovery Rate",
+                                    "a random hired person from group {max_group} is {percentage} more likely to not be competent than a random hired person from group {min_group}.")
+
+        s += get_space()
+
+        s += self.get_pretty_metric(lambda info: info.false_omission_rate,
+                                    "False Omission Rate",
+                                    "a random rejected person from group {max_group} is {percentage} more likely to actually be competent than a random rejected person from group {min_group}.",
+                                    positive_correlation_between_metric_and_advantage=False)
+        print(s)
 
     def get_pretty_performance_summary(self) -> str:
         group = self.general
@@ -115,46 +138,20 @@ class MitigationBiasAnalysis:
 
         return s
 
-    def print_summary(self):
-        s = ""
-        s += self.get_pretty_performance_summary()
-
-        s += get_pretty_title("Demographic Parity (Independence)")
-        s += self.get_pretty_metric(lambda info: info.hired_rate,
-                                    "Proportion of People Hired",
-                                    "a random person from group {max_group} is {percentage} more likely to be hired than a person from group {min_group}.",
-                                    with_competence=True)
-
-        s += get_pretty_title("Equalised Odds (Separation)")
-
-        s += self.get_pretty_metric(lambda info: info.false_negative_rate,
-                                    "False Negative Rate",
-                                    "a random competent person from group {max_group} is {percentage} more likely to be rejected than a random competent person from group {min_group}.",
-                                    positive_correlation_between_metric_and_advantage=False)
-
-        s += get_space()
-
-        s += self.get_pretty_metric(lambda info: info.false_positive_rate,
-                                    "False Positive Rate",
-                                    "a random person from group {max_group} who isn't competent is {percentage} more likely to be hired than a random person from group {min_group} who also isn't competent.")
-
-        s += get_pretty_title("Predictive Parity (Sufficiency)")
-
-        s += self.get_pretty_metric(lambda info: info.false_discovery_rate,
-                                    "False Discovery Rate",
-                                    "a random hired person from group {max_group} is {percentage} more likely to not be competent than a random hired person from group {min_group}.")
-
-        s += get_space()
-
-        s += self.get_pretty_metric(lambda info: info.false_omission_rate,
-                                    "False Omission Rate",
-                                    "a random rejected person from group {max_group} is {percentage} more likely to actually be competent than a random rejected person from group {min_group}.",
-                                    positive_correlation_between_metric_and_advantage=False)
-
-        print(s)
-
-    def to_response(self) -> CategoricalRecruiterBiasAnalysisResponse:
+    def to_response(self) -> RecruiterBiasAnalysisResponse:
         return {
             "general": self.general.to_response(),
             "byGroup": {g_name: g.to_response() for g_name, g in self.by_group.items()}
         }
+
+
+def get_pretty_title(title: str) -> str:
+    return f"""
+    -------------------------------------------------------------------
+    {title}:
+    -------------------------------------------------------------------"""
+
+
+def get_space() -> str:
+    return f"""
+    ---"""

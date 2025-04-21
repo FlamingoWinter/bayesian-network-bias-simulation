@@ -6,8 +6,10 @@ from networkx.readwrite.json_graph import node_link_data
 from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianNetwork as pgBN
 
-from backend.api.responseTypes.conditionResponse import ConditionRequest
-from backend.api.responseTypes.networkResponse import NetworkResponse
+from backend.api.requestTypes.condition_request import ConditionRequest
+from backend.api.responseTypes.network_response import NetworkResponse
+from backend.applicants.applicants import Applicants
+from backend.applicants.sample_applicants import sample_applicants
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
 from backend.utilities.time_function import time_function
 
@@ -45,16 +47,16 @@ class PgmPyNetwork(BayesianNetwork):
                          score_characteristic=score_characteristic,
                          application_characteristics=application_characteristics)
 
-        self.name_mapping: Dict[str, str] = None
-        self.inv_name_mapping = None
+        self.renaming: Dict[str, str] = None
+        self.inverse_renaming = None
         self.model: pgBN = model
         self.characteristics: Dict[str, Characteristic] = self.initialise_characteristics_from_model(model)
         self.model_type = "pgmpy"
         self.observed = observed
 
     def rename_nodes(self, old_to_new: Dict[str, CharacteristicName]):
-        self.name_mapping = {old_node: new_characteristic.name for [old_node, new_characteristic] in old_to_new.items()}
-        self.inv_name_mapping = {v: k for k, v in self.name_mapping.items()}
+        self.renaming = {old_node: new_characteristic.name for [old_node, new_characteristic] in old_to_new.items()}
+        self.inverse_renaming = {v: k for k, v in self.renaming.items()}
         new_characteristics = {}
         for _, characteristic in self.characteristics.items():
             old_name = characteristic.name
@@ -63,8 +65,8 @@ class PgmPyNetwork(BayesianNetwork):
             characteristic.name = new_characteristic.name
             new_characteristics[characteristic.name] = characteristic
         self.characteristics = new_characteristics
-        self.application_characteristics = [self.name_mapping[old_ac] for old_ac in self.application_characteristics]
-        self.score_characteristic = self.name_mapping[self.score_characteristic]
+        self.application_characteristics = [self.renaming[old_ac] for old_ac in self.application_characteristics]
+        self.score_characteristic = self.renaming[self.score_characteristic]
 
     def initialise_characteristics_from_model(self, model: pgBN):
         self.characteristics = {}
@@ -77,22 +79,32 @@ class PgmPyNetwork(BayesianNetwork):
         score_characteristic = self.score_characteristic
         application_characteristics = self.application_characteristics
 
-        if self.name_mapping is not None:
-            directed_graph = nx.relabel_nodes(directed_graph, self.name_mapping)
+        if self.renaming is not None:
+            directed_graph = nx.relabel_nodes(directed_graph, self.renaming)
+
+        applicants: Applicants = sample_applicants(self, num_samples)
+
+        characteristic_responses = {}
+        for characteristic_name, characteristic in self.characteristics.items():
+            distribution = applicants.characteristic_name_to_distribution(characteristic_name)
+            value_counts = Counter(distribution)
+            expected_values = range(max(value_counts.keys(), default=0) + 1)
+            prior_distribution = [value_counts.get(x, 0) / len(distribution) for x in expected_values]
+            characteristic_responses[characteristic.name] = characteristic.to_characteristic_response(
+                prior_distribution)
 
         return {
             "graph": node_link_data(directed_graph, link="links"),
             "scoreCharacteristic": score_characteristic,
             "applicationCharacteristics": application_characteristics,
-            "characteristics": {name: characteristic.to_characteristic_response() for [name, characteristic] in
-                                self.characteristics.items()},
+            "characteristics": characteristic_responses,
             "predefined": self.predefined}
 
     def condition_on(self, condition_request: ConditionRequest) -> None:
-        if self.name_mapping is None:
+        if self.renaming is None:
             self.observed = condition_request
         else:
-            self.observed = {self.inv_name_mapping[new_characteristic]: value for new_characteristic, value in
+            self.observed = {self.inverse_renaming[new_characteristic]: value for new_characteristic, value in
                              condition_request.items()}
 
     @time_function("Sampling Posterior")
@@ -102,8 +114,8 @@ class PgmPyNetwork(BayesianNetwork):
         inference = VariableElimination(self.model)
 
         model_formatted_characteristics = self.characteristics.keys()
-        if self.name_mapping is not None:
-            model_formatted_characteristics = [self.inv_name_mapping[c] for c in model_formatted_characteristics]
+        if self.renaming is not None:
+            model_formatted_characteristics = [self.inverse_renaming[c] for c in model_formatted_characteristics]
 
         sampled_data = (inference.query([c for c in model_formatted_characteristics if c not in self.observed.keys()],
                                         evidence=self.observed, show_progress=True))
@@ -116,9 +128,9 @@ class PgmPyNetwork(BayesianNetwork):
 
             expected_values = range(max(value_counts.keys(), default=0) + 1)
             proportions = [value_counts.get(x, 0) / total_count for x in expected_values]
-            if self.name_mapping is None:
+            if self.renaming is None:
                 condition_response[column] = proportions
             else:
-                condition_response[self.name_mapping[column]] = proportions
+                condition_response[self.renaming[column]] = proportions
 
         return condition_response

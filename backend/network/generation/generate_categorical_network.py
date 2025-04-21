@@ -12,7 +12,6 @@ from pgmpy.models import BayesianNetwork as PgBn
 from scipy.stats import rv_discrete
 
 from backend.entropy.entropy import categorical_entropy
-from backend.network.bayesian_network import BayesianNetwork
 from backend.network.generation.generate_dag import generate_random_dag
 from backend.network.pgmpy_network import PgmPyNetwork
 
@@ -21,7 +20,7 @@ default_category_number_dist = rv_discrete(values=([2, 3, 4], [0.6, 0.3, 0.1]))
 
 def generate_random_categorical_network(nodes: int = 50, parents_range: Tuple[int, int] = (2, 3),
                                         mutual_information_range: Tuple[float, float] = (0.6, 0.9),
-                                        category_number_dist=None, seed=None) -> BayesianNetwork:
+                                        category_number_dist=None, seed=None) -> PgmPyNetwork:
     if seed:
         random.seed(seed)
 
@@ -37,7 +36,7 @@ def generate_random_categorical_network(nodes: int = 50, parents_range: Tuple[in
     model = PgBn(ebunch=graph)
     assign_cpds(model, graph, num_categories_by_node, mutual_information_range)
 
-    network: BayesianNetwork = PgmPyNetwork(model)
+    network: PgmPyNetwork = PgmPyNetwork(model)
 
     for node in graph.nodes:
         network.set_category_names_for_characteristic(node, [str(x) for x in

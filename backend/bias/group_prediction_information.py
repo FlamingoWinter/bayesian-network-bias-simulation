@@ -1,15 +1,7 @@
 import pandas as pd
 
-from backend.api.responseTypes.recruiterBiasAnalysisResponse.categoricalRecruiterBiasAnalysisResponse import \
-    CategoricalGroupPredictionInformationResponse
-
-
-def confusion_matrix(df):
-    tp = ((df["predicted_score"] == 1) & (df["actual_score"] == 1)).sum()
-    fp = ((df["predicted_score"] == 1) & (df["actual_score"] == 0)).sum()
-    tn = ((df["predicted_score"] == 0) & (df["actual_score"] == 0)).sum()
-    fn = ((df["predicted_score"] == 0) & (df["actual_score"] == 1)).sum()
-    return tp, fp, tn, fn
+from backend.api.responseTypes.recruiter_bias_analysis_response import \
+    GroupPredictionInformationResponse
 
 
 class GroupPredictionInformation:
@@ -40,14 +32,13 @@ class GroupPredictionInformation:
         self.false_discovery_rate = self.hired_but_not_competent / self.hired
         self.false_omission_rate = self.not_hired_but_competent / self.not_hired
 
-    def to_response(self) -> CategoricalGroupPredictionInformationResponse:
+    def to_response(self) -> GroupPredictionInformationResponse:
         return {
             "total": int(self.total),
             "hiredAndCompetent": int(self.hired_and_competent),
             "hiredButNotCompetent": int(self.hired_but_not_competent),
             "notHiredButCompetent": int(self.not_hired_but_competent),
             "notHiredAndNotCompetent": int(self.not_hired_and_not_competent),
-
             "hired": int(self.hired),
             "hiredRate": float(self.hired_rate),
             "notHired": int(self.not_hired),
@@ -66,3 +57,11 @@ class GroupPredictionInformation:
             "falseDiscoveryRate": float(self.false_discovery_rate),
             "falseOmissionRate": float(self.false_omission_rate),
         }
+
+
+def confusion_matrix(df):
+    tp = ((df["predicted_score"] == 1) & (df["actual_score"] == 1)).sum()
+    fp = ((df["predicted_score"] == 1) & (df["actual_score"] == 0)).sum()
+    tn = ((df["predicted_score"] == 0) & (df["actual_score"] == 0)).sum()
+    fn = ((df["predicted_score"] == 0) & (df["actual_score"] == 1)).sum()
+    return tp, fp, tn, fn

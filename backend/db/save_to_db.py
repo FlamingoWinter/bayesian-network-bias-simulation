@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 from sqlalchemy import Engine, text
 from sqlalchemy import create_engine
 
+from backend.applicants.applicants import Applicants
 from backend.bias.recruiter_bias_analysis import RecruiterBiasAnalysis
-from backend.candidates.candidate_group import CandidateGroup
 from backend.entropy.entropy import categorical_entropy_of_array
 from backend.network.pgmpy_network import PgmPyNetwork
 
@@ -22,12 +22,12 @@ def get_engine() -> Engine:
 
 
 def save_run_to_db(engine: Engine,
-                   network: PgmPyNetwork, candidate_group: CandidateGroup,
+                   network: PgmPyNetwork, candidate_group: Applicants,
                    protected_characteristic_name: str, condition: int, run_duration: timedelta) -> int:
     graph = json.dumps(network.to_network_response())
 
-    protected = candidate_group.characteristics[protected_characteristic_name]
-    score = candidate_group.characteristics[network.score_characteristic]
+    protected = candidate_group.characteristic_instances[protected_characteristic_name]
+    score = candidate_group.characteristic_instances[network.score_characteristic]
 
     proportion_competent = score.sum() / len(score)
     proportion_group_1 = 1 - (protected.sum() / len(score))

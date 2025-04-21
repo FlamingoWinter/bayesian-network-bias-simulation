@@ -1,3 +1,0 @@
-class ContinuousRecruiterBiasAnalysisResponse:
-    # TODO
-    pass

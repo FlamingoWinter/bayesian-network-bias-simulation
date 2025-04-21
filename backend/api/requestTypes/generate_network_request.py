@@ -39,7 +39,7 @@ RandomNetworkRequest = Union[CategoricalNetworkRequest, ContinuousNetworkRequest
 GenerateNetworkRequest = Union[RandomNetworkRequest, PredefinedNetworkRequest]
 
 
-def new_categorical_network_request(**kwargs) -> CategoricalNetworkRequest:
+def new_random_network_request(**kwargs) -> RandomNetworkRequest:
     kwargs = replace_blanks_with_defaults(kwargs, CategoricalNetworkRequest)
     kwargs.pop("predefined_model", None)
     return CategoricalNetworkRequest(**kwargs)

@@ -5,8 +5,8 @@ from pgmpy.models import BayesianNetwork as PgBn
 from scipy.stats import rv_discrete
 from sqlalchemy import Engine
 
-from backend.candidates.candidate_group import CandidateGroup
-from backend.candidates.generate_candidates import generate_candidate_group
+from backend.applicants.applicants import Applicants
+from backend.applicants.sample_applicants import sample_applicants
 from backend.db.save_to_db import save_run_to_db, save_recruiter_run_to_db, get_engine
 from backend.experiments.network_structure_conditions import choose_score_characteristic_modified, \
     choose_protected_characteristic_modfied, choose_application_characteristics_modified
@@ -73,7 +73,7 @@ def mitigations_run():
     network.score_characteristic = score_characteristic
     network.predefined = False
 
-    candidate_group: CandidateGroup = generate_candidate_group(network, 10_000)
+    candidate_group: Applicants = sample_applicants(network, 10_000)
 
     network.application_characteristics = choose_application_characteristics_modified(
         graph, 1, score_characteristic, protected_characteristic_name)

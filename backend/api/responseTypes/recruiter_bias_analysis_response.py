@@ -1,7 +1,7 @@
 from typing import TypedDict, Dict
 
 
-class CategoricalGroupPredictionInformationResponse(TypedDict):
+class GroupPredictionInformationResponse(TypedDict):
     total: int
     hiredAndCompetent: int
     hiredButNotCompetent: int
@@ -28,6 +28,6 @@ class CategoricalGroupPredictionInformationResponse(TypedDict):
     falseOmissionRate: float
 
 
-class CategoricalRecruiterBiasAnalysisResponse(TypedDict):
-    general: CategoricalGroupPredictionInformationResponse
-    byGroup: Dict[str, CategoricalGroupPredictionInformationResponse]
+class RecruiterBiasAnalysisResponse(TypedDict):
+    general: GroupPredictionInformationResponse
+    byGroup: Dict[str, GroupPredictionInformationResponse]

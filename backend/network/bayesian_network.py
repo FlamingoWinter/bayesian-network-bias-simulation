@@ -4,8 +4,8 @@ from typing import List, Dict, Union, Literal
 import pymc as pm
 from pgmpy.models import BayesianNetwork as pgBN
 
-from backend.api.responseTypes.conditionResponse import ConditionRequest
-from backend.api.responseTypes.networkResponse import CharacteristicResponse, NetworkResponse, DistributionType
+from backend.api.requestTypes.condition_request import ConditionRequest
+from backend.api.responseTypes.network_response import CharacteristicResponse, NetworkResponse, DistributionType
 
 num_samples = 5000
 
@@ -20,12 +20,12 @@ class Characteristic:
         self.type = "categorical"
         self.category_names = category_names
 
-    def to_characteristic_response(self) -> CharacteristicResponse:
+    def to_characteristic_response(self, priorDistribution: Union[None,] = None) -> CharacteristicResponse:
         return {
             'name': self.name,
             'type': self.type,
             'categoryNames': self.category_names,
-            'priorDistribution': None
+            'priorDistribution': priorDistribution
         }
 
 

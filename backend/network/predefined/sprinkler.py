@@ -1,11 +1,10 @@
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.models import BayesianNetwork as PgBn
 
-from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pgmpy_network import PgmPyNetwork
 
 
-def get_sprinkler_network() -> BayesianNetwork:
+def get_sprinkler_network() -> PgmPyNetwork:
     sprinkler_model = PgBn([
         ('cloudy', 'sprinkler'),
         ('cloudy', 'rain'),

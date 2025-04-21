@@ -4,34 +4,30 @@ from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from backend.api.api.cache_network import get_network_from_cache
-from backend.api.cache import from_cache
-from backend.api.responseTypes.conditionResponse import ConditionRequest
-from backend.api.responseTypes.networkResponse import NetworkResponse
-from backend.api.responseTypes.recruiterBiasAnalysisResponse.biasResponse import \
+from backend.api.cache import from_cache, get_network_from_cache
+from backend.api.requestTypes.condition_request import ConditionRequest
+from backend.api.responseTypes.bias_response import \
     BiasResponse
+from backend.api.responseTypes.network_response import NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork
 from backend.utilities.time_function import time_function
 
 
-def get_example_network(request):
-    network_response: NetworkResponse = from_cache(f"network-response_{request.session.session_key}",
-                                                   "network-response")
-
+def get_network(request):
+    session_id = request.COOKIES.get('sessionid')
+    network_response: NetworkResponse = from_cache(f"network-response_{session_id}", "network-response")
     return JsonResponse(network_response, safe=False)
 
 
 def get_bias(request):
     session_id = request.COOKIES.get('sessionid')
-    bias_response: BiasResponse = from_cache(f"bias_{session_id}", "")
-
+    bias_response: BiasResponse = from_cache(f"bias_{session_id}")
     return JsonResponse(bias_response, safe=False)
 
 
 @time_function("Responding to Condition")
 def condition(request, predefined=None):
     session_id = request.COOKIES.get('sessionid')
-
     condition_request: ConditionRequest = json.loads(request.body)
     if predefined is None:
         network: BayesianNetwork = get_network_from_cache(session_id)

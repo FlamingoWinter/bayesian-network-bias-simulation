@@ -1,14 +1,16 @@
-from typing import List, Dict
+from typing import List, Dict, Callable, Any
 
+from backend.applicants.applicants import Applicants
 from backend.bias.recruiter_bias_analysis import RecruiterBiasAnalysis
-from backend.candidates.candidate_group import CandidateGroup
 from backend.network.bayesian_network import Characteristic
 from backend.recruiters.recruiter import Recruiter
 from backend.utilities.time_function import time_function
 
 
 @time_function("Simulating")
-def simulate(candidate_group: CandidateGroup, recruiters: List[Recruiter], protected_characteristic: Characteristic) -> \
+def simulate(candidate_group: Applicants, recruiters: List[Recruiter], protected_characteristic: Characteristic,
+             after_recruiter_generated: Callable[[str], Any] = lambda _: None,
+             after_mitigation_initialised: Callable[[str], Any] = lambda _: None) -> \
         dict[Recruiter, RecruiterBiasAnalysis]:
     train_candidates, holdout_candidates, test_candidates = candidate_group.random_split([0.5, 0.25, 0.25])
 
@@ -32,17 +34,20 @@ def simulate(candidate_group: CandidateGroup, recruiters: List[Recruiter], prote
 
         recruiter.train(application_train, score_train)
 
-        groups_train = train_candidates.characteristics[protected_characteristic.name].reset_index(drop=True)
+        groups_train = train_candidates.characteristic_instances[protected_characteristic.name].reset_index(drop=True)
 
-        groups_holdout = holdout_candidates.characteristics[protected_characteristic.name].reset_index(drop=True)
+        groups_holdout = holdout_candidates.characteristic_instances[protected_characteristic.name].reset_index(
+            drop=True)
 
         recruiter.initalise_mitigation(score_train, groups_train,
                                        score_holdout, application_holdout, groups_holdout,
+                                       after_mitigation_initialised
                                        )
 
         bias_by_recruiter[recruiter] = RecruiterBiasAnalysis(recruiter,
                                                              test_candidates,
                                                              application_test,
                                                              protected_characteristic)
+        after_recruiter_generated(recruiter.name)
 
     return bias_by_recruiter
