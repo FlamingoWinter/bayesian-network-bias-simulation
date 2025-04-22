@@ -15,7 +15,7 @@ def generate_random_dag(nodes: int, parents_range: Tuple[int, int]) -> nx.DiGrap
     # We want a random item out of the space of all connected directed acyclic graphs.
 
     # The difficulty with approaches to generating "random" directed acyclic graphs is that while
-    # they're often generated to be unpredictable, they're rarely generated truly randomly.
+    # they're often generated to be unpredictable, they're rarely generated uniformly randomly.
     # (i.e.- such that each graph has an equal chance to be chosen).
 
     # We don't want bias in network structure affecting any results, so we generate them at random uniformly
@@ -118,30 +118,38 @@ def calculate_out_point_counts(nodes: int, parents_range: Tuple[int, int]) -> Li
                 for i in range(min(m, min_parents), min(m, max_parents) + 1):
                     t += math.comb(m, i)  # The number of ways we can connect our out-point given that it has i parents
 
-                # d is the total dags we could have had where we linked these out-points such that at least one of the s old outpoints are disconnected
+                # d is the total number of dags we could have had where we linked these out-points such that at least one of the s old outpoints are disconnected
                 # This is a problem because it would mean that that old out-point is still an out-point,
-                # so we remove those from the probabilities.
+                # so we remove those from the probabilities
+                # and c[m, s, k] = t ** k - d
+
+                # However, to calculate this we have to use the inclusion-exclusion principle
+                # the number of dags where at least one old outpoint is disconnected is:
+                # 1) + the number of ways at least 1 specific outpoint is disconnected ** number of outpoints * comb(s, 1)
+                # 2) - the number of ways at least 2 specific outpoints are disconnected ** number of outpoints * comb(s, 2)
+                # 3) + the number of ways at least 3 specific outpoints are disconnected ** number of outpoints * comb(s, 3)
+                # etc. changing sign each time
+                # This is because (1) contains overlaps. Any condition with 2 or more disconnected outpoints is included in two
+                # specific outpoints.
+                # So we subtract (2), but that subtracting also contained overlaps and so on.
+
                 d = 0
                 for i in range(1, s + 1):
-                    # This part is the number of ways we could link these out-points such that less than or equal to i outpoints are disconnected
-                    # Explain the inclusion-exclusion principle
-                    # Then there are (s-i) "real" outpoints
-
-                    # (2 ** ((m - i) * s - 1)) is how many ways we can link our outpoints to the non-isolated points
-                    # math.comb(s, i) is how many ways the i isolated outpoints can be selected from the s total outpoints
-
-                    # ways outpoints can be linked to non-isolated points
+                    # l is the number of ways we could link these out-points such that i specific outpoints are disconnected
                     l = 0
-                    for x in range(min(m, min_parents), min(m - i, max_parents) + 1):
+
+                    for x in range(min(m - i, min_parents), min(m - i, max_parents) + 1):
+                        # the number of ways of choosing x parents from the (m-i) available non-outpoint nodes
                         l += math.comb(m - i, x)
 
                     sign = (-1) ** (i + 1)
 
                     if m - i != 0:
+                        # sign is for inclusion-exclusion
+                        # (l ** k) is (the number of ways at least i specific outpoints are disconnected) ** (number of outpoints)
+                        # math.comb(s, i) is the number of ways of picking i disconnected outpoints from s possible
                         d += sign * math.comb(s, i) * (l ** k)
 
-                if t ** k < d:
-                    print(t ** k, "<", d, f"({m}, {s}, {k}) t={t}")
                 c[m, s, k] = t ** k - d
 
     # a[n, k] is how many graphs there are with n nodes and k out-points, ignoring permutations.

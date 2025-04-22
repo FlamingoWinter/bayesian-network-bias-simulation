@@ -3,7 +3,29 @@ from typing import Dict
 
 import networkx as nx
 
-from backend.network.pgmpy_network import PgmPyNetwork, CharacteristicName
+from backend.network.pgmpy_network import PgmPyNetwork
+
+
+class CharacteristicName:
+    def __init__(self, name: str, values: list[str] = None, hml=False):
+        self.name = name
+        self.values = values
+        self.hml = hml
+
+    def set_number_values(self, num_values: int) -> 'CharacteristicName':
+        if self.hml:
+            self.values = ["V. High", "High", "Medium", "Low", "V. Low"]
+            if num_values == 2:
+                self.values = ["High", "Low"]
+            if num_values == 3:
+                self.values = ["High", "Medium", "Low"]
+            if num_values == 4:
+                self.values = ["Very High", "High", "Low", "Very Low"]
+        if num_values is not None:
+            self.values = self.values[:num_values]
+
+        return self
+
 
 protected_characteristics = [
     CharacteristicName("Gender", ["Male", "Female", "Non-Binary", "Other"]),
@@ -73,6 +95,7 @@ score_characteristic = CharacteristicName("Job Competency", ["Competent", "Not C
 def name_characteristics(network: PgmPyNetwork, seed=None) -> PgmPyNetwork:
     if seed:
         random.seed(seed)
+
     old_to_new: Dict[str, CharacteristicName] = {}
 
     graph = network.model.to_directed()

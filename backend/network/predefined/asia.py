@@ -48,9 +48,6 @@ def get_asia_network() -> BayesianNetwork:
 
     asia_model.add_cpds(cpd_asia, cpd_tub, cpd_smoke, cpd_lung, cpd_bronc, cpd_either, cpd_xray, cpd_dysp)
 
-    if not asia_model.check_model():
-        raise ValueError("The Bayesian Network is not valid!")
-
     asia_model.name = "asia"
 
     asia_network = PgmPyNetwork(asia_model,

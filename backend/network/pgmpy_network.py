@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import List, Dict
+from typing import List, Dict, Union
 
 import networkx as nx
 from networkx.readwrite.json_graph import node_link_data
@@ -11,28 +11,8 @@ from backend.api.responseTypes.network_response import NetworkResponse
 from backend.applicants.applicants import Applicants
 from backend.applicants.sample_applicants import sample_applicants
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
+from backend.network.naming_characteristics.name_characteristics import CharacteristicName
 from backend.utilities.time_function import time_function
-
-
-class CharacteristicName:
-    def __init__(self, name: str, values: List[str] = None, hml=False):
-        self.name = name
-        self.values = values
-        self.hml = hml
-
-    def set_number_values(self, num_values: int) -> 'CharacteristicName':
-        if self.hml:
-            self.values = ["V. High", "High", "Medium", "Low", "V. Low"]
-            if num_values == 2:
-                self.values = ["High", "Low"]
-            if num_values == 3:
-                self.values = ["High", "Medium", "Low"]
-            if num_values == 4:
-                self.values = ["Very High", "High", "Low", "Very Low"]
-        if num_values is not None:
-            self.values = self.values[:num_values]
-
-        return self
 
 
 class PgmPyNetwork(BayesianNetwork):
@@ -47,7 +27,7 @@ class PgmPyNetwork(BayesianNetwork):
                          score_characteristic=score_characteristic,
                          application_characteristics=application_characteristics)
 
-        self.renaming: Dict[str, str] = None
+        self.renaming: Union[Dict[str, str], None] = None
         self.inverse_renaming = None
         self.model: pgBN = model
         self.characteristics: Dict[str, Characteristic] = self.initialise_characteristics_from_model(model)

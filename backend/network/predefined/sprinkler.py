@@ -4,6 +4,8 @@ from pgmpy.models import BayesianNetwork as PgBn
 from backend.network.pgmpy_network import PgmPyNetwork
 
 
+# Adapted from an example in causality: https://books.google.co.uk/books?id=LLkhAwAAQBAJ&redir_esc=y
+
 def get_sprinkler_network() -> PgmPyNetwork:
     sprinkler_model = PgBn([
         ('cloudy', 'sprinkler'),

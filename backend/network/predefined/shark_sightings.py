@@ -31,9 +31,6 @@ def get_shark_sighting_network() -> PgmPyNetwork:
 
     shark_model.add_cpds(cpd_hot_weather, cpd_ice_cream_sales, cpd_beach_visits, cpd_shark_sightings)
 
-    if not shark_model.check_model():
-        raise ValueError("The Bayesian Network is not valid!")
-
     shark_model.name = "shark_sightings"
 
     shark_network = PgmPyNetwork(shark_model,

@@ -1,6 +1,6 @@
 import warnings
 from abc import ABC, abstractmethod
-from typing import Callable
+from typing import Callable, Any
 
 import numpy as np
 import pandas as pd
@@ -10,17 +10,23 @@ from backend.utilities.time_function import time_function
 
 
 class Mitigation(ABC):
+    proportion_hireds: np.array
+
     @property
     @abstractmethod
     def name(self) -> str:
         pass
 
-    @abstractmethod
-    def extract_hiring_proportions_from_training_and_holdout(self, score_train: pd.Series, groups_train: pd.Series,
-                                                             score_holdout: pd.Series,
-                                                             predicted_holdout: pd.Series,
-                                                             groups_holdout: pd.Series):
-        pass
+    def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series) -> pd.Series:
+        decisions = pd.Series(0, index=predicted_score.index)
+        group_order = sorted(groups.unique())
+        grouped = predicted_score.groupby(groups)
+
+        for i, group in enumerate(group_order):
+            group_scores = grouped.get_group(group)
+            decisions.loc[group_scores.index] = self.threshold_scores(group_scores, self.proportion_hireds[i])
+
+        return decisions
 
     @staticmethod
     def threshold_scores(scores: pd.Series, proportion_hired: float, randomise=True) -> pd.Series:
@@ -44,6 +50,26 @@ class Mitigation(ABC):
                 equal_threshold.loc[~equal_threshold.index.isin(equal_indices)] = False
 
         return (above_threshold | equal_threshold).astype(int)
+
+    def get_fnr_fpr_fdr_for_acc(self,
+                                score_holdout: pd.Series,
+                                predicted_holdout: pd.Series,
+                                groups: pd.Series) -> tuple[Any, Any, Any, Any, Any]:
+        decisions = self.convert_scores_to_decisions(predicted_holdout, groups)
+        false_positives = ((score_holdout == 0) & (decisions == 1)).groupby(groups).sum().sort_index()
+        false_negatives = ((score_holdout == 1) & (decisions == 0)).groupby(groups).sum().sort_index()
+        not_competent = (score_holdout == 0).groupby(groups).sum().sort_index()
+        competent = (score_holdout == 1).groupby(groups).sum().sort_index()
+        hired = (decisions == 1).groupby(groups).sum().sort_index()
+        not_hired = (decisions == 0).groupby(groups).sum().sort_index()
+
+        fpr = false_positives / not_competent
+        fnr = false_negatives / competent
+        fdr = false_positives / hired
+        f_o_r = false_negatives / not_hired
+        accuracy = (score_holdout == decisions).sum() / len(score_holdout)
+
+        return fpr, fnr, fdr, f_o_r, accuracy
 
     @staticmethod
     @time_function("Minimising Loss")
@@ -87,5 +113,14 @@ class Mitigation(ABC):
         return np.append(proportion_hired_partial, last_value)
 
     @abstractmethod
-    def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series) -> pd.Series:
+    def loss(self, proportion_hired: np.array, score_holdout: pd.Series, predicted_holdout: pd.Series,
+             groups: pd.Series) -> float:
         pass
+
+    def extract_hiring_proportions_from_training_and_holdout(self, score_train: pd.Series, groups_train: pd.Series,
+                                                             score_holdout: pd.Series,
+                                                             predicted_holdout: pd.Series,
+                                                             groups_holdout: pd.Series):
+        total_proportion_hired = score_train.sum() / len(score_train)
+        self.proportion_hireds = self.get_proportions_to_minimise_loss(
+            total_proportion_hired, score_holdout, predicted_holdout, groups_holdout, self.loss)

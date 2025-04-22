@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
@@ -26,3 +27,7 @@ class SatisfyProportionalParity(Mitigation):
         self.proportion_hired_by_group = {}
         for group, group_scores in score_train.groupby(groups_train):
             self.proportion_hired_by_group[group] = group_scores.sum() / len(group_scores)
+
+    def loss(self, proportion_hired: np.array, score_holdout: pd.Series, predicted_holdout: pd.Series,
+             groups: pd.Series) -> float:
+        pass

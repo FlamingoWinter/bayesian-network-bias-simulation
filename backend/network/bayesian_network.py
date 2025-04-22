@@ -5,28 +5,10 @@ import pymc as pm
 from pgmpy.models import BayesianNetwork as pgBN
 
 from backend.api.requestTypes.condition_request import ConditionRequest
-from backend.api.responseTypes.network_response import CharacteristicResponse, NetworkResponse, DistributionType
+from backend.api.responseTypes.network_response import NetworkResponse
+from backend.network.characteristic import Characteristic
 
 num_samples = 5000
-
-
-class Characteristic:
-    def __init__(self, name: str, distribution_type: DistributionType):
-        self.name: str = name
-        self.type: DistributionType = distribution_type
-        self.category_names: List[str] = []
-
-    def set_categories(self, category_names):
-        self.type = "categorical"
-        self.category_names = category_names
-
-    def to_characteristic_response(self, priorDistribution: Union[None,] = None) -> CharacteristicResponse:
-        return {
-            'name': self.name,
-            'type': self.type,
-            'categoryNames': self.category_names,
-            'priorDistribution': priorDistribution
-        }
 
 
 class BayesianNetwork(ABC):

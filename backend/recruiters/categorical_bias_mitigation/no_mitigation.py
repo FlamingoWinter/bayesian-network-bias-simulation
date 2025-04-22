@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
@@ -18,3 +19,7 @@ class NoMitigation(Mitigation):
                                                              predicted_holdout: pd.Series,
                                                              groups_holdout: pd.Series):
         self.proportion_hired = score_train.sum() / len(score_train)
+
+    def loss(self, proportion_hired: np.array, score_holdout: pd.Series, predicted_holdout: pd.Series,
+             groups: pd.Series) -> float:
+        pass
