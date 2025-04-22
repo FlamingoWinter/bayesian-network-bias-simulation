@@ -9,28 +9,9 @@ import numpy as np
 from backend.utilities.time_function import time_function
 
 
-def binomial_pmf(n, k, p):
-    comb = math.comb(n, k)  # n choose k
-    return comb * (p ** k) * ((1 - p) ** (n - k))
-
-
-def sample_bounded_binomial(n: int, p: float, bounds: Tuple[int, int]):
-    if n < bounds[0]:
-        return n
-    probabilities = np.array([binomial_pmf(n, k, p) for k in range(n + 1)])
-    for k in range(n + 1):
-        if not bounds[0] <= k <= bounds[1]:
-            probabilities[k] = 0
-
-    if sum(probabilities) == 0:
-        print("Probabilities = 0: n, p, bounds", n, p, bounds)
-
-    probabilities /= sum(probabilities)
-    return random.choices(range(n + 1), weights=probabilities, k=1)[0]
-
-
 @time_function("Generate random dag")
-def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.DiGraph:
+def generate_random_dag(nodes: int, parents_range: Tuple[int, int]) -> nx.DiGraph:
+    min_parents, max_parents = parents_range
     # We want a random item out of the space of all connected directed acyclic graphs.
 
     # The difficulty with approaches to generating "random" directed acyclic graphs is that while
@@ -51,7 +32,7 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
         # We sample from the enumeration of all graphs to determine the number of out-points our graph
         # should have in each layer.
         # Randomly sampling a graph given these values is trivial.
-        out_point_counts = calculate_out_point_counts(nodes, min_parents, max_parents)
+        out_point_counts = calculate_out_point_counts(nodes, parents_range)
 
         dag = nx.DiGraph()
 
@@ -88,9 +69,10 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
                 connections_by_out_point[random_out_point] += 1
 
             for out_point in out_points:
-                random.shuffle(node_list)
                 connections = sample_bounded_binomial(len(node_list), 0.5, (
                     max(min_parents, connections_by_out_point[out_point]), max_parents))
+
+                random.shuffle(node_list)
                 for node in node_list[:(connections - connections_by_out_point[out_point])]:
                     dag.add_edge(node, out_point)
 
@@ -100,11 +82,13 @@ def generate_random_dag(nodes: int, min_parents: int, max_parents: int) -> nx.Di
     return nx.relabel_nodes(dag, {node: str(node) for node in list(dag.nodes)})
 
 
-def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -> List[int]:
+def calculate_out_point_counts(nodes: int, parents_range: Tuple[int, int]) -> List[int]:
+    min_parents, max_parents = parents_range
     # An out-node is a node with no direct parents.
     # The enumeration considers that each DAG can be described by its out-points,
-    # their connections and other smaller DAGs. To list all DAGs it is sufficient to
-    # list them in order of the number of out-points on each layer.
+    # their connections and other smaller DAGs.
+
+    # To list all DAGs it is sufficient to list them in order of the number of out-points on each layer.
 
     # For a given number of nodes, by determining the number of DAGs with each number of out-points,
     # we can then sample that uniformly to determine the number of out-points our DAG should have.
@@ -220,12 +204,25 @@ def calculate_out_point_counts(nodes: int, min_parents: int, max_parents: int) -
     return out_point_counts
 
 
-def generate_random_unconnected_dag_gnp(connectedness: float, nodes: int):
-    directed_graph = nx.gnp_random_graph(nodes, connectedness, directed=True)
-    directed_acyclic_graph = nx.DiGraph([(u, v) for (u, v) in directed_graph.edges() if u < v])
+def binomial_pmf(n, k, p):
+    comb = math.comb(n, k)
+    return comb * (p ** k) * ((1 - p) ** (n - k))
 
-    return nx.relabel_nodes(directed_acyclic_graph, {node: str(node) for node in list(directed_acyclic_graph.nodes)})
+
+def sample_bounded_binomial(n: int, p: float, bounds: Tuple[int, int]):
+    if n < bounds[0]:
+        return n
+    probabilities = np.array([binomial_pmf(n, k, p) for k in range(n + 1)])
+    for k in range(n + 1):
+        if not bounds[0] <= k <= bounds[1]:
+            probabilities[k] = 0
+
+    if sum(probabilities) == 0:
+        print("Probabilities = 0: n, p, bounds", n, p, bounds)
+
+    probabilities /= sum(probabilities)
+    return random.choices(range(n + 1), weights=probabilities, k=1)[0]
 
 
 if __name__ == "__main__":
-    generate_random_dag(10, 2, 3)
+    generate_random_dag(10, (2, 3))

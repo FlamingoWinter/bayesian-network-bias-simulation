@@ -1,0 +1,41 @@
+create table public.recruiter_runs (
+  id serial not null,
+  run_id integer null,
+  recruiter text not null,
+  mitigation text not null,
+  accuracy double precision not null,
+  hired_rate double precision not null,
+  hired_rate_group_1 double precision not null,
+  hired_rate_group_2 double precision not null,
+  fpr double precision not null,
+  fpr_group_1 double precision not null,
+  fpr_group_2 double precision not null,
+  fnr double precision not null,
+  fnr_group_1 double precision not null,
+  fnr_group_2 double precision not null,
+  f_o_r double precision not null,
+  f_o_r_group_1 double precision not null,
+  f_o_r_group_2 double precision not null,
+  fdr double precision not null,
+  fdr_group_1 double precision not null,
+  fdr_group_2 double precision not null,
+  constraint recruiter_runs_pkey primary key (id),
+  constraint recruiter_runs_run_id_fkey foreign KEY (run_id) references runs (id) on delete CASCADE
+) TABLESPACE pg_default;
+
+create table public.runs (
+  id serial not null,
+  condition integer not null,
+  graph jsonb not null,
+  competent_rate double precision not null,
+  proportion_group_1 double precision not null,
+  competent_rate_group_1 double precision not null,
+  competent_rate_group_2 double precision not null,
+  protected_score_mut_inf double precision not null,
+  protected_characteristic text not null,
+  application_characteristics text[] not null,
+  score_characteristic text not null,
+  date timestamp with time zone null,
+  run_duration time without time zone null,
+  constraint runs_pkey primary key (id)
+) TABLESPACE pg_default;

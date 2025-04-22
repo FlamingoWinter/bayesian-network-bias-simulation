@@ -14,20 +14,13 @@ from backend.entropy.entropy import categorical_entropy_of_array
 from backend.network.pgmpy_network import PgmPyNetwork
 
 
-def get_engine() -> Engine:
-    load_dotenv()
-
-    return create_engine(
-        f'postgresql://postgres:{os.getenv("DB_PASSWORD")}@db.wsfskureutearqgkfdeq.supabase.co:5432/postgres')
-
-
 def save_run_to_db(engine: Engine,
-                   network: PgmPyNetwork, candidate_group: Applicants,
+                   network: PgmPyNetwork, applicants: Applicants,
                    protected_characteristic_name: str, condition: int, run_duration: timedelta) -> int:
     graph = json.dumps(network.to_network_response())
 
-    protected = candidate_group.characteristic_instances[protected_characteristic_name]
-    score = candidate_group.characteristic_instances[network.score_characteristic]
+    protected = applicants.characteristic_instances[protected_characteristic_name]
+    score = applicants.characteristic_instances[network.score_characteristic]
 
     proportion_competent = score.sum() / len(score)
     proportion_group_1 = 1 - (protected.sum() / len(score))
@@ -54,19 +47,9 @@ def save_run_to_db(engine: Engine,
         "run_duration": run_duration,
     }])
 
-    with engine.connect() as conn:
-        columns = ", ".join(data.columns)
-        placeholders = ", ".join([f":{col}" for col in data.columns])
-        result = conn.execute(
-            text(f"INSERT INTO runs ({columns}) VALUES ({placeholders}) RETURNING id"),
-            data.to_dict(orient="records")
-        )
-        conn.commit()
-        inserted_ids = [row[0] for row in result]
+    run_id = insert(engine, "runs", data)
 
-    print("Inserted IDs:", inserted_ids)
-
-    return inserted_ids[0]
+    return run_id
 
 
 def save_recruiter_run_to_db(engine: Engine,
@@ -94,16 +77,28 @@ def save_recruiter_run_to_db(engine: Engine,
             "fdr_group_2": mitigation_bias_analysis.by_group["2"].false_discovery_rate,
         }])
 
-        with engine.connect() as conn:
-            columns = ", ".join(data.columns)
-            placeholders = ", ".join([f":{col}" for col in data.columns])
-            result = conn.execute(
-                text(f"INSERT INTO recruiter_runs ({columns}) VALUES ({placeholders}) RETURNING id"),
-                data.to_dict(orient="records")
-            )
-            conn.commit()
-            inserted_ids = [row[0] for row in result]
-
-        print("Inserted IDs:", inserted_ids)
+        insert(engine, "recruiter_runs", data)
 
     return ""
+
+
+def insert(engine: Engine, table_name: str, data: pd.DataFrame):
+    with engine.connect() as conn:
+        columns = ", ".join(data.columns)
+        placeholders = ", ".join([f":{col}" for col in data.columns])
+        result = conn.execute(
+            text(f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders}) RETURNING id"),
+            data.to_dict(orient="records")
+        )
+        conn.commit()
+        inserted_ids = [row[0] for row in result]
+
+    print("Inserted IDs:", inserted_ids)
+    return inserted_ids[0]
+
+
+def get_engine() -> Engine:
+    load_dotenv()
+
+    return create_engine(
+        f'postgresql://postgres:{os.getenv("DB_PASSWORD")}@db.wsfskureutearqgkfdeq.supabase.co:5432/postgres')
