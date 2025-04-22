@@ -15,7 +15,7 @@
 	import { onMount } from 'svelte';
 	import type { Network } from '../../types/network';
 
-	export let network: Network | undefined;
+	export let network: Network | undefined = undefined;
 	const drawerStore = getDrawerStore();
 
 	onMount(() => {

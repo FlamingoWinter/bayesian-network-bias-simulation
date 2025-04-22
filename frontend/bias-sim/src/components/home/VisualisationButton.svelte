@@ -1,3 +1,5 @@
+<!--Adapted from a ui element from here https://uiverse.io/nikk7007/chatty-bulldog-58-->
+
 <script lang="ts">
 	export let center: boolean = false;
 </script>

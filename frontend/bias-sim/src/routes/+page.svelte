@@ -18,7 +18,6 @@
 
 	onMount(async () => {
 		network = await (await fetch('/example_network.json')).json() as unknown as Network;
-		console.log(network);
 		initialised = true;
 	});
 </script>

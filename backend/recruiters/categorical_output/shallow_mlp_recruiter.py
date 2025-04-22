@@ -3,9 +3,9 @@ from typing import List
 import pandas as pd
 import torch
 from torch import nn, optim
-from torch.utils.data import TensorDataset, DataLoader
 
 from backend.recruiters.categorical_bias_mitigation.mitigation import Mitigation
+from backend.recruiters.categorical_output.train_nn_model import train_nn_model
 from backend.recruiters.recruiter import Recruiter
 
 
@@ -44,26 +44,7 @@ class ShallowMLPRecruiter(Recruiter):
         if self.model is None:
             self.model = ShallowMLP(len(application_train.columns), self.width, 1)
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
-
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(device)
-
-        X_train = torch.tensor(application_train.values, dtype=torch.float32)
-        y_train = torch.tensor(score_train.values, dtype=torch.float32).unsqueeze(1)
-        dataset = TensorDataset(X_train, y_train)
-        dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True)
-
-        loss_function = nn.BCEWithLogitsLoss()
-
-        self.model.train()
-        for _ in range(self.epochs):
-            for batch_X, batch_y in dataloader:
-                batch_X, batch_y = batch_X.to(device), batch_y.to(device)
-                self.optimiser.zero_grad()
-                output = self.model(batch_X)
-                loss = loss_function(output, batch_y)
-                loss.backward()
-                self.optimiser.step()
+        train_nn_model(self.model, self.optimiser, application_train, score_train, self.batch_size, self.epochs)
 
     def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
         self.model.eval()

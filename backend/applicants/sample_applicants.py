@@ -2,13 +2,18 @@ import warnings
 from typing import cast
 
 import pymc as pm
+import xarray as xr
+from arviz import InferenceData
 from pgmpy.sampling import BayesianModelSampling
 
 from backend.applicants.applicants import Applicants
 from backend.network.bayesian_network import BayesianNetwork, num_samples
 from backend.network.pgmpy_network import PgmPyNetwork
-from backend.type_extensions.prior_trace import PriorTrace
 from backend.utilities.time_function import time_function
+
+
+class PriorTrace(InferenceData):
+    prior: xr.Dataset
 
 
 @time_function("Generating applicants")

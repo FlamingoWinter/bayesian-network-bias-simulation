@@ -15,7 +15,7 @@
 <script lang="ts">
 
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
-	import { getModalStore, ProgressRadial } from '@skeletonlabs/skeleton';
+	import { getModalStore, type ModalSettings, ProgressRadial } from '@skeletonlabs/skeleton';
 	import NewNetworkModal from './modals/new_network_modal/NewNetworkModal.svelte';
 	import NameNetworkModal from './modals/name_network_modal/NameNetworkModal.svelte';
 	import SimulateModal from './modals/simulate_modal/SimulateModal.svelte';
@@ -43,6 +43,7 @@
 			{ ref: NameNetworkModal });
 
 
+	let modal: ModalSettings;
 	$: modal = {
 		type: 'component',
 		component: modalComponent,

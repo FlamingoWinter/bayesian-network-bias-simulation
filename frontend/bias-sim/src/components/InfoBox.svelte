@@ -74,7 +74,6 @@
 
 	let loading = false;
 	let nodeName = '';
-	let paragraph = '';
 
 	export let network: Network;
 	export let conditions: Record<string, number>;
@@ -130,7 +129,6 @@
 
 		exitDialog = () => {
 			nodeName = '';
-			paragraph = '';
 			isInfoBoxVisible = false;
 		};
 	});

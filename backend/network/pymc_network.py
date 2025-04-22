@@ -2,14 +2,18 @@ from typing import List, cast
 
 import pymc as pm
 import xarray as xr
+from arviz import InferenceData
 from networkx.readwrite.json_graph import node_link_data
 
 from backend.api.requestTypes.condition_request import ConditionRequest
 from backend.api.responseTypes.condition_response import ConditionResponse
 from backend.api.responseTypes.network_response import DistributionType, NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
-from backend.type_extensions.prior_trace import PosteriorTrace
 from backend.utilities.time_function import time_function
+
+
+class PosteriorTrace(InferenceData):
+    posterior: xr.Dataset
 
 
 class PyMcNetwork(BayesianNetwork):

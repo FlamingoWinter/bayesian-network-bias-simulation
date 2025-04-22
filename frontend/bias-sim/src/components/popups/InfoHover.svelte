@@ -2,7 +2,6 @@
 	import { InfoLg } from 'svelte-bootstrap-icons';
 	import { popup } from '@skeletonlabs/skeleton';
 
-	// The popup itself needs to be declared in ModalPopups
 	export let target: string;
 	export let link: string | undefined = undefined;
 </script>

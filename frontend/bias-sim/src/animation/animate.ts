@@ -1,4 +1,4 @@
-// From https://jasperclarke.com/blog/gsap-svelte
+// Not all my code. Modified from https://jasperclarke.com/blog/gsap-svelte
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

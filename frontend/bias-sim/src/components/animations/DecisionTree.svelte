@@ -228,7 +228,6 @@
 				{/each}
 			{/if}
 
-			<!-- Lines -->
 			{#each links as { x1, y1, x2, y2, isLeft }}
 				<line x1={x1} y1={y1} x2={x2} y2={y2} stroke="gray" stroke-width="2" />
 				<g transform={`translate(${(x1 + x2) / 2}, ${(y1 + y2) / 2})`}>
@@ -245,7 +244,6 @@
 				</g>
 			{/each}
 
-			<!-- Nodes -->
 			{#each nodes as { x, y, label }}
 				<g transform={`translate(${x}, ${y})`}>
 					<foreignObject x="-200" y="-40" width="400" height="400">

@@ -40,7 +40,6 @@
 	export let posteriorDistributions: Record<string, number[]>;
 
 	let mounted = false;
-	let axisBottom: SVGGElement;
 	let areaPath: SVGPathElement;
 	let strokePath: SVGPathElement;
 	let probabilityType: ProbabilityType;
@@ -80,8 +79,6 @@
 
 	$: area = d3.area<{ x: number, y: number }>()
 		.curve(d3.curveBasis).x(d => x(d.x)).y0(height).y1(d => y(d.y));
-	$: line = d3.line<{ x: number, y: number }>()
-		.curve(d3.curveBasis).x(d => x(d.x)).y(d => y(d.y));
 
 	$: median = d3.median(distribution)!;
 

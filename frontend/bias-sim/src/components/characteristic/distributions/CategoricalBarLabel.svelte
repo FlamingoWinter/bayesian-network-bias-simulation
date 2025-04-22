@@ -18,10 +18,4 @@
 	$: belowBarY = y(bar.value) + 11;
 	$: aboveBarY = y(bar.value) - 4;
 	$: isBelowBar = (belowBarY < y(0) - 5);
-
-	function calculateBarY(barValue: number) {
-		const belowBarY = y(barValue) + 11;
-		const aboveBarY = y(barValue) - 4;
-		return (belowBarY < y(0) - 5) ? belowBarY : aboveBarY;
-	}
 </script>

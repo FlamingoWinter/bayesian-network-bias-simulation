@@ -24,7 +24,13 @@ from backend.recruiters.categorical_bias_mitigation.approach_predictive_parity.o
 from backend.recruiters.categorical_bias_mitigation.no_mitigation import NoMitigation
 from backend.recruiters.categorical_bias_mitigation.satisfy_demographic_parity import SatisfyDemographicParity
 from backend.recruiters.categorical_bias_mitigation.satisfy_proportional_parity import SatisfyProportionalParity
+from backend.recruiters.categorical_output.bayesian_recruiter import BayesianRecruiter
+from backend.recruiters.categorical_output.deep_mlp_recruiter import DeepMLPRecruiter
+from backend.recruiters.categorical_output.encoder_only_transformer_recruiter import EncoderOnlyTransformerRecruiter
+from backend.recruiters.categorical_output.logistic_regression_recruiter import LogisticRegressionRecruiter
 from backend.recruiters.categorical_output.random_forest_recruiter import RandomForestRecruiter
+from backend.recruiters.categorical_output.shallow_mlp_recruiter import ShallowMLPRecruiter
+from backend.recruiters.categorical_output.svm_recruiter import SVMRecruiter
 from backend.recruiters.recruiter import Recruiter
 from backend.simulate import simulate
 
@@ -44,24 +50,19 @@ if __name__ == "__main__":
              OptimiseForFOREquality(),
              ]),
 
-        # approx 40s - 2 minutes
+        BayesianRecruiter(
+            [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+        ShallowMLPRecruiter(
+            [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+        DeepMLPRecruiter(
+            [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+        EncoderOnlyTransformerRecruiter(
+            [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+        LogisticRegressionRecruiter(
+            [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
+        SVMRecruiter(
+            [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
 
-        # RandomForestRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-        # BayesianRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-        # ShallowMLPRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-        # DeepMLPRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-        # EncoderOnlyTransformerRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-        # LogisticRegressionRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-        # SVMRecruiter(
-        #     [NoMitigation(), SatisfyDemographicParity(), SatisfyProportionalParity()]),
-
-        # approx 20-40 seconds
     ]
 
     bias_by_recruiter = simulate(candidate_group, recruiters, protected_characteristic)
