@@ -51,7 +51,7 @@
 	import { applyForceSimulation } from '../animation/forceSimulation';
 	import { applyZoom } from '../animation/zoom';
 	import type { Network, Node } from '../types/network';
-	import { apiRequest } from '../utiliites/api';
+	import { apiRequest } from '../utilities/api';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { deconditionAll } from '../stores/functions';
 

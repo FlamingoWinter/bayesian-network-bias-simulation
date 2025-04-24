@@ -41,8 +41,7 @@ def assign_cpds(model, graph: nx.DiGraph, num_categories_by_node: dict[str, int]
                 node_probabilities_by_node[node] = calculate_node_probabilities(predecessors,
                                                                                 node_probabilities_by_node,
                                                                                 cpd, predecessor_values, num_categories)
-
-                h_y = categorical_entropy_of_probabilities(np.array(node_probabilities_by_node[node].values()))
+                h_y = categorical_entropy_of_probabilities(np.array(list(node_probabilities_by_node[node].values())))
                 h_y_given_predecessors = get_entropy_given_predecessors(predecessors,
                                                                         node_probabilities_by_node,
                                                                         cpd, predecessor_values)
@@ -82,10 +81,10 @@ def calculate_node_probabilities(predecessors_of_node: list[str],
         if len(predecessors_of_node) == 0:
             probabilities[category] = float(node_cpd[0][category])
         else:
-            for (predecessor_value_index, predecessor_values_of_node) in enumerate(predecessor_values_of_node):
+            for (predecessor_value_index, predecessor_values) in enumerate(predecessor_values_of_node):
                 # cum_prod = p(a) p(b) ...
                 cum_prod = 1
-                for (predecessor, predecessor_value) in zip(predecessors_of_node, predecessor_values_of_node):
+                for (predecessor, predecessor_value) in zip(predecessors_of_node, predecessor_values):
                     cum_prod *= node_probabilities_by_node[predecessor][predecessor_value]
                 probabilities[category] += cum_prod * node_cpd[predecessor_value_index][
                     category]

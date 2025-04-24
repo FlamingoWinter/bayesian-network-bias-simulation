@@ -58,7 +58,7 @@
 
 <script lang="ts">
 	import { ProgressRadial, RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-	import { toTitleCase } from '../utiliites/toTitleCase.js';
+	import { toTitleCase } from '../utilities/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';

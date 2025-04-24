@@ -6,7 +6,7 @@
 </text>
 
 <script lang="ts">
-	import { toTitleCase } from '../../utiliites/toTitleCase.js';
+	import { toTitleCase } from '../../utilities/toTitleCase.js';
 
 	export let nodeId: string;
 	export let rectHeight: number;

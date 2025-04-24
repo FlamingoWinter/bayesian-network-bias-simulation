@@ -144,7 +144,7 @@
 
 	import { fade } from 'svelte/transition';
 
-	import { awaitSocketClose, awaitSocketOpen } from '../../../utiliites/socket';
+	import { awaitSocketClose, awaitSocketOpen } from '../../../utilities/socket';
 
 
 	import { getModalStore, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
@@ -156,7 +156,7 @@
 	import InfoHover from '../../popups/InfoHover.svelte';
 	import ModalPopups from '../../popups/ModalPopups.svelte';
 
-	import { webSocketUrl } from '../../../utiliites/api';
+	import { webSocketUrl } from '../../../utilities/api';
 	import { invalidateNetwork, loadProcess } from '../../../stores/functions';
 	import { sessionKey } from '../../../stores/store';
 

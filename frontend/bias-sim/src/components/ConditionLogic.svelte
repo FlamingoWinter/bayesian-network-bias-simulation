@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { conditioned, conditions, posteriorDistributions } from '../stores/store';
-	import { apiRequest } from '../utiliites/api';
+	import { apiRequest } from '../utilities/api';
 	import { condition, deconditionAll } from '../stores/functions';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 

@@ -5,10 +5,10 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from backend.api.cache import from_cache, get_network_from_cache
-from backend.api.requestTypes.condition_request import ConditionRequest
-from backend.api.responseTypes.bias_response import \
+from backend.api.request_types.condition_request import ConditionRequest
+from backend.api.response_types.bias_response import \
     BiasResponse
-from backend.api.responseTypes.network_response import NetworkResponse
+from backend.api.response_types.network_response import NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork
 from backend.utilities.time_function import time_function
 

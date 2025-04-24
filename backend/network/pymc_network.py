@@ -5,9 +5,9 @@ import xarray as xr
 from arviz import InferenceData
 from networkx.readwrite.json_graph import node_link_data
 
-from backend.api.requestTypes.condition_request import ConditionRequest
-from backend.api.responseTypes.condition_response import ConditionResponse
-from backend.api.responseTypes.network_response import DistributionType, NetworkResponse
+from backend.api.request_types.condition_request import ConditionRequest
+from backend.api.response_types.condition_response import ConditionResponse
+from backend.api.response_types.network_response import DistributionType, NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork, Characteristic, num_samples
 from backend.utilities.time_function import time_function
 
@@ -45,6 +45,14 @@ class PyMcNetwork(BayesianNetwork):
 
             self.characteristics[characteristic] = Characteristic(characteristic, distribution_type)
         return self.characteristics
+
+    def sample_applicants(self, count=num_samples):
+        with self.model:
+            warnings.simplefilter("ignore", category=RuntimeWarning)
+            prior_trace: PriorTrace = cast(PriorTrace, pm.sample_prior_predictive(count))
+            warnings.simplefilter("default", category=RuntimeWarning)
+
+        return Applicants(self, prior_trace.prior.to_dataframe())
 
     def to_network_response(self) -> NetworkResponse:
         pass

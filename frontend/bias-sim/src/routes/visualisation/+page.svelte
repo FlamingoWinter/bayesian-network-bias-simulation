@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { biasAnalysis, sessionKey } from '../../stores/store';
 	import type { Network } from '../../types/network';
-	import { apiRequest, apiUrl } from '../../utiliites/api';
+	import { apiRequest, apiUrl } from '../../utilities/api';
 	import ConditionLogic from '../../components/ConditionLogic.svelte';
 	import { deconditionAll, invalidateBias, invalidateNetwork } from '../../stores/functions';
 	import * as d3 from 'd3';

@@ -5,7 +5,7 @@ import pymc as pm
 from django.core.cache import cache as django_cache
 from pgmpy.models import BayesianNetwork as PgBn
 
-from backend.api.responseTypes.network_response import NetworkResponse
+from backend.api.response_types.network_response import NetworkResponse
 from backend.network.bayesian_network import BayesianNetwork
 
 

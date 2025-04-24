@@ -5,7 +5,7 @@ from scipy.stats import rv_discrete
 
 from backend.api.api.consumers.generic_consumer import GenericConsumer
 from backend.api.cache import cache_network_and_generate_applicants
-from backend.api.requestTypes.generate_network_request import RandomNetworkRequest, new_random_network_request
+from backend.api.request_types.generate_network_request import RandomNetworkRequest, new_random_network_request
 from backend.network.generation.generate_categorical_network import generate_random_categorical_network
 from backend.network.pgmpy_network import PgmPyNetwork
 from backend.network.predefined.random_seeded import get_random_seeded_network, get_named_seeded_network

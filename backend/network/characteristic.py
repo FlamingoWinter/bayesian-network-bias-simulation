@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from backend.api.responseTypes.network_response import CharacteristicResponse, DistributionType
+from backend.api.response_types.network_response import CharacteristicResponse, DistributionType
 
 
 class Characteristic:

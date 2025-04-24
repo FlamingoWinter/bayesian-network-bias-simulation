@@ -133,7 +133,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 
-	import { awaitSocketClose, awaitSocketOpen } from '../../../utiliites/socket';
+	import { awaitSocketClose, awaitSocketOpen } from '../../../utilities/socket';
 
 
 	import {
@@ -149,7 +149,7 @@
 	import Square from 'svelte-bootstrap-icons/lib/Square.svelte';
 
 
-	import { webSocketUrl } from '../../../utiliites/api';
+	import { webSocketUrl } from '../../../utilities/api';
 	import { deconditionAll, invalidateBias, loadProcess } from '../../../stores/functions';
 	import { sessionKey } from '../../../stores/store';
 	import ModalDivider from '../ModalDivider.svelte';

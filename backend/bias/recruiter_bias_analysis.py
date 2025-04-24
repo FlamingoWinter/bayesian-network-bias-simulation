@@ -1,6 +1,6 @@
 import pandas as pd
 
-from backend.api.responseTypes.recruiter_bias_analysis_response import \
+from backend.api.response_types.recruiter_bias_analysis_response import \
     RecruiterBiasAnalysisResponse
 from backend.applicants.applicants import Applicants
 from backend.bias.mitigation_bias_analysis import MitigationBiasAnalysis

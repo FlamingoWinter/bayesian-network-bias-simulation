@@ -4,11 +4,10 @@ from typing import List
 
 from backend.api.api.consumers.generic_consumer import GenericConsumer
 from backend.api.cache import cache, get_network_from_cache
-from backend.api.requestTypes.simulate_request import new_simulate_request, SimulateRequest
-from backend.api.responseTypes.bias_response import \
+from backend.api.request_types.simulate_request import new_simulate_request, SimulateRequest
+from backend.api.response_types.bias_response import \
     BiasResponse
 from backend.applicants.applicants import Applicants
-from backend.applicants.sample_applicants import sample_applicants
 from backend.network.bayesian_network import BayesianNetwork
 from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_and_fpr_equality import \
     OptimiseForFNRAndFPREquality
@@ -48,7 +47,7 @@ class SimulateConsumer(GenericConsumer):
                       bytes_data: Any = None) -> None:
         request: SimulateRequest = new_simulate_request(**json.loads(text_data))
         network: BayesianNetwork = get_network_from_cache(self.session_key)
-        candidate_group: Applicants = sample_applicants(network, request.candidates_to_generate * 2)
+        candidate_group: Applicants = network.sample_applicants(request.candidates_to_generate * 2)
 
         await self.send_and_flush(f"{request.candidates_to_generate} Candidates Generated")
 

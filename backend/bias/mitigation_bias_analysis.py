@@ -2,7 +2,7 @@ from typing import Dict, Callable
 
 import pandas as pd
 
-from backend.api.responseTypes.recruiter_bias_analysis_response import \
+from backend.api.response_types.recruiter_bias_analysis_response import \
     RecruiterBiasAnalysisResponse
 from backend.bias.group_prediction_information import GroupPredictionInformation
 from backend.network.bayesian_network import Characteristic

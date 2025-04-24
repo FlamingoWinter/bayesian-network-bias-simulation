@@ -1,5 +1,4 @@
 from backend.network.generation.generate_categorical_network import generate_random_categorical_network
-from backend.network.naming_characteristics.name_characteristics import name_characteristics
 from backend.network.pgmpy_network import CharacteristicName, PgmPyNetwork
 
 
@@ -26,4 +25,4 @@ def get_named_seeded_network():
         seed=967
     )
     network.score_characteristic = "19"
-    return name_characteristics(network, seed=957)
+    return network.name_characteristics(seed=957)

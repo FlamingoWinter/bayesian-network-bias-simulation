@@ -1,11 +1,3 @@
-import random
-from typing import Dict
-
-import networkx as nx
-
-from backend.network.pgmpy_network import PgmPyNetwork
-
-
 class CharacteristicName:
     def __init__(self, name: str, values: list[str] = None, hml=False):
         self.name = name
@@ -90,67 +82,3 @@ affected_characteristics = [
 ]
 
 score_characteristic = CharacteristicName("Job Competency", ["Competent", "Not Competent"])
-
-
-def name_characteristics(network: PgmPyNetwork, seed=None) -> PgmPyNetwork:
-    if seed:
-        random.seed(seed)
-
-    old_to_new: Dict[str, CharacteristicName] = {}
-
-    graph = network.model.to_directed()
-
-    # 1) Characteristics affected (directly or indirectly) by job competency should be affected_characteristics.
-    score_descendants = nx.descendants(graph, network.score_characteristic)
-    affected_characteristic_choices = random.sample(affected_characteristics, len(score_descendants))
-    for score_descendant, affected_characteristic in zip(score_descendants,
-                                                         affected_characteristic_choices):
-        old_to_new[score_descendant] = affected_characteristic
-
-    # 2) Characteristics affected by nothing should be protected.
-    nodes_without_ancestors = [node for node, deg in graph.in_degree() if deg == 0]
-    if hide_protected_characteristics:
-        protected_characteristic_choices = [
-            CharacteristicName(f"Protected Characteristic {i + 1}", ["1", "2", "3", "4", "5"]) for i in
-            range(len(nodes_without_ancestors))]
-    else:
-        protected_characteristic_choices = random.sample(protected_characteristics, len(nodes_without_ancestors))
-
-    for node_without_ancestor, protected_characteristic in zip(nodes_without_ancestors,
-                                                               protected_characteristic_choices):
-        old_to_new[node_without_ancestor] = protected_characteristic
-
-    # 3) Direct predecessors of job competency should be affector characteristics
-
-    direct_predecessors = list(graph.predecessors(network.score_characteristic))
-    affector_characteristic_choices = random.sample(affector_characteristics, len(direct_predecessors))
-    for direct_predecessor, affector_characteristic in zip(direct_predecessors,
-                                                           affector_characteristic_choices):
-        old_to_new[direct_predecessor] = affector_characteristic
-
-    # 4) Direct Children of Protected Characteristics should be Intermediary
-    # Other Characteristics should be Intermediary
-    direct_children = list(set([child for p in nodes_without_ancestors for child in graph.successors(p)]))
-    unnamed_nodes = [node for node in graph.nodes if node != network.score_characteristic
-                     and node not in score_descendants
-                     and node not in nodes_without_ancestors
-                     and node not in direct_predecessors
-                     and node not in direct_children]
-
-    nodes_to_be_intermediary = list(set(direct_children + unnamed_nodes))
-
-    intermediary_characteristic_choices = random.sample(intermediary_characteristics, len(nodes_to_be_intermediary))
-    for node_to_be_intermediary, intermediary_characteristic in zip(nodes_to_be_intermediary,
-                                                                    intermediary_characteristic_choices):
-        old_to_new[node_to_be_intermediary] = intermediary_characteristic
-
-    # 5) Score Characteristic should be job competency.
-    old_to_new[network.score_characteristic] = score_characteristic
-
-    # -----------------------------------------------------------------------------------------------------
-
-    for old_name, characteristic_name in old_to_new.items():
-        characteristic_name.set_number_values(len(network.characteristics[old_name].category_names))
-
-    network.rename_nodes(old_to_new)
-    return network

@@ -1,7 +1,6 @@
 from typing import List
 
 from backend.applicants.applicants import Applicants
-from backend.applicants.sample_applicants import sample_applicants
 from backend.bias.print_bias_summary import print_bias_summary
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.generation.generate_categorical_network import generate_random_categorical_network
@@ -37,7 +36,7 @@ from backend.simulate import simulate
 if __name__ == "__main__":
     network: BayesianNetwork = generate_random_categorical_network(20)
 
-    candidate_group: Applicants = sample_applicants(network, 10_000)
+    candidate_group: Applicants = network.sample_applicants(10_000)
 
     protected_characteristic = list(network.characteristics.values())[0]
 

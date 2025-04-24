@@ -2,13 +2,19 @@ from abc import abstractmethod, ABC
 from typing import List, Dict, Union, Literal
 
 import pymc as pm
+import xarray as xr
+from arviz import InferenceData
 from pgmpy.models import BayesianNetwork as pgBN
 
-from backend.api.requestTypes.condition_request import ConditionRequest
-from backend.api.responseTypes.network_response import NetworkResponse
+from backend.api.request_types.condition_request import ConditionRequest
+from backend.api.response_types.network_response import NetworkResponse
 from backend.network.characteristic import Characteristic
 
 num_samples = 5000
+
+
+class PriorTrace(InferenceData):
+    prior: xr.Dataset
 
 
 class BayesianNetwork(ABC):
@@ -43,6 +49,10 @@ class BayesianNetwork(ABC):
 
     @abstractmethod
     def sample_conditioned(self) -> Dict[str, List[float]]:
+        pass
+
+    @abstractmethod
+    def sample_applicants(self, count=num_samples):
         pass
 
     @abstractmethod
