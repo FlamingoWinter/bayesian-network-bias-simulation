@@ -1,6 +1,6 @@
 import warnings
 from abc import ABC, abstractmethod
-from typing import Callable, Any
+from typing import Callable, Any, Union
 
 import numpy as np
 import pandas as pd
@@ -17,14 +17,17 @@ class Mitigation(ABC):
     def name(self) -> str:
         pass
 
-    def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series) -> pd.Series:
+    def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series,
+                                    proportion_hireds: Union[np.array, None] = None) -> pd.Series:
+        if proportion_hireds is None:
+            proportion_hireds = self.proportion_hireds
         decisions = pd.Series(0, index=predicted_score.index)
         group_order = sorted(groups.unique())
         grouped = predicted_score.groupby(groups)
 
         for i, group in enumerate(group_order):
             group_scores = grouped.get_group(group)
-            decisions.loc[group_scores.index] = self.threshold_scores(group_scores, self.proportion_hireds[i])
+            decisions.loc[group_scores.index] = self.threshold_scores(group_scores, proportion_hireds[i])
 
         return decisions
 
@@ -54,8 +57,9 @@ class Mitigation(ABC):
     def get_fnr_fpr_fdr_for_acc(self,
                                 score_holdout: pd.Series,
                                 predicted_holdout: pd.Series,
-                                groups: pd.Series) -> tuple[Any, Any, Any, Any, Any]:
-        decisions = self.convert_scores_to_decisions(predicted_holdout, groups)
+                                groups: pd.Series,
+                                proportion_hireds: np.array) -> tuple[Any, Any, Any, Any, Any]:
+        decisions = self.convert_scores_to_decisions(predicted_holdout, groups, proportion_hireds)
         false_positives = ((score_holdout == 0) & (decisions == 1)).groupby(groups).sum().sort_index()
         false_negatives = ((score_holdout == 1) & (decisions == 0)).groupby(groups).sum().sort_index()
         not_competent = (score_holdout == 0).groupby(groups).sum().sort_index()
@@ -79,7 +83,6 @@ class Mitigation(ABC):
             predicted_holdout: pd.Series,
             groups_holdout: pd.Series,
             loss: Callable[[np.array, pd.Series, pd.Series, pd.Series], float]
-            # proportion_hired, score_holdout, predicted_holdout, groups
     ):
         def loss_function(proportion_hired_partial):
             last_value = (total_proportion_hired - np.sum(proportion_hired_partial * group_proportions[:-1])

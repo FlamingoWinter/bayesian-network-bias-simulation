@@ -24,7 +24,12 @@ def generate_random_categorical_network(nodes: int = 50, parents_range: Tuple[in
     graph = generate_random_dag(nodes, parents_range)
     num_categories_by_node: dict[str, int] = {node: category_number_dist.rvs() for node in list(graph.nodes)}
 
-    score_characteristic = choose_score(graph)
+    try:
+        score_characteristic = choose_score(graph)
+    except:
+        return generate_random_categorical_network(nodes, parents_range, mutual_information_range, category_number_dist,
+                                                   (None if seed is None else seed + 1))
+
     num_categories_by_node[score_characteristic] = 2
 
     model = PgBn(ebunch=graph)

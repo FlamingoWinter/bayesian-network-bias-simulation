@@ -1,3 +1,5 @@
+from typing import Union
+
 import numpy as np
 import pandas as pd
 
@@ -11,7 +13,8 @@ class SatisfyProportionalParity(Mitigation):
     def name(self) -> str:
         return "Satisfy Proportional Parity"
 
-    def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series) -> pd.Series:
+    def convert_scores_to_decisions(self, predicted_score: pd.Series, groups: pd.Series,
+                                    proportion_hireds: Union[np.array, None] = None) -> pd.Series:
         decisions = pd.Series(0, index=predicted_score.index)
 
         for group, group_scores in predicted_score.groupby(groups):
