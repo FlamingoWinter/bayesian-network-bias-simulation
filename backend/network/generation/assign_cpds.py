@@ -13,7 +13,7 @@ from backend.entropy.entropy import categorical_entropy_of_probabilities
 def assign_cpds(model, graph: nx.DiGraph, num_categories_by_node: dict[str, int],
                 mutual_information_range: Tuple[float, float] = (0.6, 0.9), alpha: float = 1):
     if alpha < 1e-5:
-        raise "Could not assign cpds"
+        raise Exception("Could not assign cpds")
 
     node_probabilities_by_node: dict[str, dict[int, float]] = {}
     cpds = []

@@ -13,7 +13,7 @@ def choose_score(graph: nx.DiGraph, more_than_five_descendants=False) -> str:
                         and (len(nx.descendants(graph, node)) > 5 or not more_than_five_descendants)]
 
     if len(score_candidates) == 0:
-        raise "choose_score failed"
+        raise Exception("choose_score failed")
     else:
         score_characteristic = random.sample(score_candidates, 1)[0]
     return score_characteristic
