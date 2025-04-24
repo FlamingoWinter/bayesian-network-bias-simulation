@@ -33,10 +33,9 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.13",
-    "@sveltejs/adapter-static": "^3.0.8",
     "d3": "^7.9.0",
-    "gsap": "^3.12.7",
     "jsnetworkx": "^0.3.4",
-    "svelte-bootstrap-icons": "^3.1.2"
+    "svelte-bootstrap-icons": "^3.1.2",
+    "gsap": "^3.12.7"
   }
 }
