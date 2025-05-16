@@ -1,6 +1,7 @@
 <script lang="ts">
 	import RecruiterAnimation from '../../../components/animations/RecruiterAnimation.svelte';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
+	import Citation from '../../../components/Citation.svelte';
 </script>
 
 <h3 class="text-6xl font-bold mt-2 p-8">
@@ -94,7 +95,7 @@
 			So it seems that all these definitions have some validity as preconditions for unbiasedness.
 			Unfortunately, it's
 			mathematically impossible for even two of these conditions to be true at the same time.
-			LINK TO PROOF.
+			<Citation number={1} link="https://fairmlbook.org/classification.html#relationships-between-criteria" />
 		</p>
 		<p class="mt-16">
 			In the context of recruiting, we can think of failing to satisfy
@@ -346,15 +347,21 @@
 			Next Steps
 		</h3>
 		<p class="mt-4">
-			We've identified three definitions of bias and associated metrics. TODO: MORE CLEAR
+			We've identified three definitions of bias and associated metrics.
 		</p>
 		<p class="mt-4">
-			Those are
-			<span class="text-surface-600 font-bold">Demographic Parity</span>,
-			<span class="text-emerald-700 font-bold">FNR Difference</span>,
-			<span class="text-cyan-800 font-bold">FPR Difference</span>,
-			<span class="text-purple-700 font-bold">FOR Difference</span>, and
-			<span class="text-yellow-700 font-bold">FDR Difference</span>.
+			Those are:
+		</p>
+		<p>
+			<span class="text-surface-600 font-bold">Hiring Rate Difference</span> for Demographic Parity,
+		</p>
+		<p>
+			<span class="text-emerald-700 font-bold">FNR Difference</span> and
+			<span class="text-cyan-800 font-bold">FPR Difference</span> for Equalised Odds,
+		</p>
+		<p>
+			and <span class="text-purple-700 font-bold">FOR Difference</span> and
+			<span class="text-yellow-700 font-bold">FDR Difference</span> for Predictive Parity.
 		</p>
 
 

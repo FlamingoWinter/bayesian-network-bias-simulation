@@ -5,47 +5,28 @@
 
 	const menu = {
 		'Motivation': [],
-		'Simulation': [],
-		'Bayesian Networks': [
-			'Generating a Random Network',
-			'Sampling from a Network',
-			'Labelling Networks'
+		'Related Work': [],
+		'Tools Used': [],
+		'Preliminaries': [
+			'Binary Classification',
+			'Fairness Criteria',
+			'Directed Acyclic Graphs',
+			'Bayesian Networks'
 		],
-		'Training Recruiters': [
-			'Random Forest',
-			'Logistic Regression',
-			'Support Vector Machine',
-			'Shallow MLP',
-			'Deep MLP',
-			'Encoder-Only Transformer',
-			'Bayesian Recruiter'
+		'The Simulation': [
+			'Mathematical Design',
+			'The Applicant Distribution',
+			'A Run of the Simulation',
+			'Generating a Bayesian Network',
+			'Generating Applications',
+			'Recruiters',
+			'Measuring Bias',
+			'Applying Post-Training Mitigations'
 		],
-		'Measuring Bias': [
-			'Demographic Parity',
-			'Equalised Odds',
-			'Predictive Parity'
-		],
-		'Recruiter Mitigations': [
-			'Satisfy Demographic Parity',
-			'Satisfy Proportional Parity',
-			'Optimise for Predictive Parity',
-			'Optimise for Equalised Odds'
-		],
-		'Experiments': [
-			'Comparing Input Conditions',
-			'Comparing Recruiter Mitigations'
-		],
-		'Results': [
-			'Comparing Input Conditions',
-			'Effect of Competence Disparity',
-			'Comparing Recruiters',
-			'Accuracy and Bias',
-			'Agreement between Bias Metrics',
-			'Effect of Mitigations'
-		],
-		'Tools Used': [
-			'Backend',
-			'Frontend'
+		'The Experiment': [],
+		'Results and Findings': [
+			'Assumptions Analysis',
+			'Research Implications'
 		]
 	};
 
@@ -55,13 +36,14 @@
 
 	const utilityButtonInfos = Object.entries(menu).flatMap(([title, children]) => [
 		{
-			name: title, callback: () => window.location.href = '/guide/' + toSnakeCase(title), textSize: 'text-2xl'
+			name: title, callback: () => window.location.href = '/guide/' + toSnakeCase(title), textSize: 'text-xl',
+			inset: 'pr-4'
 		},
 		...children.map(child => ({
 			name: child,
 			callback: () => window.location.href = '/guide/' + toSnakeCase(child),
 			inset: 'pl-8',
-			textSize: 'text-md font-medium'
+			textSize: 'text-sm font-medium'
 		}))
 	]);
 

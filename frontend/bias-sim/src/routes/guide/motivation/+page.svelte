@@ -5,136 +5,108 @@
 <h3 class="text-6xl font-bold mt-2 pl-24">
 	Motivation
 </h3>
-<div class="flex justify-center pt-10 pb-28">
-	<div class="text-lg max-w-[48rem]">
-		<p>
-			The decisions made by machine learning systems may have significant
-			consequences to the people they affect.
-		</p>
-		<p class="mt-6">
-			Their use is becoming increasingly prevalent. Automated tools are finding use in
-			resume-screening
+
+<div class="flex justify-center pt-10 pb-10">
+	<div class="text-lg max-w-[40rem] flex flex-col items-center">
+
+		<p class="mt-2">
+			Machine learning (ML) is becoming increasingly prevalent in decision‑making, finding use in
+			resume screening,
 			<Citation number={1}
-								link="https://www.resumebuilder.com/7-in-10-companies-will-use-ai-in-the-hiring-process-in-2025-despite-most-saying-its-biased/#:~:text=About%2023%25%20use%20AI%20to,AI%20in%20their%20hiring%20practices." />
-			<Citation number={2}
-								link="https://www.youtube.com/watch?v=6nGM37ThEsU" />
-			, predicting crime and recidivism
-			<Citation number={3}
-								link="https://www.theguardian.com/uk-news/2025/apr/08/uk-creating-prediction-tool-to-identify-people-most-likely-to-kill" />
+								link="https://www.resumebuilder.com/7-in-10-companies-will-use-ai-in-the-hiring-process-in-2025-despite-most-saying-its-biased/" />
+			<Citation number={2} link="https://www.youtube.com/watch?v=6nGM37ThEsU" />
+			predicting crime and recidivism,
+			<Citation number={3} link="https://doi.org/10.1162/99608f92.6ed64b30" />
 			<Citation number={4}
-								link="https://hdsr.mitpress.mit.edu/pub/7z10o269/release/7" />
-			, loan approval
-			<Citation number={5}
-								link="https://link.springer.com/article/10.1007/s00146-023-01676-3" />
-			, and medical diagnoses
+								link="https://www.theguardian.com/uk-news/2025/apr/08/uk-creating-prediction-tool-to-identify-people-most-likely-to-kill" />
+			loan approval,
+			<Citation number={5} link="https://doi.org/10.1007/s00146-023-01676-3" />
+			and medical diagnoses.
 			<Citation number={6}
 								link="https://www.theguardian.com/society/2025/feb/04/nhs-to-launch-worlds-biggest-trial-of-ai-breast-cancer-diagnosis" />
-			.
-			Machine learning controls the products we buy, the entertainment recommended to us, and the information we see on
-			search
-			engines.
+			It influences the products we buy,
+			<Citation number={7} link="https://doi.org/10.2139/ssrn.4245401" />
+			the entertainment recommended to us,
+			<Citation number={8} link="https://doi.org/10.1016/j.gltp.2022.03.012" />
+			and the information we see on search engines.
+			<Citation number={9} link="https://doi.org/10.1007/978-0-387-30164-8_744" />
+			Existing research has shown that many modern ML systems exhibit bias,
+			<Citation number={10} link="https://doi.org/10.1145/3457607" />
+			<Citation number={11} link="https://doi.org/10.1007/s42001-025-00386-8" />
+			such that the decisions they make are unfair towards certain groups.
 		</p>
-		<p class="mt-6">
-			There is a concern that these systems exhibit bias, whereby the decisions they make are unfair against
-			certain groups of people. Indeed existing research has shown that many modern systems do
-			systematically disadvantage certain groups
-			<Citation number={7}
-								link="https://www.bbc.co.uk/news/technology-54349538" />
-			<Citation number={8}
-								link="https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG/" />
-			<Citation number={9}
-								link="https://arxiv.org/abs/2310.05135" />
-			.
-			However, important questions remain largely unanswered:
-		</p>
-		<ul class="mt-6 pl-4 list-disc">
-			<li>Why are these systems biased?</li>
-			<li>Can we expect them to be more biased than the corresponding human systems?</li>
-			<li>How can we work towards minimising these biases?</li>
-		</ul>
 
+		<p class="mt-8">
+			For ease of communication and conceptualisation, I narrow our focus to recruitment, whereby an ML recruiter
+			classifies applicants into the classes “<i>hire</i>” or “<i>reject</i>”, based on their applications.
+			If I were to investigate this scenario using real data, I would be likely to suffer three difficulties:
+		</p>
 
-		<p class="mt-6">
-			For the remainder of this project, we focus on recruitment, whereby a
-			<span class="text-surface-600 font-bold">Recruiter</span> classifies <span class="text-surface-600 font-bold">Applicants</span>,
-			into
-			the classes <span class="text-success-800 font-bold">Hired</span> or <span class="text-error-600 font-bold">Not Hired</span>,
-			based on an <span class="text-surface-600 font-bold">Application</span>.
+		<ol class="list-decimal list-inside mt-6 text-left space-y-2">
+			<li>It is difficult to gather sufficient data to assess bias across many decision‑making scenarios.</li>
+			<li>Some metrics for bias require some notion of ground truth
+				<Citation number={12} link="https://fairmlbook.org/pdf/fairmlbook.pdf" />
+				(how competent or meritorious an applicant actually is), but this is influenced by who measures it.
+			</li>
+			<li>The training set is likely to be biased, so it is difficult to isolate the bias which emerges from the
+				recruiter’s decision‑making.
+			</li>
+		</ol>
 
-			We define bias as <span class="text-surface-600 font-bold">Unfairness Towards a Protected Group</span>.
+		<p class="mt-8">
+			By using simulated data, I avoid these problems. I can quickly synthesise a sufficiently‑sized dataset, and ground
+			truth can be explicitly generated. However, this approach presents an additional requirement. The simulated data
+			needs to be drawn from a distribution which approximates that of reality. A Bayesian network is a model for a
+			joint probability distribution which encodes causality between variables.
+			<Citation number={13} link="https://www.cambridge.org/core/books/causality/B0046844FAE10CBF274D4ACBDAEB5F5B" />
+			I justify why this is a suitable distribution for applicants in <a href="#applicant-dist">Section&nbsp;4</a>.
 		</p>
-		<p class="mt-6">
-			In order to answer the questions above, we need a rigorous and scientific approach to bias.
-			Ultimately, this is a difficult requirement.
-		</p>
-		<p class="mt-6">
-			For example, one could make the claim that a
-			recruiting system is biased against group A,
-			because an applicant from group A is less likely to get a job when they apply.
-			However, a commentator could argue that such an observation is to be expected,
-			because that group comprises less-qualified candidates.
-		</p>
-		<p class="mt-6">
-			Indeed, in many domains, there are differences in competency between groups.
 
-			This doesn't mean that a person is more or less competent only because of their group membership,
-			instead it may be due to a combination of different education opportunities, differing access to networking,
-			different exposure to role models, and so on.
-			Different backgrounds may be associated with different economic status, and a lifetime influenced by
-			stereotypes may lead to eventual change.
+		<p class="mt-8">
+			A standard causal explanation for machine unfairness is that bias in a training set is propagated to bias in a
+			model’s output.
+			<Citation number={14} link="https://developers.google.com/machine-learning/crash-course/fairness/types-of-bias" />
+			<Citation number={15} link="https://www.weforum.org/stories/2021/07/ai-machine-learning-bias-discrimination/" />
+			This would imply that bias can be fully mitigated by debiasing the training dataset,
+			<Citation number={16}
+								link="https://news.mit.edu/2024/researchers-reduce-bias-ai-models-while-preserving-improving-accuracy-1211" />
+			<Citation number={17} link="https://www.sap.com/swiss/blogs/how-ai-can-end-bias" />
+			,
+			and that a model is only as biased as its input data. In this dissertation, I show that this is an incomplete
+			interpretation.
+			Bias can exist when training datasets are fully representative of the underlying true distribution (Result&nbsp;1).
 		</p>
-		<p class="mt-6">
-			In this case, a person's membership of the protected group and a person's competence in performing a job
-			are related features. In a statistical sense, they are dependent variables.
-		</p>
-		<p class="mt-6">
-			If group membership were independent to the inputs and outputs of a decision-making
-			algorithm, the decisions made by any model will be unbiased by most measurements, so this isn't an interesting
-			case to consider.
-		</p>
-		<p class="mt-6">
-			In many instances, it may be desirable to ensure two random members of different groups have
-			the same likelihood of receiving a job, regardless of differences in competence to promote diversity or
-			mitigate systemic biases. We limit the scope of this project to
-			largely consider competence-based hiring.
-		</p>
-		<p class="mt-6">
-			Since protected group membership and competence are not statistically independent,
-			most investigations into the bias exhibited by a decision-making system involve some
-			notion of what decisions the system should have made.
-			We then compare the deviation between these and the decisions the system did make, and whether that deviation
-			is dependent on the group membership of the person it was classifying.
-		</p>
-		<p class="mt-6">
-			Unfortunately, our notion of the "decisions the systems should have made" is influenced by our own biases as well.
-			So any attempt to measure the bias within a system will be influenced by our own preconceptions.
-		</p>
-		<p class="mt-6">
-			In this project, we take a different approach.
-		</p>
-		<p class="mt-6">
-			The understanding of bias we can attain from existing systems is limited because the "correct" decisions
-			are shaped by human assumptions.
-			But, the same limitation doesn't exist in simulated systems.
 
-			Instead, as simulators we are able to define ground truth
-			and provide it directly to recruiters during training.
-
-			If recruiters exhibit bias in this instance of unbiased training data, we can presume they will continue to
-			exhibit that bias when extrapolating to the real world.
+		<p class="mt-8">
+			Additionally, I demonstrate that two standard fairness criteria exhibit high disagreement in practice (Result&nbsp;2),
+			a problem compounded by the fact that many existing systems use an unsuitable fairness metric.
+			<Citation number={18} link="https://arxiv.org/abs/2108.02497" />
+			<Citation number={19}
+								link="https://www.researchgate.net/publication/385721402_A_Review_of_Fairness_and_A_Practical_Guide_to_Selecting_Context-Appropriate_Fairness_Metrics_in_Machine_Learning" />
+			Given then that this dissertation offers a robust criticism of current working practices, its contributions have
+			the potential to meaningfully inform and improve the field.
 		</p>
-		<p class="mt-6">
-			By simulating this recruiting scenario thousands of times with randomised applicant generation,
-			we can see which patterns in bias are prevalent throughout the results.
 
-			This controlled environment also means we can perform experiments,
-			systematically modifying parts of the simulation and seeing the effects of our actions.
+		<p class="mt-8">
+			I investigate these findings and related phenomena by measuring bias across many simulations in which a recruiter
+			makes hiring decisions on sampled applicants, systematically varying recruiter models, application generation
+			conditions, and post‑training bias mitigations. As with any simulation, the value of these results depends on
+			whether they extrapolate to real‑world recruiting. I evaluate this by analysing each assumption made in the
+			simulation’s design.
+		</p>
 
-			Under the assumptions we've made in the simulation we can then extrapolate these results to real-world systems.
+		<p class="mt-8">
+			While I focus on recruiting, this largely doesn’t affect the implementation of the simulation. To an extent, the
+			results generalise across the field of ML classification.
 		</p>
-		<p class="mt-6">
-			While we focus on recruiting, this is for ease of communication and conceptualisation. The simulation
-			generalises to all fields of automated decision-making.
+
+		<p class="mt-8">
+			Finally, I think the findings presented in this dissertation are valuable to a wider audience, including one of
+			policy‑makers, recruiters and casual readers. However, they require some context to fully understand. Therefore, I
+			also developed a website to host a visualisation and walkthrough of the research at
+			<a href="https://www.modelling-bias.com" class="underline">modelling-bias.com</a>. Markers are strongly encouraged
+			to visit this website.
 		</p>
+
 	</div>
 </div>

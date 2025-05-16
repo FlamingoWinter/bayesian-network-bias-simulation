@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-2ow%e3c@kt&x8&c$u0d3xi$27h!-2jh8enooj=_=4arry@+&s_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "api.modelling-bias.com"
+    "api.modelling-bias.com",
+    "localhost"
 ]
 
 # Application definition

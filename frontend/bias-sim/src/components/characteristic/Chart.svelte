@@ -40,7 +40,7 @@
 				<CharacteristicConfig
 					openConditionDialog={openConditionDialog}
 					conditions={conditions}
-					network={network} node={node} scoreAndApplication={scoreAndApplication} />
+					bind:network={network} node={node} scoreAndApplication={scoreAndApplication} />
 			{/if}
 		{/if}
 

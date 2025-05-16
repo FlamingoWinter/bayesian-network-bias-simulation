@@ -16,7 +16,7 @@
 
 		<ButtonRow>
 			<ButtonBelowDistribution
-				text="{node.id in network.applicationCharacteristics  ? `Unset` : `Set`} Application Characteristic"
+				text={(network.applicationCharacteristics.includes(node.id) ? 'Unset' : 'Set') + ' Application Characteristic'}
 				callback={toggleApplicationCharacteristic}
 			/>
 		</ButtonRow>
@@ -48,19 +48,21 @@
 		if (index > -1) {
 			network.applicationCharacteristics.splice(index, 1);
 		}
+		network = { ...network, applicationCharacteristics: [...network.applicationCharacteristics] };
 	}
 
 	function toggleApplicationCharacteristic() {
 		if (network.scoreCharacteristic === node.id) {
 			network.scoreCharacteristic = '';
 		}
+		const updatedApplicationCharacteristics = [...network.applicationCharacteristics];
 		const index = network.applicationCharacteristics.indexOf(node.id);
 		if (index > -1) {
-			network.applicationCharacteristics.splice(index, 1);
+			updatedApplicationCharacteristics.splice(index, 1);
 		} else {
-			network.applicationCharacteristics.push(node.id);
+			updatedApplicationCharacteristics.push(node.id);
 		}
-		network.applicationCharacteristics = [...network.applicationCharacteristics];
+		network = { ...network, applicationCharacteristics: updatedApplicationCharacteristics };
 
 	}
 </script>

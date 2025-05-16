@@ -63,7 +63,7 @@
 								characteristic of an applicant gives us information about every other characteristic of the applicant.
 							</p>
 							<p class="mt-4">
-								(There are significant further implications to this which we discuss in TODO
+								(There are further implications to this which we discuss in the Assumptions Analysis)
 							</p>
 						</div>
 

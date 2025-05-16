@@ -97,12 +97,6 @@
 								<RadioItem bind:group={predefinedModel} name="justify"
 													 value={"shark_sighting"}>Shark Sightings Network
 								</RadioItem>
-								<RadioItem bind:group={predefinedModel} name="justify"
-													 value={"random_seeded"}>Random Seeded
-								</RadioItem>
-								<RadioItem bind:group={predefinedModel} name="justify"
-													 value={"named_seeded"}>Named Seeded
-								</RadioItem>
 
 							</div>
 
@@ -128,6 +122,7 @@
 
 							await $loadProcess(generateNetworkSocket)
 							await $invalidateNetwork()
+							$biasAnalysis = undefined
 						}}>Submit
 					</button>
 				</div>
@@ -144,6 +139,8 @@
 
 	import { fade } from 'svelte/transition';
 
+	import { biasAnalysis, sessionKey } from '../../../stores/store';
+
 	import { awaitSocketClose, awaitSocketOpen } from '../../../utilities/socket';
 
 
@@ -158,7 +155,6 @@
 
 	import { webSocketUrl } from '../../../utilities/api';
 	import { invalidateNetwork, loadProcess } from '../../../stores/functions';
-	import { sessionKey } from '../../../stores/store';
 
 	const modalStore = getModalStore();
 
