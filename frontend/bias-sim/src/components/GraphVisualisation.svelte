@@ -17,7 +17,7 @@
 							simulation={simulation}
 							conditions={conditions} conditioned={conditioned} posteriorDistributions={posteriorDistributions}
 							disableInteraction={disableInteraction} characteristic={network.characteristics[node.id]}
-							node={node} network={network}
+							node={node} bind:network={network}
 							scoreAndApplication={scoreAndApplication} />
 					</g>
 				{/each}

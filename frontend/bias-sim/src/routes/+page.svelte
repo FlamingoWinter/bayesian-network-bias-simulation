@@ -1,7 +1,6 @@
 <script lang="ts">
 	import WalkthroughButton from '../components/home/WalkthroughButton.svelte';
 	import VisualisationButton from '../components/home/VisualisationButton.svelte';
-	import MoreInfoButton from '../components/home/MoreInfoButton.svelte';
 	import { onMount } from 'svelte';
 	import type { Network } from '../types/network';
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
@@ -62,7 +61,7 @@
 					Welcome!
 				</p>
 				<p>
-					This is the accompanying visualisation and guide to a dissertation
+					This is the accompanying visualisation and walkthrough to a dissertation
 					I wrote in my third year of undergraduate computer science for the University of
 					Cambridge.
 				</p>
@@ -82,7 +81,6 @@
 		<div
 			class="flex justify-center items-center gap-4 mb-6 pointer-events-auto  p-2 px-4">
 
-			<MoreInfoButton />
 			<WalkthroughButton />
 			<VisualisationButton />
 		</div>

@@ -43,8 +43,8 @@ class GenerateRandomNetworkConsumer(GenericConsumer):
             network: PgmPyNetwork = generate_random_categorical_network(int(request.number_of_nodes),
                                                                         (int(request.parents_range[0]),
                                                                          int(request.parents_range[1])),
-                                                                        (int(request.mutual_information_range[0]),
-                                                                         request.mutual_information_range[1]),
+                                                                        (float(request.mutual_information_range[0]),
+                                                                         float(request.mutual_information_range[1])),
                                                                         category_number_distribution)
 
         await self.send_and_flush(f"Network Generation Completed")

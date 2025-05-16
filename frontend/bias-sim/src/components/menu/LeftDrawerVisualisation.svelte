@@ -49,6 +49,5 @@
 	</div>
 	<BottomHrefButtons buttonInfos={[
 			{name: "Walkthrough", slug: "/walkthrough"},
-			{name: "Guide", slug: "/guide"},
 		]} />
 </div>

@@ -20,6 +20,9 @@
 								 bind:value={candidatesToGenerate}
 								 min={1000} max={100_000} />
 				</ModalRow>
+				{#if candidatesToGenerate < 1000}
+					<p class="text-red-500 text-md">Minimum is 1000 candidates</p>
+				{/if}
 
 				<ModalRow center={true} gap={10}>
 					<div class="absolute left-4">

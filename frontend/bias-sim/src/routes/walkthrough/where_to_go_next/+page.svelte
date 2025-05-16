@@ -1,5 +1,4 @@
 <script>
-	import MoreInfoButton from '../../../components/home/MoreInfoButton.svelte';
 	import VisualisationButton from '../../../components/home/VisualisationButton.svelte';
 </script>
 
@@ -18,13 +17,6 @@
 		</div>
 
 		<VisualisationButton center={true} />
-
-		<div class="mb-8 mt-16">
-			<p>
-				If you have some technical background and want to get into some of the details, take a look at:
-			</p>
-		</div>
-		<MoreInfoButton center={true} />
 
 	</div>
 </div>

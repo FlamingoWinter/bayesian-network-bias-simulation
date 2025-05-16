@@ -48,7 +48,10 @@
 		if (index > -1) {
 			network.applicationCharacteristics.splice(index, 1);
 		}
-		network = { ...network, applicationCharacteristics: [...network.applicationCharacteristics] };
+		network = {
+			...network, applicationCharacteristics: [...network.applicationCharacteristics],
+			scoreCharacteristic: network.scoreCharacteristic
+		};
 	}
 
 	function toggleApplicationCharacteristic() {

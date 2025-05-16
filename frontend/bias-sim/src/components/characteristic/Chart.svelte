@@ -6,7 +6,7 @@
 	<CharacteristicRectangle width={rectWidth} height={rectHeight}
 													 expanded={(expanded && !disableInteraction)} nodeId={node.id}
 													 heightMultiplier={heightMultiplier}
-													 network={network}
+													 bind:network={network}
 													 scoreAndApplication={scoreAndApplication} />
 
 	<CharacteristicTitle nodeId={node.id} rectHeight={rectHeight} />

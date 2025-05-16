@@ -37,8 +37,14 @@
 							<input class="input p-2 rounded-container-token"
 										 type="number" placeholder="Number of Nodes..."
 										 bind:value={numberOfNodes}
-										 min={4} max={20} />
+										 min={6} max={20} />
 						</ModalRow>
+						<div
+							class="flex px-10 items-center gap-4 justify-center">
+							{#if numberOfNodes < 15}
+								<p class="text-red-500 text-md">Minimum is 15 nodes</p>
+							{/if}
+						</div>
 						<ModalRow center={false}>
 							<div class="absolute -left-0">
 								<InfoHover target="allowed-parents" />
@@ -157,6 +163,7 @@
 	import { invalidateNetwork, loadProcess } from '../../../stores/functions';
 
 	const modalStore = getModalStore();
+
 
 	let generateNetworkSocket: WebSocket | undefined = undefined;
 

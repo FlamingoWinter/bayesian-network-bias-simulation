@@ -1,7 +1,7 @@
 <rect rx="2" ry="2" width={width} height={expanded ? height * heightMultiplier : height}
 			stroke="#333333" stroke-width="0.7"
 			x={-width/2} y={-height/2}
-			fill={calculateRectangleFill(nodeId, network.scoreCharacteristic, network.applicationCharacteristics)}
+			fill={fill}
 			style="transition: height {defaultTransition}" />
 
 
@@ -16,6 +16,12 @@
 	export let heightMultiplier: number;
 	export let network: Network;
 	export let scoreAndApplication: boolean = false;
+
+	let fill: string;
+
+	$: if (network) {
+		fill = calculateRectangleFill(nodeId, network.scoreCharacteristic, network.applicationCharacteristics);
+	}
 
 	function calculateRectangleFill(characteristic: string,
 																	scoreCharacteristic: string,
