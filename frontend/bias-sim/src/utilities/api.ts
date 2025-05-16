@@ -1,10 +1,10 @@
 import * as d3 from 'd3';
 
-// export const apiUrl = 'https://api.modelling-bias.com/';
-// export const webSocketUrl = 'wss://api.modelling-bias.com/ws';
+export const apiUrl = 'https://api.modelling-bias.com/';
+export const webSocketUrl = 'wss://api.modelling-bias.com/ws';
 
-export const apiUrl = 'http://localhost:8000/';
-export const webSocketUrl = 'ws://localhost:8000/ws';
+// export const apiUrl = 'http://localhost:8000/';
+// export const webSocketUrl = 'ws://localhost:8000/ws';
 
 export async function apiRequest(
 	url: string,
