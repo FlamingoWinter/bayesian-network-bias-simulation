@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import List
 
 from backend.db.save_to_db import save_run_to_db, save_recruiter_run_to_db
-from backend.experiments.experiment_choose_characteristics import experiment_choose_application
 from backend.experiments.setup_experiment import setup_experiment
+from backend.network.generation.choose_characteristics import choose_application
 from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_and_fpr_equality import \
     OptimiseForFNRAndFPREquality
 from backend.recruiters.categorical_bias_mitigation.approach_equalised_odds.optimise_for_fnr_equality import \
@@ -36,7 +36,7 @@ def mitigations_run():
     except:
         return mitigations_run()
 
-    network.application_characteristics = experiment_choose_application(
+    network.application_characteristics = choose_application(
         network.model.to_directed(), 1, score_characteristic_name, protected_characteristic_name)
 
     recruiters: List[Recruiter] = [

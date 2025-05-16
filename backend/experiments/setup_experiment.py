@@ -5,7 +5,6 @@ from scipy.stats import rv_discrete
 from sqlalchemy import Engine
 
 from backend.applicants.applicants import Applicants
-from backend.applicants.sample_applicants import sample_applicants
 from backend.db.save_to_db import get_engine
 from backend.network.generation.assign_cpds import assign_cpds
 from backend.network.generation.choose_characteristics import choose_score, choose_protected
@@ -41,6 +40,6 @@ def setup_experiment() -> tuple[datetime, Engine, PgmPyNetwork, Applicants, str,
     network.score_characteristic = score_characteristic
     network.predefined = False
 
-    applicants: Applicants = sample_applicants(network, 10_000)
+    applicants: Applicants = network.sample_applicants(10_000)
 
     return start_time, engine, network, applicants, score_characteristic, protected_characteristic_name

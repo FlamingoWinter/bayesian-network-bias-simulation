@@ -41,7 +41,7 @@ def choose_application(
         return random.sample(candidate_nodes, application_size // 2) + random.sample(list(proxy_nodes),
                                                                                      application_size // 2)
     elif condition == 4:
-        # 15 Random nodes are selected as application.
+        # 10 Random nodes are selected as application.
         # This doesn't include protected characteristics or any nodes connected by protected characteristic with steps<=2.
         proxy_nodes = set(
             two_hop for one_hop in [protected_characteristic] + list(graph.neighbors(protected_characteristic))
