@@ -1,7 +1,7 @@
 # Setup
 
 Development on macOS is preferred. If developing on another platform, consult
-`setup_linux.md` or `setup_windows.md`.
+`docs/setup_linux.md` or `docs/setup_windows.md`.
 
 ## Prerequisites
 
