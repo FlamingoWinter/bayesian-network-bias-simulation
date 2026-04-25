@@ -1,9 +1,6 @@
 from abc import abstractmethod, ABC
-from typing import List, Dict, Union, Literal
+from typing import List, Dict, Literal
 
-import pymc as pm
-import xarray as xr
-from arviz import InferenceData
 from pgmpy.models import BayesianNetwork as pgBN
 
 from backend.api.request_types.condition_request import ConditionRequest
@@ -13,14 +10,10 @@ from backend.network.characteristic import Characteristic
 num_samples = 5000
 
 
-class PriorTrace(InferenceData):
-    prior: xr.Dataset
-
-
 class BayesianNetwork(ABC):
     @abstractmethod
     def __init__(self,
-                 model: Union[pm.Model, pgBN] = None,
+                 model: pgBN = None,
                  characteristics: Dict[str, Characteristic] = None,
                  score_characteristic: str = "score",
                  application_characteristics: List[str] = None):
@@ -29,11 +22,11 @@ class BayesianNetwork(ABC):
         if characteristics is None:
             characteristics = {}
 
-        self.model: Union[pm.Model, pgBN] = model
+        self.model: pgBN = model
         self.characteristics: Dict[str, Characteristic] = characteristics
         self.score_characteristic: str = score_characteristic
         self.application_characteristics: List[str] = application_characteristics
-        self.model_type: Union[Literal[""], Literal["pymc"], Literal["pgmpy"]] = ""
+        self.model_type: Literal["", "pgmpy"] = ""
         self.predefined = False
 
     def set_category_names_for_characteristic(self, characteristic: str, category_names: List[str]):
@@ -44,7 +37,7 @@ class BayesianNetwork(ABC):
         pass
 
     @abstractmethod
-    def initialise_characteristics_from_model(self, model: Union[pm.Model, pgBN]):
+    def initialise_characteristics_from_model(self, model: pgBN):
         pass
 
     @abstractmethod

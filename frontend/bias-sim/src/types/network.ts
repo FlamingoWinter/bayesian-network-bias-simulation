@@ -25,7 +25,7 @@ export interface Network {
 
 export interface Characteristic {
 	name: string;
-	type: 'continuous' | 'discrete' | 'categorical';
+	type: 'discrete' | 'categorical';
 	categoryNames: string[];
 	priorDistribution: number[];
 }

@@ -14,7 +14,7 @@ class Recruiter(ABC):
 
     @property
     @abstractmethod
-    def output_type(self) -> Literal['categorical', 'continuous']:
+    def output_type(self) -> Literal['categorical']:
         pass
 
     def __init__(self, mitigations: List[Mitigation]):

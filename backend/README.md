@@ -5,7 +5,7 @@ Python/Django backend serving the simulation engine over a REST and WebSocket AP
 ## Structure
 
 ### `network/`
-The core abstraction. A `BayesianNetwork` defines a set of characteristics (nodes) with probability distributions and the dependencies between them. Two implementations exist: `PgmPyNetwork` wraps [pgmpy](https://pgmpy.org/) for discrete networks, and `PymcNetwork` wraps [PyMC](https://www.pymc.io/) for continuous ones.
+The core abstraction. A `BayesianNetwork` defines a set of characteristics (nodes) with probability distributions and the dependencies between them. `PgmPyNetwork` is the sole implementation, wrapping [pgmpy](https://pgmpy.org/) for discrete networks.
 
 `network/generation/` handles procedural network construction — generating a random DAG structure, assigning characteristics to nodes, and fitting conditional probability distributions. `network/predefined/` contains hand-authored networks (sprinkler, shark sightings, random seeded) used as defaults on startup. `network/naming_characteristics/` uses an LLM to generate human-readable names for generated network nodes.
 

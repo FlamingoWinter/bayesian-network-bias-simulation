@@ -5,7 +5,6 @@
 	import { onMount } from 'svelte';
 	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
 	import DiscreteDistribution from './distributions/DiscreteDistribution.svelte';
-	import ContinuousDistribution from './distributions/ContinuousDistribution.svelte';
 	import { defaultTransition } from '../../animation/transition';
 	import CharacteristicRectangle from './CharacteristicRectangle.svelte';
 	import CharacteristicTitle from './CharacteristicTitle.svelte';
@@ -38,7 +37,7 @@
 		top: 15,
 		right: 14,
 		bottom: 25,
-		left: characteristic.type == 'categorical' ? 36 : 14
+		left: characteristic.type === 'categorical' ? 36 : 14
 	};
 
 	const chartWidth = rectWidth - chartMargin.left - chartMargin.right;
@@ -117,17 +116,8 @@
 				width={chartWidth}
 				height={chartHeight}
 			/>
-		{:else if characteristic.type === 'discrete'}
-			<DiscreteDistribution
-				{conditions}
-				{conditioned}
-				{posteriorDistributions}
-				{characteristic}
-				width={chartWidth}
-				height={chartHeight}
-			/>
 		{:else}
-			<ContinuousDistribution
+			<DiscreteDistribution
 				{conditions}
 				{conditioned}
 				{posteriorDistributions}

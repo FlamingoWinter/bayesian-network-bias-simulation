@@ -1,9 +1,6 @@
 # Bayesian Network Bias Simulation
 
-<img src="docs/imgs/demo.png" height="200">
-
-
-
+<img src="docs/imgs/demo.png" width="800">
 
 A research tool for studying algorithmic bias in hiring. An accompanying website explains the research for a technical and non-technical audience.
 It lets you define a Bayesian network representing the statistical relationships between candidate characteristics, generate synthetic applicants 
@@ -19,17 +16,19 @@ a single simulation run.
 This website accompanies a dissertation written by me (David McIntosh) for my third year of undergraduate study at University of Cambridge.
 The dissertation can be viewed [here](https://flamingowinter.github.io/dissertation/dissertation.pdf), and the site can be viewed at www.modelling-bias.com.
 
+If you're only interested in the results of the research, a summary is at www.modelling-bias.com/walkthrough/the_results.
+
 ## Modules
 
 **`backend/`** — Python/Django. Bayesian network construction and sampling, synthetic applicant generation, recruiter models (logistic regression, random forest, SVM, MLP, transformer, Bayesian), bias mitigation strategies, fairness measurement, and a REST + WebSocket API.
 
 **`frontend/`** — SvelteKit. Interactive D3 graph visualisation of the Bayesian network, distribution charts for each characteristic, bias results display, walkthrough, and guide.
 
-<img src="docs/imgs/runsim.png" height="200">
+<img src="docs/imgs/runsim.png" width="800">
 
-<img src="docs/imgs/results.png" height="200">
+<img src="docs/imgs/results.png" width="800">
 
-<img src="docs/imgs/exp-results.png" height="800">
+<img src="docs/imgs/exp-results.png" width="800">
 
 ## Setup
 

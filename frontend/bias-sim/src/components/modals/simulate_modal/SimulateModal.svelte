@@ -65,8 +65,6 @@
 		'Optimise FOR Parity': 'optimise_for'
 	};
 
-	const continuousRecruiters: string[] = ['Simple Linear Regression'];
-
 	type MitigationState = {
 		mitigationName: string;
 		ticked: boolean;

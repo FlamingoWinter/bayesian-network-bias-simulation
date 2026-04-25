@@ -1,7 +1,6 @@
 from typing import Any
 
 import dill
-import pymc as pm
 from django.core.cache import cache as django_cache
 from pgmpy.models import BayesianNetwork as PgBn
 
@@ -33,11 +32,6 @@ def cache_network_and_generate_applicants(network: BayesianNetwork, session_id: 
 
 
 def get_network_from_cache(session_key: str) -> BayesianNetwork:
-    network: BayesianNetwork = from_cache(f"network_{session_key}",
-                                          "network")
-    if network.model_type == "pgmpy":
-        network.model.__class__ = PgBn
-    else:
-        network.model.__class__ = pm.Model
-
+    network: BayesianNetwork = from_cache(f"network_{session_key}", "network")
+    network.model.__class__ = PgBn
     return network
