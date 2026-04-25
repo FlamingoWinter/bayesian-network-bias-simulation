@@ -28,7 +28,7 @@ tasks:
     deps: [install-backend, install-frontend]
 
   install-backend:
-    desc: Create or update the conda environment from environment.yml
+    desc: Create or update the conda environment and run migrations
     cmds:
       - |
         if conda env list | grep -q "^{{.CONDA_ENV}} "; then
@@ -38,6 +38,13 @@ tasks:
           echo "Creating environment '{{.CONDA_ENV}}'..."
           conda env create -n {{.CONDA_ENV}} --file environment.yml
         fi
+      - task: migrate
+
+  migrate:
+    desc: Run Django migrations
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}} python backend/api/manage.py migrate
 
   install-frontend:
     desc: Install pnpm dependencies

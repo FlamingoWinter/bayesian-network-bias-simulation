@@ -12,6 +12,10 @@ class ApiConfig(AppConfig):
     name = 'api'
 
     def ready(self):
+        import sys
+        if any(cmd in sys.argv for cmd in ['migrate', 'makemigrations', 'collectstatic', 'shell']):
+            return
+
         network: BayesianNetwork = get_sprinkler_network()
         cache_network_and_generate_applicants(network)
 
