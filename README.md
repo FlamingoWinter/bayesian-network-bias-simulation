@@ -10,8 +10,8 @@ across different criteria.
 The core idea is that the Bayesian network acts as a controllable ground truth — you decide how characteristics like demographic group, qualifications, 
 and scores are correlated, then observe how different recruiters and mitigations respond to that structure.
 
-The tool has three modes: a free-form **visualisation** where you build and explore a network interactively, a **walkthrough** that guides you through 
-a single simulation run, and a **guide** that presents the underlying research methodology and findings.
+The tool has two modes: a free-form **visualisation** where you build and explore a network interactively, and a **walkthrough** that guides you through 
+a single simulation run.
 
 This website accompanies a dissertation written by me (David McIntosh) for my third year of undergraduate study at University of Cambridge.
 The dissertation can be viewed [here](https://flamingowinter.github.io/dissertation/dissertation.pdf), and the site can be viewed at www.modelling-bias.com.
