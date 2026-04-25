@@ -14,10 +14,11 @@ Install Taskfile (task runner):
 sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
 ```
 
-Install Node and npm (frontend package manager):
+Install Node and pnpm (frontend package manager):
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 nvm install --lts
+corepack enable pnpm
 ```
 
 

@@ -49,8 +49,8 @@
 							If group A tends to be worse at the role than group B on average, this makes group A <i
 								>more</i
 							>
-							likely to face unfair treatment in hiring. In other words, existing performance
-							differences can lead to even stronger bias.
+							likely to face unfair treatment in hiring. In other words, existing performance differences
+							can lead to even stronger bias.
 							<p class="mt-8">
 								However, by only looking at the selection of people who were hired, and the
 								selection of people who weren't, we are likely to conclude that the bias is actually

@@ -1,9 +1,22 @@
-# Setup
+# Bayesian Network Bias Simulation
 
-Development on macOS is preferred. If developing on another platform, consult
-`docs/setup_linux.md` or `docs/setup_windows.md`.
+A research tool for studying algorithmic bias in hiring. It lets you define a Bayesian network representing the statistical relationships between candidate characteristics, generate synthetic applicants from it, run those applicants through various ML recruitment models, apply bias mitigation strategies, and measure the resulting fairness outcomes across different criteria.
 
-## Prerequisites
+The core idea is that the Bayesian network acts as a controllable ground truth — you decide how characteristics like demographic group, qualifications, and scores are correlated, then observe how different recruiters and mitigations respond to that structure.
+
+The tool has three modes: a free-form **visualisation** where you build and explore a network interactively, a **walkthrough** that guides you through a single simulation run, and a **guide** that presents the underlying research methodology and findings.
+
+## Modules
+
+**`backend/`** — Python/Django. Bayesian network construction and sampling, synthetic applicant generation, recruiter models (logistic regression, random forest, SVM, MLP, transformer, Bayesian), bias mitigation strategies, fairness measurement, and a REST + WebSocket API.
+
+**`frontend/`** — SvelteKit. Interactive D3 graph visualisation of the Bayesian network, distribution charts for each characteristic, bias results display, walkthrough, and guide.
+
+## Setup
+
+Development on macOS is preferred. For other platforms see [`docs/setup_linux.md`](docs/setup_linux.md) or [`docs/setup_windows.md`](docs/setup_windows.md).
+
+### Prerequisites
 
 Install Miniconda (backend package manager):
 ```bash
@@ -16,20 +29,21 @@ Install Taskfile (task runner):
 brew install go-task
 ```
 
-Install Node and npm (frontend package manager):
+Install Node and pnpm (frontend package manager):
 ```bash
 brew install node
+brew install pnpm
 ```
 
-## Install dependencies
+### Install dependencies
 
 ```bash
 task install
 ```
 
-This creates the conda environment from `environment.yml` and installs frontend npm packages.
+This creates the conda environment from `environment.yml` and installs frontend packages.
 
-## Run
+### Run
 
 ```bash
 task backend   # Django dev server
@@ -38,7 +52,7 @@ task frontend  # Vite dev server
 
 > The frontend requires the backend server to be running.
 
-## Adding or changing dependencies
+### Adding or changing dependencies
 
 Edit `environment.yml`, then:
 

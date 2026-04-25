@@ -19,7 +19,7 @@ tasks:
     desc: Run the Vite dev server
     dir: '{{.FRONTEND_DIR}}'
     cmds:
-      - npm run dev
+      - pnpm run dev
 
   # ── Setup ───────────────────────────────────────────────────────────────────
 
@@ -40,10 +40,10 @@ tasks:
         fi
 
   install-frontend:
-    desc: Install npm dependencies
+    desc: Install pnpm dependencies
     dir: '{{.FRONTEND_DIR}}'
     cmds:
-      - npm install
+      - pnpm install
 
   # ── Code quality ─────────────────────────────────────────────────────────────
 
@@ -63,14 +63,14 @@ tasks:
     desc: Check frontend formatting (Prettier) and types (svelte-check)
     dir: '{{.FRONTEND_DIR}}'
     cmds:
-      - npm run lint
-      - npm run check
+      - pnpm run lint
+      - pnpm run check
 
   fix-frontend:
     desc: Auto-fix frontend formatting (Prettier)
     dir: '{{.FRONTEND_DIR}}'
     cmds:
-      - npm run format
+      - pnpm run format
 
   lint-backend:
     desc: Lint and type-check backend (ruff + pyright)
