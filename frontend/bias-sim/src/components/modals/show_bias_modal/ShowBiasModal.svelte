@@ -31,7 +31,7 @@
 		>
 			<div>
 				<ModalDivider />
-				<div class="flex items-center justify-between gap-4 gap-4 px-10 pt-2">
+				<div class="flex items-center justify-between gap-4 px-10 pt-2">
 					<h3 class="pb-4 text-4xl font-bold">Bias Summary</h3>
 
 					<button

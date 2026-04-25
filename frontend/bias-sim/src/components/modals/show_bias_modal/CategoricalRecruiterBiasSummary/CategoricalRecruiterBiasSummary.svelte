@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Accordion } from '@skeletonlabs/skeleton';
-	import type { MitigationBiasAnalysis } from '../../../../types/Bias.js';
+	import type { MitigationAnalysis } from '../../../../types/Bias.js';
 	import PerformanceSummary from './PerformanceSummary.svelte';
 	import DemographicParitySummary from './DemographicParitySummary.svelte';
 	import EqualisedOddsSummary from './EqualisedOddsSummary.svelte';
 	import PredictiveParitySummary from './PredictiveParitySummary.svelte';
 
-	export let recruiter: MitigationBiasAnalysis;
-	export let withoutMitigation: MitigationBiasAnalysis | null;
+	export let recruiter: MitigationAnalysis;
+	export let withoutMitigation: MitigationAnalysis | null;
 </script>
 
 <div>

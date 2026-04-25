@@ -127,14 +127,14 @@
 					<svelte:fragment slot="content">
 						<div class="rounded-md bg-surface-200 p-4 text-sm">
 							<p>
-								<span class="font-bold text-surface-600">Predictive Parity</span> (that there are no
-								differences in the average competence of hired candidates across groups, or rejected
-								candidates across groups) is a valid definition of "the external appearance of unbiasedness".
+								<span class="font-bold text-surface-600">Predictive Parity</span> (that there are no differences
+								in the average competence of hired candidates across groups, or rejected candidates across
+								groups) is a valid definition of "the external appearance of unbiasedness".
 							</p>
 							<p class="mt-4">
 								<span class="font-bold text-purple-700">FOR Difference</span> and
-								<span class="font-bold text-yellow-700">FDR Difference</span> are valid measures for
-								the external appearance of bias.
+								<span class="font-bold text-yellow-700">FDR Difference</span> are valid measures for the
+								external appearance of bias.
 							</p>
 						</div>
 					</svelte:fragment>

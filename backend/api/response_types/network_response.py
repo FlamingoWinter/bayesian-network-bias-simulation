@@ -1,4 +1,4 @@
-from typing import List, TypedDict, Dict, Literal
+from typing import List, TypedDict, Dict, Literal, Union
 
 type DistributionType = Literal["categorical"]
 

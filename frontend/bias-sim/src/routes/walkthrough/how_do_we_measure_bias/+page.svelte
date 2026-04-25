@@ -34,8 +34,8 @@
 				Of the applicant's <i>hired</i> by the recruiter, an applicant from group A is just as
 				likely to be competent as an applicant from group B.
 				<p class="mt-2">
-					And of the applicant's <i>rejected</i> by the recruiter, an applicant from group A is just
-					as likely to be competent as an applicant from group B.
+					And of the applicant's <i>rejected</i> by the recruiter, an applicant from group A is just as
+					likely to be competent as an applicant from group B.
 				</p>
 			</li>
 		</ol>

@@ -1,4 +1,4 @@
-interface CategoricalGroupPredictionInformation {
+interface GroupPredictionInformation {
 	total: number;
 	hiredAndCompetent: number;
 	hiredButNotCompetent: number;
@@ -25,12 +25,12 @@ interface CategoricalGroupPredictionInformation {
 	falseOmissionRate: number;
 }
 
-export interface MitigationBiasAnalysis {
-	general: CategoricalGroupPredictionInformation;
-	byGroup: Record<string, CategoricalGroupPredictionInformation>;
+export interface MitigationAnalysis {
+	general: GroupPredictionInformation;
+	byGroup: Record<string, GroupPredictionInformation>;
 }
 
-export type RecruiterBiasAnalysis = Record<string, MitigationBiasAnalysis>;
+export type RecruiterBiasAnalysis = Record<string, MitigationAnalysis>;
 
 export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>;
 

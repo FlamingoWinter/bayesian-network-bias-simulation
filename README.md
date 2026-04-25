@@ -77,3 +77,7 @@ Edit `environment.yml`, then:
 ```bash
 task install-backend
 ```
+
+## Development
+
+For a full list of development commands, run `task --list`.

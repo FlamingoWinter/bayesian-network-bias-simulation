@@ -2,11 +2,11 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import BiasSubTitle from '../BiasSubTitle.svelte';
 	import BiasTitle from '../BiasTitle.svelte';
-	import { type MitigationBiasAnalysis, multiplierToLevel } from '../../../../types/Bias';
+	import { type MitigationAnalysis, multiplierToLevel } from '../../../../types/Bias';
 	import { levelToColorMapping } from '../../../../types/Bias.js';
 
-	export let recruiter: MitigationBiasAnalysis;
-	export let withoutMitigation: MitigationBiasAnalysis | null;
+	export let recruiter: MitigationAnalysis;
+	export let withoutMitigation: MitigationAnalysis | null;
 
 	$: minAndMaxHiredRates = Object.entries(recruiter.byGroup).reduce(
 		(acc, [groupName, info]) => {

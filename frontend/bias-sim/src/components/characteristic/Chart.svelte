@@ -3,7 +3,7 @@
 	import { expandedNodeId } from '../../stores/store';
 	import ExpandButton from './config/CharacteristicExpandButton.svelte';
 	import { onMount } from 'svelte';
-	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
+	import Distribution from './distributions/Distribution.svelte';
 	import { defaultTransition } from '../../animation/transition';
 	import CharacteristicRectangle from './CharacteristicRectangle.svelte';
 	import CharacteristicTitle from './CharacteristicTitle.svelte';
@@ -106,7 +106,7 @@
 		height={chartHeight}
 		transform={`translate(${chartMargin.left - rectWidth / 2}, ${chartMargin.top - rectHeight / 2})`}
 	>
-		<CategoricalDistribution
+		<Distribution
 			{conditions}
 			{conditioned}
 			{posteriorDistributions}

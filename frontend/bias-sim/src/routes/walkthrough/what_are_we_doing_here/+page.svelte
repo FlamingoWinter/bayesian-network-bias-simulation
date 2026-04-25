@@ -9,8 +9,8 @@
 <div class="flex justify-center pb-10 pt-10 text-center">
 	<div class="max-w-[40rem] text-lg">
 		<p>
-			<span class="font-bold text-surface-600">Machine Learning</span> systems make decisions for us
-			every day.
+			<span class="font-bold text-surface-600">Machine Learning</span> systems make decisions for us every
+			day.
 		</p>
 		<p class="mt-12">
 			Today, such a system might decide the diagnosis you receive for a medical condition
@@ -98,9 +98,9 @@
 
 		<p class="mt-12">
 			Each <span class="font-bold text-surface-600">Training Example</span> consists of an application
-			and a corresponding hiring decision. We could generate those from previous decisions a company
-			has made, or by asking humans to make decisions. We'll discuss what this might look in practice
-			a bit later.
+			and a corresponding hiring decision. We could generate those from previous decisions a company has
+			made, or by asking humans to make decisions. We'll discuss what this might look in practice a bit
+			later.
 		</p>
 
 		<p class="mt-24">So, how can we tell whether such a system is biased?</p>
@@ -133,8 +133,8 @@
 				number={5}
 				link="https://hbr.org/2014/08/why-women-dont-apply-for-jobs-unless-theyre-100-qualified"
 			/>
-			, so we might expect there to be some competency differences among applicants if this were the
-			protected characteristic too.
+			, so we might expect there to be some competency differences among applicants if this were the protected
+			characteristic too.
 		</p>
 
 		<p class="mt-12">
@@ -199,13 +199,13 @@
 		<p class="mt-4">In this project, we investigate bias within simulated models of recruitment.</p>
 		<p class="mt-12">
 			This means we can sidestep the problem we've just discussed - We <i>can't</i> decide which real
-			candidates should actually be fired or hired, because this would be introducing our own biases
-			into the process.
+			candidates should actually be fired or hired, because this would be introducing our own biases into
+			the process.
 		</p>
 		<p class="mt-4">
 			However, we <i>can</i> effectively decide which simulated candidates should actually be fired or
-			hired. This is just another feature of the simulation: when we create each simulated candidate
-			we do so as a random collection of related unnamed characteristics, and one of those characteristics
+			hired. This is just another feature of the simulation: when we create each simulated candidate we
+			do so as a random collection of related unnamed characteristics, and one of those characteristics
 			is competence.
 		</p>
 		<p class="mt-12">

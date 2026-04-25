@@ -15,7 +15,7 @@ class RandomNetworkRequestBase(NetworkRequestBase):
 
 
 @dataclass
-class CategoricalNetworkRequest(RandomNetworkRequestBase):
+class NetworkRequest(RandomNetworkRequestBase):
     random_or_predefined: Literal['random'] = "random"
     number_of_nodes: int = 12
     parents_range: Tuple[int, int] = (1, 3)
@@ -28,10 +28,10 @@ class PredefinedNetworkRequest(NetworkRequestBase):
     predefined_model: str
 
 
-GenerateNetworkRequest = Union[CategoricalNetworkRequest, PredefinedNetworkRequest]
+GenerateNetworkRequest = Union[NetworkRequest, PredefinedNetworkRequest]
 
 
-def new_random_network_request(**kwargs) -> CategoricalNetworkRequest:
-    kwargs = replace_blanks_with_defaults(kwargs, CategoricalNetworkRequest)
+def new_random_network_request(**kwargs) -> NetworkRequest:
+    kwargs = replace_blanks_with_defaults(kwargs, NetworkRequest)
     kwargs.pop("predefined_model", None)
-    return CategoricalNetworkRequest(**kwargs)
+    return NetworkRequest(**kwargs)
