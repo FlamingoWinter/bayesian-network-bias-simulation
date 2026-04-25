@@ -12,11 +12,13 @@ num_samples = 5000
 
 class BayesianNetwork(ABC):
     @abstractmethod
-    def __init__(self,
-                 model: pgBN = None,
-                 characteristics: Dict[str, Characteristic] = None,
-                 score_characteristic: str = "score",
-                 application_characteristics: List[str] = None):
+    def __init__(
+        self,
+        model: pgBN = None,
+        characteristics: Dict[str, Characteristic] = None,
+        score_characteristic: str = "score",
+        application_characteristics: List[str] = None,
+    ):
         if application_characteristics is None:
             application_characteristics = []
         if characteristics is None:
@@ -29,7 +31,9 @@ class BayesianNetwork(ABC):
         self.model_type: Literal["", "pgmpy"] = ""
         self.predefined = False
 
-    def set_category_names_for_characteristic(self, characteristic: str, category_names: List[str]):
+    def set_category_names_for_characteristic(
+        self, characteristic: str, category_names: List[str]
+    ):
         self.characteristics[characteristic].set_categories(category_names)
 
     @abstractmethod

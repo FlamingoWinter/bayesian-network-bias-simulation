@@ -9,7 +9,8 @@ class SimulateRequest:
     candidates_to_generate: int = 10_000
     train_proportion: float = 0.9
     recruiters: dict[str, List[str]] = field(
-        default_factory=lambda: {"random_forest": ["no_mitigation"]})
+        default_factory=lambda: {"random_forest": ["no_mitigation"]}
+    )
     protected_characteristic: str = ""
     score_threshold: float = 0
 

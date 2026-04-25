@@ -1,6 +1,9 @@
 from typing import List, Union
 
-from backend.api.response_types.network_response import CharacteristicResponse, DistributionType
+from backend.api.response_types.network_response import (
+    CharacteristicResponse,
+    DistributionType,
+)
 
 
 class Characteristic:
@@ -13,10 +16,12 @@ class Characteristic:
         self.type = "categorical"
         self.category_names = category_names
 
-    def to_characteristic_response(self, prior_distribution: Union[None, list[float]] = None) -> CharacteristicResponse:
+    def to_characteristic_response(
+        self, prior_distribution: Union[None, list[float]] = None
+    ) -> CharacteristicResponse:
         return {
-            'name': self.name,
-            'type': self.type,
-            'categoryNames': self.category_names,
-            'priorDistribution': prior_distribution
+            "name": self.name,
+            "type": self.type,
+            "categoryNames": self.category_names,
+            "priorDistribution": prior_distribution,
         }

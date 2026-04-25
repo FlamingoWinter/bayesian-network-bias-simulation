@@ -2,15 +2,18 @@ from typing import Dict, Callable
 
 import pandas as pd
 
-from backend.api.response_types.recruiter_bias_analysis_response import \
-    RecruiterBiasAnalysisResponse
+from backend.api.response_types.recruiter_bias_analysis_response import (
+    RecruiterBiasAnalysisResponse,
+)
 from backend.bias.group_prediction_information import GroupPredictionInformation
 from backend.network.bayesian_network import Characteristic
 from backend.utilities.capitalise_first import capitalise_first
 
 
 class MitigationBiasAnalysis:
-    def __init__(self, applications: pd.DataFrame, protected_characteristic: Characteristic):
+    def __init__(
+        self, applications: pd.DataFrame, protected_characteristic: Characteristic
+    ):
         # Requires that application has a categorical column "group" denoting whether it is in the biased group,
         # a categorical column "predicted_score" and a categorical column "actual_score",
         # with 0 or 1 for rejected/not competent or hired/competent.
@@ -30,42 +33,54 @@ class MitigationBiasAnalysis:
         s += self.get_pretty_performance_summary()
 
         s += get_pretty_title("Demographic Parity (Independence)")
-        s += self.get_pretty_metric(lambda info: info.hired_rate,
-                                    "Proportion of People Hired",
-                                    "a random person from group {max_group} is {percentage} more likely to be hired than a person from group {min_group}.",
-                                    with_competence=True)
+        s += self.get_pretty_metric(
+            lambda info: info.hired_rate,
+            "Proportion of People Hired",
+            "a random person from group {max_group} is {percentage} more likely to be hired than a person from group {min_group}.",
+            with_competence=True,
+        )
 
         s += get_pretty_title("Equalised Odds (Separation)")
 
-        s += self.get_pretty_metric(lambda info: info.false_negative_rate,
-                                    "False Negative Rate",
-                                    "a random competent person from group {max_group} is {percentage} more likely to be rejected than a random competent person from group {min_group}.",
-                                    positive_correlation_between_metric_and_advantage=False)
+        s += self.get_pretty_metric(
+            lambda info: info.false_negative_rate,
+            "False Negative Rate",
+            "a random competent person from group {max_group} is {percentage} more likely to be rejected than a random competent person from group {min_group}.",
+            positive_correlation_between_metric_and_advantage=False,
+        )
 
         s += get_space()
 
-        s += self.get_pretty_metric(lambda info: info.false_positive_rate,
-                                    "False Positive Rate",
-                                    "a random person from group {max_group} who isn't competent is {percentage} more likely to be hired than a random person from group {min_group} who also isn't competent.")
+        s += self.get_pretty_metric(
+            lambda info: info.false_positive_rate,
+            "False Positive Rate",
+            "a random person from group {max_group} who isn't competent is {percentage} more likely to be hired than a random person from group {min_group} who also isn't competent.",
+        )
 
         s += get_pretty_title("Predictive Parity (Sufficiency)")
 
-        s += self.get_pretty_metric(lambda info: info.false_discovery_rate,
-                                    "False Discovery Rate",
-                                    "a random hired person from group {max_group} is {percentage} more likely to not be competent than a random hired person from group {min_group}.")
+        s += self.get_pretty_metric(
+            lambda info: info.false_discovery_rate,
+            "False Discovery Rate",
+            "a random hired person from group {max_group} is {percentage} more likely to not be competent than a random hired person from group {min_group}.",
+        )
 
         s += get_space()
 
-        s += self.get_pretty_metric(lambda info: info.false_omission_rate,
-                                    "False Omission Rate",
-                                    "a random rejected person from group {max_group} is {percentage} more likely to actually be competent than a random rejected person from group {min_group}.",
-                                    positive_correlation_between_metric_and_advantage=False)
+        s += self.get_pretty_metric(
+            lambda info: info.false_omission_rate,
+            "False Omission Rate",
+            "a random rejected person from group {max_group} is {percentage} more likely to actually be competent than a random rejected person from group {min_group}.",
+            positive_correlation_between_metric_and_advantage=False,
+        )
         print(s)
 
     def get_pretty_performance_summary(self) -> str:
         group = self.general
 
-        return get_pretty_title("Performance") + f"""
+        return (
+            get_pretty_title("Performance")
+            + f"""
         Model Accuracy: {group.accuracy:.2g}
         
         Proportion of People Hired: {group.hired_rate}
@@ -82,17 +97,25 @@ class MitigationBiasAnalysis:
         
         False Omission Rate: {group.false_omission_rate:.2g}
             (Of people not hired, how many were actually competent?)"""
+        )
 
-    def get_pretty_metric(self, find_metric: Callable[[GroupPredictionInformation], float],
-                          metric_english_name: str, explanation: str,
-                          with_competence=False,
-                          positive_correlation_between_metric_and_advantage=True) -> str:
+    def get_pretty_metric(
+        self,
+        find_metric: Callable[[GroupPredictionInformation], float],
+        metric_english_name: str,
+        explanation: str,
+        with_competence=False,
+        positive_correlation_between_metric_and_advantage=True,
+    ) -> str:
         s = ""
         for group_name, info in self.by_group.items():
             s += f"""
         {metric_english_name} in group {group_name}: {find_metric(info):.2g}"""
 
-        metric_and_group_names = [(find_metric(info), group_name) for [group_name, info] in self.by_group.items()]
+        metric_and_group_names = [
+            (find_metric(info), group_name)
+            for [group_name, info] in self.by_group.items()
+        ]
         min_rate, min_group = min(metric_and_group_names)
         max_rate, max_group = max(metric_and_group_names)
         percentage = (max_rate / min_rate - 1) * 100
@@ -101,23 +124,41 @@ class MitigationBiasAnalysis:
         if len(self.by_group) > 2:
             s += f"""
             The biggest difference among groups in the proportion of people hired is {min_group} and {max_group}, 
-            where """ + explanation.format(min_group=min_group, max_group=max_group, percentage=formatted_percentage)
+            where """ + explanation.format(
+                min_group=min_group,
+                max_group=max_group,
+                percentage=formatted_percentage,
+            )
         else:
             s += f"""
             
         {capitalise_first(explanation.format(min_group=min_group, max_group=max_group, percentage=formatted_percentage))}"""
 
-        superlative = ("minimal" if percentage < 2 else
-                       "subtle" if percentage < 10 else
-                       "moderate" if percentage < 25 else  # For demographic parity, this breaks the disparate impact, and could be illegal in some contexts.
-                       "significant")
+        superlative = (
+            "minimal"
+            if percentage < 2
+            else "subtle"
+            if percentage < 10
+            else "moderate"
+            if percentage < 25
+            # For demographic parity, this breaks the disparate impact, and could be illegal in some contexts.
+            else "significant"
+        )
 
         s += f"""
         
-        ** By this metric,{" and if we assume these groups should have the same chance at attaining a job," if with_competence else ""} there is a {superlative} bias for group {
-        min_group if not positive_correlation_between_metric_and_advantage else max_group
+        ** By this metric,{
+            " and if we assume these groups should have the same chance at attaining a job,"
+            if with_competence
+            else ""
+        } there is a {superlative} bias for group {
+            min_group
+            if not positive_correlation_between_metric_and_advantage
+            else max_group
         } and against group {
-        max_group if not positive_correlation_between_metric_and_advantage else min_group
+            max_group
+            if not positive_correlation_between_metric_and_advantage
+            else min_group
         }"""
 
         if with_competence:
@@ -141,7 +182,7 @@ class MitigationBiasAnalysis:
     def to_response(self) -> RecruiterBiasAnalysisResponse:
         return {
             "general": self.general.to_response(),
-            "byGroup": {g_name: g.to_response() for g_name, g in self.by_group.items()}
+            "byGroup": {g_name: g.to_response() for g_name, g in self.by_group.items()},
         }
 
 

@@ -40,4 +40,6 @@ class BayesianRecruiter(Recruiter):
             for _, row in applications.iterrows()
         ]
 
-        return pd.DataFrame(probabilities, columns=self.model.get_cpds("score").state_names["score"])[1]
+        return pd.DataFrame(
+            probabilities, columns=self.model.get_cpds("score").state_names["score"]
+        )[1]

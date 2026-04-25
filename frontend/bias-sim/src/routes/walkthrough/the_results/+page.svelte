@@ -225,16 +225,28 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet1 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/fnr_difference_all.png" alt="Chart showing False Negative Rate difference across all recruiters and mitigations" />
+										<img
+											src="/results/fnr_difference_all.png"
+											alt="Chart showing False Negative Rate difference across all recruiters and mitigations"
+										/>
 									</div>
 									<div class={tabSet1 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/fpr_difference_all.png" alt="Chart showing False Positive Rate difference across all recruiters and mitigations" />
+										<img
+											src="/results/fpr_difference_all.png"
+											alt="Chart showing False Positive Rate difference across all recruiters and mitigations"
+										/>
 									</div>
 									<div class={tabSet1 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/fdr_difference_all.png" alt="Chart showing False Discovery Rate difference across all recruiters and mitigations" />
+										<img
+											src="/results/fdr_difference_all.png"
+											alt="Chart showing False Discovery Rate difference across all recruiters and mitigations"
+										/>
 									</div>
 									<div class={tabSet1 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/for_difference_all.png" alt="Chart showing False Omission Rate difference across all recruiters and mitigations" />
+										<img
+											src="/results/for_difference_all.png"
+											alt="Chart showing False Omission Rate difference across all recruiters and mitigations"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -250,16 +262,28 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet2 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/fnr_difference_acc.png" alt="Chart showing False Negative Rate difference for accurate recruiters only" />
+										<img
+											src="/results/fnr_difference_acc.png"
+											alt="Chart showing False Negative Rate difference for accurate recruiters only"
+										/>
 									</div>
 									<div class={tabSet2 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/fpr_difference_acc.png" alt="Chart showing False Positive Rate difference for accurate recruiters only" />
+										<img
+											src="/results/fpr_difference_acc.png"
+											alt="Chart showing False Positive Rate difference for accurate recruiters only"
+										/>
 									</div>
 									<div class={tabSet2 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/fdr_difference_acc.png" alt="Chart showing False Discovery Rate difference for accurate recruiters only" />
+										<img
+											src="/results/fdr_difference_acc.png"
+											alt="Chart showing False Discovery Rate difference for accurate recruiters only"
+										/>
 									</div>
 									<div class={tabSet2 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/for_difference_acc.png" alt="Chart showing False Omission Rate difference for accurate recruiters only" />
+										<img
+											src="/results/for_difference_acc.png"
+											alt="Chart showing False Omission Rate difference for accurate recruiters only"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -331,28 +355,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fnr_fnr.png" alt="Heatmap showing False Negative Rate when optimising for False Negative Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fnr_fnr.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Negative Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FNR Difference' && tabSet4 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fnr_fpr.png" alt="Heatmap showing False Negative Rate when optimising for False Positive Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fnr_fpr.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Positive Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FNR Difference' && tabSet4 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fnr_fdr.png" alt="Heatmap showing False Negative Rate when optimising for False Discovery Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fnr_fdr.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Discovery Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FNR Difference' && tabSet4 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fnr_for.png" alt="Heatmap showing False Negative Rate when optimising for False Omission Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fnr_for.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Omission Rate (low disparity scenario)"
+													/>
 												</div>
 
 												<div
@@ -360,28 +396,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fpr_fnr.png" alt="Heatmap showing False Positive Rate when optimising for False Negative Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fpr_fnr.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Negative Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FPR Difference' && tabSet4 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fpr_fpr.png" alt="Heatmap showing False Positive Rate when optimising for False Positive Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fpr_fpr.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Positive Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FPR Difference' && tabSet4 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fpr_fdr.png" alt="Heatmap showing False Positive Rate when optimising for False Discovery Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fpr_fdr.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Discovery Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FPR Difference' && tabSet4 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fpr_for.png" alt="Heatmap showing False Positive Rate when optimising for False Omission Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fpr_for.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Omission Rate (low disparity scenario)"
+													/>
 												</div>
 
 												<div
@@ -389,28 +437,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fdr_fnr.png" alt="Heatmap showing False Discovery Rate when optimising for False Negative Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fdr_fnr.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Negative Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FDR Difference' && tabSet4 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fdr_fpr.png" alt="Heatmap showing False Discovery Rate when optimising for False Positive Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fdr_fpr.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Positive Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FDR Difference' && tabSet4 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fdr_fdr.png" alt="Heatmap showing False Discovery Rate when optimising for False Discovery Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fdr_fdr.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Discovery Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FDR Difference' && tabSet4 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/fdr_for.png" alt="Heatmap showing False Discovery Rate when optimising for False Omission Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/fdr_for.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Omission Rate (low disparity scenario)"
+													/>
 												</div>
 
 												<div
@@ -418,28 +478,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/for_fnr.png" alt="Heatmap showing False Omission Rate when optimising for False Negative Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/for_fnr.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Negative Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FOR Difference' && tabSet4 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/for_fpr.png" alt="Heatmap showing False Omission Rate when optimising for False Positive Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/for_fpr.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Positive Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FOR Difference' && tabSet4 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/for_fdr.png" alt="Heatmap showing False Omission Rate when optimising for False Discovery Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/for_fdr.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Discovery Rate (low disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet3 === 'FOR Difference' && tabSet4 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_low_disp/for_for.png" alt="Heatmap showing False Omission Rate when optimising for False Omission Rate (low disparity scenario)" />
+													<img
+														src="/results/compare_metrics_low_disp/for_for.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Omission Rate (low disparity scenario)"
+													/>
 												</div>
 											</div>
 										</div>
@@ -518,28 +590,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fnr_fnr.png" alt="Heatmap showing False Negative Rate when optimising for False Negative Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fnr_fnr.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Negative Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FNR Difference' && tabSet6 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fnr_fpr.png" alt="Heatmap showing False Negative Rate when optimising for False Positive Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fnr_fpr.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Positive Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FNR Difference' && tabSet6 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fnr_fdr.png" alt="Heatmap showing False Negative Rate when optimising for False Discovery Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fnr_fdr.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Discovery Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FNR Difference' && tabSet6 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fnr_for.png" alt="Heatmap showing False Negative Rate when optimising for False Omission Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fnr_for.png"
+														alt="Heatmap showing False Negative Rate when optimising for False Omission Rate (high disparity scenario)"
+													/>
 												</div>
 
 												<div
@@ -547,28 +631,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fpr_fnr.png" alt="Heatmap showing False Positive Rate when optimising for False Negative Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fpr_fnr.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Negative Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FPR Difference' && tabSet6 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fpr_fpr.png" alt="Heatmap showing False Positive Rate when optimising for False Positive Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fpr_fpr.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Positive Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FPR Difference' && tabSet6 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fpr_fdr.png" alt="Heatmap showing False Positive Rate when optimising for False Discovery Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fpr_fdr.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Discovery Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FPR Difference' && tabSet6 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fpr_for.png" alt="Heatmap showing False Positive Rate when optimising for False Omission Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fpr_for.png"
+														alt="Heatmap showing False Positive Rate when optimising for False Omission Rate (high disparity scenario)"
+													/>
 												</div>
 
 												<div
@@ -576,28 +672,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fdr_fnr.png" alt="Heatmap showing False Discovery Rate when optimising for False Negative Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fdr_fnr.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Negative Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FDR Difference' && tabSet6 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fdr_fpr.png" alt="Heatmap showing False Discovery Rate when optimising for False Positive Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fdr_fpr.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Positive Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FDR Difference' && tabSet6 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fdr_fdr.png" alt="Heatmap showing False Discovery Rate when optimising for False Discovery Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fdr_fdr.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Discovery Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FDR Difference' && tabSet6 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/fdr_for.png" alt="Heatmap showing False Discovery Rate when optimising for False Omission Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/fdr_for.png"
+														alt="Heatmap showing False Discovery Rate when optimising for False Omission Rate (high disparity scenario)"
+													/>
 												</div>
 
 												<div
@@ -605,28 +713,40 @@
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/for_fnr.png" alt="Heatmap showing False Omission Rate when optimising for False Negative Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/for_fnr.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Negative Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FOR Difference' && tabSet6 === 'FPR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/for_fpr.png" alt="Heatmap showing False Omission Rate when optimising for False Positive Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/for_fpr.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Positive Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FOR Difference' && tabSet6 === 'FDR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/for_fdr.png" alt="Heatmap showing False Omission Rate when optimising for False Discovery Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/for_fdr.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Discovery Rate (high disparity scenario)"
+													/>
 												</div>
 												<div
 													class={tabSet5 === 'FOR Difference' && tabSet6 === 'FOR Difference'
 														? ''
 														: 'hidden'}
 												>
-													<img src="/results/compare_metrics_high_disp/for_for.png" alt="Heatmap showing False Omission Rate when optimising for False Omission Rate (high disparity scenario)" />
+													<img
+														src="/results/compare_metrics_high_disp/for_for.png"
+														alt="Heatmap showing False Omission Rate when optimising for False Omission Rate (high disparity scenario)"
+													/>
 												</div>
 											</div>
 										</div>
@@ -662,7 +782,11 @@
 							</p>
 
 							<div class="mt-12 flex justify-center">
-								<img width="600" src="/results/equalised_odds_and_predictive_parity.png" alt="Chart comparing equalised odds and predictive parity mitigation strategies across recruiters" />
+								<img
+									width="600"
+									src="/results/equalised_odds_and_predictive_parity.png"
+									alt="Chart comparing equalised odds and predictive parity mitigation strategies across recruiters"
+								/>
 							</div>
 						</div>
 					</svelte:fragment>
@@ -716,19 +840,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet7 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/bias_high_disp/fnr.png" alt="Chart showing False Negative Rate bias in a high disparity scenario" />
+										<img
+											src="/results/bias_high_disp/fnr.png"
+											alt="Chart showing False Negative Rate bias in a high disparity scenario"
+										/>
 									</div>
 									<div class={tabSet7 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/bias_high_disp/fpr.png" alt="Chart showing False Positive Rate bias in a high disparity scenario" />
+										<img
+											src="/results/bias_high_disp/fpr.png"
+											alt="Chart showing False Positive Rate bias in a high disparity scenario"
+										/>
 									</div>
 									<div class={tabSet7 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/bias_high_disp/fdr.png" alt="Chart showing False Discovery Rate bias in a high disparity scenario" />
+										<img
+											src="/results/bias_high_disp/fdr.png"
+											alt="Chart showing False Discovery Rate bias in a high disparity scenario"
+										/>
 									</div>
 									<div class={tabSet7 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/bias_high_disp/for.png" alt="Chart showing False Omission Rate bias in a high disparity scenario" />
+										<img
+											src="/results/bias_high_disp/for.png"
+											alt="Chart showing False Omission Rate bias in a high disparity scenario"
+										/>
 									</div>
 									<div class={tabSet7 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/bias_high_disp/dem.png" alt="Chart showing Demographic Parity bias in a high disparity scenario" />
+										<img
+											src="/results/bias_high_disp/dem.png"
+											alt="Chart showing Demographic Parity bias in a high disparity scenario"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -758,19 +897,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet8 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_competence/fnr.png" alt="Chart comparing False Negative Rate bias across different competence thresholds" />
+										<img
+											src="/results/compare_competence/fnr.png"
+											alt="Chart comparing False Negative Rate bias across different competence thresholds"
+										/>
 									</div>
 									<div class={tabSet8 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_competence/fpr.png" alt="Chart comparing False Positive Rate bias across different competence thresholds" />
+										<img
+											src="/results/compare_competence/fpr.png"
+											alt="Chart comparing False Positive Rate bias across different competence thresholds"
+										/>
 									</div>
 									<div class={tabSet8 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_competence/fdr.png" alt="Chart comparing False Discovery Rate bias across different competence thresholds" />
+										<img
+											src="/results/compare_competence/fdr.png"
+											alt="Chart comparing False Discovery Rate bias across different competence thresholds"
+										/>
 									</div>
 									<div class={tabSet8 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_competence/for.png" alt="Chart comparing False Omission Rate bias across different competence thresholds" />
+										<img
+											src="/results/compare_competence/for.png"
+											alt="Chart comparing False Omission Rate bias across different competence thresholds"
+										/>
 									</div>
 									<div class={tabSet8 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/compare_competence/dem.png" alt="Chart comparing Demographic Parity bias across different competence thresholds" />
+										<img
+											src="/results/compare_competence/dem.png"
+											alt="Chart comparing Demographic Parity bias across different competence thresholds"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -789,19 +943,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet9 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/very_low_disparity/fnr.png" alt="Chart showing False Negative Rate bias in a very low disparity scenario" />
+										<img
+											src="/results/very_low_disparity/fnr.png"
+											alt="Chart showing False Negative Rate bias in a very low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet9 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/very_low_disparity/fpr.png" alt="Chart showing False Positive Rate bias in a very low disparity scenario" />
+										<img
+											src="/results/very_low_disparity/fpr.png"
+											alt="Chart showing False Positive Rate bias in a very low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet9 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/very_low_disparity/fdr.png" alt="Chart showing False Discovery Rate bias in a very low disparity scenario" />
+										<img
+											src="/results/very_low_disparity/fdr.png"
+											alt="Chart showing False Discovery Rate bias in a very low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet9 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/very_low_disparity/for.png" alt="Chart showing False Omission Rate bias in a very low disparity scenario" />
+										<img
+											src="/results/very_low_disparity/for.png"
+											alt="Chart showing False Omission Rate bias in a very low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet9 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/very_low_disparity/dem.png" alt="Chart showing Demographic Parity bias in a very low disparity scenario" />
+										<img
+											src="/results/very_low_disparity/dem.png"
+											alt="Chart showing Demographic Parity bias in a very low disparity scenario"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -880,19 +1049,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet10 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_conditions/fnr.png" alt="Chart comparing False Negative Rate bias across different network conditions" />
+										<img
+											src="/results/compare_conditions/fnr.png"
+											alt="Chart comparing False Negative Rate bias across different network conditions"
+										/>
 									</div>
 									<div class={tabSet10 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_conditions/fpr.png" alt="Chart comparing False Positive Rate bias across different network conditions" />
+										<img
+											src="/results/compare_conditions/fpr.png"
+											alt="Chart comparing False Positive Rate bias across different network conditions"
+										/>
 									</div>
 									<div class={tabSet10 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_conditions/fdr.png" alt="Chart comparing False Discovery Rate bias across different network conditions" />
+										<img
+											src="/results/compare_conditions/fdr.png"
+											alt="Chart comparing False Discovery Rate bias across different network conditions"
+										/>
 									</div>
 									<div class={tabSet10 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/compare_conditions/for.png" alt="Chart comparing False Omission Rate bias across different network conditions" />
+										<img
+											src="/results/compare_conditions/for.png"
+											alt="Chart comparing False Omission Rate bias across different network conditions"
+										/>
 									</div>
 									<div class={tabSet10 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/compare_conditions/dem.png" alt="Chart comparing Demographic Parity bias across different network conditions" />
+										<img
+											src="/results/compare_conditions/dem.png"
+											alt="Chart comparing Demographic Parity bias across different network conditions"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -982,19 +1166,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet11 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters/fnr.png" alt="Chart showing False Negative Rate bias across different recruiter types" />
+										<img
+											src="/results/recruiters/fnr.png"
+											alt="Chart showing False Negative Rate bias across different recruiter types"
+										/>
 									</div>
 									<div class={tabSet11 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters/fpr.png" alt="Chart showing False Positive Rate bias across different recruiter types" />
+										<img
+											src="/results/recruiters/fpr.png"
+											alt="Chart showing False Positive Rate bias across different recruiter types"
+										/>
 									</div>
 									<div class={tabSet11 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters/fdr.png" alt="Chart showing False Discovery Rate bias across different recruiter types" />
+										<img
+											src="/results/recruiters/fdr.png"
+											alt="Chart showing False Discovery Rate bias across different recruiter types"
+										/>
 									</div>
 									<div class={tabSet11 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters/for.png" alt="Chart showing False Omission Rate bias across different recruiter types" />
+										<img
+											src="/results/recruiters/for.png"
+											alt="Chart showing False Omission Rate bias across different recruiter types"
+										/>
 									</div>
 									<div class={tabSet11 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/recruiters/dem.png" alt="Chart showing Demographic Parity bias across different recruiter types" />
+										<img
+											src="/results/recruiters/dem.png"
+											alt="Chart showing Demographic Parity bias across different recruiter types"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -1026,19 +1225,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet12 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters_low_disp/fnr.png" alt="Chart showing False Negative Rate bias across recruiter types in a low disparity scenario" />
+										<img
+											src="/results/recruiters_low_disp/fnr.png"
+											alt="Chart showing False Negative Rate bias across recruiter types in a low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet12 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters_low_disp/fpr.png" alt="Chart showing False Positive Rate bias across recruiter types in a low disparity scenario" />
+										<img
+											src="/results/recruiters_low_disp/fpr.png"
+											alt="Chart showing False Positive Rate bias across recruiter types in a low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet12 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters_low_disp/fdr.png" alt="Chart showing False Discovery Rate bias across recruiter types in a low disparity scenario" />
+										<img
+											src="/results/recruiters_low_disp/fdr.png"
+											alt="Chart showing False Discovery Rate bias across recruiter types in a low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet12 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/recruiters_low_disp/for.png" alt="Chart showing False Omission Rate bias across recruiter types in a low disparity scenario" />
+										<img
+											src="/results/recruiters_low_disp/for.png"
+											alt="Chart showing False Omission Rate bias across recruiter types in a low disparity scenario"
+										/>
 									</div>
 									<div class={tabSet12 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/recruiters_low_disp/dem.png" alt="Chart showing Demographic Parity bias across recruiter types in a low disparity scenario" />
+										<img
+											src="/results/recruiters_low_disp/dem.png"
+											alt="Chart showing Demographic Parity bias across recruiter types in a low disparity scenario"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>
@@ -1068,19 +1282,34 @@
 								{/each}
 								<svelte:fragment slot="panel">
 									<div class={tabSet13 === 'FNR Difference' ? '' : 'hidden'}>
-										<img src="/results/mitigations/fnr.png" alt="Chart showing False Negative Rate bias across different bias mitigation strategies" />
+										<img
+											src="/results/mitigations/fnr.png"
+											alt="Chart showing False Negative Rate bias across different bias mitigation strategies"
+										/>
 									</div>
 									<div class={tabSet13 === 'FPR Difference' ? '' : 'hidden'}>
-										<img src="/results/mitigations/fpr.png" alt="Chart showing False Positive Rate bias across different bias mitigation strategies" />
+										<img
+											src="/results/mitigations/fpr.png"
+											alt="Chart showing False Positive Rate bias across different bias mitigation strategies"
+										/>
 									</div>
 									<div class={tabSet13 === 'FDR Difference' ? '' : 'hidden'}>
-										<img src="/results/mitigations/fdr.png" alt="Chart showing False Discovery Rate bias across different bias mitigation strategies" />
+										<img
+											src="/results/mitigations/fdr.png"
+											alt="Chart showing False Discovery Rate bias across different bias mitigation strategies"
+										/>
 									</div>
 									<div class={tabSet13 === 'FOR Difference' ? '' : 'hidden'}>
-										<img src="/results/mitigations/for.png" alt="Chart showing False Omission Rate bias across different bias mitigation strategies" />
+										<img
+											src="/results/mitigations/for.png"
+											alt="Chart showing False Omission Rate bias across different bias mitigation strategies"
+										/>
 									</div>
 									<div class={tabSet13 === 'Demographic Parity' ? '' : 'hidden'}>
-										<img src="/results/mitigations/dem.png" alt="Chart showing Demographic Parity bias across different bias mitigation strategies" />
+										<img
+											src="/results/mitigations/dem.png"
+											alt="Chart showing Demographic Parity bias across different bias mitigation strategies"
+										/>
 									</div>
 								</svelte:fragment>
 							</TabGroup>

@@ -10,14 +10,23 @@ from backend.recruiters.recruiter import Recruiter
 
 
 class Transformer(nn.Module):
-    def __init__(self, input_size: int, hidden_size: int, output_size: int,
-                 depth: int, num_heads: int, dropout=0.1):
+    def __init__(
+        self,
+        input_size: int,
+        hidden_size: int,
+        output_size: int,
+        depth: int,
+        num_heads: int,
+        dropout=0.1,
+    ):
         super(Transformer, self).__init__()
 
         self.first_layer = nn.Linear(input_size, hidden_size)
         self.encoder = nn.TransformerEncoder(
-            nn.TransformerEncoderLayer(d_model=hidden_size, nhead=num_heads, dropout=dropout, batch_first=True),
-            num_layers=depth
+            nn.TransformerEncoderLayer(
+                d_model=hidden_size, nhead=num_heads, dropout=dropout, batch_first=True
+            ),
+            num_layers=depth,
         )
 
         self.output_layer = nn.Linear(hidden_size, output_size)
@@ -37,8 +46,16 @@ class EncoderOnlyTransformerRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, mitigations: List[Mitigation], width=16, depth=4, epochs=3, lr=1e-4, batch_size=512,
-                 num_heads=2):
+    def __init__(
+        self,
+        mitigations: List[Mitigation],
+        width=16,
+        depth=4,
+        epochs=3,
+        lr=1e-4,
+        batch_size=512,
+        num_heads=2,
+    ):
         super().__init__(mitigations)
         self.model = None
         self.width = width
@@ -51,11 +68,23 @@ class EncoderOnlyTransformerRecruiter(Recruiter):
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):
         if self.model is None:
-            self.model = Transformer(len(application_train.columns), self.width, 1,
-                                     self.depth, self.num_heads)
+            self.model = Transformer(
+                len(application_train.columns),
+                self.width,
+                1,
+                self.depth,
+                self.num_heads,
+            )
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
 
-        train_nn_model(self.model, self.optimiser, application_train, score_train, self.batch_size, self.epochs)
+        train_nn_model(
+            self.model,
+            self.optimiser,
+            application_train,
+            score_train,
+            self.batch_size,
+            self.epochs,
+        )
 
     def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
         self.model.eval()

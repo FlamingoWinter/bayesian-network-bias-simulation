@@ -14,8 +14,9 @@ class GenericConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def send_and_flush(self, message: str, error=False):
-        await self.send(text_data=json.dumps({
-            'message': f"{message}",
-            **({"error": True} if error else {})
-        }))
+        await self.send(
+            text_data=json.dumps(
+                {"message": f"{message}", **({"error": True} if error else {})}
+            )
+        )
         await asyncio.sleep(0.1)

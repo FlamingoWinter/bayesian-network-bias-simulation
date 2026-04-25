@@ -15,7 +15,7 @@ class ShallowMLP(nn.Module):
         self.model = nn.Sequential(
             nn.Linear(input_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
+            nn.Linear(hidden_size, output_size),
         )
 
     def forward(self, x):
@@ -31,7 +31,9 @@ class ShallowMLPRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, mitigations: List[Mitigation], width=64, epochs=4, lr=0.01, batch_size=512):
+    def __init__(
+        self, mitigations: List[Mitigation], width=64, epochs=4, lr=0.01, batch_size=512
+    ):
         super().__init__(mitigations)
         self.model = None
         self.width = width
@@ -44,7 +46,14 @@ class ShallowMLPRecruiter(Recruiter):
         if self.model is None:
             self.model = ShallowMLP(len(application_train.columns), self.width, 1)
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
-        train_nn_model(self.model, self.optimiser, application_train, score_train, self.batch_size, self.epochs)
+        train_nn_model(
+            self.model,
+            self.optimiser,
+            application_train,
+            score_train,
+            self.batch_size,
+            self.epochs,
+        )
 
     def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
         self.model.eval()

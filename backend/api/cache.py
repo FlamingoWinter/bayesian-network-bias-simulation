@@ -15,12 +15,14 @@ def cache(key: str, to_cache):
 def from_cache(key: str, backup_key: str = "") -> Any:
     try:
         return dill.loads(django_cache.get(key))
-    except:
+    except Exception:
         print("used backup instead of", key)
         return dill.loads(django_cache.get(backup_key))
 
 
-def cache_network_and_generate_applicants(network: BayesianNetwork, session_id: str = None):
+def cache_network_and_generate_applicants(
+    network: BayesianNetwork, session_id: str = None
+):
     network_response: NetworkResponse = network.to_network_response()
 
     if session_id is not None:

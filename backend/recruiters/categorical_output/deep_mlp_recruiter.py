@@ -35,7 +35,15 @@ class DeepMLPRecruiter(Recruiter):
     def output_type(self):
         return "categorical"
 
-    def __init__(self, mitigations: List[Mitigation], width=16, depth=16, epochs=10, lr=0.01, batch_size=512):
+    def __init__(
+        self,
+        mitigations: List[Mitigation],
+        width=16,
+        depth=16,
+        epochs=10,
+        lr=0.01,
+        batch_size=512,
+    ):
         super().__init__(mitigations)
         self.model = None
         self.width = width
@@ -47,9 +55,18 @@ class DeepMLPRecruiter(Recruiter):
 
     def train(self, application_train: pd.DataFrame, score_train: pd.Series):
         if self.model is None:
-            self.model = DeepMLP(len(application_train.columns), self.width, 1, self.depth)
+            self.model = DeepMLP(
+                len(application_train.columns), self.width, 1, self.depth
+            )
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
-        train_nn_model(self.model, self.optimiser, application_train, score_train, self.batch_size, self.epochs)
+        train_nn_model(
+            self.model,
+            self.optimiser,
+            application_train,
+            score_train,
+            self.batch_size,
+            self.epochs,
+        )
 
     def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
         self.model.eval()

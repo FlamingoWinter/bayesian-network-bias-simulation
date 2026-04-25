@@ -4,9 +4,14 @@ from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 
 
-def train_nn_model(model: nn.Module, optimiser: optim.Optimizer,
-                   application_train: pd.DataFrame, score_train: pd.Series,
-                   batch_size: int, epochs: int):
+def train_nn_model(
+    model: nn.Module,
+    optimiser: optim.Optimizer,
+    application_train: pd.DataFrame,
+    score_train: pd.Series,
+    batch_size: int,
+    epochs: int,
+):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 

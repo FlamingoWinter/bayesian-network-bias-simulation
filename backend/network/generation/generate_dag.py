@@ -69,11 +69,19 @@ def generate_random_dag(nodes: int, parents_range: Tuple[int, int]) -> nx.DiGrap
                 connections_by_out_point[random_out_point] += 1
 
             for out_point in out_points:
-                connections = sample_bounded_binomial(len(node_list), 0.5, (
-                    max(min_parents, connections_by_out_point[out_point]), max_parents))
+                connections = sample_bounded_binomial(
+                    len(node_list),
+                    0.5,
+                    (
+                        max(min_parents, connections_by_out_point[out_point]),
+                        max_parents,
+                    ),
+                )
 
                 random.shuffle(node_list)
-                for node in node_list[:(connections - connections_by_out_point[out_point])]:
+                for node in node_list[
+                    : (connections - connections_by_out_point[out_point])
+                ]:
                     dag.add_edge(node, out_point)
 
         if nx.is_weakly_connected:
@@ -116,7 +124,9 @@ def calculate_out_point_counts(nodes: int, parents_range: Tuple[int, int]) -> Li
                 # t is the total ways to link one outpoint to the m nodes on the existing graph
                 t = 0
                 for i in range(min(m, min_parents), min(m, max_parents) + 1):
-                    t += math.comb(m, i)  # The number of ways we can connect our out-point given that it has i parents
+                    t += math.comb(
+                        m, i
+                    )  # The number of ways we can connect our out-point given that it has i parents
 
                 # d is the total number of dags we could have had where we linked these out-points such that at least one of the s old outpoints are disconnected
                 # This is a problem because it would mean that that old out-point is still an out-point,
@@ -135,22 +145,24 @@ def calculate_out_point_counts(nodes: int, parents_range: Tuple[int, int]) -> Li
 
                 d = 0
                 for i in range(1, s + 1):
-                    # l is the number of ways we could link these out-points such that i specific outpoints are disconnected
-                    l = 0
+                    # link_ways is the number of ways we could link these out-points such that i specific outpoints are disconnected
+                    link_ways = 0
 
-                    for x in range(min(m - i, min_parents), min(m - i, max_parents) + 1):
+                    for x in range(
+                        min(m - i, min_parents), min(m - i, max_parents) + 1
+                    ):
                         # the number of ways of choosing x parents from the (m-i) available non-outpoint nodes
-                        l += math.comb(m - i, x)
+                        link_ways += math.comb(m - i, x)
 
                     sign = (-1) ** (i + 1)
 
                     if m - i != 0:
                         # sign is for inclusion-exclusion
-                        # (l ** k) is (the number of ways at least i specific outpoints are disconnected) ** (number of outpoints)
+                        # (link_ways ** k) is (the number of ways at least i specific outpoints are disconnected) ** (number of outpoints)
                         # math.comb(s, i) is the number of ways of picking i disconnected outpoints from s possible
-                        d += sign * math.comb(s, i) * (l ** k)
+                        d += sign * math.comb(s, i) * (link_ways**k)
 
-                c[m, s, k] = t ** k - d
+                c[m, s, k] = t**k - d
 
     # a[n, k] is how many graphs there are with n nodes and k out-points, ignoring permutations.
     a = np.ones((nodes + 1, nodes + 1), dtype=object)
@@ -214,7 +226,7 @@ def calculate_out_point_counts(nodes: int, parents_range: Tuple[int, int]) -> Li
 
 def binomial_pmf(n, k, p):
     comb = math.comb(n, k)
-    return comb * (p ** k) * ((1 - p) ** (n - k))
+    return comb * (p**k) * ((1 - p) ** (n - k))
 
 
 def sample_bounded_binomial(n: int, p: float, bounds: Tuple[int, int]):

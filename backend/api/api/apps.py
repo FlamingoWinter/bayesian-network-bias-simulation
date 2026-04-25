@@ -3,17 +3,24 @@ from django.apps import AppConfig
 from backend.api.cache import cache_network_and_generate_applicants
 from backend.network.bayesian_network import BayesianNetwork
 from backend.network.pgmpy_network import PgmPyNetwork
-from backend.network.predefined.random_seeded import get_random_seeded_network, get_named_seeded_network
+from backend.network.predefined.random_seeded import (
+    get_random_seeded_network,
+    get_named_seeded_network,
+)
 from backend.network.predefined.shark_sightings import get_shark_sighting_network
 from backend.network.predefined.sprinkler import get_sprinkler_network
 
 
 class ApiConfig(AppConfig):
-    name = 'api'
+    name = "api"
 
     def ready(self):
         import sys
-        if any(cmd in sys.argv for cmd in ['migrate', 'makemigrations', 'collectstatic', 'shell']):
+
+        if any(
+            cmd in sys.argv
+            for cmd in ["migrate", "makemigrations", "collectstatic", "shell"]
+        ):
             return
 
         network: BayesianNetwork = get_sprinkler_network()

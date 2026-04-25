@@ -4,7 +4,7 @@ class CharacteristicName:
         self.values = values
         self.hml = hml
 
-    def set_number_values(self, num_values: int) -> 'CharacteristicName':
+    def set_number_values(self, num_values: int) -> "CharacteristicName":
         if self.hml:
             self.values = ["V. High", "High", "Medium", "Low", "V. Low"]
             if num_values == 2:
@@ -22,12 +22,21 @@ class CharacteristicName:
 protected_characteristics = [
     CharacteristicName("Gender", ["Male", "Female", "Non-Binary", "Other"]),
     CharacteristicName("Race", ["White", "Black", "Asian", "Hispanic", "Other"]),
-    CharacteristicName("Religion or Belief", ["Christian", "Muslim", "Jewish", "Hindu", "Other"]),
-    CharacteristicName("Sexual Orientation", ["Heterosexual", "Homosexual", "Bisexual", "Other"]),
-    CharacteristicName("Gender Identity", ["Cisgender", "Transgender", "Non-Binary", "Other"]),
+    CharacteristicName(
+        "Religion or Belief", ["Christian", "Muslim", "Jewish", "Hindu", "Other"]
+    ),
+    CharacteristicName(
+        "Sexual Orientation", ["Heterosexual", "Homosexual", "Bisexual", "Other"]
+    ),
+    CharacteristicName(
+        "Gender Identity", ["Cisgender", "Transgender", "Non-Binary", "Other"]
+    ),
     CharacteristicName("Age", ["18-30", "31-40", "41-50", "51-60", "61+"]),
     CharacteristicName("Marital Status", ["Married", "Single", "Divorced", "Widowed"]),
-    CharacteristicName("Family Income Class", ["High Upper Class", "Upper Class", "Middle Class", "Lower Class"]),
+    CharacteristicName(
+        "Family Income Class",
+        ["High Upper Class", "Upper Class", "Middle Class", "Lower Class"],
+    ),
     CharacteristicName("School Attended", ["Private", "State", "Selective"]),
 ]
 
@@ -67,7 +76,6 @@ affector_characteristics = [
     CharacteristicName("Conflict Resolution Skills", hml=True),
     CharacteristicName("Leadership Ability", hml=True),
     CharacteristicName("Emotional Intelligence", hml=True),
-
 ]
 
 affected_characteristics = [
@@ -81,4 +89,6 @@ affected_characteristics = [
     CharacteristicName("Job Satisfaction", hml=True),
 ]
 
-score_characteristic = CharacteristicName("Job Competency", ["Competent", "Not Competent"])
+score_characteristic = CharacteristicName(
+    "Job Competency", ["Competent", "Not Competent"]
+)
