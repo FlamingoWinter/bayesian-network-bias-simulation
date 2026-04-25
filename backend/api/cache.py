@@ -4,8 +4,8 @@ import dill
 from django.core.cache import cache as django_cache
 from pgmpy.models import BayesianNetwork as PgBn
 
-from backend.api.response_types.network_response import NetworkResponse
-from backend.network.bayesian_network import BayesianNetwork
+from backend.api.types import NetworkResponse
+from backend.simulation.build_network.bayesian_network import BayesianNetwork
 
 
 def cache(key: str, to_cache):

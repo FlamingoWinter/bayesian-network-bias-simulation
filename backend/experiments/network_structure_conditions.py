@@ -1,30 +1,30 @@
 from datetime import datetime
 from typing import List
 
-from backend.db.save_to_db import save_run_to_db, save_recruiter_run_to_db
-from backend.network.generation.choose_characteristics import (
+from backend.experiments.helpers.save_to_db import save_run_to_db, save_recruiter_run_to_db
+from backend.simulation.build_network.generation.choose_characteristics import (
     choose_application,
 )
-from backend.experiments.setup_experiment import setup_experiment
-from backend.recruiters.categorical_bias_mitigation.no_mitigation import NoMitigation
-from backend.recruiters.categorical_output.bayesian_recruiter import BayesianRecruiter
-from backend.recruiters.categorical_output.deep_mlp_recruiter import DeepMLPRecruiter
-from backend.recruiters.categorical_output.encoder_only_transformer_recruiter import (
+from backend.experiments.helpers.setup_experiment import setup_experiment
+from backend.simulation.train_recruiters.mitigation.no_mitigation import NoMitigation
+from backend.simulation.train_recruiters.models.bayesian_recruiter import BayesianRecruiter
+from backend.simulation.train_recruiters.models.deep_mlp_recruiter import DeepMLPRecruiter
+from backend.simulation.train_recruiters.models.encoder_only_transformer_recruiter import (
     EncoderOnlyTransformerRecruiter,
 )
-from backend.recruiters.categorical_output.logistic_regression_recruiter import (
+from backend.simulation.train_recruiters.models.logistic_regression_recruiter import (
     LogisticRegressionRecruiter,
 )
-from backend.recruiters.categorical_output.random_forest_recruiter import (
+from backend.simulation.train_recruiters.models.random_forest_recruiter import (
     RandomForestRecruiter,
 )
-from backend.recruiters.categorical_output.shallow_mlp_recruiter import (
+from backend.simulation.train_recruiters.models.shallow_mlp_recruiter import (
     ShallowMLPRecruiter,
 )
-from backend.recruiters.categorical_output.svm_recruiter import SVMRecruiter
-from backend.recruiters.recruiter import Recruiter
-from backend.simulate import simulate
-from backend.utilities.time_function import time_function
+from backend.simulation.train_recruiters.models.svm_recruiter import SVMRecruiter
+from backend.simulation.train_recruiters.recruiter import Recruiter
+from backend.simulation.simulate import simulate
+from backend.utils.time_function import time_function
 
 
 @time_function("Network Structure Conditions Run")
