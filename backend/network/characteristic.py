@@ -19,9 +19,9 @@ class Characteristic:
     def to_characteristic_response(
         self, prior_distribution: Union[None, list[float]] = None
     ) -> CharacteristicResponse:
-        return {
-            "name": self.name,
-            "type": self.type,
-            "categoryNames": self.category_names,
-            "priorDistribution": prior_distribution,
-        }
+        return CharacteristicResponse(
+            name=self.name,
+            type=self.type,
+            categoryNames=self.category_names,
+            priorDistribution=prior_distribution,
+        )

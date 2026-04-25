@@ -182,10 +182,10 @@ class MitigationBiasAnalysis:
         return s
 
     def to_response(self) -> RecruiterBiasAnalysisResponse:
-        return {
-            "general": self.general.to_response(),
-            "byGroup": {g_name: g.to_response() for g_name, g in self.by_group.items()},
-        }
+        return RecruiterBiasAnalysisResponse(
+            general=self.general.to_response(),
+            byGroup={g_name: g.to_response() for g_name, g in self.by_group.items()},
+        )
 
 
 def get_pretty_title(title: str) -> str:

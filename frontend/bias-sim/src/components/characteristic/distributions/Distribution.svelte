@@ -32,15 +32,21 @@
 				? characteristic.priorDistribution
 				: [conditions[characteristic.name]];
 
+	// Fallback to a uniform distribution when data is absent
+	$: uniform = Array(characteristic.categoryNames.length).fill(
+		1 / characteristic.categoryNames.length
+	);
+	$: safeDist = distribution ?? uniform;
+
 	$: bars = Array.from(characteristic.categoryNames).map((categoryName, index) => ({
 		category: categoryName,
 		value:
 			probabilityType === 'conditioned'
-				? index == distribution[0]
+				? index === safeDist[0]
 					? 1
 					: 0
-				: index < distribution.length
-					? distribution[index]
+				: index < safeDist.length
+					? safeDist[index]
 					: 0
 	}));
 

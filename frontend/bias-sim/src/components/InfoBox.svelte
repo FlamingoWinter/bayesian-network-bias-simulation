@@ -1,18 +1,10 @@
 <script lang="ts">
-	import { ProgressRadial, RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
+	import { ProgressRadial, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import { toTitleCase } from '../utilities/toTitleCase.js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { CaretRightFill } from 'svelte-bootstrap-icons';
-	import * as d3 from 'd3';
 	import type { Network } from '../types/network';
-
-	type ConditionSettings = {
-		isCategorical: boolean;
-		categoricalValues: string[];
-		min: number | null;
-		max: number | null;
-	};
 
 	let loading = false;
 	let nodeName = '';
@@ -24,15 +16,9 @@
 	export let openConditionDialog: (expandedNode: string) => Promise<void>;
 	export let exitDialog: () => void;
 
-	let conditionSettings: ConditionSettings = {
-		isCategorical: true,
-		categoricalValues: [],
-		min: null,
-		max: null
-	};
+	let categoricalValues: string[] = [];
 	let isInfoBoxVisible = false;
 	let valueSelected = '';
-	let numericalValueSelected: number;
 
 	onMount(() => {
 		openConditionDialog = async (nodeId: string) => {
@@ -45,27 +31,8 @@
 
 			nodeName = nodeId;
 			isInfoBoxVisible = true;
-			conditionSettings.isCategorical = characteristic.type === 'categorical';
-			valueSelected = conditionSettings.categoricalValues[0];
-
-			if (characteristic.type == 'categorical') {
-				conditionSettings.categoricalValues = characteristic.categoryNames!;
-			} else {
-				const minValue = d3.min(characteristic.priorDistribution)!;
-				const maxValue = d3.max(characteristic.priorDistribution)!;
-				const ticks = d3.ticks(minValue, maxValue, 20);
-				conditionSettings.min = ticks[0];
-				conditionSettings.max = ticks[ticks.length - 1];
-
-				if (minValue > ticks[0]) {
-					conditionSettings.min = ticks[0] + (ticks[1] - ticks[0]);
-				}
-				if (maxValue < ticks[ticks.length - 1]) {
-					conditionSettings.max = ticks[ticks.length - 1] - (ticks[1] - ticks[0]);
-				}
-
-				numericalValueSelected = conditionSettings.min;
-			}
+			categoricalValues = characteristic.categoryNames;
+			valueSelected = categoricalValues[0];
 		};
 
 		exitDialog = () => {
@@ -91,34 +58,13 @@
 				<p class="mb-4 text-xs text-gray-600">
 					Select a value to see how its observation affects uncertainty in the network:
 				</p>
-				{#if conditionSettings.isCategorical}
-					<RadioGroup class="mb-10 flex w-full flex-wrap" rounded="rounded-container-token">
-						{#each conditionSettings.categoricalValues as categoricalValue}
-							<RadioItem bind:group={valueSelected} name="justify" value={categoricalValue}
-								>{categoricalValue}</RadioItem
-							>
-						{/each}
-					</RadioGroup>
-				{:else}
-					<RangeSlider
-						name="range-slider"
-						bind:value={numericalValueSelected}
-						min={conditionSettings.min ?? 0}
-						max={conditionSettings.max ?? 0}
-						step={d3.tickStep(0, (conditionSettings.max ?? 0) - (conditionSettings.min ?? 0), 20)}
-					>
-						<div class="flex items-center justify-between">
-							<div class="font-bold">{conditionSettings.min ?? 0}</div>
-							<div class="font-bold">{conditionSettings.max ?? 0}</div>
-						</div>
-					</RangeSlider>
-					<input
-						class="input my-6 p-4"
-						type="text"
-						placeholder="Input"
-						bind:value={numericalValueSelected}
-					/>
-				{/if}
+				<RadioGroup class="mb-10 flex w-full flex-wrap" rounded="rounded-container-token">
+					{#each categoricalValues as categoricalValue}
+						<RadioItem bind:group={valueSelected} name="justify" value={categoricalValue}
+							>{categoricalValue}</RadioItem
+						>
+					{/each}
+				</RadioGroup>
 			</div>
 			<div class="flex w-full justify-center">
 				<button
@@ -126,12 +72,7 @@
 					class="variant-filled btn btn-lg relative min-w-32 rounded-full px-4 py-2"
 					on:click={async () => {
 						loading = true;
-						await condition(
-							nodeName,
-							conditionSettings.isCategorical
-								? conditionSettings.categoricalValues.indexOf(valueSelected)
-								: numericalValueSelected
-						);
+						await condition(nodeName, categoricalValues.indexOf(valueSelected));
 						loading = false;
 						exitDialog();
 					}}
