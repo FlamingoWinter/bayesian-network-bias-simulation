@@ -4,8 +4,6 @@ vars:
   CONDA_ENV: bayesian-network-bias-simulation
   FRONTEND_DIR: frontend/bias-sim
   BACKEND_DIR: backend
-  # Override with CONDA_ENV_FILE=environment_linux.yml task install-backend
-  CONDA_ENV_FILE: '{{.CONDA_ENV_FILE | default "environment_macos.yml"}}'
 
 tasks:
 
@@ -30,22 +28,15 @@ tasks:
     deps: [install-backend, install-frontend]
 
   install-backend:
-    desc: Create or update the conda environment
+    desc: Create or update the conda environment from environment.yml
     cmds:
       - |
-        OS=$(uname)
-        if [ "$OS" != "Darwin" ] && [ -z "$CONDA_ENV_FILE" ]; then
-          echo "Warning: this project was set up on macOS. You are on $OS."
-          echo "The default env file is '{{.CONDA_ENV_FILE}}' — override with:"
-          echo "  CONDA_ENV_FILE=environment_linux.yml task install-backend"
-          echo ""
-        fi
         if conda env list | grep -q "^{{.CONDA_ENV}} "; then
-          echo "Environment '{{.CONDA_ENV}}' exists, updating from {{.CONDA_ENV_FILE}}..."
-          conda env update -n {{.CONDA_ENV}} --file {{.CONDA_ENV_FILE}} --prune
+          echo "Environment '{{.CONDA_ENV}}' exists, updating..."
+          conda env update -n {{.CONDA_ENV}} --file environment.yml --prune
         else
-          echo "Creating environment '{{.CONDA_ENV}}' from {{.CONDA_ENV_FILE}}..."
-          conda env create -n {{.CONDA_ENV}} --file {{.CONDA_ENV_FILE}}
+          echo "Creating environment '{{.CONDA_ENV}}'..."
+          conda env create -n {{.CONDA_ENV}} --file environment.yml
         fi
 
   install-frontend:
@@ -93,15 +84,3 @@ tasks:
     cmds:
       - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check --fix {{.BACKEND_DIR}}
       - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format {{.BACKEND_DIR}}
-
-  # ── Environment management ───────────────────────────────────────────────────
-
-  env-export:
-    desc: Export conda env to {{.CONDA_ENV_FILE}}
-    cmds:
-      - conda env export -n {{.CONDA_ENV}} > {{.CONDA_ENV_FILE}}
-
-  env-update:
-    desc: Update conda env from {{.CONDA_ENV_FILE}}
-    cmds:
-      - conda env update -n {{.CONDA_ENV}} --file {{.CONDA_ENV_FILE}} --prune

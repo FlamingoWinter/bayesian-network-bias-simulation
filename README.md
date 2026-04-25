@@ -1,55 +1,47 @@
-## Installation
+# Setup
 
-#### Condas and Pip Packages
+Development on macOS is preferred. If developing on another platform, consult
+`setup_linux.md` or `setup_windows.md`.
 
-- Install condas from https://www.anaconda.com/download/
-- create a new environment from the environment.yml file with
-  `conda env create -n bayesian-network-bias-simulation --file environment.yml`
-- To export the environment use `conda export > environment.yml`
-- To update a local environment to be consistent with the environment file use `conda env update --file environment.yml --prune
-`
+## Prerequisites
 
-#### Problems with PyMC on Windows
+Install Miniconda (backend package manager):
+```bash
+brew install --cask miniconda
+conda init zsh
+```
 
-- The installation of PyMC has a lot of issues on Windows. First, add the following lines to your path or some Numpy
-  functions won't be recognised: `C:\ProgramData\anaconda3\Scripts`, `C:\ProgramData\anaconda3\bin`,
-  `C:\ProgramData\anaconda3\Library\bin`, `C:\ProgramData\anaconda3\Library\mingw-w64\bin`,
-  `C:\ProgramData\anaconda3\Library\mingw-w64`, `C:\ProgramData\anaconda3\condabin`
-    - See
-      here (https://stackoverflow.com/questions/54063285/numpy-is-already-installed-with-anaconda-but-i-get-an-importerror-dll-load-fail).
-      If you installed condas per user, this step will be different.
-- There's an incompatibility with Numpy, Pytensor and PyMc. Numpy used to expose information on Blas libraries (
-  optimised mathematical libraries), which PyMC used to configure Pytensor. But numpy doesn't do this anymore. So add an
-  environment variable with name `PYTENSOR_FLAGS` and value
-  `blas__ldflags="-L\"C:\Users\<YOUR USERNAME>\.conda\envs\bayesian-network-bias-simulation\Library\bin\" -lmkl_core -lmkl_intel_thread -lmkl_rt"`.
-  This will differ depending on processors, so you can try installing pytensor to a clean environment and printing
-  `pytensor.config` to see what the value of this should be.
+Install Taskfile (task runner):
+```bash
+brew install go-task
+```
 
-#### GraphViz
+Install Node and npm (frontend package manager):
+```bash
+brew install node
+```
 
-- For plotting (which should only be necessary for debugging),
-  install C++ from https://visualstudio.microsoft.com/visual-cpp-build-tools/, install graphviz
-  from https://graphviz.org/download/,
-  then install pygraphviz with the command:
+## Install dependencies
 
-```python -m pip install --config-settings="--global-option=build_ext" --config-settings="--global-option=-IC:\Program Files\Graphviz\include" --config-settings="--global-option=-LC:\Program Files\Graphviz\lib" pygraphviz```
+```bash
+task install
+```
 
-- There's another weird error when plotting where `removehandler()` is called on a None object. That can be suppressed
-  by modifying the library.
+This creates the conda environment from `environment.yml` and installs frontend npm packages.
 
-#### Django
+## Run
 
-- Call `<python> api/api/manage.py runserver` to run the development server.
+```bash
+task backend   # Django dev server
+task frontend  # Vite dev server
+```
 
-#### PyCharm
+> The frontend requires the backend server to be running.
 
-- I used Pycharm for this, with autoformatting on save. I recommend setting up both the backend and frontend command as
-  a run configuration.
-- I installed the typescript and svelte extension and configured prettier to run on save.
+## Adding or changing dependencies
 
-### Svelte/Frontend
+Edit `environment.yml`, then:
 
-- Install node and npm from https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
-- Navigate into `/frontend/bias-sim` and run `npm install` to update dependencies.
-- In the same directory run `npm run dev` to start the development environment.
-    - The site won't work if the backend server isn't running.
+```bash
+task install-backend
+```
