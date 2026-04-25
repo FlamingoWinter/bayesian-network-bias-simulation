@@ -1,6 +1,6 @@
-from typing import List, TypedDict, Dict, Union, Literal
+from typing import List, TypedDict, Dict, Literal
 
-type DistributionType = Union[Literal["discrete"], Literal["categorical"]]
+type DistributionType = Literal["categorical"]
 
 CharacteristicResponse = TypedDict('CharacteristicResponse', {
     'name': str,

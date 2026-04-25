@@ -4,7 +4,6 @@
 	import ExpandButton from './config/CharacteristicExpandButton.svelte';
 	import { onMount } from 'svelte';
 	import CategoricalDistribution from './distributions/CategoricalDistribution.svelte';
-	import DiscreteDistribution from './distributions/DiscreteDistribution.svelte';
 	import { defaultTransition } from '../../animation/transition';
 	import CharacteristicRectangle from './CharacteristicRectangle.svelte';
 	import CharacteristicTitle from './CharacteristicTitle.svelte';
@@ -37,7 +36,7 @@
 		top: 15,
 		right: 14,
 		bottom: 25,
-		left: characteristic.type === 'categorical' ? 36 : 14
+		left: 36
 	};
 
 	const chartWidth = rectWidth - chartMargin.left - chartMargin.right;
@@ -107,25 +106,14 @@
 		height={chartHeight}
 		transform={`translate(${chartMargin.left - rectWidth / 2}, ${chartMargin.top - rectHeight / 2})`}
 	>
-		{#if characteristic.type === 'categorical'}
-			<CategoricalDistribution
-				{conditions}
-				{conditioned}
-				{posteriorDistributions}
-				{characteristic}
-				width={chartWidth}
-				height={chartHeight}
-			/>
-		{:else}
-			<DiscreteDistribution
-				{conditions}
-				{conditioned}
-				{posteriorDistributions}
-				{characteristic}
-				width={chartWidth}
-				height={chartHeight}
-			/>
-		{/if}
+		<CategoricalDistribution
+			{conditions}
+			{conditioned}
+			{posteriorDistributions}
+			{characteristic}
+			width={chartWidth}
+			height={chartHeight}
+		/>
 	</g>
 
 	<CharacteristicConfigContainer

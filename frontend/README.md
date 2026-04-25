@@ -12,7 +12,7 @@ SvelteKit file-based routing. Two top-level sections:
 
 ### `src/components/`
 
-**`characteristic/`** — the main building block of the visualisation. Each node in the network expands into a `CharacteristicConfig` panel showing its probability distribution and allowing the user to condition on it. Distributions are rendered as SVG charts: `CategoricalDistribution` and `DiscreteDistribution`, each with custom axes.
+**`characteristic/`** — the main building block of the visualisation. Each node in the network expands into a `CharacteristicConfig` panel showing its probability distribution and allowing the user to condition on it. Distributions are rendered as SVG charts via `CategoricalDistribution`, with custom axes.
 
 **`modals/`** — overlay panels for key interactions:
 - `NewNetworkModal` — configure and generate a new random Bayesian network
