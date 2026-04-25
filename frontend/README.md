@@ -5,7 +5,7 @@ SvelteKit application providing two modes: an interactive network visualisation,
 ## Structure
 
 ### `src/routes/`
-SvelteKit file-based routing. Three top-level sections:
+SvelteKit file-based routing. Two top-level sections:
 
 - **`/visualisation`** — the main interactive tool. Renders the Bayesian network as a force-directed graph, lets users condition on node values, trigger simulations, and view bias results.
 - **`/walkthrough`** — a step-by-step guided tour through a single simulation run, explaining each stage as it happens.

@@ -2,6 +2,9 @@
 
 <img src="docs/imgs/demo.png" height="200">
 
+
+
+
 A research tool for studying algorithmic bias in hiring. An accompanying website explains the research for a technical and non-technical audience.
 It lets you define a Bayesian network representing the statistical relationships between candidate characteristics, generate synthetic applicants 
 from it, run those applicants through various ML recruitment models, apply bias mitigation strategies, and measure the resulting fairness outcomes 
@@ -21,6 +24,12 @@ The dissertation can be viewed [here](https://flamingowinter.github.io/dissertat
 **`backend/`** — Python/Django. Bayesian network construction and sampling, synthetic applicant generation, recruiter models (logistic regression, random forest, SVM, MLP, transformer, Bayesian), bias mitigation strategies, fairness measurement, and a REST + WebSocket API.
 
 **`frontend/`** — SvelteKit. Interactive D3 graph visualisation of the Bayesian network, distribution charts for each characteristic, bias results display, walkthrough, and guide.
+
+<img src="docs/imgs/runsim.png" height="200">
+
+<img src="docs/imgs/results.png" height="200">
+
+<img src="docs/imgs/exp-results.png" height="800">
 
 ## Setup
 
