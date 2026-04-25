@@ -6,7 +6,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class GenericConsumer(AsyncWebsocketConsumer):
-    session_key: str
+    session_key: str | None
 
     async def connect(self):
         query = self.scope.get("query_string", b"").decode("utf-8")

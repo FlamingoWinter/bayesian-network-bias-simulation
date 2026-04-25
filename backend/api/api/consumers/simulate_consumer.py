@@ -121,7 +121,7 @@ def recruiter_string_to_recruiter(recruiter: str, mitigations: List[str]) -> Rec
     }
 
     if recruiter not in recruiters_by_name:
-        raise f"Unknown recruiter {recruiter}"
+        raise ValueError(f"Unknown recruiter {recruiter}")
 
     return recruiters_by_name[recruiter](
         [mitigation_string_to_mitigation(s) for s in mitigations]
@@ -144,6 +144,6 @@ def mitigation_string_to_mitigation(s: str) -> Mitigation:
     }
 
     if s not in mitigations_by_name:
-        raise f"Unknown mitigation {s}"
+        raise ValueError(f"Unknown mitigation {s}")
 
     return mitigations_by_name[s]

@@ -241,7 +241,7 @@ def sample_bounded_binomial(n: int, p: float, bounds: Tuple[int, int]):
         print("Probabilities = 0: n, p, bounds", n, p, bounds)
 
     probabilities /= sum(probabilities)
-    return random.choices(range(n + 1), weights=probabilities, k=1)[0]
+    return random.choices(range(n + 1), weights=probabilities.tolist(), k=1)[0]
 
 
 if __name__ == "__main__":

@@ -8,12 +8,12 @@ from backend.api.api.consumers import name_network_consumer
 from backend.api.api.consumers import simulate_consumer
 
 websocket_urlpatterns = [
-    re_path(
+    re_path(  # type: ignore[arg-type]
         r"ws/generate-random-network",
         generate_random_network_consumer.GenerateRandomNetworkConsumer.as_asgi(),
     ),
-    re_path(r"ws/name-network", name_network_consumer.NameNetworkConsumer.as_asgi()),
-    re_path(r"ws/simulate", simulate_consumer.SimulateConsumer.as_asgi()),
+    re_path(r"ws/name-network", name_network_consumer.NameNetworkConsumer.as_asgi()),  # type: ignore[arg-type]
+    re_path(r"ws/simulate", simulate_consumer.SimulateConsumer.as_asgi()),  # type: ignore[arg-type]
 ]
 
 application = ProtocolTypeRouter(

@@ -40,7 +40,7 @@ def condition(request, predefined=None):
     try:
         condition_response = network.sample_conditioned()
     except Exception:
-        return JsonResponse(status=400)
+        return JsonResponse({}, status=400)
 
     return JsonResponse(condition_response, safe=False, status=200)
 

@@ -44,7 +44,7 @@ class SatisfyProportionalParity(Mitigation):
 
     def loss(
         self,
-        proportion_hired: np.array,
+        proportion_hired: np.ndarray,
         score_holdout: pd.Series,
         predicted_holdout: pd.Series,
         groups: pd.Series,

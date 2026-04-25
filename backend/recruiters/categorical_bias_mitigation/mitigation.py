@@ -10,7 +10,7 @@ from backend.utilities.time_function import time_function
 
 
 class Mitigation(ABC):
-    proportion_hireds: np.array
+    proportion_hireds: np.ndarray
 
     @property
     @abstractmethod
@@ -69,7 +69,7 @@ class Mitigation(ABC):
         score_holdout: pd.Series,
         predicted_holdout: pd.Series,
         groups: pd.Series,
-        proportion_hireds: np.array,
+        proportion_hireds: np.ndarray,
     ) -> tuple[Any, Any, Any, Any, Any]:
         decisions = self.convert_scores_to_decisions(
             predicted_holdout, groups, proportion_hireds
@@ -142,7 +142,7 @@ class Mitigation(ABC):
     @abstractmethod
     def loss(
         self,
-        proportion_hired: np.array,
+        proportion_hired: np.ndarray,
         score_holdout: pd.Series,
         predicted_holdout: pd.Series,
         groups: pd.Series,

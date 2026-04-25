@@ -1,16 +1,16 @@
-from dataclasses import is_dataclass, asdict
-from typing import Type
+from dataclasses import asdict, is_dataclass
+from typing import Any, Type
 
 
-def as_dict(obj: any) -> dict[str, any]:
+def as_dict(obj: Any) -> dict[str, Any]:
     if is_dataclass(obj) and not isinstance(obj, type):
         return asdict(obj)
-    raise f"Error: {obj} not dataclass"
+    raise ValueError(f"Error: {obj} not dataclass")
 
 
 def replace_blanks_with_defaults(
-    kwargs: dict[any, any], dataclass: Type
-) -> dict[any, any]:
+    kwargs: dict[Any, Any], dataclass: Type
+) -> dict[Any, Any]:
     for key, default in as_dict(dataclass()).items():
         if (
             kwargs.get(key, default) == ""
