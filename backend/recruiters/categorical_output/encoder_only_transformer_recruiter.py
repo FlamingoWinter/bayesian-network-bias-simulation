@@ -77,6 +77,7 @@ class EncoderOnlyTransformerRecruiter(Recruiter):
             )
             self.optimiser = optim.Adam(self.model.parameters(), lr=self.lr)
 
+        assert self.model is not None and self.optimiser is not None
         train_nn_model(
             self.model,
             self.optimiser,
@@ -87,7 +88,8 @@ class EncoderOnlyTransformerRecruiter(Recruiter):
         )
 
     def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
+        assert self.model is not None
         self.model.eval()
-        X = torch.tensor(applications.values, dtype=torch.float32)
+        X = torch.tensor(applications.values, dtype=torch.float32)  # type: ignore
         predicted_scores = self.model(X).detach().numpy().flatten()
         return pd.Series(predicted_scores)

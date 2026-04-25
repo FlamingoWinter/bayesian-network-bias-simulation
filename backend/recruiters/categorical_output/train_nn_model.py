@@ -12,11 +12,11 @@ def train_nn_model(
     batch_size: int,
     epochs: int,
 ):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # type: ignore
     model.to(device)
 
-    X_train = torch.tensor(application_train.values, dtype=torch.float32)
-    y_train = torch.tensor(score_train.values, dtype=torch.float32).unsqueeze(1)
+    X_train = torch.tensor(application_train.values, dtype=torch.float32)  # type: ignore
+    y_train = torch.tensor(score_train.values, dtype=torch.float32).unsqueeze(1)  # type: ignore
     dataset = TensorDataset(X_train, y_train)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 import dill
 from django.core.cache import cache as django_cache
@@ -21,7 +21,7 @@ def from_cache(key: str, backup_key: str = "") -> Any:
 
 
 def cache_network_and_generate_applicants(
-    network: BayesianNetwork, session_id: str = None
+    network: BayesianNetwork, session_id: Optional[str] = None
 ):
     network_response: NetworkResponse = network.to_network_response()
 

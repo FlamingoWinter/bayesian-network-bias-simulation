@@ -24,7 +24,9 @@ class MitigationBiasAnalysis:
         self.by_group: Dict[str, GroupPredictionInformation] = {}
 
         for group_index, group in enumerate(protected_characteristic.category_names):
-            application_subset = applications[applications["group"] == group_index]
+            application_subset: pd.DataFrame = applications[
+                applications["group"] == group_index
+            ]  # type: ignore
             if len(application_subset) > 0:
                 self.by_group[group] = GroupPredictionInformation(application_subset)
 

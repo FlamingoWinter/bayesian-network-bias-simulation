@@ -1,6 +1,6 @@
 import random
 from collections import Counter
-from typing import List, Dict, Union
+from typing import List, Dict, Optional, Union
 
 import networkx as nx
 from networkx.readwrite.json_graph import node_link_data
@@ -33,12 +33,12 @@ class PgmPyNetwork(BayesianNetwork):
         self,
         model: pgBN,
         score_characteristic: str = "score",
-        application_characteristics: List[str] = None,
-        observed: Dict[str, float] = None,
+        application_characteristics: Optional[List[str]] = None,
+        observed: Optional[Dict[str, float]] = None,
     ):
 
         super().__init__(
-            model=None,
+            model=model,
             characteristics=None,
             score_characteristic=score_characteristic,
             application_characteristics=application_characteristics,
@@ -72,7 +72,9 @@ class PgmPyNetwork(BayesianNetwork):
         ]
         self.score_characteristic = self.renaming[self.score_characteristic]
 
-    def initialise_characteristics_from_model(self, model: pgBN):
+    def initialise_characteristics_from_model(
+        self, model: pgBN
+    ) -> Dict[str, Characteristic]:
         self.characteristics = {}
         for characteristic in model.nodes:
             self.characteristics[characteristic] = Characteristic(
@@ -96,7 +98,7 @@ class PgmPyNetwork(BayesianNetwork):
                 characteristic_name
             )
             value_counts = Counter(distribution)
-            expected_values = range(max(value_counts.keys(), default=0) + 1)
+            expected_values = range(int(max(value_counts.keys(), default=0)) + 1)
             prior_distribution = [
                 value_counts.get(x, 0) / len(distribution) for x in expected_values
             ]
@@ -105,7 +107,7 @@ class PgmPyNetwork(BayesianNetwork):
             )
 
         return {
-            "graph": node_link_data(directed_graph, link="links"),
+            "graph": node_link_data(directed_graph, link="links"),  # type: ignore
             "scoreCharacteristic": score_characteristic,
             "applicationCharacteristics": application_characteristics,
             "characteristics": characteristic_responses,
@@ -116,6 +118,7 @@ class PgmPyNetwork(BayesianNetwork):
         if self.renaming is None:
             self.observed = condition_request
         else:
+            assert self.inverse_renaming is not None
             self.observed = {
                 self.inverse_renaming[new_characteristic]: value
                 for new_characteristic, value in condition_request.items()
@@ -123,12 +126,16 @@ class PgmPyNetwork(BayesianNetwork):
 
     @time_function("Sampling Posterior")
     def sample_conditioned(self):
+        assert self.observed is not None, (
+            "Call condition_on() before sample_conditioned()"
+        )
         if len(self.model.nodes) > 22:
             raise Exception("Error! Too many nodes for variable elimination")
         inference = VariableElimination(self.model)
 
         model_formatted_characteristics = self.characteristics.keys()
         if self.renaming is not None:
+            assert self.inverse_renaming is not None
             model_formatted_characteristics = [
                 self.inverse_renaming[c] for c in model_formatted_characteristics
             ]
@@ -142,14 +149,14 @@ class PgmPyNetwork(BayesianNetwork):
             evidence=self.observed,
             show_progress=True,
         )
-        sampled_data = sampled_data.sample(num_samples)
+        sampled_data = sampled_data.sample(num_samples)  # type: ignore
 
         condition_response = {}
         for column in sampled_data:
             total_count = len(sampled_data[column])
             value_counts = Counter(sampled_data[column])
 
-            expected_values = range(max(value_counts.keys(), default=0) + 1)
+            expected_values = range(int(max(value_counts.keys(), default=0)) + 1)
             proportions = [
                 value_counts.get(x, 0) / total_count for x in expected_values
             ]
@@ -160,7 +167,7 @@ class PgmPyNetwork(BayesianNetwork):
 
         return condition_response
 
-    def sample_applicants(self, count=num_samples):
+    def sample_applicants(self, count: int = num_samples) -> Applicants:
         sampler = BayesianModelSampling(self.model)
         sampled_data = sampler.forward_sample(size=count)
 

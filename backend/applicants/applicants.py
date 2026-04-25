@@ -1,4 +1,4 @@
-from typing import Tuple, List
+from typing import Tuple, List, cast
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -16,7 +16,9 @@ class Applicants:
     def get_applications(
         self, one_hot_encode_categorical_variables=False
     ) -> pd.DataFrame:
-        df = self.characteristic_instances[self.network.application_characteristics]
+        df: pd.DataFrame = self.characteristic_instances[
+            self.network.application_characteristics
+        ]  # type: ignore
         if one_hot_encode_categorical_variables:
             categorical_columns = [
                 column_name
@@ -27,9 +29,12 @@ class Applicants:
         return df.reset_index(drop=True)
 
     def get_scores(self) -> pd.Series:
-        return self.characteristic_instances[
-            self.network.score_characteristic
-        ].reset_index(drop=True)
+        return cast(
+            pd.Series,
+            self.characteristic_instances[
+                self.network.score_characteristic
+            ].reset_index(drop=True),
+        )
 
     def characteristic_name_to_distribution(self, characteristic: str) -> List[float]:
         return self.characteristic_instances[characteristic].to_list()
@@ -40,11 +45,11 @@ class Applicants:
         remaining_applicants_proportion = 1
         for split_size in split_sizes[:-1]:
             test_size = 1 - (split_size / remaining_applicants_proportion)
-            remaining, characteristic_split = train_test_split(
+            remaining, characteristic_split = train_test_split(  # type: ignore
                 remaining, test_size=test_size
             )
             remaining_applicants_proportion -= split_size
-            splits.append(characteristic_split)
-        splits.append(remaining)
+            splits.append(characteristic_split)  # type: ignore
+        splits.append(remaining)  # type: ignore
 
         return tuple(Applicants(self.network, split) for split in splits)

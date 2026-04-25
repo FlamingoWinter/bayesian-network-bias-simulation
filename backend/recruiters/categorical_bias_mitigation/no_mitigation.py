@@ -17,7 +17,7 @@ class NoMitigation(Mitigation):
         self,
         predicted_score: pd.Series,
         groups: pd.Series,
-        proportion_hireds: Union[np.array, None] = None,
+        proportion_hireds: Union[np.ndarray, None] = None,
     ) -> pd.Series:
         return self.threshold_scores(predicted_score, self.proportion_hired)
 
@@ -38,4 +38,4 @@ class NoMitigation(Mitigation):
         predicted_holdout: pd.Series,
         groups: pd.Series,
     ) -> float:
-        pass
+        return 0.0

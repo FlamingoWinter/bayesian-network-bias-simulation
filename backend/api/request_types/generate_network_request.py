@@ -9,7 +9,7 @@ class NetworkRequestBase:
 
 
 class RandomNetworkRequestBase(NetworkRequestBase):
-    random_or_predefined: Literal["random"]
+    random_or_predefined: Literal["random"]  # type: ignore
     number_of_nodes: int
     parents_range: Tuple[int, int]
 
@@ -26,7 +26,7 @@ class NetworkRequest(RandomNetworkRequestBase):
 
 
 class PredefinedNetworkRequest(NetworkRequestBase):
-    random_or_predefined: Literal["predefined"]
+    random_or_predefined: Literal["predefined"]  # type: ignore
     predefined_model: str
 
 

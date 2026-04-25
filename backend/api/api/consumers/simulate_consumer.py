@@ -65,6 +65,7 @@ from backend.utilities.replace_nan import replace_nan
 
 class SimulateConsumer(GenericConsumer):
     async def receive(self, text_data: Any = None, bytes_data: Any = None) -> None:
+        assert self.session_key is not None
         request: SimulateRequest = new_simulate_request(**json.loads(text_data))
         network: BayesianNetwork = get_network_from_cache(self.session_key)
         candidate_group: Applicants = network.sample_applicants(

@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 import networkx as nx
 
@@ -35,7 +36,7 @@ def choose_application(
     score_characteristic: str,
     protected_characteristic: str = "",
     application_size: int = 10,
-) -> str:
+) -> List[str]:
     if condition == 1:
         # 10 Random nodes are selected as application. This doesn't include protected Characteristic.
         candidate_nodes = [
@@ -84,6 +85,8 @@ def choose_application(
             and node not in proxy_nodes
         ]
         return random.sample(candidate_nodes, application_size)
+
+    raise ValueError(f"Unknown condition: {condition}")
 
 
 def choose_protected(graph: nx.DiGraph) -> str:

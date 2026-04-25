@@ -24,5 +24,5 @@ class RandomForestRecruiter(Recruiter):
         self.model.fit(application_train, score_train)
 
     def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
-        predicted_scores = pd.Series(self.model.predict_proba(applications)[:, 1])
+        predicted_scores = pd.Series(self.model.predict_proba(applications)[:, 1])  # type: ignore
         return predicted_scores

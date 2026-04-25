@@ -11,13 +11,14 @@ from backend.network.pgmpy_network import PgmPyNetwork
 
 class NameNetworkConsumer(GenericConsumer):
     async def receive(self, text_data: Any = None, bytes_data: Any = None) -> None:
+        assert self.session_key is not None
         network: BayesianNetwork = get_network_from_cache(self.session_key)
 
         if network.model_type == "pgmpy":
-            network: PgmPyNetwork = cast(PgmPyNetwork, network)
-            network.name_characteristics()
+            pgmpy_network = cast(PgmPyNetwork, network)
+            pgmpy_network.name_characteristics()
             await self.send_and_flush("Network Renaming Completed")
-            cache_network_and_generate_applicants(network, self.session_key)
+            cache_network_and_generate_applicants(pgmpy_network, self.session_key)
             await self.send_and_flush("Candidate Generation Completed")
         else:
             await self.send_and_flush(

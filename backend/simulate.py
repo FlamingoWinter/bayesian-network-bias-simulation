@@ -1,4 +1,6 @@
-from typing import List, Dict, Callable, Any
+from typing import List, Dict, Callable, Any, cast
+
+import pandas as pd
 
 from backend.applicants.applicants import Applicants
 from backend.bias.recruiter_bias_analysis import RecruiterBiasAnalysis
@@ -53,13 +55,17 @@ def simulate(
 
         recruiter.train(application_train, score_train)
 
-        groups_train = train_candidates.characteristic_instances[
-            protected_characteristic.name
-        ].reset_index(drop=True)
+        groups_train = cast(
+            pd.Series,
+            train_candidates.characteristic_instances[protected_characteristic.name],
+        ).reset_index(drop=True)
 
-        groups_holdout = mitigation_candidates.characteristic_instances[
-            protected_characteristic.name
-        ].reset_index(drop=True)
+        groups_holdout = cast(
+            pd.Series,
+            mitigation_candidates.characteristic_instances[
+                protected_characteristic.name
+            ],
+        ).reset_index(drop=True)
 
         recruiter.initalise_mitigation(
             score_train,

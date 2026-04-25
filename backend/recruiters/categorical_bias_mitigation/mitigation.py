@@ -1,6 +1,6 @@
 import warnings
 from abc import ABC, abstractmethod
-from typing import Callable, Any, Union
+from typing import Callable, Any, Union, cast
 
 import numpy as np
 import pandas as pd
@@ -21,7 +21,7 @@ class Mitigation(ABC):
         self,
         predicted_score: pd.Series,
         groups: pd.Series,
-        proportion_hireds: Union[np.array, None] = None,
+        proportion_hireds: Union[np.ndarray, None] = None,
     ) -> pd.Series:
         if proportion_hireds is None:
             proportion_hireds = self.proportion_hireds
@@ -30,7 +30,7 @@ class Mitigation(ABC):
         grouped = predicted_score.groupby(groups)
 
         for i, group in enumerate(group_order):
-            group_scores = grouped.get_group(group)
+            group_scores = cast(pd.Series, grouped.get_group(group))
             decisions.loc[group_scores.index] = self.threshold_scores(
                 group_scores, proportion_hireds[i]
             )
@@ -52,14 +52,14 @@ class Mitigation(ABC):
 
         remaining_needed = num_selected - above_threshold.sum()
         if remaining_needed > 0:
-            equal_indices = scores[equal_threshold].index
+            equal_indices = scores[equal_threshold].index  # type: ignore
             if randomise and len(equal_indices) > 0:
-                drop_indices = np.random.choice(
+                drop_indices = np.random.choice(  # type: ignore
                     equal_indices, len(equal_indices) - remaining_needed, replace=False
                 )
                 equal_threshold.loc[drop_indices] = False
             else:
-                equal_indices = scores[equal_threshold].index[:remaining_needed]
+                equal_indices = scores[equal_threshold].index[:remaining_needed]  # type: ignore
                 equal_threshold.loc[~equal_threshold.index.isin(equal_indices)] = False
 
         return (above_threshold | equal_threshold).astype(int)
@@ -100,7 +100,7 @@ class Mitigation(ABC):
         score_holdout: pd.Series,
         predicted_holdout: pd.Series,
         groups_holdout: pd.Series,
-        loss: Callable[[np.array, pd.Series, pd.Series, pd.Series], float],
+        loss: Callable[[np.ndarray, pd.Series, pd.Series, pd.Series], float],
     ):
         def loss_function(proportion_hired_partial):
             last_value = (

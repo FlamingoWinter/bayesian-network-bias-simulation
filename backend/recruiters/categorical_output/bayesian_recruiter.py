@@ -27,19 +27,19 @@ class BayesianRecruiter(Recruiter):
         data["score"] = score_train
 
         hc = HillClimbSearch(data)
-        best_model = hc.estimate(scoring_method=BicScore(data))
+        best_model = hc.estimate(scoring_method=BicScore(data))  # type: ignore
 
         self.model = BayesianNetwork(best_model.edges())
 
         self.model.fit(data, estimator=MaximumLikelihoodEstimator)
 
-    def predict_scores(self, applications: pd.DataFrame) -> pd.DataFrame:
+    def predict_scores(self, applications: pd.DataFrame) -> pd.Series:
         infer = VariableElimination(self.model)
         probabilities = [
-            infer.query(variables=["score"], evidence=row.to_dict()).values
+            infer.query(variables=["score"], evidence=row.to_dict()).values  # type: ignore
             for _, row in applications.iterrows()
         ]
 
-        return pd.DataFrame(
-            probabilities, columns=self.model.get_cpds("score").state_names["score"]
-        )[1]
+        cpd = self.model.get_cpds("score")
+        state_names = cpd.state_names["score"] if cpd is not None else None  # type: ignore
+        return pd.DataFrame(probabilities, columns=state_names)[1]  # type: ignore

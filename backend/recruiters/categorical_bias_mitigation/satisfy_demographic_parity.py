@@ -17,7 +17,7 @@ class SatisfyDemographicParity(Mitigation):
         self,
         predicted_score: pd.Series,
         groups: pd.Series,
-        proportion_hireds: Union[np.array, None] = None,
+        proportion_hireds: Union[np.ndarray, None] = None,
     ) -> pd.Series:
         decisions = pd.Series(0, index=predicted_score.index)
 
@@ -45,4 +45,4 @@ class SatisfyDemographicParity(Mitigation):
         predicted_holdout: pd.Series,
         groups: pd.Series,
     ) -> float:
-        pass
+        return 0.0

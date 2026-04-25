@@ -24,8 +24,10 @@ def save_run_to_db(
 ) -> int:
     graph = json.dumps(network.to_network_response())
 
-    protected = applicants.characteristic_instances[protected_characteristic_name]
-    score = applicants.characteristic_instances[network.score_characteristic]
+    protected: pd.Series = applicants.characteristic_instances[
+        protected_characteristic_name
+    ]  # type: ignore
+    score: pd.Series = applicants.characteristic_instances[network.score_characteristic]  # type: ignore
 
     proportion_competent = score.sum() / len(score)
     proportion_group_1 = 1 - (protected.sum() / len(score))
@@ -37,9 +39,11 @@ def save_run_to_db(
     ).sum()
 
     protected_score_mut_inf = (
-        categorical_entropy_of_array(protected)
-        + categorical_entropy_of_array(score)
-        - categorical_entropy_of_array(np.column_stack((protected, score)))
+        categorical_entropy_of_array(protected.values)
+        + categorical_entropy_of_array(score.values)
+        - categorical_entropy_of_array(
+            np.column_stack((protected.values, score.values))
+        )
     )
 
     data = pd.DataFrame(

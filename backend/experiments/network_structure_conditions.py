@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import List
 
 from backend.db.save_to_db import save_run_to_db, save_recruiter_run_to_db
-from backend.experiments.experiment_choose_characteristics import (
-    experiment_choose_application,
+from backend.network.generation.choose_characteristics import (
+    choose_application,
 )
 from backend.experiments.setup_experiment import setup_experiment
 from backend.recruiters.categorical_bias_mitigation.no_mitigation import NoMitigation
@@ -45,7 +45,7 @@ def network_structure_conditions_run():
 
     for condition in [1, 2, 3, 4]:
         condition_start_time = datetime.now()
-        network.application_characteristics = experiment_choose_application(
+        network.application_characteristics = choose_application(
             network.model.to_directed(),
             condition,
             score_characteristic_name,

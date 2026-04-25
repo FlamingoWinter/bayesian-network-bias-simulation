@@ -1,11 +1,14 @@
 from abc import abstractmethod, ABC
-from typing import List, Dict, Literal
+from typing import List, Dict, Literal, Optional, TYPE_CHECKING
 
 from pgmpy.models import BayesianNetwork as pgBN
 
 from backend.api.request_types.condition_request import ConditionRequest
 from backend.api.response_types.network_response import NetworkResponse
 from backend.network.characteristic import Characteristic
+
+if TYPE_CHECKING:
+    from backend.applicants.applicants import Applicants
 
 num_samples = 5000
 
@@ -14,17 +17,17 @@ class BayesianNetwork(ABC):
     @abstractmethod
     def __init__(
         self,
-        model: pgBN = None,
-        characteristics: Dict[str, Characteristic] = None,
+        model: Optional[pgBN] = None,
+        characteristics: Optional[Dict[str, Characteristic]] = None,
         score_characteristic: str = "score",
-        application_characteristics: List[str] = None,
+        application_characteristics: Optional[List[str]] = None,
     ):
         if application_characteristics is None:
             application_characteristics = []
         if characteristics is None:
             characteristics = {}
 
-        self.model: pgBN = model
+        self.model: pgBN = model  # type: ignore
         self.characteristics: Dict[str, Characteristic] = characteristics
         self.score_characteristic: str = score_characteristic
         self.application_characteristics: List[str] = application_characteristics
@@ -41,7 +44,9 @@ class BayesianNetwork(ABC):
         pass
 
     @abstractmethod
-    def initialise_characteristics_from_model(self, model: pgBN):
+    def initialise_characteristics_from_model(
+        self, model: pgBN
+    ) -> Dict[str, Characteristic]:
         pass
 
     @abstractmethod
@@ -49,7 +54,7 @@ class BayesianNetwork(ABC):
         pass
 
     @abstractmethod
-    def sample_applicants(self, count=num_samples):
+    def sample_applicants(self, count: int = num_samples) -> "Applicants":
         pass
 
     @abstractmethod

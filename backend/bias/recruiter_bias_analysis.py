@@ -1,3 +1,5 @@
+from typing import cast
+
 import pandas as pd
 
 from backend.api.response_types.recruiter_bias_analysis_response import (
@@ -21,7 +23,10 @@ class RecruiterBiasAnalysis:
 
         actual_scores = candidate_group.get_scores()
 
-        groups = candidate_group.characteristic_instances[protected_characteristic.name]
+        groups = cast(
+            pd.Series,
+            candidate_group.characteristic_instances[protected_characteristic.name],
+        )
 
         groups.reset_index(drop=True, inplace=True)
         actual_scores.reset_index(drop=True, inplace=True)
@@ -51,7 +56,7 @@ class RecruiterBiasAnalysis:
             mitigation_bias_analysis.print_summary()
 
     def to_response(self) -> RecruiterBiasAnalysisResponse:
-        return {
+        return {  # type: ignore
             mitigation: bias_analysis.to_response()
             for mitigation, bias_analysis in self.analysis_by_mitigation.items()
         }

@@ -17,13 +17,14 @@ class SatisfyProportionalParity(Mitigation):
         self,
         predicted_score: pd.Series,
         groups: pd.Series,
-        proportion_hireds: Union[np.array, None] = None,
+        proportion_hireds: Union[np.ndarray, None] = None,
     ) -> pd.Series:
         decisions = pd.Series(0, index=predicted_score.index)
 
         for group, group_scores in predicted_score.groupby(groups):
             decisions.loc[group_scores.index] = self.threshold_scores(
-                group_scores, self.proportion_hired_by_group[group]
+                group_scores,
+                self.proportion_hired_by_group[int(group)],  # type: ignore
             )
 
         return decisions
@@ -38,7 +39,7 @@ class SatisfyProportionalParity(Mitigation):
     ):
         self.proportion_hired_by_group = {}
         for group, group_scores in score_train.groupby(groups_train):
-            self.proportion_hired_by_group[group] = group_scores.sum() / len(
+            self.proportion_hired_by_group[int(group)] = group_scores.sum() / len(  # type: ignore
                 group_scores
             )
 
@@ -49,4 +50,4 @@ class SatisfyProportionalParity(Mitigation):
         predicted_holdout: pd.Series,
         groups: pd.Series,
     ) -> float:
-        pass
+        return 0.0

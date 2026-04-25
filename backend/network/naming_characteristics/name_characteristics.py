@@ -1,5 +1,8 @@
+from typing import Optional
+
+
 class CharacteristicName:
-    def __init__(self, name: str, values: list[str] = None, hml=False):
+    def __init__(self, name: str, values: Optional[list[str]] = None, hml=False):
         self.name = name
         self.values = values
         self.hml = hml
@@ -13,7 +16,7 @@ class CharacteristicName:
                 self.values = ["High", "Medium", "Low"]
             if num_values == 4:
                 self.values = ["Very High", "High", "Low", "Very Low"]
-        if num_values is not None:
+        if num_values is not None and self.values is not None:
             self.values = self.values[:num_values]
 
         return self
