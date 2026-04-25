@@ -39,10 +39,10 @@ def save_run_to_db(
     ).sum()
 
     protected_score_mut_inf = (
-        categorical_entropy_of_array(protected.values)
-        + categorical_entropy_of_array(score.values)
+        categorical_entropy_of_array(protected.to_numpy())
+        + categorical_entropy_of_array(score.to_numpy())
         - categorical_entropy_of_array(
-            np.column_stack((protected.values, score.values))
+            np.column_stack((protected.to_numpy(), score.to_numpy()))
         )
     )
 
