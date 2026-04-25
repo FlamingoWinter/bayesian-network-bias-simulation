@@ -1,7 +1,6 @@
 <script lang="ts">
 	import WalkthroughButton from '../components/home/WalkthroughButton.svelte';
 	import VisualisationButton from '../components/home/VisualisationButton.svelte';
-	import MoreInfoButton from '../components/home/MoreInfoButton.svelte';
 	import { onMount } from 'svelte';
 	import type { Network } from '../types/network';
 	import GraphVisualisation from '../components/GraphVisualisation.svelte';
@@ -75,7 +74,6 @@
 			</div>
 		</div>
 		<div class="pointer-events-auto mb-6 flex items-center justify-center gap-4 p-2 px-4">
-			<MoreInfoButton />
 			<WalkthroughButton />
 			<VisualisationButton />
 		</div>

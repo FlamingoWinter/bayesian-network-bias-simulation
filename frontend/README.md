@@ -1,6 +1,6 @@
 # Frontend
 
-SvelteKit application providing three modes: an interactive network visualisation, a guided walkthrough, and a research guide.
+SvelteKit application providing two modes: an interactive network visualisation, and a guided walkthrough.
 
 ## Structure
 
@@ -9,7 +9,6 @@ SvelteKit file-based routing. Three top-level sections:
 
 - **`/visualisation`** — the main interactive tool. Renders the Bayesian network as a force-directed graph, lets users condition on node values, trigger simulations, and view bias results.
 - **`/walkthrough`** — a step-by-step guided tour through a single simulation run, explaining each stage as it happens.
-- **`/guide`** — a detailed written guide covering the research motivation, preliminaries (DAGs, Bayesian networks, binary classification, fairness criteria), the simulation design, and findings. Structured as nested routes matching the guide's sections.
 
 ### `src/components/`
 
