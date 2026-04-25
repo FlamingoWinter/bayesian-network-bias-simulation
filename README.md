@@ -1,5 +1,7 @@
 # Bayesian Network Bias Simulation
 
+<img src="docs/imgs/demo.png" height="200">
+
 A research tool for studying algorithmic bias in hiring. An accompanying website explains the research for a technical and non-technical audience.
 It lets you define a Bayesian network representing the statistical relationships between candidate characteristics, generate synthetic applicants 
 from it, run those applicants through various ML recruitment models, apply bias mitigation strategies, and measure the resulting fairness outcomes 
