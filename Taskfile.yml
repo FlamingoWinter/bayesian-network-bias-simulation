@@ -91,3 +91,13 @@ tasks:
     cmds:
       - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check --fix {{.BACKEND_DIR}}
       - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format {{.BACKEND_DIR}}
+
+  # ── Type generation ──────────────────────────────────────────────────────────
+
+  generate-types:
+    desc: Generate TypeScript types from backend Pydantic models (via pydantic2ts)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pydantic2ts --module backend.api.schema
+        --output {{.FRONTEND_DIR}}/src/types/generated.ts

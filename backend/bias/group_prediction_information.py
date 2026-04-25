@@ -40,7 +40,7 @@ class GroupPredictionInformation:
         self.false_omission_rate = self.not_hired_but_competent / self.not_hired
 
     def to_response(self) -> GroupPredictionInformationResponse:
-        return {
+        return {  # type: ignore
             "total": int(self.total),
             "hiredAndCompetent": int(self.hired_and_competent),
             "hiredButNotCompetent": int(self.hired_but_not_competent),

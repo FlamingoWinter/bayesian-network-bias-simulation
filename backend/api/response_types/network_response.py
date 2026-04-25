@@ -1,24 +1,20 @@
-from typing import List, TypedDict, Dict, Literal, Union
+from typing import Dict, List, Literal, Optional
 
-type DistributionType = Literal["categorical"]
+from pydantic import BaseModel
 
-CharacteristicResponse = TypedDict(
-    "CharacteristicResponse",
-    {
-        "name": str,
-        "type": DistributionType,
-        "categoryNames": List[str],
-        "priorDistribution": Union[List[float], None],
-    },
-)
+DistributionType = Literal["categorical"]
 
-NetworkResponse = TypedDict(
-    "NetworkResponse",
-    {
-        "graph": None,
-        "scoreCharacteristic": str,
-        "applicationCharacteristics": List[str],
-        "characteristics": Dict[str, CharacteristicResponse],
-        "predefined": bool,
-    },
-)
+
+class CharacteristicResponse(BaseModel):
+    name: str
+    type: DistributionType
+    categoryNames: List[str]
+    priorDistribution: Optional[List[float]] = None
+
+
+class NetworkResponse(BaseModel):
+    graph: None = None
+    scoreCharacteristic: str
+    applicationCharacteristics: List[str]
+    characteristics: Dict[str, CharacteristicResponse]
+    predefined: bool

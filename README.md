@@ -81,3 +81,13 @@ task install-backend
 ## Development
 
 For a full list of development commands, run `task --list`.
+
+### Type generation
+
+Frontend TypeScript types for API responses are derived automatically from the backend Pydantic models.
+
+The backend models live in `backend/api/response_types/` and are collected by `backend/api/schema.py`. Generate them to `frontend/bias-sim/src/types/generated.ts` with:
+```bash
+task generate-types
+```
+...and commit the changes.

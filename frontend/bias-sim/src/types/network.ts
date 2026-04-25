@@ -1,4 +1,7 @@
 import * as d3 from 'd3';
+import type { CharacteristicResponse, NetworkResponse } from './generated';
+
+export type Characteristic = CharacteristicResponse;
 
 export interface Node extends d3.SimulationNodeDatum {
 	id: string;
@@ -15,17 +18,6 @@ export interface Graph {
 	links: Link[];
 }
 
-export interface Network {
-	graph: Graph;
-	scoreCharacteristic: string;
-	applicationCharacteristics: string[];
-	characteristics: Record<string, Characteristic>;
-	predefined: boolean;
-}
-
-export interface Characteristic {
-	name: string;
-	type: 'categorical';
-	categoryNames: string[];
-	priorDistribution: number[];
-}
+// Network is the backend NetworkResponse with `graph` swapped from null to the
+// client-side D3 Graph object (the backend omits graph; the client builds it).
+export type Network = Omit<NetworkResponse, 'graph'> & { graph: Graph };

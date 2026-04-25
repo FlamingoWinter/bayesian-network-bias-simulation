@@ -1,7 +1,9 @@
-from typing import TypedDict, Dict
+from typing import Dict
+
+from pydantic import BaseModel
 
 
-class GroupPredictionInformationResponse(TypedDict):
+class GroupPredictionInformationResponse(BaseModel):
     total: int
     hiredAndCompetent: int
     hiredButNotCompetent: int
@@ -28,6 +30,6 @@ class GroupPredictionInformationResponse(TypedDict):
     falseOmissionRate: float
 
 
-class RecruiterBiasAnalysisResponse(TypedDict):
+class RecruiterBiasAnalysisResponse(BaseModel):
     general: GroupPredictionInformationResponse
     byGroup: Dict[str, GroupPredictionInformationResponse]

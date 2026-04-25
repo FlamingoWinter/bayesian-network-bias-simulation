@@ -1,37 +1,7 @@
-interface GroupPredictionInformation {
-	total: number;
-	hiredAndCompetent: number;
-	hiredButNotCompetent: number;
-	notHiredButCompetent: number;
-	notHiredAndNotCompetent: number;
+import type { RecruiterBiasAnalysisResponse } from './generated';
 
-	hired: number;
-	hiredRate: number;
-	notHired: number;
-	notHiredRate: number;
-	correct: number;
-	correctRate: number;
-	incorrect: number;
-	incorrectRate: number;
-	competent: number;
-	competentRate: number;
-	notCompetent: number;
-	notCompetentRate: number;
-
-	accuracy: number;
-	falseNegativeRate: number;
-	falsePositiveRate: number;
-	falseDiscoveryRate: number;
-	falseOmissionRate: number;
-}
-
-export interface MitigationAnalysis {
-	general: GroupPredictionInformation;
-	byGroup: Record<string, GroupPredictionInformation>;
-}
-
+export type MitigationAnalysis = RecruiterBiasAnalysisResponse;
 export type RecruiterBiasAnalysis = Record<string, MitigationAnalysis>;
-
 export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>;
 
 export type BiasLevel = 'Minimal' | 'Moderate' | 'High' | 'Very High';
