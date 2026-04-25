@@ -337,7 +337,7 @@
 		<button
 			type="button"
 			class="variant-filled btn btn-xl z-[5] mt-20 min-w-32 rounded-full px-4 py-4 text-2xl"
-			onclick={() => (window.location.href = '/walkthrough/putting_it_all_together')}
+			on:click={() => (window.location.href = '/walkthrough/putting_it_all_together')}
 		>
 			Next
 			<CaretRightFill class="ml-2" width={20} height={20} />

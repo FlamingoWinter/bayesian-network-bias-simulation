@@ -106,7 +106,7 @@
 		</p>
 		<img
 			src="https://www.causeweb.org/cause/sites/default/files/resources/fun/cartoons/shark_ice_cream.jpg"
-			alt=""
+			alt="Comic showing ice cream sales and shark sightings are correlated, illustrating that correlation does not imply causation"
 			class="mt-12"
 			width="400"
 		/>
@@ -246,7 +246,7 @@
 		<button
 			type="button"
 			class="variant-filled btn btn-xl z-[5] mt-12 min-w-32 rounded-full px-4 py-4 text-2xl"
-			onclick={() => (window.location.href = '/walkthrough/whats_a_recruiter_exactly')}
+			on:click={() => (window.location.href = '/walkthrough/whats_a_recruiter_exactly')}
 		>
 			Next
 			<CaretRightFill class="ml-2" width={20} height={20} />
