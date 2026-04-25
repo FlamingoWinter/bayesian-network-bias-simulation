@@ -3,17 +3,18 @@
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 
-
 	export let height: number;
 	export let maxBarY: number = 0;
 	export let display: boolean;
 
-	export let y: d3.ScaleLinear<number, number, never> = d3.scaleLinear().domain([0, maxBarY]).range([height, 0]);
+	export let y: d3.ScaleLinear<number, number, never> = d3
+		.scaleLinear()
+		.domain([0, maxBarY])
+		.range([height, 0]);
 
 	const duration = 200;
 
 	let axisLeft: SVGGElement;
-
 
 	let maxBarYTween: Tween<number>;
 
@@ -22,7 +23,6 @@
 			duration: duration
 		});
 	});
-
 
 	let updating = false;
 
@@ -42,7 +42,6 @@
 			}, duration + 20);
 		}
 	}
-
 
 	$: if (axisLeft && y) {
 		d3.select(axisLeft).transition().call(d3.axisLeft(y).ticks(2));

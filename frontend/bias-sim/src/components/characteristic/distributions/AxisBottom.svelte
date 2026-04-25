@@ -4,14 +4,16 @@
 
 	import * as d3 from 'd3';
 
-
 	export let width: number;
 	export let height: number;
 	export let distribution: number[] = [0];
 	export let extend = false;
 	export let display = true;
 
-	export let x: d3.ScaleLinear<number, number, never> = d3.scaleLinear().range([0, width]).domain([Math.min(...distribution), Math.max(...distribution)]);
+	export let x: d3.ScaleLinear<number, number, never> = d3
+		.scaleLinear()
+		.range([0, width])
+		.domain([Math.min(...distribution), Math.max(...distribution)]);
 
 	const duration = 200;
 
@@ -29,13 +31,15 @@
 		});
 	});
 
-
 	const updating = { min: false, max: false };
 
 	function updateAxis(minOrMax: 'min' | 'max') {
 		if (!updating[minOrMax]) return;
 		const extendAmount = extend ? (maxDistribution.current - minDistribution.current) * 0.05 : 0;
-		x = d3.scaleLinear().range([0, width]).domain([minDistribution.current - extendAmount, maxDistribution.current + extendAmount]);
+		x = d3
+			.scaleLinear()
+			.range([0, width])
+			.domain([minDistribution.current - extendAmount, maxDistribution.current + extendAmount]);
 		requestAnimationFrame(() => updateAxis(minOrMax));
 	}
 

@@ -8,26 +8,19 @@
 
 	export let recruiter: MitigationBiasAnalysis;
 	export let withoutMitigation: MitigationBiasAnalysis | null;
-
 </script>
 
 <div>
 	<section>
-
 		<Accordion>
-			<PerformanceSummary recruiter={recruiter} />
+			<PerformanceSummary {recruiter} />
 			<hr />
-			<DemographicParitySummary recruiter={recruiter} withoutMitigation={withoutMitigation} />
+			<DemographicParitySummary {recruiter} {withoutMitigation} />
 			<hr />
-			<EqualisedOddsSummary recruiter={recruiter} withoutMitigation={withoutMitigation} />
+			<EqualisedOddsSummary {recruiter} {withoutMitigation} />
 
 			<hr />
-			<PredictiveParitySummary recruiter={recruiter} withoutMitigation={withoutMitigation} />
-
-
+			<PredictiveParitySummary {recruiter} {withoutMitigation} />
 		</Accordion>
-
-
 	</section>
-
 </div>

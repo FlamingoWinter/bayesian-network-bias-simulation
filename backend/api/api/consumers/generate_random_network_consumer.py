@@ -47,7 +47,7 @@ class GenerateRandomNetworkConsumer(GenericConsumer):
                                                                          request.mutual_information_range[1]),
                                                                         category_number_distribution)
 
-        await self.send_and_flush(f"Network Generation Completed")
+        await self.send_and_flush("Network Generation Completed")
         cache_network_and_generate_applicants(network, self.session_key)
-        await self.send_and_flush(f"Candidate Generation Completed")
+        await self.send_and_flush("Candidate Generation Completed")
         await self.close(code=1000)

@@ -1,0 +1,12 @@
+{
+  "include": ["."],
+  "exclude": [
+    "**/__pycache__",
+    "**/migrations"
+  ],
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "standard",
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "djangoSettingsModule": "api.settings"
+}

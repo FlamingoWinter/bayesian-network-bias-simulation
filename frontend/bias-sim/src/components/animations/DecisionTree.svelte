@@ -23,7 +23,7 @@
 		child1: {
 			label: 'Did they go to Oxford?',
 			child1: {
-				label: 'Don\'t Hire'
+				label: "Don't Hire"
 			},
 			child2: {
 				label: 'Hire'
@@ -37,7 +37,7 @@
 					label: 'Hire'
 				},
 				child2: {
-					label: 'Don\'t Hire'
+					label: "Don't Hire"
 				}
 			},
 			child2: {
@@ -46,21 +46,21 @@
 					label: 'Hire'
 				},
 				child2: {
-					label: 'Don\'t Hire'
+					label: "Don't Hire"
 				}
 			}
 		}
 	};
 
 	type ApplicationInformation = {
-		id: number
+		id: number;
 		firstLeft: boolean;
 		secondLeft: boolean;
 		thirdLeft: boolean;
-	}
+	};
 
 	let nodes: PositionedTree[] = [];
-	let links: { x1: number; y1: number; x2: number; y2: number, isLeft: boolean }[] = [];
+	let links: { x1: number; y1: number; x2: number; y2: number; isLeft: boolean }[] = [];
 	let applications: ApplicationInformation[] = [];
 	let applicantTimeline: gsap.core.Timeline | undefined;
 
@@ -69,7 +69,6 @@
 	let currentX = 1.5;
 
 	function layout(node: RawTree, depth = 0): PositionedTree {
-
 		const y = depth * verticalSpacing;
 
 		let left: PositionedTree | undefined;
@@ -97,10 +96,8 @@
 		const positioned = { ...node, x, y };
 		nodes.push(positioned);
 
-		if (left)
-			links.push({ x1: x - 20, y1: y + 30, x2: left.x, y2: left.y - 40, isLeft: true });
-		if (right)
-			links.push({ x1: x + 20, y1: y + 30, x2: right.x, y2: right.y - 40, isLeft: false });
+		if (left) links.push({ x1: x - 20, y1: y + 30, x2: left.x, y2: left.y - 40, isLeft: true });
+		if (right) links.push({ x1: x + 20, y1: y + 30, x2: right.x, y2: right.y - 40, isLeft: false });
 
 		return positioned;
 	}
@@ -108,8 +105,8 @@
 	layout(tree);
 
 	type OnEnterViewportOptions = {
-		callback: () => void
-	}
+		callback: () => void;
+	};
 
 	function onEnterViewport(node: Element, options: OnEnterViewportOptions) {
 		let entered = false;
@@ -131,7 +128,6 @@
 
 	onMount(() => {
 		applicantTimeline = gsap.timeline({ paused: false });
-
 	});
 
 	function startAnimation() {
@@ -146,10 +142,14 @@
 		}
 
 		addApplication();
-		applicantTimeline?.to({}, {
-			duration: 10, repeat: -1,
-			onRepeat: addApplication
-		});
+		applicantTimeline?.to(
+			{},
+			{
+				duration: 10,
+				repeat: -1,
+				onRepeat: addApplication
+			}
+		);
 	}
 
 	function finalAnimation(application: ApplicationInformation) {
@@ -157,8 +157,12 @@
 			type: 'to',
 			scale: 1,
 			xPercent: application.secondLeft
-				? application.thirdLeft ? -330 : -20
-				: application.thirdLeft ? 150 : 430,
+				? application.thirdLeft
+					? -330
+					: -20
+				: application.thirdLeft
+					? 150
+					: 430,
 			yPercent: 1060,
 			delay: 2,
 			duration: 1,
@@ -168,12 +172,14 @@
 </script>
 
 <div class="flex items-center" use:onEnterViewport={{ callback: startAnimation }}>
-	<div class="flex justify-center w-[40rem] h-full">
-		<svg class="w-full h-full" viewBox="-100 -100 1600 1400">
+	<div class="flex h-full w-[40rem] justify-center">
+		<svg class="h-full w-full" viewBox="-100 -100 1600 1400">
 			{#if useAnimation}
 				{#each applications as application (application.id)}
-					<g transform={`translate(960, -10)`}
-						 use:animate={{anims: [
+					<g
+						transform={`translate(960, -10)`}
+						use:animate={{
+							anims: [
 								{ type: 'from', scale: 0, duration: 0.5, ease: 'ease-out' },
 								{
 									type: 'to',
@@ -182,33 +188,37 @@
 									yPercent: 400,
 									delay: 2,
 									duration: 1,
-									ease: 'ease-in-out',
+									ease: 'ease-in-out'
 								},
 								{
 									type: 'to',
 									scale: 1,
 									xPercent: application.firstLeft
-										? application.secondLeft ? -690 : -480
-										: application.secondLeft ? -300 : 470,
-									yPercent: application.firstLeft
-										? 900
-										: application.secondLeft ? 660 : 800,
+										? application.secondLeft
+											? -690
+											: -480
+										: application.secondLeft
+											? -300
+											: 470,
+									yPercent: application.firstLeft ? 900 : application.secondLeft ? 660 : 800,
 									delay: 2,
 									duration: 1,
-									ease: 'ease-in-out',
+									ease: 'ease-in-out'
 								},
-								...(!application.firstLeft
-									? [finalAnimation(application)]
-									: []),
-									{
+								...(!application.firstLeft ? [finalAnimation(application)] : []),
+								{
 									type: 'to',
 									scale: 1,
 									delay: 0,
 									color: application.firstLeft
-									? application.secondLeft ? "red" : "green"
-									: application.thirdLeft ? "green" : "red",
+										? application.secondLeft
+											? 'red'
+											: 'green'
+										: application.thirdLeft
+											? 'green'
+											: 'red',
 									duration: 1,
-									ease: 'ease-in-out',
+									ease: 'ease-in-out'
 								},
 								{
 									type: 'to',
@@ -216,11 +226,11 @@
 									opacity: 0,
 									delay: 1,
 									duration: 1,
-									ease: 'ease-in-out',
-								},
+									ease: 'ease-in-out'
+								}
 							]
-
-						}}>
+						}}
+					>
 						<foreignObject x="-25" y="-25" width="100" height="100">
 							<ApplicationIcon />
 						</foreignObject>
@@ -229,16 +239,15 @@
 			{/if}
 
 			{#each links as { x1, y1, x2, y2, isLeft }}
-				<line x1={x1} y1={y1} x2={x2} y2={y2} stroke="gray" stroke-width="2" />
+				<line {x1} {y1} {x2} {y2} stroke="gray" stroke-width="2" />
 				<g transform={`translate(${(x1 + x2) / 2}, ${(y1 + y2) / 2})`}>
 					<foreignObject x="-200" y="-40" width="400" height="400">
 						<div>
-							<p class="text-3xl font-bold text-center flex justify-center ">
-						<span class="w-fit p-2 rounded-xl bg-white">
-							{isLeft ? 'Yes' : 'No'}
-						</span>
+							<p class="flex justify-center text-center text-3xl font-bold">
+								<span class="w-fit rounded-xl bg-white p-2">
+									{isLeft ? 'Yes' : 'No'}
+								</span>
 							</p>
-
 						</div>
 					</foreignObject>
 				</g>
@@ -248,18 +257,23 @@
 				<g transform={`translate(${x}, ${y})`}>
 					<foreignObject x="-200" y="-40" width="400" height="400">
 						<div>
-							{#if label === "Hire" || label === "Don\'t Hire"}
-								<p class="text-3xl font-bold text-center {label === 'Hire' ? 'text-success-200'
-																										: 'text-error-200'} flex justify-center ">
-							<span class="w-fit border-4 p-4 rounded-xl bg-gray-600">
-							{label}
-							</span>
+							{#if label === 'Hire' || label === "Don\'t Hire"}
+								<p
+									class="text-center text-3xl font-bold {label === 'Hire'
+										? 'text-success-200'
+										: 'text-error-200'} flex justify-center"
+								>
+									<span class="w-fit rounded-xl border-4 bg-gray-600 p-4">
+										{label}
+									</span>
 								</p>
 							{:else}
-								<p class="text-3xl font-bold text-center text-surface-600  flex justify-center bg-white">
-							<span class="w-fit border-4 p-4 rounded-xl">
-							{label}
-							</span>
+								<p
+									class="flex justify-center bg-white text-center text-3xl font-bold text-surface-600"
+								>
+									<span class="w-fit rounded-xl border-4 p-4">
+										{label}
+									</span>
 								</p>
 							{/if}
 						</div>

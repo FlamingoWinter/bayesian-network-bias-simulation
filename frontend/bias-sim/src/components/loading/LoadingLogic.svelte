@@ -42,8 +42,7 @@
 				};
 			});
 		};
-
 	});
 </script>
 
-<Loading isLoading={isLoading} loadingText={loadingText} />
+<Loading {isLoading} {loadingText} />

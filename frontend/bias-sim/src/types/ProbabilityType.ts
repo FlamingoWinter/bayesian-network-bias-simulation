@@ -1,1 +1,1 @@
-type ProbabilityType = 'conditioned' | 'prior' | 'posterior'
+type ProbabilityType = 'conditioned' | 'prior' | 'posterior';

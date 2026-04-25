@@ -1,11 +1,12 @@
-<button class="btn rounded-none variant-ghost-secondary ring-0 {classList}
-								text-2xl py-2 text-left font-semibold text-white w-full justify-start"
-				on:click={callback}>
-	<slot />
-</button>
-
 <script lang="ts">
-	export let callback = () => {
-	};
+	export let callback = () => {};
 	export let classList: string = '';
 </script>
+
+<button
+	class="variant-ghost-secondary btn rounded-none ring-0 {classList}
+								w-full justify-start py-2 text-left text-2xl font-semibold text-white"
+	on:click={callback}
+>
+	<slot />
+</button>

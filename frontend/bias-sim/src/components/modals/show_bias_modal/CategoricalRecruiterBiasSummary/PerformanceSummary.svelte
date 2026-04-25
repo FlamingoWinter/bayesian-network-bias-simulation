@@ -5,8 +5,6 @@
 	import type { MitigationBiasAnalysis } from '../../../../types/Bias.js';
 
 	export let recruiter: MitigationBiasAnalysis;
-
-
 </script>
 
 <AccordionItem>
@@ -28,8 +26,10 @@
 			<AccordionItem>
 				<svelte:fragment slot="summary">
 					<BiasSubTitle title="Proportion of People Hired:" value={recruiter.general.hiredRate} />
-					<BiasSubTitle title={"Proportion of People Competent:"}
-												value={recruiter.general.competentRate} />
+					<BiasSubTitle
+						title={'Proportion of People Competent:'}
+						value={recruiter.general.competentRate}
+					/>
 				</svelte:fragment>
 				<svelte:fragment slot="content">
 					<div>
@@ -42,7 +42,6 @@
 			<AccordionItem>
 				<svelte:fragment slot="summary">
 					<BiasSubTitle title="False Positive Rate:" value={recruiter.general.falsePositiveRate} />
-
 				</svelte:fragment>
 				<svelte:fragment slot="content">
 					<div>
@@ -54,7 +53,6 @@
 			<AccordionItem>
 				<svelte:fragment slot="summary">
 					<BiasSubTitle title="False Negative Rate:" value={recruiter.general.falseNegativeRate} />
-
 				</svelte:fragment>
 				<svelte:fragment slot="content">
 					<div>
@@ -65,8 +63,10 @@
 			<hr />
 			<AccordionItem>
 				<svelte:fragment slot="summary">
-
-					<BiasSubTitle title="False Discovery Rate:" value={recruiter.general.falseDiscoveryRate} />
+					<BiasSubTitle
+						title="False Discovery Rate:"
+						value={recruiter.general.falseDiscoveryRate}
+					/>
 				</svelte:fragment>
 				<svelte:fragment slot="content">
 					<div>

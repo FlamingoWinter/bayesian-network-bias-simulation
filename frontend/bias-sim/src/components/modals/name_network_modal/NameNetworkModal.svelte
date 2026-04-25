@@ -1,53 +1,7 @@
-{#if $modalStore[0]}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<div class="h-full flex flex-col gap-5 justify-center items-center">
-		<div transition:fade={{ duration: 400 } } on:click|stopPropagation role="alertdialog"
-				 class="card p-4 bg-surface-200-700-token view w-[50vw] min-w-64 h-[40rem] max-h-[90vh] overflow-y-scroll hide-scrollbar drop-shadow-md rounded-lg flex flex-col justify-between">
-			<div>
-				<ModalDivider />
-				<ModalRow center={false}>
-					<h3 class="text-2xl font-bold  text-center">Name Network</h3>
-				</ModalRow>
-				<p class="px-20 py-4 whitespace-pre-line text-center">
-					{caveatString}
-				</p>
-			</div>
-
-			<footer class="flex justify-end">
-				<div class="flex gap-2">
-					<button class="btn variant-outline-primary" on:click={()=>{modalStore.close()}}>Cancel</button>
-					<button class="btn variant-outline-secondary"
-									on:click={async ()=>{
-							await awaitSocketClose(nameNetworkSocket)
-
-							nameNetworkSocket = await awaitSocketOpen(new WebSocket(`${webSocketUrl}/name-network/?session_key=${$sessionKey}`));
-							await nameNetworkSocket.send("")
-							modalStore.close()
-
-							await $deconditionAll()
-
-							await $loadProcess(nameNetworkSocket)
-							await $invalidateNetwork()
-						}}>Submit
-					</button>
-				</div>
-			</footer>
-
-		</div>
-	</div>
-
-
-{/if}
-
-<ModalPopups />
-
 <script lang="ts">
-
 	import { fade } from 'svelte/transition';
 
 	import { awaitSocketClose, awaitSocketOpen } from '../../../utilities/socket';
-
 
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import ModalPopups from '../../popups/ModalPopups.svelte';
@@ -75,8 +29,64 @@ some insight into how a protected characteristic may have an indirect dependency
 Additionally, some dependencies will be obviously wrong due to the primitive algorithm used to generate them.
 
 By randomly labelling these nodes, you acknowledge that you won't interpret these labels as meaningful
-predictions.`.split('\n\n').map((a) => {
-		return a.split('\n').join(' ');
-	}).join('\n\n');
-
+predictions.`
+		.split('\n\n')
+		.map((a) => {
+			return a.split('\n').join(' ');
+		})
+		.join('\n\n');
 </script>
+
+{#if $modalStore[0]}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<div class="flex h-full flex-col items-center justify-center gap-5">
+		<div
+			transition:fade={{ duration: 400 }}
+			on:click|stopPropagation
+			role="alertdialog"
+			class="view card bg-surface-200-700-token hide-scrollbar flex h-[40rem] max-h-[90vh] w-[50vw] min-w-64 flex-col justify-between overflow-y-scroll rounded-lg p-4 drop-shadow-md"
+		>
+			<div>
+				<ModalDivider />
+				<ModalRow center={false}>
+					<h3 class="text-center text-2xl font-bold">Name Network</h3>
+				</ModalRow>
+				<p class="whitespace-pre-line px-20 py-4 text-center">
+					{caveatString}
+				</p>
+			</div>
+
+			<footer class="flex justify-end">
+				<div class="flex gap-2">
+					<button
+						class="variant-outline-primary btn"
+						on:click={() => {
+							modalStore.close();
+						}}>Cancel</button
+					>
+					<button
+						class="variant-outline-secondary btn"
+						on:click={async () => {
+							await awaitSocketClose(nameNetworkSocket);
+
+							nameNetworkSocket = await awaitSocketOpen(
+								new WebSocket(`${webSocketUrl}/name-network/?session_key=${$sessionKey}`)
+							);
+							await nameNetworkSocket.send('');
+							modalStore.close();
+
+							await $deconditionAll();
+
+							await $loadProcess(nameNetworkSocket);
+							await $invalidateNetwork();
+						}}
+						>Submit
+					</button>
+				</div>
+			</footer>
+		</div>
+	</div>
+{/if}
+
+<ModalPopups />

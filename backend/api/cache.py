@@ -28,8 +28,8 @@ def cache_network_and_generate_applicants(network: BayesianNetwork, session_id: 
         cache(f"network_{session_id}", network)
         cache(f"network-response_{session_id}", network_response)
     else:
-        cache(f"network", network)
-        cache(f"network-response", network_response)
+        cache("network", network)
+        cache("network-response", network_response)
 
 
 def get_network_from_cache(session_key: str) -> BayesianNetwork:

@@ -7,7 +7,7 @@
 	const menu = [
 		'1) What are we Doing Here?',
 		'2) How do we Simulate Candidates?',
-		'3) What\'s a Recruiter, Exactly?',
+		"3) What's a Recruiter, Exactly?",
 		'4) How do we Measure Bias?',
 		'5) Putting it all Together!',
 		'6) The Results',
@@ -15,20 +15,28 @@
 	];
 
 	function toSlug(str: string) {
-		return str.toLowerCase().replace(/\s+/g, '_').substring(3).replace(/[^\w\s]/g, '');
+		return str
+			.toLowerCase()
+			.replace(/\s+/g, '_')
+			.substring(3)
+			.replace(/[^\w\s]/g, '');
 	}
 
-	const utilityButtonInfos = menu.map((title) =>
-		({
-			name: title, callback: () => window.location.href = '/walkthrough/' + toSlug(title), textSize: 'text-md'
-		}));
+	const utilityButtonInfos = menu.map((title) => ({
+		name: title,
+		callback: () => (window.location.href = '/walkthrough/' + toSlug(title)),
+		textSize: 'text-md'
+	}));
 </script>
-<div class="pt-16 flex flex-col justify-between items-start  h-full">
-	<div class="flex flex-col justify-start items-start w-full pr-4 gap-1">
-		<TopUtilityButtons utilityButtonInfos={utilityButtonInfos} />
+
+<div class="flex h-full flex-col items-start justify-between pt-16">
+	<div class="flex w-full flex-col items-start justify-start gap-1 pr-4">
+		<TopUtilityButtons {utilityButtonInfos} />
 	</div>
-	<BottomHrefButtons buttonInfos={[
-			{name: "Visualisation", slug: "/visualisation"},
-			{name: "Guide", slug: "/guide"},
-		]} />
+	<BottomHrefButtons
+		buttonInfos={[
+			{ name: 'Visualisation', slug: '/visualisation' },
+			{ name: 'Guide', slug: '/guide' }
+		]}
+	/>
 </div>

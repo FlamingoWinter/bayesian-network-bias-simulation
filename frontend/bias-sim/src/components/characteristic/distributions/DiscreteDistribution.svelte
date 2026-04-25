@@ -1,32 +1,3 @@
-<g>
-	{#each bars as bar}
-		<g class="bar">
-			<rect rx="2" x={x(bar.x)} y={ mounted ? y(bar.y) : y(0)}
-						width={(x(barWidth) - x(0)) * 0.9} height={ mounted ? height - y(bar.y) : 0}
-						fill={calculateDistributionFill(probabilityType)}
-						style="transition: height  {defaultTransition},
-															 y {defaultTransition},
-																fill {defaultTransition}">
-
-			</rect>
-		</g>
-	{/each}
-	<g>
-		<text class="bar-label"
-					x={x(median)}
-					y={0}
-					transform={`translate(0, ${mounted ? -4 : y(0) - 10})`}
-					text-anchor="middle" font-size="8px" font-weight="400"
-					fill="#000"
-					style="transition: transform 750ms">
-			{`${median.toPrecision(2)}`}
-		</text>
-	</g>
-	<AxisBottom bind:x={x} height={height} width={width} distribution={distribution}></AxisBottom>
-	<AxisLeft bind:y={y} height={height} maxBarY={maxBarY} display={false} />
-</g>
-
-
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
@@ -48,7 +19,9 @@
 	let probabilityType: ProbabilityType;
 
 	$: probabilityType = conditioned
-		? (characteristic.name in conditions ? 'conditioned' : 'posterior')
+		? characteristic.name in conditions
+			? 'conditioned'
+			: 'posterior'
 		: 'prior';
 
 	let distribution: number[];
@@ -70,11 +43,10 @@
 		binStart + (i + 1) * barWidth
 	]);
 
-
 	$: bars = bins.map(([start, end]) => {
 		return {
 			x: start,
-			y: distribution.filter(d => d >= start && d < end).length
+			y: distribution.filter((d) => d >= start && d < end).length
 		};
 	});
 
@@ -86,8 +58,8 @@
 	$: median = d3.median(distribution)!;
 
 	interface Bar {
-		x: number,
-		y: number
+		x: number;
+		y: number;
 	}
 
 	onMount(() => {
@@ -95,6 +67,40 @@
 			mounted = true;
 		}, 0);
 	});
-
-
 </script>
+
+<g>
+	{#each bars as bar}
+		<g class="bar">
+			<rect
+				rx="2"
+				x={x(bar.x)}
+				y={mounted ? y(bar.y) : y(0)}
+				width={(x(barWidth) - x(0)) * 0.9}
+				height={mounted ? height - y(bar.y) : 0}
+				fill={calculateDistributionFill(probabilityType)}
+				style="transition: height  {defaultTransition},
+															 y {defaultTransition},
+																fill {defaultTransition}"
+			>
+			</rect>
+		</g>
+	{/each}
+	<g>
+		<text
+			class="bar-label"
+			x={x(median)}
+			y={0}
+			transform={`translate(0, ${mounted ? -4 : y(0) - 10})`}
+			text-anchor="middle"
+			font-size="8px"
+			font-weight="400"
+			fill="#000"
+			style="transition: transform 750ms"
+		>
+			{`${median.toPrecision(2)}`}
+		</text>
+	</g>
+	<AxisBottom bind:x {height} {width} {distribution}></AxisBottom>
+	<AxisLeft bind:y {height} {maxBarY} display={false} />
+</g>

@@ -3,6 +3,7 @@ version: '3'
 vars:
   CONDA_ENV: bayesian-network-bias-simulation
   FRONTEND_DIR: frontend/bias-sim
+  BACKEND_DIR: backend
   # Override with CONDA_ENV_FILE=environment_linux.yml task install-backend
   CONDA_ENV_FILE: '{{.CONDA_ENV_FILE | default "environment_macos.yml"}}'
 
@@ -56,17 +57,42 @@ tasks:
   # ── Code quality ─────────────────────────────────────────────────────────────
 
   lint:
-    desc: Check formatting (Prettier) and types (svelte-check)
+    desc: Lint and type-check everything (frontend + backend)
+    cmds:
+      - task: lint-frontend
+      - task: lint-backend
+
+  fix:
+    desc: Auto-fix formatting everywhere (frontend + backend)
+    cmds:
+      - task: fix-frontend
+      - task: fix-backend
+
+  lint-frontend:
+    desc: Check frontend formatting (Prettier) and types (svelte-check)
     dir: '{{.FRONTEND_DIR}}'
     cmds:
       - npm run lint
       - npm run check
 
-  fix:
-    desc: Auto-fix formatting (Prettier)
+  fix-frontend:
+    desc: Auto-fix frontend formatting (Prettier)
     dir: '{{.FRONTEND_DIR}}'
     cmds:
       - npm run format
+
+  lint-backend:
+    desc: Lint and type-check backend (ruff + pyright)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check {{.BACKEND_DIR}}
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format --check {{.BACKEND_DIR}}
+      - conda run -n {{.CONDA_ENV}} --no-capture-output pyright {{.BACKEND_DIR}}
+
+  fix-backend:
+    desc: Auto-fix backend linting and formatting (ruff)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check --fix {{.BACKEND_DIR}}
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format {{.BACKEND_DIR}}
 
   # ── Environment management ───────────────────────────────────────────────────
 

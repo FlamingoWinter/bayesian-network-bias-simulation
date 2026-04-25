@@ -12,7 +12,6 @@
 	export let recruiter: MitigationBiasAnalysis;
 	export let withoutMitigation: MitigationBiasAnalysis | null;
 
-
 	$: minAndMaxFalseDiscoveryRates = Object.entries(recruiter.byGroup).reduce(
 		(acc, [groupName, info]) => {
 			if (info.falseDiscoveryRate > acc.maxFalseDiscoveryRate) {
@@ -28,7 +27,9 @@
 		{ min: '', max: '', minFalseDiscoveryRate: 1, maxFalseDiscoveryRate: 0 }
 	);
 
-	$: absoluteFalseDiscoveryRateDisparity = minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate - minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate;
+	$: absoluteFalseDiscoveryRateDisparity =
+		minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate -
+		minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate;
 	$: falseDiscoveryBiasLevel = absoluteDisparityToLevel(absoluteFalseDiscoveryRateDisparity);
 
 	$: minAndMaxFalseOmissionRates = Object.entries(recruiter.byGroup).reduce(
@@ -46,10 +47,10 @@
 		{ min: '', max: '', minFalseOmissionRate: 1, maxFalseOmissionRate: 0 }
 	);
 
-	$: absoluteFalseOmissionRateDisparity = minAndMaxFalseOmissionRates.maxFalseOmissionRate - minAndMaxFalseOmissionRates.minFalseOmissionRate;
+	$: absoluteFalseOmissionRateDisparity =
+		minAndMaxFalseOmissionRates.maxFalseOmissionRate -
+		minAndMaxFalseOmissionRates.minFalseOmissionRate;
 	$: falseOmissionBiasLevel = absoluteDisparityToLevel(absoluteFalseOmissionRateDisparity);
-
-
 </script>
 
 <AccordionItem>
@@ -57,141 +58,160 @@
 		<BiasTitle subtitle="Sufficiency">Predictive Parity</BiasTitle>
 	</svelte:fragment>
 	<svelte:fragment slot="content">
-
-			<div class="py-4">
-				<p class=" text-center">
-					<span class="font-bold block center text-2xl">
-						{((1- minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate) * 100).toFixed(1)}%
-					</span>
-					of the people hired from group {minAndMaxFalseDiscoveryRates.max} are competent, while
-					<span  class="font-bold block center text-2xl">
-						{((1-minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate) * 100).toFixed(1)}%
-					</span>
-					of people hired from group {minAndMaxFalseDiscoveryRates.min} are competent.
-				</p>
-				<p class="mt-4 text-center">
-					This is an absolute difference of
-					<span style="color: {levelToColorMapping[falseDiscoveryBiasLevel]}" class="font-bold block center text-3xl">
-						{(absoluteFalseDiscoveryRateDisparity * 100).toFixed(1)}
-					</span>
-				</p>
-				<p class="mt-8 text-center">By this metric, there is a <span
+		<div class="py-4">
+			<p class=" text-center">
+				<span class="center block text-2xl font-bold">
+					{((1 - minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate) * 100).toFixed(1)}%
+				</span>
+				of the people hired from group {minAndMaxFalseDiscoveryRates.max} are competent, while
+				<span class="center block text-2xl font-bold">
+					{((1 - minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate) * 100).toFixed(1)}%
+				</span>
+				of people hired from group {minAndMaxFalseDiscoveryRates.min} are competent.
+			</p>
+			<p class="mt-4 text-center">
+				This is an absolute difference of
+				<span
 					style="color: {levelToColorMapping[falseDiscoveryBiasLevel]}"
-					class="font-bold text-lg">{falseDiscoveryBiasLevel}</span> bias
-					against group {minAndMaxFalseDiscoveryRates.min}</p>
-			</div>
+					class="center block text-3xl font-bold"
+				>
+					{(absoluteFalseDiscoveryRateDisparity * 100).toFixed(1)}
+				</span>
+			</p>
+			<p class="mt-8 text-center">
+				By this metric, there is a <span
+					style="color: {levelToColorMapping[falseDiscoveryBiasLevel]}"
+					class="text-lg font-bold">{falseDiscoveryBiasLevel}</span
+				>
+				bias against group {minAndMaxFalseDiscoveryRates.min}
+			</p>
+		</div>
 
-
-
-			<Accordion spacing="0">
-				<AccordionItem>
-					<svelte:fragment slot="summary">
-											<h2 class="font-bold">More Information</h2>
-
-					</svelte:fragment>
-					<svelte:fragment slot="content">
-						<div class="table-container">
-							<table class="table table-hover">
-								<thead>
+		<Accordion spacing="0">
+			<AccordionItem>
+				<svelte:fragment slot="summary">
+					<h2 class="font-bold">More Information</h2>
+				</svelte:fragment>
+				<svelte:fragment slot="content">
+					<div class="table-container">
+						<table class="table table-hover">
+							<thead>
 								<tr>
 									<th>Group</th>
 									<th>False Discovery Rate</th>
 
 									<th>Proportion Hired</th>
 								</tr>
-								</thead>
-								<tbody>
+							</thead>
+							<tbody>
 								{#each Object.keys(recruiter.byGroup) as group}
 									<tr>
 										<td>{group}</td>
 										{#if withoutMitigation === null}
-											<td class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</td>
+											<td class="font-bold"
+												>{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</td
+											>
 										{:else}
 											<td>
-												<span class="font-bold">{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</span>
-												<span class="text-xs">{withoutMitigation.byGroup[group].falseDiscoveryRate.toFixed(3)}</span>
+												<span class="font-bold"
+													>{recruiter.byGroup[group].falseDiscoveryRate.toFixed(3)}</span
+												>
+												<span class="text-xs"
+													>{withoutMitigation.byGroup[group].falseDiscoveryRate.toFixed(3)}</span
+												>
 											</td>
 										{/if}
 										<td>{recruiter.byGroup[group].hiredRate.toFixed(3)}</td>
 									</tr>
 								{/each}
-								</tbody>
-							</table>
-							{#if withoutMitigation !== null}
-								<p class="text-xs py-2">* Bracketed values are from the model without the mitigation applied.</p>
-							{/if}
-						</div>
-					</svelte:fragment>
-				</AccordionItem>
-			</Accordion>
+							</tbody>
+						</table>
+						{#if withoutMitigation !== null}
+							<p class="py-2 text-xs">
+								* Bracketed values are from the model without the mitigation applied.
+							</p>
+						{/if}
+					</div>
+				</svelte:fragment>
+			</AccordionItem>
+		</Accordion>
 
-			<hr />
-			<div class="py-4">
-				<p class=" text-center">
-					<span class="font-bold block center text-2xl">
-						{(minAndMaxFalseOmissionRates.minFalseOmissionRate * 100).toFixed(1)}%
-					</span>
-					of people rejected from group {minAndMaxFalseOmissionRates.min} were actually competent while
-					<span  class="font-bold block center text-2xl">
-						{(minAndMaxFalseOmissionRates.maxFalseOmissionRate * 100).toFixed(1)}%
-					</span>
-					of people rejected from group {minAndMaxFalseOmissionRates.max} were actually competent.
-				</p>
-				<p class="mt-4 text-center">
-					This is an absolute difference of
-					<span style="color: {levelToColorMapping[falseOmissionBiasLevel]}" class="font-bold block center text-3xl">
-						{(absoluteFalseOmissionRateDisparity * 100).toFixed(1)}
-					</span>
-				</p>
-				<p class="mt-8 text-center">By this metric, there is a <span
+		<hr />
+		<div class="py-4">
+			<p class=" text-center">
+				<span class="center block text-2xl font-bold">
+					{(minAndMaxFalseOmissionRates.minFalseOmissionRate * 100).toFixed(1)}%
+				</span>
+				of people rejected from group {minAndMaxFalseOmissionRates.min} were actually competent while
+				<span class="center block text-2xl font-bold">
+					{(minAndMaxFalseOmissionRates.maxFalseOmissionRate * 100).toFixed(1)}%
+				</span>
+				of people rejected from group {minAndMaxFalseOmissionRates.max} were actually competent.
+			</p>
+			<p class="mt-4 text-center">
+				This is an absolute difference of
+				<span
 					style="color: {levelToColorMapping[falseOmissionBiasLevel]}"
-					class="font-bold text-lg">{falseOmissionBiasLevel}</span> bias
-					against group {minAndMaxFalseOmissionRates.max}</p>
-			</div>
+					class="center block text-3xl font-bold"
+				>
+					{(absoluteFalseOmissionRateDisparity * 100).toFixed(1)}
+				</span>
+			</p>
+			<p class="mt-8 text-center">
+				By this metric, there is a <span
+					style="color: {levelToColorMapping[falseOmissionBiasLevel]}"
+					class="text-lg font-bold">{falseOmissionBiasLevel}</span
+				>
+				bias against group {minAndMaxFalseOmissionRates.max}
+			</p>
+		</div>
 
-
-
-			<Accordion spacing="0">
-				<AccordionItem>
-					<svelte:fragment slot="summary">
-											<h2 class="font-bold">More Information</h2>
-					</svelte:fragment>
-					<svelte:fragment slot="content">
-						<div class="table-container">
-							<table class="table table-hover">
-								<thead>
+		<Accordion spacing="0">
+			<AccordionItem>
+				<svelte:fragment slot="summary">
+					<h2 class="font-bold">More Information</h2>
+				</svelte:fragment>
+				<svelte:fragment slot="content">
+					<div class="table-container">
+						<table class="table table-hover">
+							<thead>
 								<tr>
 									<th>Group</th>
 									<th>False Omission Rate</th>
 									<th>Proportion Rejected</th>
 								</tr>
-								</thead>
-								<tbody>
+							</thead>
+							<tbody>
 								{#each Object.keys(recruiter.byGroup) as group}
 									<tr>
 										<td>{group}</td>
 										{#if withoutMitigation === null}
-										<td class="font-bold">{recruiter.byGroup[group].falseOmissionRate.toFixed(3)}</td>
-
-
-									{:else}
-										<td>
-											<span class="font-bold">{recruiter.byGroup[group].falseOmissionRate.toFixed(3)}</span>
-											<span class="text-xs">{withoutMitigation.byGroup[group].falseOmissionRate.toFixed(3)}</span>
-										</td>
-									{/if}
+											<td class="font-bold"
+												>{recruiter.byGroup[group].falseOmissionRate.toFixed(3)}</td
+											>
+										{:else}
+											<td>
+												<span class="font-bold"
+													>{recruiter.byGroup[group].falseOmissionRate.toFixed(3)}</span
+												>
+												<span class="text-xs"
+													>{withoutMitigation.byGroup[group].falseOmissionRate.toFixed(3)}</span
+												>
+											</td>
+										{/if}
 										<td>{recruiter.byGroup[group].notHiredRate.toFixed(3)}</td>
 									</tr>
 								{/each}
-								</tbody>
-							</table>
-							{#if withoutMitigation !== null}
-							<p class="text-xs py-2">* Bracketed values are from the model without the mitigation applied.</p>
+							</tbody>
+						</table>
+						{#if withoutMitigation !== null}
+							<p class="py-2 text-xs">
+								* Bracketed values are from the model without the mitigation applied.
+							</p>
 						{/if}
-						</div>
-					</svelte:fragment>
-				</AccordionItem>
-			</Accordion>
-
+					</div>
+				</svelte:fragment>
+			</AccordionItem>
+		</Accordion>
 	</svelte:fragment>
 </AccordionItem>

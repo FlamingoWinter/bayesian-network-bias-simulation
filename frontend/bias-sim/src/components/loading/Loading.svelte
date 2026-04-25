@@ -7,10 +7,16 @@
 
 {#if isLoading}
 	<div
-		class="absolute w-[100vw] h-[100vh] flex justify-center items-center bg-surface-800 bg-opacity-80">
+		class="absolute flex h-[100vh] w-[100vw] items-center justify-center bg-surface-800 bg-opacity-80"
+	>
 		<div class="flex flex-col items-center">
-			<ProgressRadial value={undefined} width="w-[10rem]" meter="stroke-primary-200" track="stroke-primary-400" />
-			<h3 class="text-[4rem] font-bold mt-16 text-center text-surface-100">{loadingText}...</h3>
+			<ProgressRadial
+				value={undefined}
+				width="w-[10rem]"
+				meter="stroke-primary-200"
+				track="stroke-primary-400"
+			/>
+			<h3 class="mt-16 text-center text-[4rem] font-bold text-surface-100">{loadingText}...</h3>
 		</div>
 	</div>
 {/if}

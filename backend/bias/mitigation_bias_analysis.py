@@ -153,5 +153,5 @@ def get_pretty_title(title: str) -> str:
 
 
 def get_space() -> str:
-    return f"""
+    return """
     ---"""

@@ -25,17 +25,16 @@ interface CategoricalGroupPredictionInformation {
 	falseOmissionRate: number;
 }
 
-
 export interface MitigationBiasAnalysis {
 	general: CategoricalGroupPredictionInformation;
 	byGroup: Record<string, CategoricalGroupPredictionInformation>;
 }
 
-export type RecruiterBiasAnalysis = Record<string, MitigationBiasAnalysis>
+export type RecruiterBiasAnalysis = Record<string, MitigationBiasAnalysis>;
 
-export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>
+export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>;
 
-export type BiasLevel = 'Minimal' | 'Moderate' | 'High' | 'Very High'
+export type BiasLevel = 'Minimal' | 'Moderate' | 'High' | 'Very High';
 
 export function multiplierToLevel(multiplier: number): BiasLevel {
 	if (multiplier > 1) {
@@ -57,10 +56,9 @@ export function absoluteDisparityToLevel(absoluteDisparity: number): BiasLevel {
 	return 'Very High';
 }
 
-
 export const levelToColorMapping: Record<BiasLevel, string> = {
-	'Minimal': '#22bd28',
-	'Moderate': '#c3b223',
-	'High': '#ba832f',
+	Minimal: '#22bd28',
+	Moderate: '#c3b223',
+	High: '#ba832f',
 	'Very High': '#bf4138'
 };

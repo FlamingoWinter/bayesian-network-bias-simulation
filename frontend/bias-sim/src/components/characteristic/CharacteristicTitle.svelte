@@ -1,10 +1,3 @@
-<text x={0} y={-rectHeight /2 - 7} text-anchor="middle" fill="#333333" font-weight="600" font-size="18px"
-			class="max-w-1">
-	{#each textWrappedTitle as line, i}
-		<tspan x="0" dy="{i===0 ? (-20) * textWrappedTitle.length + 20 : 20}">{line}</tspan>
-	{/each}
-</text>
-
 <script lang="ts">
 	import { toTitleCase } from '../../utilities/toTitleCase.js';
 
@@ -17,7 +10,7 @@
 		const words = text.split(' ');
 		const wrappedWords: string[] = [words[0]];
 		let lettersLeft = n - words[0].length;
-		words.slice(1).forEach(word => {
+		words.slice(1).forEach((word) => {
 			if (lettersLeft < word.length) {
 				lettersLeft = n;
 				wrappedWords.push(word);
@@ -30,3 +23,16 @@
 	}
 </script>
 
+<text
+	x={0}
+	y={-rectHeight / 2 - 7}
+	text-anchor="middle"
+	fill="#333333"
+	font-weight="600"
+	font-size="18px"
+	class="max-w-1"
+>
+	{#each textWrappedTitle as line, i}
+		<tspan x="0" dy={i === 0 ? -20 * textWrappedTitle.length + 20 : 20}>{line}</tspan>
+	{/each}
+</text>

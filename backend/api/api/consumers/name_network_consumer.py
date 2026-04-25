@@ -15,9 +15,9 @@ class NameNetworkConsumer(GenericConsumer):
         if network.model_type == "pgmpy":
             network: PgmPyNetwork = cast(PgmPyNetwork, network)
             network.name_characteristics()
-            await self.send_and_flush(f"Network Renaming Completed")
+            await self.send_and_flush("Network Renaming Completed")
             cache_network_and_generate_applicants(network, self.session_key)
-            await self.send_and_flush(f"Candidate Generation Completed")
+            await self.send_and_flush("Candidate Generation Completed")
         else:
             await self.send_and_flush("Error: Network is not a categorical one.", error=True)
 

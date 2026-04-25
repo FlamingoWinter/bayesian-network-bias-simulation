@@ -4,44 +4,45 @@
 	export let center: boolean = false;
 </script>
 
-<button class="rounded-2xl border-none block relative bg-white cursor-pointer select-none
-							py-6 px-10 text-2xl font-semibold h-fit
-							overflow-hidden text-warning-600 z-10 {center ? '' : 'mr-auto flex-grow basis-0'} drop-shadow-2xl"
-				on:click={() => window.location.href = '/guide'}>
+<button
+	class="relative z-10 block h-fit cursor-pointer select-none overflow-hidden
+							rounded-2xl border-none bg-white px-10 py-6
+							text-2xl font-semibold text-warning-600 {center ? '' : 'mr-auto flex-grow basis-0'} drop-shadow-2xl"
+	on:click={() => (window.location.href = '/guide')}
+>
 	More Information
-	<span class="rounded-2xl absolute left-0 top-0 w-full h-full bg-transparent -z-10 border-4 border-solid
-							border-warning-600"></span>
+	<span
+		class="absolute left-0 top-0 -z-10 h-full w-full rounded-2xl border-4 border-solid border-warning-600
+							bg-transparent"
+	></span>
 </button>
 
-
 <style>
-    button span::before {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 0;
-        height: 500%;
-        background: var(--lightgray);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(-60deg);
-        transition: all 0.3s;
-    }
+	button span::before {
+		content: '';
+		display: block;
+		position: absolute;
+		width: 0;
+		height: 500%;
+		background: var(--lightgray);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(-60deg);
+		transition: all 0.3s;
+	}
 
-    button:hover span::before {
-        transform: translate(-50%, -50%) rotate(-90deg);
-        width: 100%;
-        background: rgb(var(--color-warning-600));
-    }
+	button:hover span::before {
+		transform: translate(-50%, -50%) rotate(-90deg);
+		width: 100%;
+		background: rgb(var(--color-warning-600));
+	}
 
-    button:hover {
-        transition: all 0.3s;
-        color: white;
-    }
+	button:hover {
+		transition: all 0.3s;
+		color: white;
+	}
 
-
-    button:active span::before {
-        background: black;
-    }
-
+	button:active span::before {
+		background: black;
+	}
 </style>
