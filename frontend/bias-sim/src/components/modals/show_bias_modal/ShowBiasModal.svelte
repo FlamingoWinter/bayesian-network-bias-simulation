@@ -4,19 +4,12 @@
 	import ModalPopups from '../../popups/ModalPopups.svelte';
 	import ModalDivider from '../ModalDivider.svelte';
 	import { biasAnalysis } from '../../../stores/store';
-	import { onMount } from 'svelte';
 	import { X } from 'svelte-bootstrap-icons';
 	import CategoricalRecruiterBiasSummary from './CategoricalRecruiterBiasSummary/CategoricalRecruiterBiasSummary.svelte';
 
 	const modalStore = getModalStore();
 
 	let tabSet: string = Object.keys($biasAnalysis!)[0];
-
-	onMount(() => {
-		if ($biasAnalysis !== undefined) {
-			tabSet = Object.keys($biasAnalysis!)[0];
-		}
-	});
 </script>
 
 {#if $modalStore[0] && $biasAnalysis !== undefined}

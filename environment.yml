@@ -31,10 +31,13 @@ dependencies:
       - networkx==3.4.2
       - statsmodels==0.14.4
       - pydantic==2.10.4
-      - pydantic2ts==2.0.0
+      - pydantic-to-typescript==2.0.0
       # AI
       - google-generativeai==0.8.3
       # Dev tools
       - django-stubs
       - pyright
+      - pytest
+      - pytest-django
+      - pytest-asyncio
       - ruff

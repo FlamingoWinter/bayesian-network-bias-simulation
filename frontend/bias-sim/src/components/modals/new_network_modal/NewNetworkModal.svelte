@@ -45,7 +45,7 @@
 
 	function updateProbabilities(probabilityIndex: number) {
 		let difference = 1 - p.reduce((sum, item) => sum + item.value, 0);
-		let indexToChange = probabilityIndex == 3 ? 2 : 3;
+		let indexToChange = probabilityIndex === 3 ? 2 : 3;
 
 		if (difference > 0) {
 			// Probabilities need to increase
@@ -53,7 +53,7 @@
 				difference -= 1 - p[indexToChange].value;
 				p[indexToChange].value = 1;
 				indexToChange -= 1;
-				if (indexToChange == probabilityIndex) {
+				if (indexToChange === probabilityIndex) {
 					indexToChange -= 1;
 				}
 			}
@@ -64,7 +64,7 @@
 				difference += p[indexToChange].value;
 				p[indexToChange].value = 0;
 				indexToChange -= 1;
-				if (indexToChange == probabilityIndex) {
+				if (indexToChange === probabilityIndex) {
 					indexToChange -= 1;
 				}
 			}

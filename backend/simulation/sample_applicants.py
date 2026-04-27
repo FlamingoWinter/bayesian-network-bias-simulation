@@ -44,7 +44,7 @@ class Applicants:
         splits: List[pd.DataFrame] = []
         remaining_applicants_proportion = 1
         for split_size in split_sizes[:-1]:
-            test_size = 1 - (split_size / remaining_applicants_proportion)
+            test_size = split_size / remaining_applicants_proportion
             remaining, characteristic_split = train_test_split(  # type: ignore
                 remaining, test_size=test_size
             )

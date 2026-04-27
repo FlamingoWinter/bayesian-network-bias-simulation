@@ -5,7 +5,7 @@
 	let error: boolean;
 
 	const validateInput = () => {
-		if (p != '') {
+		if (p !== '') {
 			error = !(0 <= p && p <= 1);
 		}
 	};

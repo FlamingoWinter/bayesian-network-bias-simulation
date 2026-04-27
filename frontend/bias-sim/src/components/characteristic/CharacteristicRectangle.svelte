@@ -19,7 +19,7 @@
 			return '#ffffff';
 		}
 
-		if (characteristic == scoreCharacteristic) {
+		if (characteristic === scoreCharacteristic) {
 			return '#fff1a1';
 		}
 		if (applicationCharacteristics.includes(characteristic)) {

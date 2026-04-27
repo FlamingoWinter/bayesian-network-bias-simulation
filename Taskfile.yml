@@ -92,6 +92,33 @@ tasks:
       - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check --fix {{.BACKEND_DIR}}
       - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format {{.BACKEND_DIR}}
 
+  # ── Tests ────────────────────────────────────────────────────────────────────
+
+  test:
+    desc: Run all fast tests (backend unit + integration, excluding slow mitigations)
+    deps: [test-backend]
+
+  test-backend:
+    desc: Run the backend pytest suite (excludes slow dual_annealing mitigations)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pytest -m "not slow"
+
+  test-backend-all:
+    desc: Run the full backend test suite including slow mitigation tests
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pytest
+
+  test-backend-unit:
+    desc: Run only the backend unit tests
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pytest backend/tests/unit -m "not django_db"
+
   # ── Type generation ──────────────────────────────────────────────────────────
 
   generate-types:

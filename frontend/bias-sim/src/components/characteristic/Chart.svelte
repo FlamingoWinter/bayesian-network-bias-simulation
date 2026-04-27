@@ -72,7 +72,7 @@
 		expanded = !expanded;
 	}
 
-	$: if (expanded && $expandedNodeId != node.id) {
+	$: if (expanded && $expandedNodeId !== node.id) {
 		toggleExpand();
 	}
 

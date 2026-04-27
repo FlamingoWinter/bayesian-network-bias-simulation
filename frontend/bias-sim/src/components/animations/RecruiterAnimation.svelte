@@ -65,7 +65,7 @@
 			let competent = true;
 			if (showBias) {
 				color = Math.random() > 0.5 ? 'gray' : 'purple';
-				if (color == 'purple') {
+				if (color === 'purple') {
 					competent = Math.random() < 0.6;
 					applicantIsHired = Math.random() < (competent ? 0.5 : 0);
 				} else {
@@ -81,7 +81,7 @@
 				hired: applicantIsHired,
 				indexInHireClass: !showCompetence
 					? applicants.filter((a) => a.hired === applicantIsHired).length
-					: applicants.filter((a) => a.hired === applicantIsHired && a.competent == competent)
+					: applicants.filter((a) => a.hired === applicantIsHired && a.competent === competent)
 							.length,
 				competent: competent,
 				color: color
@@ -102,7 +102,7 @@
 
 	function addApplication(applicationIsHired: boolean) {
 		applications.push({
-			id: applications.length == 0 ? 0 : applications[applications.length - 1].id + 1,
+			id: applications.length === 0 ? 0 : applications[applications.length - 1].id + 1,
 			hired: applicationIsHired
 		});
 		applications = applications;

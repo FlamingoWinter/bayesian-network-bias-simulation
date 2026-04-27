@@ -11,13 +11,12 @@
 	let mode: 'new_network' | 'none' | 'name_network' | 'run_simulation' = 'new_network';
 
 	$: if (network.characteristics) {
+		const firstKey = Object.keys(network.characteristics)[0];
 		mode = network.predefined
 			? 'new_network'
-			: Object.keys(network.characteristics)[0] in ['0', '1', '2', '3']
+			: /^\d+$/.test(firstKey)
 				? 'name_network'
-				: Object.keys(network.characteristics).some((a) => a.includes('Characteristic'))
-					? 'run_simulation'
-					: 'none';
+				: 'run_simulation';
 	}
 
 	// The mode should be generating a new network. If the network is the predefined demo network.
@@ -25,9 +24,9 @@
 	const modalStore = getModalStore();
 
 	$: modalComponent =
-		mode == 'new_network'
+		mode === 'new_network'
 			? { ref: NewNetworkModal }
-			: mode == 'run_simulation'
+			: mode === 'run_simulation'
 				? { ref: SimulateModal, props: { network: network } }
 				: { ref: NameNetworkModal };
 

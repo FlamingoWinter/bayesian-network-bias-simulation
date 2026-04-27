@@ -58,7 +58,7 @@ def generate_random_categorical_network(
 
     network.score_characteristic = score_characteristic
     network.application_characteristics = choose_application(
-        graph, 1, score_characteristic
+        graph, 1, score_characteristic, application_size=min(nodes - 2, 10)
     )
 
     network.predefined = False

@@ -1,56 +1,23 @@
 <script lang="ts">
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import BiasSubTitle from '../BiasSubTitle.svelte';
 	import BiasTitle from '../BiasTitle.svelte';
 	import {
 		absoluteDisparityToLevel,
 		type MitigationAnalysis,
-		multiplierToLevel
+		minMaxGroups
 	} from '../../../../types/Bias';
 	import { levelToColorMapping } from '../../../../types/Bias.js';
 
 	export let recruiter: MitigationAnalysis;
 	export let withoutMitigation: MitigationAnalysis | null;
 
-	$: minAndMaxFalseDiscoveryRates = Object.entries(recruiter.byGroup).reduce(
-		(acc, [groupName, info]) => {
-			if (info.falseDiscoveryRate > acc.maxFalseDiscoveryRate) {
-				acc.max = groupName;
-				acc.maxFalseDiscoveryRate = info.falseDiscoveryRate;
-			}
-			if (info.falseDiscoveryRate < acc.minFalseDiscoveryRate) {
-				acc.min = groupName;
-				acc.minFalseDiscoveryRate = info.falseDiscoveryRate;
-			}
-			return acc;
-		},
-		{ min: '', max: '', minFalseDiscoveryRate: 1, maxFalseDiscoveryRate: 0 }
-	);
+	$: fdr = minMaxGroups(recruiter.byGroup, 'falseDiscoveryRate');
+	$: absoluteFDRDisparity = fdr.maxVal - fdr.minVal;
+	$: fdrBiasLevel = absoluteDisparityToLevel(absoluteFDRDisparity);
 
-	$: absoluteFalseDiscoveryRateDisparity =
-		minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate -
-		minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate;
-	$: falseDiscoveryBiasLevel = absoluteDisparityToLevel(absoluteFalseDiscoveryRateDisparity);
-
-	$: minAndMaxFalseOmissionRates = Object.entries(recruiter.byGroup).reduce(
-		(acc, [groupName, info]) => {
-			if (info.falseOmissionRate > acc.maxFalseOmissionRate) {
-				acc.max = groupName;
-				acc.maxFalseOmissionRate = info.falseOmissionRate;
-			}
-			if (info.falseOmissionRate < acc.minFalseOmissionRate) {
-				acc.min = groupName;
-				acc.minFalseOmissionRate = info.falseOmissionRate;
-			}
-			return acc;
-		},
-		{ min: '', max: '', minFalseOmissionRate: 1, maxFalseOmissionRate: 0 }
-	);
-
-	$: absoluteFalseOmissionRateDisparity =
-		minAndMaxFalseOmissionRates.maxFalseOmissionRate -
-		minAndMaxFalseOmissionRates.minFalseOmissionRate;
-	$: falseOmissionBiasLevel = absoluteDisparityToLevel(absoluteFalseOmissionRateDisparity);
+	$: omission = minMaxGroups(recruiter.byGroup, 'falseOmissionRate');
+	$: absoluteFORDisparity = omission.maxVal - omission.minVal;
+	$: forBiasLevel = absoluteDisparityToLevel(absoluteFORDisparity);
 </script>
 
 <AccordionItem>
@@ -61,29 +28,29 @@
 		<div class="py-4">
 			<p class=" text-center">
 				<span class="center block text-2xl font-bold">
-					{((1 - minAndMaxFalseDiscoveryRates.maxFalseDiscoveryRate) * 100).toFixed(1)}%
+					{((1 - fdr.maxVal) * 100).toFixed(1)}%
 				</span>
-				of the people hired from group {minAndMaxFalseDiscoveryRates.max} are competent, while
+				of the people hired from group {fdr.max} are competent, while
 				<span class="center block text-2xl font-bold">
-					{((1 - minAndMaxFalseDiscoveryRates.minFalseDiscoveryRate) * 100).toFixed(1)}%
+					{((1 - fdr.minVal) * 100).toFixed(1)}%
 				</span>
-				of people hired from group {minAndMaxFalseDiscoveryRates.min} are competent.
+				of people hired from group {fdr.min} are competent.
 			</p>
 			<p class="mt-4 text-center">
 				This is an absolute difference of
 				<span
-					style="color: {levelToColorMapping[falseDiscoveryBiasLevel]}"
+					style="color: {levelToColorMapping[fdrBiasLevel]}"
 					class="center block text-3xl font-bold"
 				>
-					{(absoluteFalseDiscoveryRateDisparity * 100).toFixed(1)}
+					{(absoluteFDRDisparity * 100).toFixed(1)}
 				</span>
 			</p>
 			<p class="mt-8 text-center">
 				By this metric, there is a <span
-					style="color: {levelToColorMapping[falseDiscoveryBiasLevel]}"
-					class="text-lg font-bold">{falseDiscoveryBiasLevel}</span
+					style="color: {levelToColorMapping[fdrBiasLevel]}"
+					class="text-lg font-bold">{fdrBiasLevel}</span
 				>
-				bias against group {minAndMaxFalseDiscoveryRates.min}
+				bias against group {fdr.min}
 			</p>
 		</div>
 
@@ -140,29 +107,29 @@
 		<div class="py-4">
 			<p class=" text-center">
 				<span class="center block text-2xl font-bold">
-					{(minAndMaxFalseOmissionRates.minFalseOmissionRate * 100).toFixed(1)}%
+					{(omission.minVal * 100).toFixed(1)}%
 				</span>
-				of people rejected from group {minAndMaxFalseOmissionRates.min} were actually competent while
+				of people rejected from group {omission.min} were actually competent while
 				<span class="center block text-2xl font-bold">
-					{(minAndMaxFalseOmissionRates.maxFalseOmissionRate * 100).toFixed(1)}%
+					{(omission.maxVal * 100).toFixed(1)}%
 				</span>
-				of people rejected from group {minAndMaxFalseOmissionRates.max} were actually competent.
+				of people rejected from group {omission.max} were actually competent.
 			</p>
 			<p class="mt-4 text-center">
 				This is an absolute difference of
 				<span
-					style="color: {levelToColorMapping[falseOmissionBiasLevel]}"
+					style="color: {levelToColorMapping[forBiasLevel]}"
 					class="center block text-3xl font-bold"
 				>
-					{(absoluteFalseOmissionRateDisparity * 100).toFixed(1)}
+					{(absoluteFORDisparity * 100).toFixed(1)}
 				</span>
 			</p>
 			<p class="mt-8 text-center">
 				By this metric, there is a <span
-					style="color: {levelToColorMapping[falseOmissionBiasLevel]}"
-					class="text-lg font-bold">{falseOmissionBiasLevel}</span
+					style="color: {levelToColorMapping[forBiasLevel]}"
+					class="text-lg font-bold">{forBiasLevel}</span
 				>
-				bias against group {minAndMaxFalseOmissionRates.max}
+				bias against group {omission.max}
 			</p>
 		</div>
 

@@ -9,12 +9,12 @@ export const webSocketUrl = 'ws://localhost:8000/ws';
 export async function apiRequest(
 	url: string,
 	method: 'GET' | 'POST' = 'GET',
-	body: any = undefined
+	body: string | undefined = undefined
 ) {
-	const headers: any = {
+	const headers: Record<string, string> = {
 		'Content-Type': 'application/json'
 	};
-	if (method == 'POST') {
+	if (method === 'POST') {
 		headers['X-CSRFToken'] = (
 			(await d3.json(`${apiUrl}csrf/`, { credentials: 'include' })) as { token: string }
 		).token;

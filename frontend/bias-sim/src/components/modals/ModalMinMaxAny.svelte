@@ -16,10 +16,10 @@
 	export let any: boolean;
 
 	const validateInput = () => {
-		if (min != '') {
+		if (min !== '') {
 			minError = !(minBound <= min && min <= maxBound);
 		}
-		if (max != '') {
+		if (max !== '') {
 			maxError = !(minBound <= max && max <= maxBound);
 		}
 	};
@@ -72,8 +72,8 @@
 		value={true}
 		on:click={() => {
 			if (!any) {
-				minField.value = '';
-				maxField.value = '';
+				min = '';
+				max = '';
 			}
 		}}
 		>Any

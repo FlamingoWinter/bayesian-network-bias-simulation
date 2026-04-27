@@ -3,7 +3,7 @@
 	export let y: any;
 	export let bar: { category: string; value: number };
 	export let fontSize: number;
-	export let mounted;
+	export let mounted: boolean;
 
 	$: belowBarY = y(bar.value) + 11;
 	$: aboveBarY = y(bar.value) - 4;

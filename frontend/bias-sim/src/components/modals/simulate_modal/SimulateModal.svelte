@@ -7,7 +7,6 @@
 		Accordion,
 		AccordionItem,
 		getModalStore,
-		type ModalComponent,
 		type ModalSettings,
 		RangeSlider
 	} from '@skeletonlabs/skeleton';
@@ -28,11 +27,9 @@
 
 	const modalStore = getModalStore();
 
-	const showBiasModalComponent: ModalComponent = { ref: ShowBiasModal };
-
 	const showBiasModal: ModalSettings = {
 		type: 'component',
-		component: showBiasModalComponent,
+		component: { ref: ShowBiasModal },
 		backdropClasses: 'bg-gradient-to-tr from-indigo-500/50 via-purple-500/50 to-pink-500/50'
 	};
 

@@ -10,17 +10,14 @@
 	export let withoutMitigation: MitigationAnalysis | null;
 </script>
 
-<div>
-	<section>
-		<Accordion>
-			<PerformanceSummary {recruiter} />
-			<hr />
-			<DemographicParitySummary {recruiter} {withoutMitigation} />
-			<hr />
-			<EqualisedOddsSummary {recruiter} {withoutMitigation} />
-
-			<hr />
-			<PredictiveParitySummary {recruiter} {withoutMitigation} />
-		</Accordion>
-	</section>
-</div>
+<section>
+	<Accordion>
+		<PerformanceSummary {recruiter} />
+		<hr />
+		<DemographicParitySummary {recruiter} {withoutMitigation} />
+		<hr />
+		<EqualisedOddsSummary {recruiter} {withoutMitigation} />
+		<hr />
+		<PredictiveParitySummary {recruiter} {withoutMitigation} />
+	</Accordion>
+</section>
