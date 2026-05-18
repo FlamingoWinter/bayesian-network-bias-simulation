@@ -1,6 +1,6 @@
 import pandas as pd
 
-from backend.api.types import (
+from backend.api.schemas import (
     GroupPredictionInformationResponse,
 )
 

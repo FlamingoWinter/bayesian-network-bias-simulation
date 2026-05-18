@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from backend.api.types import (
+from backend.api.schemas import (
     CharacteristicResponse,
     DistributionType,
 )

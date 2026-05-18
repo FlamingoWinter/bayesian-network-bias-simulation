@@ -1,5 +1,5 @@
 """
-Unit tests for backend/api/types.py.
+Unit tests for backend/api/schemas.py.
 
 Covers Pydantic validation, blank-sentinel stripping, and default fallbacks
 for both SimulateRequest and NetworkRequest.
@@ -8,7 +8,7 @@ for both SimulateRequest and NetworkRequest.
 import pytest
 from pydantic import ValidationError
 
-from backend.api.types import (
+from backend.api.schemas import (
     NetworkRequest,
     PredefinedNetworkRequest,
     SimulateRequest,

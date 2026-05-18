@@ -1,0 +1,12 @@
+.git
+.idea
+.pytest_cache
+.ruff_cache
+**/__pycache__
+**/*.pyc
+.env
+deploy/deploy.env
+frontend/bias-sim/node_modules
+frontend/bias-sim/.svelte-kit
+db.sqlite3
+backend/tests

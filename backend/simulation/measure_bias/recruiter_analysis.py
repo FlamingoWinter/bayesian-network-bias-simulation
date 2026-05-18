@@ -2,7 +2,7 @@ from typing import cast
 
 import pandas as pd
 
-from backend.api.types import (
+from backend.api.schemas import (
     RecruiterBiasAnalysisResponse,
 )
 from backend.simulation.sample_applicants import Applicants

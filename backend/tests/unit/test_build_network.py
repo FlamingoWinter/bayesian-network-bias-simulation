@@ -198,7 +198,7 @@ class TestCharacteristic:
         assert c.category_names == ["young", "old"]
 
     def test_to_characteristic_response(self):
-        from backend.api.types import CharacteristicResponse
+        from backend.api.schemas import CharacteristicResponse
 
         c = Characteristic("race", "categorical")
         c.set_categories(["A", "B"])

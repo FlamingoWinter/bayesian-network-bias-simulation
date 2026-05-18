@@ -3,8 +3,8 @@ from typing import List, Dict, Literal, Optional, TYPE_CHECKING
 
 from pgmpy.models import BayesianNetwork as pgBN
 
-from backend.api.types import ConditionRequest
-from backend.api.types import NetworkResponse
+from backend.api.schemas import ConditionRequest
+from backend.api.schemas import NetworkResponse
 from backend.simulation.build_network.characteristic import Characteristic
 
 if TYPE_CHECKING:

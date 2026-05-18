@@ -4,11 +4,11 @@ from typing import List
 
 from backend.api.websocket_consumers.base import GenericConsumer
 from backend.api.cache import cache, get_network_from_cache
-from backend.api.types import (
+from backend.api.schemas import (
     new_simulate_request,
     SimulateRequest,
 )
-from backend.api.types import BiasResponse
+from backend.api.schemas import BiasResponse
 from backend.simulation.sample_applicants import Applicants
 from backend.simulation.build_network.bayesian_network import BayesianNetwork
 from backend.simulation.train_recruiters.mitigation.equalised_odds.optimise_for_fnr_and_fpr_equality import (

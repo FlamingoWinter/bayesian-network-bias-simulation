@@ -26,7 +26,7 @@ import pandas as pd
 import pytest
 from pgmpy.models import BayesianNetwork as pgBN
 
-from backend.api.types import NetworkResponse
+from backend.api.schemas import NetworkResponse
 from backend.simulation.build_network.bayesian_network import (
     BayesianNetwork,
     Characteristic,

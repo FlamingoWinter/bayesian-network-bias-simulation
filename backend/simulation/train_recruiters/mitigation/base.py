@@ -91,7 +91,7 @@ class Mitigation(ABC):
         f_o_r = false_negatives / not_hired
         accuracy = (score_holdout == decisions).sum() / len(score_holdout)
 
-        return fpr, fnr, fdr, f_o_r, accuracy
+        return fnr, fpr, fdr, f_o_r, accuracy
 
     @staticmethod
     @time_function("Minimising Loss")

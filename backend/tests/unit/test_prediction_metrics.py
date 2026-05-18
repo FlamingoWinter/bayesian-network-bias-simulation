@@ -150,7 +150,7 @@ class TestGroupPredictionInformationRates:
 
 class TestGroupPredictionInformationToResponse:
     def test_returns_pydantic_model(self, df):
-        from backend.api.types import GroupPredictionInformationResponse
+        from backend.api.schemas import GroupPredictionInformationResponse
 
         info = GroupPredictionInformation(df)
         response = info.to_response()

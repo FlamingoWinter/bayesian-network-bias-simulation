@@ -5,7 +5,7 @@ from scipy.stats import rv_discrete
 
 from backend.api.websocket_consumers.base import GenericConsumer
 from backend.api.cache import cache_network_and_generate_applicants
-from backend.api.types import (
+from backend.api.schemas import (
     NetworkRequest,
     new_random_network_request,
 )

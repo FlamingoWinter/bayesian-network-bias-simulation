@@ -67,7 +67,7 @@ class TestMitigationBiasAnalysisPerGroup:
 
 class TestMitigationBiasAnalysisToResponse:
     def test_returns_recruiter_bias_analysis_response(self, analysis):
-        from backend.api.types import RecruiterBiasAnalysisResponse
+        from backend.api.schemas import RecruiterBiasAnalysisResponse
 
         response = analysis.to_response()
         assert isinstance(response, RecruiterBiasAnalysisResponse)

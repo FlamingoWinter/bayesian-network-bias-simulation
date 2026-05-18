@@ -8,8 +8,8 @@ from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianNetwork as pgBN
 from pgmpy.sampling import BayesianModelSampling
 
-from backend.api.types import ConditionRequest
-from backend.api.types import NetworkResponse
+from backend.api.schemas import ConditionRequest
+from backend.api.schemas import NetworkResponse
 from backend.simulation.sample_applicants import Applicants
 from backend.simulation.build_network.bayesian_network import (
     BayesianNetwork,

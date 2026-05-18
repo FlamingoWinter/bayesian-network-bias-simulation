@@ -2,7 +2,7 @@ from typing import Dict, Callable
 
 import pandas as pd
 
-from backend.api.types import (
+from backend.api.schemas import (
     RecruiterBiasAnalysisResponse,
 )
 from backend.simulation.measure_bias.prediction_metrics import GroupPredictionInformation
