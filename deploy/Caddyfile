@@ -1,0 +1,19 @@
+# TLS via Let's Encrypt. Proxies to the Docker app (deploy exposes 127.0.0.1:8080).
+#
+# The names are split into separate site blocks so a DNS/firewall problem with one
+# hostname doesn't fail the certificate for the others (which is what happens when
+# all three share one site block: one failed ACME challenge fails the whole cert
+# and Caddy falls back to its untrusted internal CA).
+
+{
+	# Used to register the ACME account with Let's Encrypt and to get expiry warnings.
+	email digitallimestone@gmail.com
+}
+
+modelling-bias.com, www.modelling-bias.com {
+	reverse_proxy 127.0.0.1:8080
+}
+
+api.modelling-bias.com {
+	reverse_proxy 127.0.0.1:8080
+}

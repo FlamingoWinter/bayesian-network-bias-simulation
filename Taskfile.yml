@@ -4,6 +4,7 @@ vars:
   CONDA_ENV: bayesian-network-bias-simulation
   FRONTEND_DIR: frontend/bias-sim
   BACKEND_DIR: backend
+  DEPLOY_ENV: '{{.ROOT_DIR}}/deploy/deploy.env'
 
 tasks:
 
@@ -118,6 +119,32 @@ tasks:
       - conda run -n {{.CONDA_ENV}} --no-capture-output
         env PYTHONPATH={{.ROOT_DIR}}
         pytest backend/tests/unit -m "not django_db"
+
+  # ── Deploy ───────────────────────────────────────────────────────────────────
+
+  deploy:
+    desc: Build Docker image, push to GHCR, and deploy on the droplet (needs deploy/deploy.env)
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/deploy.sh
+
+  setup-caddy:
+    desc: Install Caddy on the droplet (Let's Encrypt) proxying to the app on 127.0.0.1:8080
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/setup-caddy.sh
+
+  diagnose-tls:
+    desc: SSH to the droplet and print why TLS is unhealthy (cert issuer, ACME log, DNS, firewall)
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/diagnose-tls.sh
+
+  renew-tls:
+    desc: Push the current Caddyfile and force a fresh Let's Encrypt issuance on the droplet
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/renew-tls.sh
 
   # ── Type generation ──────────────────────────────────────────────────────────
 

@@ -11,6 +11,27 @@ if [[ ! -f "${ENV_FILE}" ]]; then
   exit 1
 fi
 
+# Docker Desktop (macOS) installs the CLI here; add it if the app is installed but shell PATH is stale.
+if ! command -v docker >/dev/null 2>&1; then
+  for docker_bin in \
+    /usr/local/bin/docker \
+    /Applications/Docker.app/Contents/Resources/bin/docker; do
+    if [[ -x "${docker_bin}" ]]; then
+      export PATH="$(dirname "${docker_bin}"):${PATH}"
+      break
+    fi
+  done
+fi
+if ! command -v docker >/dev/null 2>&1; then
+  echo "docker: command not found. Install Docker Desktop (https://www.docker.com/products/docker-desktop/), start it, then retry." >&2
+  echo "On the droplet you also need Docker: https://docs.docker.com/engine/install/ubuntu/" >&2
+  exit 1
+fi
+if ! docker info >/dev/null 2>&1; then
+  echo "Docker is installed but the daemon is not running. Open Docker Desktop and wait until it is ready, then retry." >&2
+  exit 1
+fi
+
 # shellcheck disable=SC1090
 source "${ENV_FILE}"
 
@@ -61,6 +82,12 @@ REMOTE_PORT="${CONTAINER_PORT:-8080}"
 echo "==> Deploying on ${SSH_TARGET}"
 ssh "${SSH_TARGET}" bash -s <<EOF
 set -euo pipefail
+if ! command -v docker >/dev/null 2>&1; then
+  echo "docker is not installed on this host. On Ubuntu, run once as root:" >&2
+  echo "  curl -fsSL https://get.docker.com | sh" >&2
+  echo "  systemctl enable --now docker" >&2
+  exit 127
+fi
 echo "${GITHUB_TOKEN}" | docker login ghcr.io -u "${GITHUB_USER_LC}" --password-stdin
 
 docker pull "${REGISTRY_IMAGE}"
@@ -75,7 +102,7 @@ docker image prune -f >/dev/null 2>&1 || true
 docker run -d \\
   --name '${CONTAINER_NAME}' \\
   --restart unless-stopped \\
-  -p ${REMOTE_PORT}:8080 \\
+  -p 127.0.0.1:${REMOTE_PORT}:8080 \\
   -e DJANGO_SECRET_KEY='${DJANGO_SECRET_KEY}' \\
   -e DJANGO_DEBUG='${DJANGO_DEBUG:-false}' \\
   -e DJANGO_ALLOWED_HOSTS='${DJANGO_ALLOWED_HOSTS:-api.modelling-bias.com,localhost}' \\
