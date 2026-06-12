@@ -1,47 +1,3 @@
-{#if network}
-	<svg bind:this={svg} width={width} height={height}
-			 class="font-roboto font-normal">
-		<g bind:this={zoomGroup}>
-			<g bind:this={linkGroup}>
-				{#each network.graph.links as link}
-					<line class="link" stroke="#aaa"
-								marker-start={`url(#arrowhead-${link.index})`} />
-				{/each}
-			</g>
-			<g bind:this={nodeGroup}>
-				{#each network.graph.nodes as node}
-					<g class="node" id="node-{node.id}">
-						<Chart
-							openConditionDialog={openConditionDialog}
-							exitDialog={exitDialog}
-							simulation={simulation}
-							conditions={conditions} conditioned={conditioned} posteriorDistributions={posteriorDistributions}
-							disableInteraction={disableInteraction} characteristic={network.characteristics[node.id]}
-							node={node} network={network}
-							scoreAndApplication={scoreAndApplication} />
-					</g>
-				{/each}
-			</g>
-			<defs bind:this={markerGroup}>
-				{#each network.graph.links as link}
-					<marker id={`arrowhead-${link.index}`}
-									viewBox="0 -5 10 10"
-									refY={0}
-									markerWidth="15" markerHeight="15" orient="auto"
-									class="marker">
-						<path d="M0,-5L10,0L0,5" fill="#aaa" />
-					</marker>
-				{/each}
-			</defs>
-		</g>
-	</svg>
-	<InfoBox
-		bind:openConditionDialog={openConditionDialog}
-		bind:exitDialog={exitDialog}
-		network={network} conditions={conditions} condition={condition} />
-{/if}
-
-
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
@@ -84,19 +40,23 @@
 	let nodeGroup: SVGGElement;
 	let markerGroup: SVGDefsElement;
 
-	let openConditionDialog: (expandedNode: string) => Promise<void> = async () => {
-	};
+	let openConditionDialog: (expandedNode: string) => Promise<void> = async () => {};
 
-	let exitDialog: () => void = () => {
-	};
-
+	let exitDialog: () => void = () => {};
 
 	onMount(async () => {
 		const toastStore = getToastStore();
 
 		applyZoom(svg, zoomGroup, initialZoom, initialTranslate, noPan);
 		if (network) {
-			simulation = applyForceSimulation(network.graph, width, height, nodeGroup, linkGroup, markerGroup);
+			simulation = applyForceSimulation(
+				network.graph,
+				width,
+				height,
+				nodeGroup,
+				linkGroup,
+				markerGroup
+			);
 		}
 
 		condition = async (characteristic: string, value: number | null) => {
@@ -110,16 +70,19 @@
 			let conditionResponse: Record<string, number[]> = {};
 			try {
 				if (Object.keys(tempConditions).length > 0) {
-					conditionResponse = await apiRequest(`condition/${
-						predefinedModel === null ? '' : predefinedModel + '/'
-					}`, 'POST', JSON.stringify(tempConditions)) as Record<string, number[]>;
+					conditionResponse = (await apiRequest(
+						`condition/${predefinedModel === null ? '' : predefinedModel + '/'}`,
+						'POST',
+						JSON.stringify(tempConditions)
+					)) as Record<string, number[]>;
 				}
 				conditions = tempConditions;
 				conditioned = Object.keys(tempConditions).length > 0;
 				posteriorDistributions = conditionResponse;
 			} catch (e) {
 				const t: ToastSettings = {
-					message: 'Conditioning for this variable failed. Did you try to condition on impossible evidence?',
+					message:
+						'Conditioning for this variable failed. Did you try to condition on impossible evidence?',
 					timeout: 3000,
 					background: 'variant-filled-error'
 				};
@@ -131,18 +94,22 @@
 			conditions = {};
 			conditioned = false;
 		};
-
 	});
-
 
 	$: {
 		if (network) {
 			applyZoom(svg, zoomGroup, initialZoom, initialTranslate, noPan);
 			if (simulation) {
 				simulation.stop();
-
 			}
-			simulation = applyForceSimulation(network.graph, width, height, nodeGroup, linkGroup, markerGroup);
+			simulation = applyForceSimulation(
+				network.graph,
+				width,
+				height,
+				nodeGroup,
+				linkGroup,
+				markerGroup
+			);
 		}
 	}
 
@@ -152,8 +119,51 @@
 			simulation.alpha(1).restart();
 		}
 	}
-
-
 </script>
 
-
+{#if network}
+	<svg bind:this={svg} {width} {height} class="font-roboto font-normal">
+		<g bind:this={zoomGroup}>
+			<g bind:this={linkGroup}>
+				{#each network.graph.links as link}
+					<line class="link" stroke="#aaa" marker-start={`url(#arrowhead-${link.index})`} />
+				{/each}
+			</g>
+			<g bind:this={nodeGroup}>
+				{#each network.graph.nodes as node}
+					<g class="node" id="node-{node.id}">
+						<Chart
+							{openConditionDialog}
+							{exitDialog}
+							{simulation}
+							{conditions}
+							{conditioned}
+							{posteriorDistributions}
+							{disableInteraction}
+							characteristic={network.characteristics[node.id]}
+							{node}
+							{network}
+							{scoreAndApplication}
+						/>
+					</g>
+				{/each}
+			</g>
+			<defs bind:this={markerGroup}>
+				{#each network.graph.links as link}
+					<marker
+						id={`arrowhead-${link.index}`}
+						viewBox="0 -5 10 10"
+						refY={0}
+						markerWidth="15"
+						markerHeight="15"
+						orient="auto"
+						class="marker"
+					>
+						<path d="M0,-5L10,0L0,5" fill="#aaa" />
+					</marker>
+				{/each}
+			</defs>
+		</g>
+	</svg>
+	<InfoBox bind:openConditionDialog bind:exitDialog {network} {conditions} {condition} />
+{/if}

@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { getDrawerStore, getModalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
+	import {
+		getDrawerStore,
+		getModalStore,
+		type ModalComponent,
+		type ModalSettings
+	} from '@skeletonlabs/skeleton';
 	import MenuButton from '../menu/MenuButton.svelte';
 
 	const modalStore = getModalStore();
@@ -8,7 +13,6 @@
 	export let component: ModalComponent;
 	export let classList: string = '';
 
-
 	const modal: ModalSettings = {
 		type: 'component',
 		component: component,
@@ -16,8 +20,12 @@
 	};
 </script>
 
-
-<MenuButton classList={classList} callback={()=>{	modalStore.trigger(modal); drawerStore.close();}}>
+<MenuButton
+	{classList}
+	callback={() => {
+		modalStore.trigger(modal);
+		drawerStore.close();
+	}}
+>
 	<slot />
 </MenuButton>
-

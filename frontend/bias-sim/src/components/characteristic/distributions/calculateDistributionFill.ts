@@ -1,10 +1,9 @@
+const fillByType: Record<ProbabilityType, string> = {
+	prior: '#0d3b68',
+	conditioned: '#494660',
+	posterior: '#bf8b00'
+};
+
 export function calculateDistributionFill(probabilityType: ProbabilityType) {
-	switch (probabilityType) {
-		case 'prior':
-			return '#0d3b68';
-		case 'conditioned':
-			return '#494660';
-		case 'posterior':
-			return '#bf8b00';
-	}
+	return fillByType[probabilityType];
 }

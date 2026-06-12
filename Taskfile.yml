@@ -1,0 +1,157 @@
+version: '3'
+
+vars:
+  CONDA_ENV: bayesian-network-bias-simulation
+  FRONTEND_DIR: frontend/bias-sim
+  BACKEND_DIR: backend
+  DEPLOY_ENV: '{{.ROOT_DIR}}/deploy/deploy.env'
+
+tasks:
+
+  # ── Dev servers ─────────────────────────────────────────────────────────────
+
+  backend:
+    desc: Run the Django dev server
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}} python backend/api/manage.py runserver
+
+  frontend:
+    desc: Run the Vite dev server
+    dir: '{{.FRONTEND_DIR}}'
+    cmds:
+      - pnpm run dev
+
+  # ── Setup ───────────────────────────────────────────────────────────────────
+
+  install:
+    desc: Install all dependencies (backend + frontend)
+    deps: [install-backend, install-frontend]
+
+  install-backend:
+    desc: Create or update the conda environment and run migrations
+    cmds:
+      - |
+        if conda env list | grep -q "^{{.CONDA_ENV}} "; then
+          echo "Environment '{{.CONDA_ENV}}' exists, updating..."
+          conda env update -n {{.CONDA_ENV}} --file environment.yml --prune
+        else
+          echo "Creating environment '{{.CONDA_ENV}}'..."
+          conda env create -n {{.CONDA_ENV}} --file environment.yml
+        fi
+      - task: migrate
+
+  migrate:
+    desc: Run Django migrations
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}} python backend/api/manage.py migrate
+
+  install-frontend:
+    desc: Install pnpm dependencies
+    dir: '{{.FRONTEND_DIR}}'
+    cmds:
+      - pnpm install
+
+  # ── Code quality ─────────────────────────────────────────────────────────────
+
+  lint:
+    desc: Lint and type-check everything (frontend + backend)
+    cmds:
+      - task: lint-frontend
+      - task: lint-backend
+
+  fix:
+    desc: Auto-fix formatting everywhere (frontend + backend)
+    cmds:
+      - task: fix-frontend
+      - task: fix-backend
+
+  lint-frontend:
+    desc: Check frontend formatting (Prettier) and types (svelte-check)
+    dir: '{{.FRONTEND_DIR}}'
+    cmds:
+      - pnpm run lint
+      - pnpm run check
+
+  fix-frontend:
+    desc: Auto-fix frontend formatting (Prettier)
+    dir: '{{.FRONTEND_DIR}}'
+    cmds:
+      - pnpm run format
+
+  lint-backend:
+    desc: Lint and type-check backend (ruff + pyright)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check {{.BACKEND_DIR}}
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format --check {{.BACKEND_DIR}}
+      - conda run -n {{.CONDA_ENV}} --no-capture-output pyright {{.BACKEND_DIR}}
+
+  fix-backend:
+    desc: Auto-fix backend linting and formatting (ruff)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff check --fix {{.BACKEND_DIR}}
+      - conda run -n {{.CONDA_ENV}} --no-capture-output ruff format {{.BACKEND_DIR}}
+
+  # ── Tests ────────────────────────────────────────────────────────────────────
+
+  test:
+    desc: Run all fast tests (backend unit + integration, excluding slow mitigations)
+    deps: [test-backend]
+
+  test-backend:
+    desc: Run the backend pytest suite (excludes slow dual_annealing mitigations)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pytest -m "not slow"
+
+  test-backend-all:
+    desc: Run the full backend test suite including slow mitigation tests
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pytest
+
+  test-backend-unit:
+    desc: Run only the backend unit tests
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pytest backend/tests/unit -m "not django_db"
+
+  # ── Deploy ───────────────────────────────────────────────────────────────────
+
+  deploy:
+    desc: Build Docker image, push to GHCR, and deploy on the droplet (needs deploy/deploy.env)
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/deploy.sh
+
+  setup-caddy:
+    desc: Install Caddy on the droplet (Let's Encrypt) proxying to the app on 127.0.0.1:8080
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/setup-caddy.sh
+
+  diagnose-tls:
+    desc: SSH to the droplet and print why TLS is unhealthy (cert issuer, ACME log, DNS, firewall)
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/diagnose-tls.sh
+
+  renew-tls:
+    desc: Push the current Caddyfile and force a fresh Let's Encrypt issuance on the droplet
+    cmds:
+      - test -f {{.DEPLOY_ENV}} || (echo "Copy deploy/deploy.env.example to deploy/deploy.env" >&2; exit 1)
+      - env DEPLOY_ENV={{.DEPLOY_ENV}} {{.ROOT_DIR}}/deploy/renew-tls.sh
+
+  # ── Type generation ──────────────────────────────────────────────────────────
+
+  generate-types:
+    desc: Generate TypeScript types from backend Pydantic models (via pydantic2ts)
+    cmds:
+      - conda run -n {{.CONDA_ENV}} --no-capture-output
+        env PYTHONPATH={{.ROOT_DIR}}
+        pydantic2ts --module backend.api.schema
+        --output {{.FRONTEND_DIR}}/src/types/generated.ts

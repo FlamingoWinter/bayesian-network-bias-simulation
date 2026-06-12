@@ -1,41 +1,10 @@
-interface CategoricalGroupPredictionInformation {
-	total: number;
-	hiredAndCompetent: number;
-	hiredButNotCompetent: number;
-	notHiredButCompetent: number;
-	notHiredAndNotCompetent: number;
+import type { GroupPredictionInformationResponse, RecruiterBiasAnalysisResponse } from './generated';
 
-	hired: number;
-	hiredRate: number;
-	notHired: number;
-	notHiredRate: number;
-	correct: number;
-	correctRate: number;
-	incorrect: number;
-	incorrectRate: number;
-	competent: number;
-	competentRate: number;
-	notCompetent: number;
-	notCompetentRate: number;
+export type MitigationAnalysis = RecruiterBiasAnalysisResponse;
+export type RecruiterBiasAnalysis = Record<string, MitigationAnalysis>;
+export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>;
 
-	accuracy: number;
-	falseNegativeRate: number;
-	falsePositiveRate: number;
-	falseDiscoveryRate: number;
-	falseOmissionRate: number;
-}
-
-
-export interface MitigationBiasAnalysis {
-	general: CategoricalGroupPredictionInformation;
-	byGroup: Record<string, CategoricalGroupPredictionInformation>;
-}
-
-export type RecruiterBiasAnalysis = Record<string, MitigationBiasAnalysis>
-
-export type BiasAnalysis = Record<string, RecruiterBiasAnalysis>
-
-export type BiasLevel = 'Minimal' | 'Moderate' | 'High' | 'Very High'
+export type BiasLevel = 'Minimal' | 'Moderate' | 'High' | 'Very High';
 
 export function multiplierToLevel(multiplier: number): BiasLevel {
 	if (multiplier > 1) {
@@ -57,10 +26,25 @@ export function absoluteDisparityToLevel(absoluteDisparity: number): BiasLevel {
 	return 'Very High';
 }
 
+/** Find the groups with the minimum and maximum value for a numeric field. */
+export function minMaxGroups(
+	byGroup: Record<string, GroupPredictionInformationResponse>,
+	field: keyof GroupPredictionInformationResponse
+): { min: string; max: string; minVal: number; maxVal: number } {
+	return Object.entries(byGroup).reduce(
+		(acc, [groupName, info]) => {
+			const val = info[field] as number;
+			if (val > acc.maxVal) { acc.max = groupName; acc.maxVal = val; }
+			if (val < acc.minVal) { acc.min = groupName; acc.minVal = val; }
+			return acc;
+		},
+		{ min: '', max: '', minVal: 1, maxVal: 0 }
+	);
+}
 
 export const levelToColorMapping: Record<BiasLevel, string> = {
-	'Minimal': '#22bd28',
-	'Moderate': '#c3b223',
-	'High': '#ba832f',
+	Minimal: '#22bd28',
+	Moderate: '#c3b223',
+	High: '#ba832f',
 	'Very High': '#bf4138'
 };

@@ -1,12 +1,11 @@
-from typing import Any
+from typing import Any, Optional
 
 import dill
-import pymc as pm
 from django.core.cache import cache as django_cache
 from pgmpy.models import BayesianNetwork as PgBn
 
-from backend.api.response_types.network_response import NetworkResponse
-from backend.network.bayesian_network import BayesianNetwork
+from backend.api.schemas import NetworkResponse
+from backend.simulation.build_network.bayesian_network import BayesianNetwork
 
 
 def cache(key: str, to_cache):
@@ -16,28 +15,25 @@ def cache(key: str, to_cache):
 def from_cache(key: str, backup_key: str = "") -> Any:
     try:
         return dill.loads(django_cache.get(key))
-    except:
+    except Exception:
         print("used backup instead of", key)
         return dill.loads(django_cache.get(backup_key))
 
 
-def cache_network_and_generate_applicants(network: BayesianNetwork, session_id: str = None):
+def cache_network_and_generate_applicants(
+    network: BayesianNetwork, session_id: Optional[str] = None
+):
     network_response: NetworkResponse = network.to_network_response()
 
     if session_id is not None:
         cache(f"network_{session_id}", network)
         cache(f"network-response_{session_id}", network_response)
     else:
-        cache(f"network", network)
-        cache(f"network-response", network_response)
+        cache("network", network)
+        cache("network-response", network_response)
 
 
 def get_network_from_cache(session_key: str) -> BayesianNetwork:
-    network: BayesianNetwork = from_cache(f"network_{session_key}",
-                                          "network")
-    if network.model_type == "pgmpy":
-        network.model.__class__ = PgBn
-    else:
-        network.model.__class__ = pm.Model
-
+    network: BayesianNetwork = from_cache(f"network_{session_key}", "network")
+    network.model.__class__ = PgBn
     return network

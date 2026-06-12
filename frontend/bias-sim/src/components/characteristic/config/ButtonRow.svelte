@@ -1,3 +1,3 @@
-<div class="flex items-center justify-between w-full gap-0.5">
+<div class="flex w-full items-center justify-between gap-0.5">
 	<slot />
 </div>

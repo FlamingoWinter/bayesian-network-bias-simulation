@@ -21,41 +21,40 @@
 	$: height = innerHeight - 4;
 
 	onMount(async () => {
-		network = await apiRequest('') as Network;
+		network = (await apiRequest('')) as Network;
 
 		$invalidateNetwork = async () => {
-			network = await apiRequest('') as Network;
+			network = (await apiRequest('')) as Network;
 			$deconditionAll();
 		};
 
 		$invalidateBias = async () => {
-			$biasAnalysis = await apiRequest('bias/') as BiasAnalysis;
+			$biasAnalysis = (await apiRequest('bias/')) as BiasAnalysis;
 		};
 
-		$sessionKey = (await d3.json(`${apiUrl}session/`, { credentials: 'include' }) as { key: string }).key;
-
+		$sessionKey = (
+			(await d3.json(`${apiUrl}session/`, { credentials: 'include' })) as { key: string }
+		).key;
 
 		initialised = true;
 	});
 </script>
 
-
-<style>
-    :global(body) {
-        margin: 0;
-        padding: 0;
-    }
-</style>
-
 <svelte:window bind:innerWidth bind:innerHeight />
-
 
 <ConditionLogic />
 {#if initialised}
-	<LeftDrawerButton network={network} />
+	<LeftDrawerButton {network} />
 
-	<GraphVisualisation width={width} height={height} network={network} />
+	<GraphVisualisation {width} {height} {network} />
 {/if}
 {#if network}
-	<NextButton network={network} />
+	<NextButton {network} />
 {/if}
+
+<style>
+	:global(body) {
+		margin: 0;
+		padding: 0;
+	}
+</style>

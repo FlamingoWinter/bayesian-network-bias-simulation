@@ -1,3 +1,6 @@
 .idea/
 
 .env
+deploy/deploy.env
+
+db.sqlite3

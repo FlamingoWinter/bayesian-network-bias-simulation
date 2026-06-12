@@ -1,13 +1,11 @@
 <script lang="ts">
 	export let text: string;
-	export let callback: () => void = () => {
-	};
+	export let callback: () => void = () => {};
 </script>
-
 
 <button
 	type="button"
-	class="btn btn-sm variant-glass-primary w-full px-2 pt-0 pb-0.5 text-xs font-oswald font-light leading-0"
+	class="leading-0 variant-glass-primary btn btn-sm w-full px-2 pb-0.5 pt-0 font-oswald text-xs font-light"
 	on:click={callback}
 	on:mousedown|stopPropagation
 	on:click|stopPropagation

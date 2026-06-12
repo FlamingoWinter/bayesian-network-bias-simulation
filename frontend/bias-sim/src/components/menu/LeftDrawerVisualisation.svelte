@@ -20,7 +20,6 @@
 		backdropClasses: 'bg-gradient-to-tr from-indigo-500/50 via-purple-500/50 to-pink-500/50'
 	};
 
-
 	function openModal(ModalComponent: any) {
 		modal.component = { ref: ModalComponent };
 		modalStore.trigger(modal);
@@ -30,25 +29,37 @@
 	let showBias: boolean = false;
 
 	$: if (network.characteristics) {
-		showBias = ($biasAnalysis !== undefined);
+		showBias = $biasAnalysis !== undefined;
 	}
 </script>
-<div class="pt-14 flex flex-col justify-between items-start  h-full">
-	<div class="flex flex-col justify-start items-start w-full pr-8 gap-2">
-		<TopUtilityButtons utilityButtonInfos={[
-			{name: "New Network", callback: () => openModal(NewNetworkModal)},
-			{name: "Label Network", callback: () => openModal(NameNetworkModal)},
-			...(!network.predefined ? [{name: "Run Simulation", callback: () => {
-				modal.component = { ref: SimulateModal, props: {network: network} };
-				modalStore.trigger(modal);
-				drawerStore.close();
-				}}] : []),
-			...(showBias ? [{name: "Show Bias", callback: () => openModal(ShowBiasModal)}] : []),
-			...($conditioned ? [{name: "Decondition All", callback: $deconditionAll}] : []),
-		]} />
+
+<div class="flex h-full flex-col items-start justify-between pt-14">
+	<div class="flex w-full flex-col items-start justify-start gap-2 pr-8">
+		<TopUtilityButtons
+			utilityButtonInfos={[
+				{ name: 'New Network', callback: () => openModal(NewNetworkModal) },
+				{ name: 'Label Network', callback: () => openModal(NameNetworkModal) },
+				...(!network.predefined
+					? [
+							{
+								name: 'Run Simulation',
+								callback: () => {
+									modal.component = { ref: SimulateModal, props: { network: network } };
+									modalStore.trigger(modal);
+									drawerStore.close();
+								}
+							}
+						]
+					: []),
+				...(showBias ? [{ name: 'Show Bias', callback: () => openModal(ShowBiasModal) }] : []),
+				...($conditioned ? [{ name: 'Decondition All', callback: $deconditionAll }] : [])
+			]}
+		/>
 	</div>
-	<BottomHrefButtons buttonInfos={[
-			{name: "Walkthrough", slug: "/walkthrough"},
-			{name: "Guide", slug: "/guide"},
-		]} />
+	<BottomHrefButtons
+		buttonInfos={[
+			{ name: 'Walkthrough', slug: '/walkthrough' },
+			{ name: 'Guide', slug: '/guide' }
+		]}
+	/>
 </div>

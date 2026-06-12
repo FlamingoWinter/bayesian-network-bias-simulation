@@ -6,12 +6,16 @@
 	export let link: string | undefined = undefined;
 </script>
 
-<button class="btn btn-icon variant-outline-surface [&>*]:pointer-events-none w-8" use:popup={{
-						event: 'hover',
-						target: target,
-						placement: 'top',
-					}}
-				on:click={()=>{if (link!==undefined) window.open(`${link}`, "_blank");}}>
+<button
+	class="variant-outline-surface btn btn-icon w-8 [&>*]:pointer-events-none"
+	use:popup={{
+		event: 'hover',
+		target: target,
+		placement: 'top'
+	}}
+	on:click={() => {
+		if (link !== undefined) window.open(`${link}`, '_blank');
+	}}
+>
 	<InfoLg />
 </button>
-
