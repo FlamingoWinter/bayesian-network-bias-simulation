@@ -36,6 +36,18 @@ def test_every_frontend_route_is_handled(websocket_patterns):
         )
 
 
+def _consumer_class(pattern):
+    """Channels 4 exposes the consumer as `.consumer_class`; older versions as `.cls`."""
+    callback = pattern.callback
+    cls = getattr(callback, "consumer_class", None) or getattr(callback, "cls", None)
+    if cls is None:
+        raise AssertionError(
+            f"Pattern '{pattern.pattern}' callback has neither "
+            f".consumer_class nor .cls — not a Channels consumer?"
+        )
+    return cls
+
+
 def test_every_routed_consumer_is_a_websocket_consumer(websocket_patterns):
     """
     Every entry in the routing table should point to a real WebSocket consumer,
@@ -44,7 +56,7 @@ def test_every_routed_consumer_is_a_websocket_consumer(websocket_patterns):
     from channels.generic.websocket import AsyncWebsocketConsumer
 
     for pattern in websocket_patterns:
-        consumer_cls = pattern.callback.cls
+        consumer_cls = _consumer_class(pattern)
         assert issubclass(consumer_cls, AsyncWebsocketConsumer), (
             f"Pattern '{pattern.pattern}' does not point to an AsyncWebsocketConsumer"
         )
@@ -55,7 +67,7 @@ def test_no_two_routes_point_to_the_same_consumer(websocket_patterns):
     Each consumer should own exactly one route.  Sharing a route would mean
     one consumer is unreachable.
     """
-    consumer_classes = [p.callback.cls for p in websocket_patterns]
+    consumer_classes = [_consumer_class(p) for p in websocket_patterns]
     assert len(consumer_classes) == len(set(consumer_classes)), (
         "Two or more routes point to the same consumer class"
     )

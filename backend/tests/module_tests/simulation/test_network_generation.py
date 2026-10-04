@@ -19,7 +19,6 @@ from collections import Counter
 
 import networkx as nx
 import numpy as np
-import pytest
 from scipy.stats import chisquare
 
 from backend.simulation.build_network.generation.generate_categorical_network import (
@@ -27,7 +26,6 @@ from backend.simulation.build_network.generation.generate_categorical_network im
 )
 from backend.simulation.build_network.generation.generate_dag import (
     calculate_out_point_counts,
-    generate_random_dag,
 )
 
 

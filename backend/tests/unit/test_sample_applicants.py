@@ -5,7 +5,6 @@ Uses StubBayesianNetwork from conftest so no pgmpy inference occurs.
 """
 
 import pandas as pd
-import pytest
 
 
 # ── get_applications ──────────────────────────────────────────────────────────
