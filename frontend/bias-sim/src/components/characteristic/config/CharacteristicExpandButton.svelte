@@ -17,10 +17,10 @@
 			on:mouseout={() => (isButtonHovered = false)}
 			transition:fade={{ duration: 300 }}
 		>
-			<!-- mousedown must propagate for d3.drag; see the .filter() in forceSimulation.ts -->
 			<button
 				type="button"
 				class="variant-filled btn-icon flex h-6 w-6 items-center justify-center p-2"
+				on:mousedown|stopPropagation
 				on:click={callbackFunction}
 				on:click|stopPropagation
 			>

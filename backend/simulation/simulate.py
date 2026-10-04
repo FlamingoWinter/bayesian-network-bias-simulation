@@ -26,10 +26,10 @@ def simulate(
     )
     application_test_one_hot = test_candidates.get_applications(
         one_hot_encode_categorical_variables=True
-    ).reindex(columns=application_train_one_hot.columns, fill_value=0)
+    )
     application_mitigation_one_hot = mitigation_candidates.get_applications(
         one_hot_encode_categorical_variables=True
-    ).reindex(columns=application_train_one_hot.columns, fill_value=0)
+    )
     application_train_raw = train_candidates.get_applications()
     application_test_raw = test_candidates.get_applications()
     application_mitigation_raw = mitigation_candidates.get_applications()

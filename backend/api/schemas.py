@@ -6,7 +6,7 @@ Response types are used by simulation/measure_bias/ and simulation/build_network
 to construct serialisable outputs; see schema.py for pydantic2ts type generation.
 """
 
-from typing import Any, Dict, List, Literal, Optional, Tuple, Union
+from typing import Dict, List, Literal, Optional, Tuple, Union
 
 from pydantic import BaseModel, model_validator
 
@@ -23,9 +23,7 @@ class CharacteristicResponse(BaseModel):
 
 
 class NetworkResponse(BaseModel):
-    # networkx node_link_data (`nodes`, `links`). Loosely typed: the frontend
-    # replaces this with its own Graph type.
-    graph: Optional[Dict[str, Any]] = None
+    graph: None = None
     scoreCharacteristic: str
     applicationCharacteristics: List[str]
     characteristics: Dict[str, CharacteristicResponse]

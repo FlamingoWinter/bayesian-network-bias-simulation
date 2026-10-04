@@ -92,24 +92,7 @@ export function applyForceSimulation(
 			unknown
 		>
 	).call(
-		d3
-			.drag<Element, Node>()
-			// d3's default filter (no right/ctrl-click), plus: ignore presses on HTML controls
-			// inside the node's <foreignObject>, so buttons get their click without needing
-			// mousedown|stopPropagation (which would block dragging the node).
-			.filter((event: Event) => {
-				if (event instanceof MouseEvent && (event.ctrlKey || event.button)) {
-					return false;
-				}
-				const target = event.target as Element | null;
-				if (target && target.closest('button, a, input, select, textarea, [role="button"]')) {
-					return false;
-				}
-				return true;
-			})
-			.on('start', dragStarted)
-			.on('drag', dragged)
-			.on('end', dragEnded)
+		d3.drag<Element, Node>().on('start', dragStarted).on('drag', dragged).on('end', dragEnded)
 	);
 
 	function dragStarted(event: D3DragEvent<SVGRectElement, Node, Node>, d: Node) {

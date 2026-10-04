@@ -58,9 +58,10 @@
 			>
 				<p class="mb-2">Welcome!</p>
 				<p>
-					This is the accompanying visualisation and guide to a dissertation I (David McIntosh)
-					wrote in my third year of undergraduate computer science for the University of Cambridge.
+					This is the accompanying visualisation and guide to a dissertation I wrote in my third
+					year of undergraduate computer science for the University of Cambridge.
 				</p>
+				<p>This website is currently anonymised while it's marked.</p>
 				<p class="mt-4">
 					If you're unfamiliar with Bayesian Networks or fairness in machine learning, then I
 					explain everything in the

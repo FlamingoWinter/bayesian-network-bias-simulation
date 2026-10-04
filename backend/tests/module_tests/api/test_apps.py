@@ -8,6 +8,7 @@ load.  This test verifies that the startup routine caches each named network.
 
 import importlib
 import sys
+import pytest
 from unittest.mock import patch
 
 

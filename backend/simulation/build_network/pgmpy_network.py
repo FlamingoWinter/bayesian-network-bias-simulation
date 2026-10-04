@@ -106,13 +106,13 @@ class PgmPyNetwork(BayesianNetwork):
                 characteristic.to_characteristic_response(prior_distribution)
             )
 
-        return NetworkResponse(
-            graph=node_link_data(directed_graph, link="links"),  # type: ignore[arg-type]
-            scoreCharacteristic=score_characteristic,
-            applicationCharacteristics=application_characteristics,
-            characteristics=characteristic_responses,
-            predefined=self.predefined,
-        )
+        return {
+            "graph": node_link_data(directed_graph, link="links"),  # type: ignore
+            "scoreCharacteristic": score_characteristic,
+            "applicationCharacteristics": application_characteristics,
+            "characteristics": characteristic_responses,
+            "predefined": self.predefined,
+        }
 
     def condition_on(self, condition_request: ConditionRequest) -> None:
         if self.renaming is None:

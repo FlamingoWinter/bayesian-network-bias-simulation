@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import timedelta
 
@@ -21,7 +22,7 @@ def save_run_to_db(
     condition: int,
     run_duration: timedelta,
 ) -> int:
-    graph = network.to_network_response().model_dump_json()
+    graph = json.dumps(network.to_network_response())
 
     protected: pd.Series = applicants.characteristic_instances[
         protected_characteristic_name

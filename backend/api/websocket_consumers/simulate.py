@@ -1,4 +1,3 @@
-import asyncio
 import json
 from typing import Any
 from typing import List
@@ -85,28 +84,21 @@ class SimulateConsumer(GenericConsumer):
         protected_characteristic = network.characteristics[
             request.protected_characteristic
         ]
-        loop = asyncio.get_running_loop()
-
-        sent = []
-
-        def notify(message: str) -> None:
-            sent.append(
-                asyncio.run_coroutine_threadsafe(self.send_and_flush(message), loop)
-            )
-
-        bias_by_recruiter = await asyncio.to_thread(
-            simulate,
+        bias_by_recruiter = simulate(
             candidate_group,
             recruiters,
             protected_characteristic,
-            after_recruiter_generated=lambda name: notify(
-                f"{name} recruiter generated"
+            after_recruiter_generated=(
+                lambda recruiter_name: self.send_and_flush(
+                    f"{recruiter_name} recruiter generated"
+                )
             ),
-            after_mitigation_initialised=lambda name: notify(
-                f"{name} mitigation initialised"
+            after_mitigation_initialised=(
+                lambda mitigation_name: self.send_and_flush(
+                    f"{mitigation_name} mitigation initialised"
+                )
             ),
         )
-        await asyncio.gather(*map(asyncio.wrap_future, sent))
 
         bias_response: BiasResponse = {
             recruiter.name: bias.to_response()

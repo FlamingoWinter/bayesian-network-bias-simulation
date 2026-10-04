@@ -1,7 +1,4 @@
-import type {
-	GroupPredictionInformationResponse,
-	RecruiterBiasAnalysisResponse
-} from './generated';
+import type { GroupPredictionInformationResponse, RecruiterBiasAnalysisResponse } from './generated';
 
 export type MitigationAnalysis = RecruiterBiasAnalysisResponse;
 export type RecruiterBiasAnalysis = Record<string, MitigationAnalysis>;
@@ -37,14 +34,8 @@ export function minMaxGroups(
 	return Object.entries(byGroup).reduce(
 		(acc, [groupName, info]) => {
 			const val = info[field] as number;
-			if (val > acc.maxVal) {
-				acc.max = groupName;
-				acc.maxVal = val;
-			}
-			if (val < acc.minVal) {
-				acc.min = groupName;
-				acc.minVal = val;
-			}
+			if (val > acc.maxVal) { acc.max = groupName; acc.maxVal = val; }
+			if (val < acc.minVal) { acc.min = groupName; acc.minVal = val; }
 			return acc;
 		},
 		{ min: '', max: '', minVal: 1, maxVal: 0 }
