@@ -1,5 +1,6 @@
 <script>
 	import '../app.css';
+	import { afterNavigate } from '$app/navigation';
 	import {
 		Drawer,
 		getDrawerStore,
@@ -18,6 +19,13 @@
 
 	initializeStores();
 	const drawerStore = getDrawerStore();
+
+	// GoatCounter counts the initial load itself; count in-app navigations here.
+	afterNavigate((navigation) => {
+		if (navigation.type === 'enter') return;
+		// @ts-expect-error injected by the GoatCounter script
+		window.goatcounter?.count?.({ path: location.pathname + location.search });
+	});
 </script>
 
 <Toast />

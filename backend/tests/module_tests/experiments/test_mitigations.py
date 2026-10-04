@@ -9,7 +9,7 @@ takes many minutes).
 """
 
 from datetime import datetime
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
 
 def run_with_mocks():
@@ -94,7 +94,6 @@ def test_experiment_pipeline_order_is_setup_then_simulate_then_save():
     simulate → save.  Out-of-order execution would produce incorrect results
     (e.g. saving before simulating).
     """
-    from unittest.mock import call as C
 
     call_order = []
 

@@ -1,0 +1,14 @@
+name: Health check
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # daily, 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash deploy/healthcheck.sh

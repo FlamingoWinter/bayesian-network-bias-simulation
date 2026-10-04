@@ -207,9 +207,11 @@ def test_simulate_stores_bias_results_in_cache_for_all_requested_recruiters(
             "score_threshold": 0,
         })
 
-        await _collect_messages(communicator)
+        return [m["message"] for m in await _collect_messages(communicator)]
 
-    async_to_sync(_run)()
+    messages = async_to_sync(_run)()
+    assert any(m.endswith("recruiter generated") for m in messages)
+    assert any(m.endswith("mitigation initialised") for m in messages)
 
     bias = from_cache(f"bias_{session_key}")
     assert bias is not None

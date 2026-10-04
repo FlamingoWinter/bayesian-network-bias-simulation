@@ -6,6 +6,8 @@ sklearn, torch) would make tests slow or hard to isolate.  Real objects
 are only constructed in integration/ tests.
 """
 
+# ruff: noqa: E402  (imports must follow the sys.path setup below)
+
 import os
 import sys
 
@@ -18,7 +20,7 @@ _api_dir = os.path.normpath(
 if _api_dir not in sys.path:
     sys.path.insert(0, _api_dir)
 
-from typing import Dict, List, Optional
+from typing import Dict, List
 from unittest.mock import MagicMock
 
 import numpy as np
